@@ -1,5 +1,6 @@
-import { View, Text, FlatList } from "react-native";
+import { View, Text, FlatList, Pressable } from "react-native";
 import React from "react";
+import { useNavigation } from "@react-navigation/native";
 
 const data = [
   {
@@ -21,10 +22,15 @@ const data = [
   },
 ];
 
-const Home = () => {
+const InitialPage = () => {
+  const navigation = useNavigation();
   return (
-    <View>
-      <FlatList
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <Text> Initial </Text>
+      <Pressable onPress={() => navigation.navigate("intro")}>
+        <Text>Next Page</Text>
+      </Pressable>
+      {/* <FlatList
         data={data}
         renderItem={({ item }) => (
           <View>
@@ -35,10 +41,9 @@ const Home = () => {
         horizontal
         showsHorizontalScrollIndicator={false}
         pagingEnabled
-      />
-      <Text style={{ fontFamily: "Bold", fontSize: 30 }}>Home</Text>
+      /> */}
     </View>
   );
 };
 
-export default Home;
+export default InitialPage;
