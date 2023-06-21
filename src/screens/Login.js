@@ -8,7 +8,7 @@ import Checkbox from "expo-checkbox";
 
 const Login = () => {
   const navigation = useNavigation();
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isChecked, setChecked] = useState(false);
 
@@ -49,11 +49,7 @@ const Login = () => {
         E-mail
       </Text>
 
-      <CustomInput
-        placeholder="Username"
-        value={username}
-        setValue={setUsername}
-      />
+      <CustomInput placeholder="Your Email" value={email} setValue={setEmail} />
 
       <Text
         style={{ fontFamily: "SemiBold", fontSize: 14, right: 150, top: 6 }}
@@ -61,7 +57,7 @@ const Login = () => {
         Password
       </Text>
       <CustomInput
-        placeholder="Password"
+        placeholder="Your Password"
         value={password}
         setValue={setPassword}
         secureTextEntry={true}
@@ -127,8 +123,8 @@ const Login = () => {
       >
         <Text style={{ fontFamily: "SemiBold", fontSize: 12 }}>
           Don,t have an account?
+          <CustomButton text="Signup" onPress={onSignup} type="tertiary" />
         </Text>
-        <CustomButton text="Signup" onPress={onSignup} type="tertiary" />
       </View>
     </View>
   );

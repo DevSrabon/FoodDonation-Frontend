@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   container_primary: {
     backgroundColor: "#B4AAF2",
   },
-  container_tertiary: { width: "30%", padding: 0 },
+  container_tertiary: { width: "30%", padding: 0, marginVertical: 0 },
   text: {
     fontFamily: "Medium",
     fontSize: 12,
