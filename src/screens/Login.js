@@ -21,7 +21,7 @@ const Login = () => {
 
   const onSignInPressed = () => {
     console.warn("signin");
-    signIn(inputField.email, inputField.password)
+    signIn(email, password)
       .then((result) => {
         console.log(result);
         setLoading(false);
@@ -127,9 +127,7 @@ const Login = () => {
         </Pressable>
         <Pressable
           style={styles.box}
-          onPress={() => {
-            promptAsync();
-          }}
+          onPress={() => promptAsync({ useProxy: false, showInRecents: true })}
         >
           <Image source={icons.google} />
         </Pressable>

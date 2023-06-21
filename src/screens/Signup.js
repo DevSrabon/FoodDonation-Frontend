@@ -6,7 +6,7 @@ import CustomInput from "../components/CustomInput";
 import { AuthContext } from "../context/Provider";
 
 const Signup = () => {
-  const { createUser, updateUser, user promptAsync, loading, setLoading } =
+  const { createUser, updateUser, user, promptAsync, loading, setLoading } =
     useContext(AuthContext);
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
@@ -14,9 +14,9 @@ const Signup = () => {
   const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
-if(user?.email){
-  navigation.navigate("otp")
-}
+  if (user?.email) {
+    navigation.navigate("otp");
+  }
   const onSignup = async () => {
     const userName = { displayName: firstName + " " + lastName };
     try {

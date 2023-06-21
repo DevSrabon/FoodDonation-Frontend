@@ -2,14 +2,15 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useFonts } from "expo-font";
 import AuthProvider from "./src/context/Provider";
+import Donor from "./src/screens/Donor";
+import FoodNeedier from "./src/screens/FoodNeedier";
 import InitialPage from "./src/screens/InitialPage";
 import Intro from "./src/screens/Intro";
 import Login from "./src/screens/Login";
 import Otp from "./src/screens/Otp";
 import RoleSelection from "./src/screens/RoleSelection";
-import Donor from "./src/screens/Donor";
+import Signup from "./src/screens/Signup";
 import Transporter from "./src/screens/Transporter";
-import FoodNeedier from "./src/screens/FoodNeedier";
 // import BottomNav from "./src/navigation/BottomNav";
 
 export default function App() {
