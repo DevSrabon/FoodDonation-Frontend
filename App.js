@@ -13,7 +13,7 @@ import Otp from "./src/screens/Otp";
 
 export default function App() {
   const [loaded] = useFonts({
-    Reguler: require("./assets/fonts/Gilroy-Regular.ttf"),
+    Regular: require("./assets/fonts/Gilroy-Regular.ttf"),
     Medium: require("./assets/fonts/Gilroy-Medium.ttf"),
     SemiBold: require("./assets/fonts/Gilroy-SemiBold.ttf"),
     Bold: require("./assets/fonts/Gilroy-Bold.ttf"),

@@ -37,8 +37,8 @@ const styles = StyleSheet.create({
   },
   container_tertiary: { width: "30%", padding: 0, marginVertical: 0 },
   text: {
-    fontFamily: "Medium",
-    fontSize: 12,
+    fontFamily: "SemiBold",
+    fontSize: 14,
     color: "white",
   },
   text_tertiary: {

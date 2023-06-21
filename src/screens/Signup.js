@@ -20,7 +20,7 @@ const Signup = () => {
   };
 
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+    <View style={styles.container}>
       <Text
         style={{ fontFamily: "SemiBold", fontSize: 28, bottom: 20, right: 145 }}
       >

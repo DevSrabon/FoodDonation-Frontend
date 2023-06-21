@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 70,
   },
   detail: {
-    fontFamily: "Reguler",
+    fontFamily: "Regular",
     paddingLeft: 30,
     fontSize: 15,
     lineHeight: 22,
