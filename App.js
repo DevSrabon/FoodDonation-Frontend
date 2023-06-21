@@ -9,6 +9,10 @@ import Login from "./src/screens/Login";
 import InitialPage from "./src/screens/InitialPage";
 import Signup from "./src/screens/Signup";
 import Otp from "./src/screens/Otp";
+import RoleSelection from "./src/screens/RoleSelection";
+import Donor from "./src/screens/Donor";
+import Transporter from "./src/screens/Transporter";
+import FoodNeedier from "./src/screens/FoodNeedier";
 // import BottomNav from "./src/navigation/BottomNav";
 
 export default function App() {
@@ -37,6 +41,13 @@ export default function App() {
         <Stack.Screen name="login" component={Login}></Stack.Screen>
         <Stack.Screen name="signup" component={Signup}></Stack.Screen>
         <Stack.Screen name="otp" component={Otp}></Stack.Screen>
+        <Stack.Screen
+          name="roleSelection"
+          component={RoleSelection}
+        ></Stack.Screen>
+        <Stack.Screen name="donor" component={Donor}></Stack.Screen>
+        <Stack.Screen name="transporter" component={Transporter}></Stack.Screen>
+        <Stack.Screen name="foodNeedier" component={FoodNeedier}></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );

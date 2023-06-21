@@ -1,10 +1,12 @@
 import { View, Text, StyleSheet, TextInput } from "react-native";
 import React from "react";
 import CustomButton from "../components/CustomButton";
+import { useNavigation } from "@react-navigation/native";
 
 const Otp = () => {
+  const navigation = useNavigation();
   const onVerify = () => {
-    console.warn("otp");
+    navigation.navigate("roleSelection");
   };
   const onResend = () => {
     console.warn("otp");
