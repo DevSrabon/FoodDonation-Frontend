@@ -1,31 +1,26 @@
-import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
-
-import * as WebBrowser from "expo-web-browser";
+import Checkbox from "expo-checkbox";
 import React, { useContext, useState } from "react";
-import { Button, Pressable, Text, TextInput, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import icons from "../../assets/icons";
+import CustomButton from "../components/CustomButton";
+import CustomInput from "../components/CustomInput";
 import { AuthContext } from "../context/Provider";
-WebBrowser.maybeCompleteAuthSession();
 
 const Login = () => {
-  const navigation = useNavigation();
-
   const { signIn, promptAsync, user, loading, setLoading } =
     useContext(AuthContext);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [isChecked, setChecked] = useState(false);
+  const navigation = useNavigation();
+
   if (user?.email) {
     navigation.navigate("otp");
   }
-  const [inputField, setInputField] = useState({
-    email: "",
-    password: "",
-  });
-  const handleChangeText = (key, value) => {
-    setInputField((prevInputField) => ({
-      ...prevInputField,
-      [key]: value,
-    }));
-  };
-  const handleLogin = () => {
+
+  const onSignInPressed = () => {
+    console.warn("signin");
     signIn(inputField.email, inputField.password)
       .then((result) => {
         console.log(result);
@@ -38,40 +33,146 @@ const Login = () => {
         setLoading(false);
       });
   };
+
+  const onForgotPasswordPressed = () => {
+    console.warn("Forgot Password");
+  };
+
+  const onSignInFacebook = () => {
+    console.warn("Facebook");
+  };
+
+  const onSignInGoogle = () => {
+    console.warn("Google");
+  };
+
+  const onSignInLinkedin = () => {
+    console.warn("linkedin");
+  };
+
+  const onSignup = () => {
+    navigation.navigate("signup");
+  };
+
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Text>Login</Text>
-      <View>
-        <Text>Email</Text>
-        <TextInput
-          value={inputField.email}
-          onChangeText={(text) => handleChangeText("email", text)}
-          placeholder="Enter your email"
-          keyboardType="email-address"
-        />
+    <View style={styles.container}>
+      <Text
+        style={{ fontFamily: "SemiBold", fontSize: 28, bottom: 20, right: 145 }}
+      >
+        Login
+      </Text>
+      <Text
+        style={{ fontFamily: "SemiBold", fontSize: 14, right: 160, top: 6 }}
+      >
+        E-mail
+      </Text>
 
-        <Text>Password</Text>
-        <TextInput
-          value={inputField.password}
-          onChangeText={(text) => handleChangeText("password", text)}
-          placeholder="Enter your password"
-          secureTextEntry
-        />
+      <CustomInput placeholder="Your Email" value={email} setValue={setEmail} />
 
-        <Button title="Log In" onPress={handleLogin} />
-        <FontAwesome.Button
-          name="google"
-          backgroundColor="#3b5998"
-          onPress={() => promptAsync({ useProxy: false, showInRecents: true })}
-        >
-          Login with google
-        </FontAwesome.Button>
+      <Text
+        style={{ fontFamily: "SemiBold", fontSize: 14, right: 150, top: 6 }}
+      >
+        Password
+      </Text>
+      <CustomInput
+        placeholder="Your Password"
+        value={password}
+        setValue={setPassword}
+        secureTextEntry={true}
+      />
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          gap: 130,
+          marginBottom: 20,
+        }}
+      >
+        <View style={{ flexDirection: "row" }}>
+          <Checkbox
+            style={styles.checkbox}
+            value={isChecked}
+            onValueChange={setChecked}
+            color={isChecked ? "#B4AAF2" : undefined}
+          />
+          <Text
+            style={{ fontFamily: "Medium", fontSize: 12, color: "#747980" }}
+          >
+            Remember me
+          </Text>
+        </View>
+
+        <CustomButton
+          text="Forgot Password"
+          onPress={onForgotPasswordPressed}
+          type="tertiary"
+        />
       </View>
-      <Pressable onPress={() => navigation.navigate("signup")}>
-        <Text>Sign Up</Text>
-      </Pressable>
+
+      <CustomButton text="Login" onPress={onSignInPressed} type="primary" />
+
+      <Text
+        style={{
+          fontFamily: "SemiBold",
+          fontSize: 12,
+          marginBottom: 10,
+          marginTop: 20,
+        }}
+      >
+        or continue with
+      </Text>
+      <View style={styles.subContainer}>
+        <Pressable style={styles.box}>
+          <Image source={icons.fb} />
+        </Pressable>
+        <Pressable
+          style={styles.box}
+          onPress={() => {
+            promptAsync();
+          }}
+        >
+          <Image source={icons.google} />
+        </Pressable>
+        <Pressable style={styles.box}>
+          <Image source={icons.linked} />
+        </Pressable>
+      </View>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          top: 80,
+        }}
+      >
+        <Text style={{ fontFamily: "SemiBold", fontSize: 12 }}>
+          Don,t have an account?
+          <CustomButton text="Signup" onPress={onSignup} type="tertiary" />
+        </Text>
+      </View>
     </View>
   );
 };
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "white",
+  },
+  subContainer: {
+    flexDirection: "row",
+
+    gap: 20,
+  },
+  box: {
+    width: 72,
+    heigh: 68,
+    padding: 16,
+    borderRadius: 6,
+    borderColor: "#EBE9F1",
+    borderWidth: 1,
+  },
+  checkbox: { marginRight: 3 },
+});
 export default Login;

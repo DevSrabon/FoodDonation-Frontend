@@ -1,62 +1,24 @@
 import { useNavigation } from "@react-navigation/native";
-
-import FontAwesome from "@expo/vector-icons/FontAwesome";
-
-import React, { useContext, useEffect, useState } from "react";
-import { Button, Pressable, Text, TextInput, View } from "react-native";
+import React, { useContext, useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import CustomButton from "../components/CustomButton";
+import CustomInput from "../components/CustomInput";
 import { AuthContext } from "../context/Provider";
 
 const Signup = () => {
-  const navigation = useNavigation();
-  const { createUser, updateUser, promptAsync, loading, setLoading } =
+  const { createUser, updateUser, user promptAsync, loading, setLoading } =
     useContext(AuthContext);
-  const [inputField, setInputField] = useState({
-    email: "",
-    password: "",
-    phoneNumber: "",
-    firstName: "",
-    lastName: "",
-    verificationCode: "",
-    verificationId: "",
-  });
-  const { email, password, firstName, lastName, phoneNumber } = inputField;
-  const userName = { displayName: firstName + " " + lastName };
-
-  // const [error, setError] = useState("");
-
-  // const [flag, setFlag] = useState(false);
-  // const [otp, setOtp] = useState("");
-  // const [result, setResult] = useState("");
-  // const getOtp = async (e) => {
-  //   e.preventDefault();
-  //   setError("");
-  //   const { phoneNumber } = inputField; //
-  //   if (!phoneNumber) {
-  //     setError("Please enter a valid phone number!");
-  //     return;
-  //   }
-  //   try {
-  //     const response = await setUpRecaptha(phoneNumber);
-  //     console.log(phoneNumber);
-  //     setResult(response);
-  //     setFlag(true);
-  //   } catch (err) {
-  //     console.log(err.message);
-  //   }
-  // };
-
-  // const verifyOtp = async (e) => {
-  //   e.preventDefault();
-  //   setError("");
-  //   if (otp === "" || otp === null) return;
-  //   try {
-  //     await result.confirm(otp);
-  //     navigation.navigate("/home");
-  //   } catch (err) {
-  //     setError(err.message);
-  //   }
-  // };
-  const handleSignUp = async () => {
+  const navigation = useNavigation();
+  const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [password, setPassword] = useState("");
+if(user?.email){
+  navigation.navigate("otp")
+}
+  const onSignup = async () => {
+    const userName = { displayName: firstName + " " + lastName };
     try {
       await createUser(email, password);
       await updateUser(userName);
@@ -68,82 +30,101 @@ const Signup = () => {
       }
     }
   };
-  const handleChangeText = (key, value) => {
-    setInputField((prevInputField) => ({
-      ...prevInputField,
-      [key]: value,
-    }));
+  const onLogin = () => {
+    navigation.navigate("login");
   };
 
   return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        rowGap: 10,
-      }}
-    >
-      <Text>Signup</Text>
-      <View
+    <View style={styles.container}>
+      <Text
+        style={{ fontFamily: "SemiBold", fontSize: 28, bottom: 20, right: 145 }}
+      >
+        Signup
+      </Text>
+      <Text
+        style={{ fontFamily: "SemiBold", fontSize: 14, right: 150, top: 6 }}
+      >
+        First Name
+      </Text>
+      <CustomInput
+        placeholder="Your First Name"
+        value={firstName}
+        setValue={setFirstName}
+      />
+      <Text
+        style={{ fontFamily: "SemiBold", fontSize: 14, right: 150, top: 6 }}
+      >
+        Last Name
+      </Text>
+      <CustomInput
+        placeholder="Your Last Name"
+        value={lastName}
+        setValue={setLastName}
+      />
+      <Text
+        style={{ fontFamily: "SemiBold", fontSize: 14, right: 137, top: 6 }}
+      >
+        Phone Number
+      </Text>
+      <CustomInput
+        placeholder="Your Phone Number"
+        value={phoneNumber}
+        setValue={setPhoneNumber}
+      />
+      <Text
+        style={{ fontFamily: "SemiBold", fontSize: 14, right: 165, top: 6 }}
+      >
+        E-mail
+      </Text>
+
+      <CustomInput placeholder="Your Email" value={email} setValue={setEmail} />
+      <Text
+        style={{ fontFamily: "SemiBold", fontSize: 14, right: 155, top: 6 }}
+      >
+        Password
+      </Text>
+      <CustomInput
+        placeholder="Your Password"
+        value={password}
+        setValue={setPassword}
+        secureTextEntry={true}
+      />
+      <Text
         style={{
-          display: "flex",
-          flexDirection: "column",
-          rowGap: 5,
+          fontFamily: "Medium",
+          fontSize: 14,
+          lineHeight: 20,
+          marginBottom: 20,
         }}
       >
-        <Text>Email</Text>
-        <TextInput
-          value={inputField.email}
-          onChangeText={(text) => handleChangeText("email", text)}
-          placeholder="Enter your email"
-          keyboardType="email-address"
-        />
+        By signing up you agree to our{" "}
+        <Text style={{ fontSize: 16 }}>Terms & Condition</Text> and{" "}
+        <Text style={{ fontSize: 16 }}>Privacy Policy.*</Text>
+      </Text>
+      <CustomButton text="Continue" onPress={onSignup} type="primary" />
 
-        <Text>Password</Text>
-        <TextInput
-          value={inputField.password}
-          onChangeText={(text) => handleChangeText("password", text)}
-          placeholder="Enter your password"
-          secureTextEntry
-        />
-
-        <Text>Phone Number</Text>
-        <TextInput
-          value={inputField.phoneNumber}
-          onChangeText={(text) => handleChangeText("phoneNumber", text)}
-          placeholder="Enter your phone number"
-          keyboardType="phone-pad"
-        />
-
-        <Text>First Name</Text>
-        <TextInput
-          value={inputField.firstName}
-          onChangeText={(text) => handleChangeText("firstName", text)}
-          placeholder="Enter your first name"
-        />
-
-        <Text>Last Name</Text>
-        <TextInput
-          value={inputField.lastName}
-          onChangeText={(text) => handleChangeText("lastName", text)}
-          placeholder="Enter your last name"
-        />
-        {/* <Text id="recaptcha-container"></Text> */}
-        <Button title="Send Verification Code" onPress={handleSignUp} />
-        <FontAwesome.Button
-          name="google"
-          backgroundColor="#3b5998"
-          onPress={() => promptAsync({ useProxy: false, showInRecents: true })}
-        >
-          Login with google
-        </FontAwesome.Button>
-      </View>
-      <Pressable onPress={() => navigation.navigate("otp")}>
-        <Text>OTP</Text>
-      </Pressable>
+      <Text
+        style={{
+          fontFamily: "SemiBold",
+          fontSize: 12,
+          textAlign: "center",
+          top: 50,
+        }}
+      >
+        Already signed up ?
+        <CustomButton text="Login" onPress={onLogin} type="tertiary" />
+      </Text>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "white",
+  },
+});
 
 export default Signup;
