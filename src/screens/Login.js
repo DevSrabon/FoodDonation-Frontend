@@ -13,6 +13,7 @@ import icons from "../../assets/icons";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import { AuthContext } from "../context/Provider";
+import Loading from "../components/Loading";
 
 const Login = () => {
   const { signIn, promptAsync, user, request, loading, setLoading } =
@@ -63,12 +64,7 @@ const Login = () => {
     navigation.navigate("signup");
   };
   if (loading) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator size="large" color="blue" />
-        <Text>Loading...</Text>
-      </View>
-    );
+    return <Loading />;
   }
   return (
     <View style={styles.container}>

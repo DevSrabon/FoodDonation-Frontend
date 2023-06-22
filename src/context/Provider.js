@@ -72,6 +72,7 @@ const AuthProvider = ({ children }) => {
 
       const user = await response.json();
       await AsyncStorage.setItem("@srabonbarua", JSON.stringify(user));
+      setLoading(true);
       setUser(user);
     } catch (error) {
       // Add your own error handler here

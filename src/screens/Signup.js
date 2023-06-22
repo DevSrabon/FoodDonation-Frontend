@@ -1,8 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useContext, useEffect, useState } from "react";
-import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
+import Loading from "../components/Loading";
 import { AuthContext } from "../context/Provider";
 
 const Signup = () => {
@@ -39,12 +40,7 @@ const Signup = () => {
     navigation.navigate("login");
   };
   if (loading) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator size="large" color="blue" />
-        <Text>Loading...</Text>
-      </View>
-    );
+    return <Loading />;
   }
   return (
     <View style={styles.container}>
