@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useContext, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import { ActivityIndicator, StyleSheet, Text, View } from "react-native";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import { AuthContext } from "../context/Provider";
@@ -14,17 +14,22 @@ const Signup = () => {
   const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
-  if (user?.email) {
-    navigation.navigate("otp");
-  }
+  useEffect(() => {
+    if (user?.email) {
+      navigation.navigate("otp");
+    }
+  }, [user, navigation]);
+
   const onSignup = async () => {
     const userName = { displayName: firstName + " " + lastName };
     try {
       await createUser(email, password);
       await updateUser(userName);
+      await setLoading(false);
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
         alert("Email is already in use");
+        setLoading(false);
       } else {
         console.log("Error:", error);
       }
@@ -33,7 +38,14 @@ const Signup = () => {
   const onLogin = () => {
     navigation.navigate("login");
   };
-
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" color="blue" />
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
       <Text

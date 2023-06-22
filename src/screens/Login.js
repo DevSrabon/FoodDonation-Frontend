@@ -1,23 +1,32 @@
 import { useNavigation } from "@react-navigation/native";
 import Checkbox from "expo-checkbox";
-import React, { useContext, useState } from "react";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import {
+  ActivityIndicator,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import icons from "../../assets/icons";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import { AuthContext } from "../context/Provider";
 
 const Login = () => {
-  const { signIn, promptAsync, user, loading, setLoading } =
+  const { signIn, promptAsync, user, request, loading, setLoading } =
     useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isChecked, setChecked] = useState(false);
   const navigation = useNavigation();
 
-  if (user?.email) {
-    navigation.navigate("otp");
-  }
+  useEffect(() => {
+    if (user?.email) {
+      navigation.navigate("otp");
+    }
+  }, [user, navigation]);
 
   const onSignInPressed = () => {
     console.warn("signin");
@@ -53,7 +62,14 @@ const Login = () => {
   const onSignup = () => {
     navigation.navigate("signup");
   };
-
+  if (loading) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" color="blue" />
+        <Text>Loading...</Text>
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
       <Text
@@ -127,6 +143,7 @@ const Login = () => {
         </Pressable>
         <Pressable
           style={styles.box}
+          disabled={!request}
           onPress={() => promptAsync({ useProxy: false, showInRecents: true })}
         >
           <Image source={icons.google} />

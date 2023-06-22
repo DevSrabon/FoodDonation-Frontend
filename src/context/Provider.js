@@ -34,7 +34,7 @@ const AuthProvider = ({ children }) => {
     iosClientId:
       "1076467046409-eauic2ru65l4b6lustejji71tjar5h40.apps.googleusercontent.com",
     webClientId:
-      "1076467046409-aefr4jm44k4boabqd8jrl9bakvbb5m5d.apps.googleusercontent.com",
+      "1076467046409-f7dik116mreamar2fls2anor8aicijlp.apps.googleusercontent.com",
     expoClientId:
       "1076467046409-aefr4jm44k4boabqd8jrl9bakvbb5m5d.apps.googleusercontent.com",
   });
@@ -58,7 +58,7 @@ const AuthProvider = ({ children }) => {
   }
 
   const getLocalUser = async () => {
-    const data = await AsyncStorage.getItem("@user");
+    const data = await AsyncStorage.getItem("@srabonbarua");
     if (!data) return null;
     return JSON.parse(data);
   };
@@ -71,7 +71,7 @@ const AuthProvider = ({ children }) => {
       });
 
       const user = await response.json();
-      await AsyncStorage.setItem("@user", JSON.stringify(user));
+      await AsyncStorage.setItem("@srabonbarua", JSON.stringify(user));
       setUser(user);
     } catch (error) {
       // Add your own error handler here
@@ -122,6 +122,7 @@ const AuthProvider = ({ children }) => {
     user,
     setLoading,
     updateUser,
+    request,
     promptAsync,
     loading,
   };
