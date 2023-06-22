@@ -11,6 +11,8 @@ import Otp from "./src/screens/Otp";
 import RoleSelection from "./src/screens/RoleSelection";
 import Signup from "./src/screens/Signup";
 import Transporter from "./src/screens/Transporter";
+import Map from "./src/screens/Map";
+import UserMap from "./src/components/UserMap";
 // import BottomNav from "./src/navigation/BottomNav";
 
 export default function App() {
@@ -53,6 +55,7 @@ export default function App() {
             name="foodNeedier"
             component={FoodNeedier}
           ></Stack.Screen>
+          <Stack.Screen name="map" component={Map}></Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
     </AuthProvider>

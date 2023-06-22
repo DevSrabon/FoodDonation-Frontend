@@ -23,7 +23,7 @@ const Donor = () => {
       <View style={styles.boxContainer}>
         <Pressable
           style={styles.box}
-          onPress={() => navigation.navigate("donor")}
+          onPress={() => navigation.navigate("map")}
         >
           <Text
             style={{ fontFamily: "SemiBold", fontSize: 14, color: "#252525" }}
