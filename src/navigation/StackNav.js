@@ -1,7 +1,6 @@
 import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import icons from "../../assets/icons";
-
 import { Pressable, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import InitialPage from "../screens/InitialPage";
@@ -9,6 +8,14 @@ import Intro from "../screens/Intro";
 import Login from "../screens/Login";
 import Signup from "../screens/Signup";
 import Otp from "../screens/Otp";
+import Donor from "../screens/Donor";
+import Transporter from "../screens/Transporter";
+import FoodNeedier from "../screens/FoodNeedier";
+import User from "../screens/User";
+import Chat from "../screens/Chat";
+import Home from "../screens/Home";
+import RoleSelection from "../screens/RoleSelection";
+import Profile from "../screens/Profile";
 
 const Stack = createNativeStackNavigator();
 
@@ -17,7 +24,7 @@ const StackNav = () => {
 
   return (
     <Stack.Navigator
-      initialRouteName="initial"
+      initialRouteName="user"
       screenOptions={{
         headerStyle: { backgroundColor: "white" },
         headerTitleAlign: "center",
@@ -30,44 +37,32 @@ const StackNav = () => {
             <Image source={icons.leftArrow} />
           </Pressable>
         ),
-        headerRight: () => (
-          <Pressable onPress={() => navigation.navigate("Settings")}>
-            <Image source={icons.setting} />
-          </Pressable>
-        ),
       }}
     >
-      {/* <Stack.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{ headerShown: false }}
-      /> */}
-      <Stack.Screen name="initial" component={InitialPage} />
+      <Stack.Screen name="initial" component={InitialPage}></Stack.Screen>
+      <Stack.Screen name="intro" component={Intro}></Stack.Screen>
+      <Stack.Screen name="login" component={Login}></Stack.Screen>
+      <Stack.Screen name="signup" component={Signup}></Stack.Screen>
+      <Stack.Screen name="otp" component={Otp}></Stack.Screen>
       <Stack.Screen
-        name="intro"
-        component={Intro}
-        options={{ headerShown: false }}
-      />
+        name="roleSelection"
+        component={RoleSelection}
+      ></Stack.Screen>
+      <Stack.Screen name="donor" component={Donor}></Stack.Screen>
+      <Stack.Screen name="transporter" component={Transporter}></Stack.Screen>
+      <Stack.Screen name="foodNeedier" component={FoodNeedier}></Stack.Screen>
       <Stack.Screen
-        name="login"
-        component={Login}
-        options={{ headerShown: false }}
-      />
+        name="user"
+        component={User}
+        // options={{ headerShown: false }}
+      ></Stack.Screen>
+      <Stack.Screen name="chat" component={Chat}></Stack.Screen>
+      <Stack.Screen name="home" component={Home}></Stack.Screen>
       <Stack.Screen
-        name="signup"
-        component={Signup}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="otp"
-        component={Otp}
-        options={{ headerShown: false }}
-      />
-      {/* <Stack.Screen
-        name="Single"
-        component={SingleRoute}
-        options={({ route }) => ({ title: route.params.name })}
-      /> */}
+        name="profile"
+        component={Profile}
+        // options={{ headerTitle: "" }}
+      ></Stack.Screen>
     </Stack.Navigator>
   );
 };

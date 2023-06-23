@@ -5,6 +5,10 @@ import google from "./Google.png";
 import linked from "./linkedin.png";
 import lock from "./lock.png";
 import email from "./email.png";
+import notification from "./notification.png";
+import settings from "./settings.png";
+import leftArrow from "./leftArrow.png";
+import profile from "./profile.png";
 
 export default {
   InitialBtn,
@@ -14,4 +18,8 @@ export default {
   linked,
   lock,
   email,
+  notification,
+  settings,
+  leftArrow,
+  profile,
 };
