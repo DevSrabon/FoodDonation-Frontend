@@ -1,12 +1,12 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
-import Search from "../screens/Search";
-import WishList from "../screens/WishList";
-import ProfileScreen from "../screens/ProfileScreen";
 import { Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import StackNav from "./StackNav";
+import Home from "../screens/Home";
+// import Donate from "../screens/Donate";
+import Chat from "../screens/Chat";
+import Profile from "../screens/Profile";
 
 const Tab = createBottomTabNavigator();
 
@@ -17,7 +17,7 @@ const BottomNav = () => {
       initialRouteName="Main"
       screenOptions={{
         tabBarInactiveTintColor: "gray",
-        tabBarActiveTintColor: "#FF8682",
+        tabBarActiveTintColor: "#B4AAF2",
         tabBarStyle: {
           position: "absolute",
           borderRadius: 20,
@@ -36,51 +36,53 @@ const BottomNav = () => {
         name="Main"
         component={StackNav}
         options={{
-          title: "Home",
-          tabBarIcon: ({ focused, color }) => (
-            <Feather
-              name="home"
-              size={32}
-              color={focused ? "#FF8682" : "gray"}
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Search"
-        component={Search}
-        options={{
-          tabBarIcon: ({ focused, color }) => (
-            <Feather
-              name="search"
-              size={32}
-              color={focused ? "#FF8682" : "gray"}
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="WishList"
-        component={WishList}
-        options={{
-          tabBarIcon: ({ focused, color }) => (
-            <Ionicons
-              name="heart"
-              size={32}
-              color={focused ? "#FF8682" : "gray"}
-            />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={{
+          // headerShown: true,
+          title: "",
           tabBarIcon: ({ focused, color }) => (
             <Feather
               name="user"
               size={32}
-              color={focused ? "#FF8682" : "gray"}
+              color={focused ? "#B4AAF2" : "gray"}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="home"
+        component={Home}
+        options={{
+          tabBarIcon: ({ focused, color }) => (
+            <Feather
+              name="home"
+              size={32}
+              color={focused ? "#B4AAF2" : "gray"}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="profile"
+        component={Profile}
+        options={{
+          title: "",
+          tabBarIcon: ({ focused, color }) => (
+            <Feather
+              name="user-plus"
+              size={32}
+              color={focused ? "#B4AAF2" : "gray"}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="chat"
+        component={Chat}
+        options={{
+          tabBarIcon: ({ focused, color }) => (
+            <Ionicons
+              name="md-chatbox-ellipses-outline"
+              size={32}
+              color={focused ? "#B4AAF2" : "gray"}
             />
           ),
         }}
