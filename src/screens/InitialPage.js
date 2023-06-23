@@ -1,18 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import icons from "../../assets/icons";
-import { AuthContext } from "../context/Provider";
 
 const InitialPage = () => {
   const navigation = useNavigation();
-
-  // signOutUser after reload
-  const { user, signOutUser } = useContext(AuthContext);
-  useEffect(() => {
-    if (!user?.email) return;
-    signOutUser();
-  }, []);
 
   return (
     <View style={styles.container}>

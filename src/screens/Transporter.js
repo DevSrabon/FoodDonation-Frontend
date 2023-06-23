@@ -1,13 +1,23 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
-import React from "react";
+import React, { useState } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import CustomButton from "../components/CustomButton";
-import { useNavigation } from "@react-navigation/native";
+import Loading from "../components/Loading";
+import { userContext } from "../context/Provider";
+import useUpdateUser from "../hook/useUpdateSubRoleUser";
 
-const Transporter = () => {
-  const navigation = useNavigation();
-  const onRoleSelect = () => {
-    console.warn("continue");
+const Transporter = async () => {
+  const [update, setUpdate] = useState("");
+  const { user } = userContext();
+  const { loading, error, updateUserRole } = useUpdateUser();
+
+  const onRoleSelect = async () => {
+    if (error) return alert(error);
+
+    updateUserRole(update, user?.email, "user");
   };
+
+  if (loading) return <Loading />;
+
   return (
     <View style={styles.container}>
       <View style={styles.subContainer}>
@@ -23,12 +33,12 @@ const Transporter = () => {
       <View style={styles.boxContainer}>
         <Pressable
           style={styles.box}
-          onPress={() => navigation.navigate("donor")}
+          onPress={() => setUpdate("Non-Profit Organization")}
         >
           <Text
             style={{ fontFamily: "SemiBold", fontSize: 14, color: "#252525" }}
           >
-            Non-Profit Organisation
+            Non-Profit Organization
           </Text>
           <Text
             style={{
@@ -41,10 +51,7 @@ const Transporter = () => {
             Person or an Organization who donates the food
           </Text>
         </Pressable>
-        <Pressable
-          style={styles.box}
-          onPress={() => navigation.navigate("transporter")}
-        >
+        <Pressable style={styles.box} onPress={() => setUpdate("Food Banks")}>
           <Text
             style={{ fontFamily: "SemiBold", fontSize: 14, color: "#252525" }}
           >

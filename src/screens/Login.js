@@ -1,19 +1,12 @@
 import { useNavigation } from "@react-navigation/native";
 import Checkbox from "expo-checkbox";
-import React, { useContext, useEffect, useState } from "react";
-import {
-  ActivityIndicator,
-  Image,
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import React, { useContext, useState } from "react";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import icons from "../../assets/icons";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
-import { AuthContext } from "../context/Provider";
 import Loading from "../components/Loading";
+import { AuthContext } from "../context/Provider";
 
 const Login = () => {
   const { signIn, promptAsync, user, request, loading, setLoading } =
@@ -23,19 +16,13 @@ const Login = () => {
   const [isChecked, setChecked] = useState(false);
   const navigation = useNavigation();
 
-  useEffect(() => {
-    if (user?.email) {
-      navigation.navigate("otp");
-    }
-  }, [user, navigation]);
-
   const onSignInPressed = () => {
     console.warn("signin");
     signIn(email, password)
       .then((result) => {
         console.log(result);
         setLoading(false);
-        navigation.navigate("otp");
+        navigation.navigate("roleSelection");
       })
       .catch((err) => {
         console.log(err);
