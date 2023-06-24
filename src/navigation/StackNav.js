@@ -16,6 +16,9 @@ import Chat from "../screens/Chat";
 import Home from "../screens/Home";
 import RoleSelection from "../screens/RoleSelection";
 import Profile from "../screens/Profile";
+import AddRestaurant from "../screens/AddRestaurant";
+import Donate from "../screens/Donate";
+import DonateMeal from "../screens/DonateMeal";
 
 const Stack = createNativeStackNavigator();
 
@@ -54,14 +57,17 @@ const StackNav = () => {
       <Stack.Screen
         name="user"
         component={User}
-        // options={{ headerShown: false }}
+      // options={{ headerShown: false }}
       ></Stack.Screen>
       <Stack.Screen name="chat" component={Chat}></Stack.Screen>
       <Stack.Screen name="home" component={Home}></Stack.Screen>
+      <Stack.Screen name="AddRestaurant" component={AddRestaurant}></Stack.Screen>
+      <Stack.Screen name="Donate" component={Donate}></Stack.Screen>
+      <Stack.Screen name="DonateMeal" component={DonateMeal}></Stack.Screen>
       <Stack.Screen
         name="profile"
         component={Profile}
-        // options={{ headerTitle: "" }}
+      // options={{ headerTitle: "" }}
       ></Stack.Screen>
     </Stack.Navigator>
   );

@@ -7,6 +7,7 @@ import Home from "../screens/Home";
 // import Donate from "../screens/Donate";
 import Chat from "../screens/Chat";
 import Profile from "../screens/Profile";
+import AddRestaurant from "../screens/AddRestaurant";
 
 const Tab = createBottomTabNavigator();
 
@@ -60,6 +61,19 @@ const BottomNav = () => {
           ),
         }}
       />
+      {/* <Tab.Screen
+        name="home"
+        component={AddRestaurant}
+        options={{
+          tabBarIcon: ({ focused, color }) => (
+            <Feather
+              name="home"
+              size={32}
+              color={focused ? "#B4AAF2" : "gray"}
+            />
+          ),
+        }}
+      /> */}
       <Tab.Screen
         name="profile"
         component={Profile}
