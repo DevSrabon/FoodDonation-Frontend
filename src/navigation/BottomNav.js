@@ -8,10 +8,12 @@ import Home from "../screens/Home";
 import Chat from "../screens/Chat";
 import Profile from "../screens/Profile";
 import DonorNext from "../screens/DonorNext";
+import { userContext } from "../context/Provider";
 
 const Tab = createBottomTabNavigator();
 
 const BottomNav = () => {
+  const { user, signOutUser } = userContext();
   return (
     <Tab.Navigator
       backBehavior="Main"
