@@ -1,44 +1,76 @@
 import React, { useContext, useState } from "react";
-import { StyleSheet, Text, View, TextInput, ScrollView,FlatList } from "react-native";
+import { StyleSheet, Text, View, TextInput, } from "react-native";
 import { Picker } from '@react-native-picker/picker';
-import { useRoute } from '@react-navigation/native';
+
 import CustomButton from "../components/CustomButton";
 import Loading from "../components/Loading";
 import { AuthContext } from "../context/Provider";
 
 const DonateMeal = () => {
-    const route = useRoute();
-    const numbers = route.params.number;
-    const intNumber = parseInt(numbers);
-    const [number, setNumber] = useState('');
+    const { loading, setLoading } =
+        useContext(AuthContext);
+    // const navigation = useNavigation();
 
-    const [selectedNumbers, setSelectedNumbers] = useState([]);
-    const [itemsValues, setItemsValues] = useState("");
     const [selectedOptions, setSelectedOptions] = useState([]);
+    const [number, setNumber] = useState('');
+    const [itemsValues, setItemsValues] = useState("");
+
+    const handleNumberChange = (value) => {
+        // Remove non-numeric characters
+        const formattedValue = value.replace(/[^0-9]/g, '');
+        setNumber(formattedValue);
+    };
+
+    const handleOptionChange = (value) => {
+        setSelectedOptions(value);
+    };
 
     const mealOptions = [
         { id: 1, label: 'Meal Type' },
         { id: 2, label: 'Meal2' },
         { id: 3, label: 'Meal3' },
     ];
+    const quantityTypes = [
 
-    const handleOptionChange = (value) => {
-        setSelectedOptions(value);
+        { id: 2, label: 'Kg' },
+        { id: 3, label: 'L' },
+        { id: 4, label: 'Pcs ' },
+    ];
+    const orderOptions = [
+        { id: 1, label: 'Drop or Pickup' },
+        { id: 2, label: 'Drop' },
+        { id: 3, label: 'Pickup' },
+    ];
+
+
+
+    const onDonateMeal = async () => {
+        console.log("Donate meal screen")
     };
 
-    const renderNumberItem = ({ item }) => (
-        <View style={{ fontWeight: selectedNumbers.includes(item) ? 'bold' : 'normal' }}>
-            <View style={{ flexDirection: 'row', gap: 3 }}>
+    if (loading) {
+        return <Loading />;
+    }
+    return (
+        < >
+            <View style={styles.container}>
+                <Text
+                    style={{ fontFamily: "SemiBold", fontSize: 30, bottom: 20 }}
+                >
+                    Donate
+                </Text>
 
+            <View style={{ flexDirection: 'row', gap: 3 }}>
+                    {/* Item 1 */}
                 <View style={{ width: 150 }}>
                     <Text
                         style={{ fontFamily: "SemiBold", fontSize: 14 }}
                     >
-                        Item {item}
+                            Item 1
                     </Text>
                     <TextInput
                         style={styles.inputText}
-                        placeholder={`Item ${item}`}
+                            placeholder="Item1"
                         value={itemsValues}
                     />
                 </View>
@@ -66,59 +98,50 @@ const DonateMeal = () => {
                             ))}
                         </Picker>
                     </View>
+
                 </View>
             </View>
+                <View style={{ flexDirection: 'row', gap: 3 }}>
+                    {/* Item 2 */}
+                    <View style={{ width: 150 }}>
+                        <Text
+                            style={{ fontFamily: "SemiBold", fontSize: 14 }}
+                        >
+                            Item 2
+                        </Text>
+                        <TextInput
+                            style={styles.inputText}
+                            placeholder="Item2"
+                            value={itemsValues}
+                        />
         </View>
-    );
 
-    const { loading, setLoading } =
-        useContext(AuthContext);
     
+                    {/* Meal options */}
+                    <View style={{
+                        width: 150,
   
-    const handleNumberChange = (value) => {
-        // Remove non-numeric characters
-        const formattedValue = value.replace(/[^0-9]/g, '');
-        setNumber(formattedValue);
-    };
-
-    const quantityTypes = [
-        { id: 2, label: 'Kg' },
-        { id: 3, label: 'L' },
-        { id: 4, label: 'Pcs ' },
-    ];
-    const orderOptions = [
-        { id: 1, label: 'Drop or Pickup' },
-        { id: 2, label: 'Drop' },
-        { id: 3, label: 'Pickup' },
-    ];
-
-
-
-    const onDonateMeal = async () => {
-        console.log("Donate meal screen")
-    };
-
-    if (loading) {
-        return <Loading />;
-    }
-    return (
-        <ScrollView >
-            <View style={styles.container}>
+                    }}>
                 <Text
-                    style={{ fontFamily: "SemiBold", fontSize: 30, bottom: 20 }}
+                            style={{ fontFamily: "SemiBold", fontSize: 14 }}
                 >
-                    Donate
+                            Meal Type
                 </Text>
-               
-                <View>
-                    <FlatList
-                        data={Array.from(Array(intNumber), (_, index) => index + 1)}
-                        renderItem={renderNumberItem}
-                        keyExtractor={(item) => item.toString()}
-                        extraData={selectedNumbers}
-                    />
+                        <View style={styles.inputText}>
+                            <Picker
+                                selectedValue={selectedOptions}
+                                onValueChange={handleOptionChange}
+                                mode="dropdown"
+                                multiple={true}
+                            >
+                                {mealOptions.map((option) => (
+                                    <Picker.Item key={option.id} label={option.label} value={option.id} />
+                                ))}
+                            </Picker>
                 </View>
 
+                    </View>
+                </View>
                 <View style={{ flexDirection: 'row', gap: 3, marginTop: 50, }}>
                     {/* Item 2 */}
                     <View style={{ width: 150 }}>
@@ -127,7 +150,7 @@ const DonateMeal = () => {
                         >
                             Item Quantity
                         </Text>
-                        <View style={{ width: 140 }}>
+                        <View style={{ width: 100 }}>
                             <TextInput
                                 style={styles.inputText}
                                 keyboardType="numeric"
@@ -167,7 +190,7 @@ const DonateMeal = () => {
                 {/* Order */}
                 <View style={{
                     width: 300,
-                    marginTop: 30,
+                    marginTop: 50,
                 }}>
                     <Text
                         style={{ fontFamily: "SemiBold", fontSize: 14 }}
@@ -188,9 +211,11 @@ const DonateMeal = () => {
                     </View>
 
                 </View>
+
                 <CustomButton text="Continue" onPress={onDonateMeal} type="primary" />
+
             </View>
-        </ScrollView>
+        </>
     );
 };
 

@@ -13,9 +13,18 @@ import Intro from "../screens/Intro";
 import Login from "../screens/Login";
 import Otp from "../screens/Otp";
 import RoleSelection from "../screens/RoleSelection";
+
+import Profile from "../screens/Profile";
+// import DonorNext from "../screens/DonorNext";
+import { userContext } from "../context/Provider";
+import AddRestaurant from "../screens/AddRestaurant";
+import DonateMeal from "../screens/DonateMeal";
+import Donate from "../screens/Donate";
+
 import Signup from "../screens/Signup";
 import User from "../screens/User";
 import Transporter from "../screens/Transporter";
+
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -107,6 +116,49 @@ const StackNav = () => {
   }, []);
 
   return (
+
+    <Stack.Navigator
+      initialRouteName={user?.email ? "user" : "initial"}
+      screenOptions={{
+        headerStyle: { backgroundColor: "white" },
+        headerTitleAlign: "center",
+        headerTintColor: "black",
+        // statusBarStyle: "auto",
+
+        headerShadowVisible: false,
+        headerLeft: () => (
+          <Pressable onPress={() => navigation.goBack()}>
+            <Image source={icons.leftArrow} />
+          </Pressable>
+        ),
+      }}
+    >
+      <Stack.Screen name="initial" component={InitialPage}></Stack.Screen>
+      <Stack.Screen name="intro" component={Intro}></Stack.Screen>
+      <Stack.Screen name="login" component={Login}></Stack.Screen>
+      <Stack.Screen name="signup" component={Signup}></Stack.Screen>
+      <Stack.Screen name="otp" component={Otp}></Stack.Screen>
+      <Stack.Screen
+        name="roleSelection"
+        component={RoleSelection}
+      ></Stack.Screen>
+      <Stack.Screen name="donor" component={Donor}></Stack.Screen>
+      <Stack.Screen name="transporter" component={Transporter}></Stack.Screen>
+      <Stack.Screen name="foodNeedier" component={FoodNeedier}></Stack.Screen>
+      <Stack.Screen
+        name="user"
+        component={User}
+        // options={{ headerShown: false }}
+      ></Stack.Screen>
+      <Stack.Screen name="chat" component={Chat}></Stack.Screen>
+      <Stack.Screen name="home" component={Home}></Stack.Screen>
+      <Stack.Screen name="profile" component={Profile}></Stack.Screen>
+      {/* <Stack.Screen name="donornext" component={DonorNext}></Stack.Screen> */}
+      <Stack.Screen name="address" component={AddRestaurant}></Stack.Screen>
+      <Stack.Screen name="DonateMeal" component={DonateMeal}></Stack.Screen>
+      <Stack.Screen name="donate" component={Donate}></Stack.Screen>
+    </Stack.Navigator>
+
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName="initial"
@@ -133,6 +185,7 @@ const StackNav = () => {
         </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
+
   );
 };
 
