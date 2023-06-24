@@ -1,11 +1,15 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useContext, useState } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity, ScrollView } from "react-native";
+// import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+
 import icons from "../../assets/icons";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import Loading from "../components/Loading";
 import { AuthContext } from "../context/Provider";
+// import { ScrollView } from "react-native-web";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 
 const AddRestaurant = () => {

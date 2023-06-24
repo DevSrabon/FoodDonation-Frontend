@@ -1,6 +1,3 @@
-
-
-// import { useNavigation } from "@react-navigation/native";
 import React, { useContext, useState } from "react";
 import { StyleSheet, Text, View, TextInput, } from "react-native";
 import { Picker } from '@react-native-picker/picker';
@@ -63,47 +60,47 @@ const DonateMeal = () => {
                     Donate
                 </Text>
 
-                <View style={{ flexDirection: 'row', gap: 3 }}>
+            <View style={{ flexDirection: 'row', gap: 3 }}>
                     {/* Item 1 */}
-                    <View style={{ width: 150 }}>
-                        <Text
-                            style={{ fontFamily: "SemiBold", fontSize: 14 }}
-                        >
+                <View style={{ width: 150 }}>
+                    <Text
+                        style={{ fontFamily: "SemiBold", fontSize: 14 }}
+                    >
                             Item 1
-                        </Text>
-                        <TextInput
-                            style={styles.inputText}
+                    </Text>
+                    <TextInput
+                        style={styles.inputText}
                             placeholder="Item1"
-                            value={itemsValues}
-                        />
-                    </View>
-
-                    {/* Meal options */}
-
-                    <View style={{
-                        width: 150,
-
-                    }}>
-                        <Text
-                            style={{ fontFamily: "SemiBold", fontSize: 14 }}
-                        >
-                            Meal Type
-                        </Text>
-                        <View style={styles.inputText}>
-                            <Picker
-                                selectedValue={selectedOptions}
-                                onValueChange={handleOptionChange}
-                                mode="dropdown"
-                                multiple={true}
-                            >
-                                {mealOptions.map((option) => (
-                                    <Picker.Item key={option.id} label={option.label} value={option.id} />
-                                ))}
-                            </Picker>
-                        </View>
-
-                    </View>
+                        value={itemsValues}
+                    />
                 </View>
+
+                {/* Meal options */}
+
+                <View style={{
+                    width: 150,
+
+                }}>
+                    <Text
+                        style={{ fontFamily: "SemiBold", fontSize: 14 }}
+                    >
+                        Meal Type
+                    </Text>
+                    <View style={styles.inputText}>
+                        <Picker
+                            selectedValue={selectedOptions}
+                            onValueChange={handleOptionChange}
+                            mode="dropdown"
+                            multiple={true}
+                        >
+                            {mealOptions.map((option) => (
+                                <Picker.Item key={option.id} label={option.label} value={option.id} />
+                            ))}
+                        </Picker>
+                    </View>
+
+                </View>
+            </View>
                 <View style={{ flexDirection: 'row', gap: 3 }}>
                     {/* Item 2 */}
                     <View style={{ width: 150 }}>
@@ -117,19 +114,19 @@ const DonateMeal = () => {
                             placeholder="Item2"
                             value={itemsValues}
                         />
-                    </View>
+        </View>
 
-
+    
                     {/* Meal options */}
                     <View style={{
                         width: 150,
-
+  
                     }}>
-                        <Text
+                <Text
                             style={{ fontFamily: "SemiBold", fontSize: 14 }}
-                        >
+                >
                             Meal Type
-                        </Text>
+                </Text>
                         <View style={styles.inputText}>
                             <Picker
                                 selectedValue={selectedOptions}
@@ -141,7 +138,7 @@ const DonateMeal = () => {
                                     <Picker.Item key={option.id} label={option.label} value={option.id} />
                                 ))}
                             </Picker>
-                        </View>
+                </View>
 
                     </View>
                 </View>
@@ -226,6 +223,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingLeft: 20,
+        paddingTop: 40,
         justifyContent: "center",
         backgroundColor: "white",
 
