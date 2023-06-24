@@ -1,12 +1,27 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
-import React from "react";
-import CustomButton from "../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
+import React, { useState } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
+import CustomButton from "../components/CustomButton";
+import { userContext } from "../context/Provider";
 
 const RoleSelection = () => {
   const navigation = useNavigation();
-  const onRoleSelect = () => {
-    console.warn("continue");
+  const [update, setUpdate] = useState("");
+  const { user } = userContext();
+  const onRoleSelect = async () => {
+    const body = { role: update, email: user?.email };
+    try {
+      const response = await axios.patch(
+        `https://food-donation-backend.vercel.app/api/v1/users/update-role`,
+        body
+      );
+
+      if (response.data.status === "success")
+        return navigation.navigate(response.data.data.role);
+    } catch (error) {
+      console.log("Error updating user:", error);
+    }
   };
   return (
     <View style={styles.container}>
@@ -21,10 +36,7 @@ const RoleSelection = () => {
         </Text>
       </View>
       <View style={styles.boxContainer}>
-        <Pressable
-          style={styles.box}
-          onPress={() => navigation.navigate("donor")}
-        >
+        <Pressable style={styles.box} onPress={() => setUpdate("donor")}>
           <Text
             style={{ fontFamily: "SemiBold", fontSize: 14, color: "#252525" }}
           >
@@ -41,10 +53,7 @@ const RoleSelection = () => {
             Person or an Organization who donates the food
           </Text>
         </Pressable>
-        <Pressable
-          style={styles.box}
-          onPress={() => navigation.navigate("transporter")}
-        >
+        <Pressable style={styles.box} onPress={() => setUpdate("transporter")}>
           <Text
             style={{ fontFamily: "SemiBold", fontSize: 14, color: "#252525" }}
           >
@@ -61,10 +70,7 @@ const RoleSelection = () => {
             Person or an Organization who helps Transporting the food
           </Text>
         </Pressable>
-        <Pressable
-          style={styles.box}
-          onPress={() => navigation.navigate("foodNeedier")}
-        >
+        <Pressable style={styles.box} onPress={() => setUpdate("needy")}>
           <Text
             style={{ fontFamily: "SemiBold", fontSize: 14, color: "#252525" }}
           >

@@ -1,11 +1,12 @@
-import { View, Text, StyleSheet, Image } from "react-native";
-import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import MapView, { Marker } from "react-native-maps";
-import { PROVIDER_GOOGLE } from "react-native-maps";
+import React, { useState } from "react";
+import { Image, StyleSheet, Text, View } from "react-native";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import icons from "../../assets/icons";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { userContext } from "../context/Provider";
+import useFetchData from "../hook/useFetchData";
 import CustomInput from "./CustomInput";
+import Loading from "./Loading";
 
 const origin = { latitude: 11.70484, longitude: 92.715733 };
 const GOOGLE_MAPS_APIKEY = "AIzaSyD7TKiBE0n8EsPH_snI7QjhGFagY0Vq3FQ";
@@ -13,6 +14,12 @@ const GOOGLE_MAPS_APIKEY = "AIzaSyD7TKiBE0n8EsPH_snI7QjhGFagY0Vq3FQ";
 const UserMap = () => {
   const navigation = useNavigation();
   const [serach, setSearch] = useState(0);
+  const { user } = userContext();
+  const { loading, error, data } = useFetchData(`users?email=${user?.email}`);
+
+  if (loading) return <Loading />;
+
+  if (error) return alert(error);
 
   return (
     <View style={styles.mapContainer}>
@@ -38,7 +45,7 @@ const UserMap = () => {
               {" "}
               Wellcome,
             </Text>{" "}
-            Paul
+            {data?.data?.name}
           </Text>
           <Image source={icons.notification} />
         </View>

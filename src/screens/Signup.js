@@ -1,39 +1,45 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useContext, useEffect, useState } from "react";
+import axios from "axios";
+import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import Loading from "../components/Loading";
-import { AuthContext } from "../context/Provider";
-
+import { userContext } from "../context/Provider";
 const Signup = () => {
   const { createUser, updateUser, user, promptAsync, loading, setLoading } =
-    useContext(AuthContext);
+    userContext();
   const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
-  useEffect(() => {
-    if (user?.email) {
-      navigation.navigate("otp");
-    }
-  }, [user, navigation]);
 
   const onSignup = async () => {
     const userName = { displayName: firstName + " " + lastName };
     try {
       await createUser(email, password);
       await updateUser(userName);
+      const res = await axios.post(
+        "https://food-donation-backend.vercel.app/api/v1/users",
+        {
+          name: userName.displayName,
+          email,
+          phone: phoneNumber,
+        }
+      );
       await setLoading(false);
+      if (res.status === 201) return navigation.navigate("login");
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
         alert("Email is already in use");
         setLoading(false);
       } else {
-        console.log("Error:", error);
+        alert("Error:", error);
+        setLoading(false);
       }
+      setLoading(false);
     }
   };
   const onLogin = () => {

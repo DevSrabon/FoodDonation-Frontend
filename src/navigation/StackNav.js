@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import icons from "../../assets/icons";
 import { Pressable, Image } from "react-native";
@@ -16,16 +16,26 @@ import Chat from "../screens/Chat";
 import Home from "../screens/Home";
 import RoleSelection from "../screens/RoleSelection";
 import Profile from "../screens/Profile";
-import DonorNext from "../screens/DonorNext";
+// import DonorNext from "../screens/DonorNext";
+import { userContext } from "../context/Provider";
+import AddRestaurant from "../screens/AddRestaurant";
+import DonateMeal from "../screens/DonateMeal";
+import Donate from "../screens/Donate";
 
 const Stack = createNativeStackNavigator();
 
 const StackNav = () => {
   const navigation = useNavigation();
+  const { user, signOutUser } = userContext();
+
+  // SignOut While reload. ** We will remove it later.
+  useEffect(() => {
+    if (user?.email) return signOutUser;
+  }, []);
 
   return (
     <Stack.Navigator
-      initialRouteName="user"
+      initialRouteName={user?.email ? "user" : "initial"}
       screenOptions={{
         headerStyle: { backgroundColor: "white" },
         headerTitleAlign: "center",
@@ -60,7 +70,10 @@ const StackNav = () => {
       <Stack.Screen name="chat" component={Chat}></Stack.Screen>
       <Stack.Screen name="home" component={Home}></Stack.Screen>
       <Stack.Screen name="profile" component={Profile}></Stack.Screen>
-      <Stack.Screen name="donornext" component={DonorNext}></Stack.Screen>
+      {/* <Stack.Screen name="donornext" component={DonorNext}></Stack.Screen> */}
+      <Stack.Screen name="address" component={AddRestaurant}></Stack.Screen>
+      <Stack.Screen name="DonateMeal" component={DonateMeal}></Stack.Screen>
+      <Stack.Screen name="donate" component={Donate}></Stack.Screen>
     </Stack.Navigator>
   );
 };
