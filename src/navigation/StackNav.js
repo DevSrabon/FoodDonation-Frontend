@@ -16,10 +16,11 @@ import Chat from "../screens/Chat";
 import Home from "../screens/Home";
 import RoleSelection from "../screens/RoleSelection";
 import Profile from "../screens/Profile";
-import DonorNext from "../screens/DonorNext";
+// import DonorNext from "../screens/DonorNext";
 import { userContext } from "../context/Provider";
-import AddressPickup from "../components/AddressPickup";
 import AddRestaurant from "../screens/AddRestaurant";
+import DonateMeal from "../screens/DonateMeal";
+import Donate from "../screens/Donate";
 
 const Stack = createNativeStackNavigator();
 
@@ -69,8 +70,10 @@ const StackNav = () => {
       <Stack.Screen name="chat" component={Chat}></Stack.Screen>
       <Stack.Screen name="home" component={Home}></Stack.Screen>
       <Stack.Screen name="profile" component={Profile}></Stack.Screen>
-      <Stack.Screen name="donornext" component={DonorNext}></Stack.Screen>
+      {/* <Stack.Screen name="donornext" component={DonorNext}></Stack.Screen> */}
       <Stack.Screen name="address" component={AddRestaurant}></Stack.Screen>
+      <Stack.Screen name="DonateMeal" component={DonateMeal}></Stack.Screen>
+      <Stack.Screen name="donate" component={Donate}></Stack.Screen>
     </Stack.Navigator>
   );
 };
