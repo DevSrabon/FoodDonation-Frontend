@@ -9,6 +9,8 @@ import notification from "./notification.png";
 import settings from "./settings.png";
 import leftArrow from "./leftArrow.png";
 import profile from "./profile.png";
+import fixedHeight from "./fixedHeight.png";
+
 
 export default {
   InitialBtn,
@@ -22,4 +24,5 @@ export default {
   settings,
   leftArrow,
   profile,
+  fixedHeight
 };
