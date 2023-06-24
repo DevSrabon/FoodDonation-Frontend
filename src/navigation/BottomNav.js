@@ -1,19 +1,15 @@
-import React from "react";
+import { Feather, Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Feather } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
-import StackNav from "./StackNav";
+import React from "react";
 import Home from "../screens/Home";
 // import Donate from "../screens/Donate";
 import Chat from "../screens/Chat";
-import Profile from "../screens/Profile";
-import DonorNext from "../screens/DonorNext";
-import { userContext } from "../context/Provider";
+import Donor from "../screens/Donor";
+import User from "../screens/User";
 
 const Tab = createBottomTabNavigator();
 
 const BottomNav = () => {
-  const { user, signOutUser } = userContext();
   return (
     <Tab.Navigator
       backBehavior="Main"
@@ -31,15 +27,13 @@ const BottomNav = () => {
           backgroundColor: "white",
           height: 70,
         },
-
         headerShown: false,
       }}
     >
       <Tab.Screen
         name="Main"
-        component={StackNav}
+        component={User}
         options={{
-          // headerShown: true,
           title: "",
           tabBarIcon: ({ focused, color }) => (
             <Feather
@@ -63,22 +57,9 @@ const BottomNav = () => {
           ),
         }}
       />
-      {/* <Tab.Screen
-        name="home"
-        component={AddRestaurant}
-        options={{
-          tabBarIcon: ({ focused, color }) => (
-            <Feather
-              name="home"
-              size={32}
-              color={focused ? "#B4AAF2" : "gray"}
-            />
-          ),
-        }}
-      /> */}
       <Tab.Screen
         name="donornext"
-        component={DonorNext}
+        component={Donor}
         options={{
           title: "",
           tabBarIcon: ({ focused, color }) => (
