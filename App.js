@@ -1,8 +1,7 @@
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useFonts } from "expo-font";
 import AuthProvider from "./src/context/Provider";
-import BottomNav from "./src/navigation/BottomNav";
-import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import StackNav from "./src/navigation/StackNav";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -19,14 +18,7 @@ export default function App() {
 
   return (
     <AuthProvider>
-      <NavigationContainer>
-        <Stack.Navigator
-          initialRouteName="user"
-          screenOptions={{ headerShown: false }}
-        >
-          <Stack.Screen name="Bottom" component={BottomNav}></Stack.Screen>
-        </Stack.Navigator>
-      </NavigationContainer>
+      <StackNav />
     </AuthProvider>
   );
 }
