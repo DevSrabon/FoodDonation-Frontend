@@ -7,11 +7,13 @@ import Home from "../screens/Home";
 // import Donate from "../screens/Donate";
 import Chat from "../screens/Chat";
 import Profile from "../screens/Profile";
-import AddRestaurant from "../screens/AddRestaurant";
+import DonorNext from "../screens/DonorNext";
+import { userContext } from "../context/Provider";
 
 const Tab = createBottomTabNavigator();
 
 const BottomNav = () => {
+  const { user, signOutUser } = userContext();
   return (
     <Tab.Navigator
       backBehavior="Main"
@@ -75,8 +77,8 @@ const BottomNav = () => {
         }}
       /> */}
       <Tab.Screen
-        name="profile"
-        component={Profile}
+        name="donornext"
+        component={DonorNext}
         options={{
           title: "",
           tabBarIcon: ({ focused, color }) => (

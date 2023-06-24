@@ -1,10 +1,11 @@
-import { View, Text, Pressable, StyleSheet, Image } from "react-native";
-import React from "react";
-import icons from "../../assets/icons";
 import { useNavigation } from "@react-navigation/native";
+import React from "react";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import icons from "../../assets/icons";
 
 const InitialPage = () => {
   const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}> Food Donation. </Text>
