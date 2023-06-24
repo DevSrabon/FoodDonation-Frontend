@@ -11,12 +11,13 @@ const FoodNeedier = () => {
   const { loading, error, updateUserRole } = useUpdateUser();
 
   const onRoleSelect = async () => {
-    if (error) return alert(error);
-
     updateUserRole(update, user?.email, "user");
   };
 
+  if (error) return alert(error);
+
   if (loading) return <Loading />;
+
   return (
     <View style={styles.container}>
       <View style={styles.subContainer}>

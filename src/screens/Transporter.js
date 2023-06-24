@@ -5,16 +5,16 @@ import Loading from "../components/Loading";
 import { userContext } from "../context/Provider";
 import useUpdateUser from "../hook/useUpdateSubRoleUser";
 
-const Transporter = async () => {
+const Transporter = () => {
   const [update, setUpdate] = useState("");
   const { user } = userContext();
   const { loading, error, updateUserRole } = useUpdateUser();
 
   const onRoleSelect = async () => {
-    if (error) return alert(error);
-
     updateUserRole(update, user?.email, "user");
   };
+
+  if (error) return alert(error);
 
   if (loading) return <Loading />;
 
