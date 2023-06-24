@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import icons from "../../assets/icons";
 import { Pressable, Image } from "react-native";
@@ -16,18 +16,23 @@ import Chat from "../screens/Chat";
 import Home from "../screens/Home";
 import RoleSelection from "../screens/RoleSelection";
 import Profile from "../screens/Profile";
-import AddRestaurant from "../screens/AddRestaurant";
-import Donate from "../screens/Donate";
-import DonateMeal from "../screens/DonateMeal";
+import DonorNext from "../screens/DonorNext";
+import { userContext } from "../context/Provider";
 
 const Stack = createNativeStackNavigator();
 
 const StackNav = () => {
   const navigation = useNavigation();
+  const { user, signOutUser } = userContext();
+
+  // SignOut While reload. ** We will remove it later.
+  useEffect(() => {
+    if (user?.email) return signOutUser;
+  }, []);
 
   return (
     <Stack.Navigator
-      initialRouteName="user"
+      initialRouteName={user?.email ? "user" : "initial"}
       screenOptions={{
         headerStyle: { backgroundColor: "white" },
         headerTitleAlign: "center",
@@ -57,18 +62,12 @@ const StackNav = () => {
       <Stack.Screen
         name="user"
         component={User}
-      // options={{ headerShown: false }}
+        // options={{ headerShown: false }}
       ></Stack.Screen>
       <Stack.Screen name="chat" component={Chat}></Stack.Screen>
       <Stack.Screen name="home" component={Home}></Stack.Screen>
-      <Stack.Screen name="AddRestaurant" component={AddRestaurant}></Stack.Screen>
-      <Stack.Screen name="Donate" component={Donate}></Stack.Screen>
-      <Stack.Screen name="DonateMeal" component={DonateMeal}></Stack.Screen>
-      <Stack.Screen
-        name="profile"
-        component={Profile}
-      // options={{ headerTitle: "" }}
-      ></Stack.Screen>
+      <Stack.Screen name="profile" component={Profile}></Stack.Screen>
+      <Stack.Screen name="donornext" component={DonorNext}></Stack.Screen>
     </Stack.Navigator>
   );
 };
