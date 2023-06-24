@@ -13,7 +13,7 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import app from "../firebase/firebase.config";
 WebBrowser.maybeCompleteAuthSession();
 export const AuthContext = createContext();
@@ -133,3 +133,8 @@ const AuthProvider = ({ children }) => {
 };
 
 export default AuthProvider;
+
+export const userContext = () => {
+  const context = useContext(AuthContext);
+  return context;
+};

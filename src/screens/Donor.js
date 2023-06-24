@@ -1,13 +1,23 @@
-import { View, Text, StyleSheet, Pressable } from "react-native";
-import React from "react";
+import React, { useState } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import CustomButton from "../components/CustomButton";
-import { useNavigation } from "@react-navigation/native";
+import Loading from "../components/Loading";
+import { userContext } from "../context/Provider";
+import useUpdateUser from "../hook/useUpdateSubRoleUser";
 
 const Donor = () => {
-  const navigation = useNavigation();
-  const onRoleSelect = () => {
-    console.warn("continue");
+  const [update, setUpdate] = useState("");
+
+  const { user } = userContext();
+  const { loading, error, updateUserRole } = useUpdateUser();
+
+  const onRoleSelect = async () => {
+    updateUserRole(update, user?.email, "user");
   };
+
+  if (error) return alert(error);
+
+  if (loading) return <Loading />;
   return (
     <View style={styles.container}>
       <View style={styles.subContainer}>
@@ -23,7 +33,7 @@ const Donor = () => {
       <View style={styles.boxContainer}>
         <Pressable
           style={styles.box}
-          onPress={() => navigation.navigate("donor")}
+          onPress={() => setUpdate("Restaurant Owner")}
         >
           <Text
             style={{ fontFamily: "SemiBold", fontSize: 14, color: "#252525" }}
@@ -43,7 +53,7 @@ const Donor = () => {
         </Pressable>
         <Pressable
           style={styles.box}
-          onPress={() => navigation.navigate("transporter")}
+          onPress={() => setUpdate("Catering Services")}
         >
           <Text
             style={{ fontFamily: "SemiBold", fontSize: 14, color: "#252525" }}
@@ -63,7 +73,7 @@ const Donor = () => {
         </Pressable>
         <Pressable
           style={styles.box}
-          onPress={() => navigation.navigate("donor")}
+          onPress={() => setUpdate("Grocery Store")}
         >
           <Text
             style={{ fontFamily: "SemiBold", fontSize: 14, color: "#252525" }}
@@ -78,12 +88,12 @@ const Donor = () => {
               paddingVertical: 8,
             }}
           >
-            Person or an Organization who needs the food
+            Grocery Store
           </Text>
         </Pressable>
         <Pressable
           style={styles.box}
-          onPress={() => navigation.navigate("donor")}
+          onPress={() => setUpdate("Normal People")}
         >
           <Text
             style={{ fontFamily: "SemiBold", fontSize: 14, color: "#252525" }}
