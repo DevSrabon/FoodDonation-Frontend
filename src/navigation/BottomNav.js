@@ -9,6 +9,8 @@ import Chat from "../screens/Chat";
 import Profile from "../screens/Profile";
 import DonorNext from "../screens/DonorNext";
 import { userContext } from "../context/Provider";
+import AddressPickup from "../components/AddressPickup";
+import AddRestaurant from "../screens/AddRestaurant";
 
 const Tab = createBottomTabNavigator();
 
@@ -77,8 +79,8 @@ const BottomNav = () => {
         }}
       /> */}
       <Tab.Screen
-        name="donornext"
-        component={DonorNext}
+        name="address"
+        component={AddRestaurant}
         options={{
           title: "",
           tabBarIcon: ({ focused, color }) => (

@@ -18,6 +18,8 @@ import RoleSelection from "../screens/RoleSelection";
 import Profile from "../screens/Profile";
 import DonorNext from "../screens/DonorNext";
 import { userContext } from "../context/Provider";
+import AddressPickup from "../components/AddressPickup";
+import AddRestaurant from "../screens/AddRestaurant";
 
 const Stack = createNativeStackNavigator();
 
@@ -68,6 +70,7 @@ const StackNav = () => {
       <Stack.Screen name="home" component={Home}></Stack.Screen>
       <Stack.Screen name="profile" component={Profile}></Stack.Screen>
       <Stack.Screen name="donornext" component={DonorNext}></Stack.Screen>
+      <Stack.Screen name="address" component={AddRestaurant}></Stack.Screen>
     </Stack.Navigator>
   );
 };
