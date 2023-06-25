@@ -10,7 +10,7 @@ import CustomInput from "../components/CustomInput";
 import Loading from "../components/Loading";
 import { userContext } from "../context/Provider";
 import { AuthContext } from "../context/Provider";
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+
 import Container from "../components/container";
 
 const AddRestaurant = () => {

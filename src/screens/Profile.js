@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import React, { useState } from "react";
 import {
@@ -10,7 +9,7 @@ import {
   Text,
   View,
 } from "react-native";
-import { launchImageLibrary } from "react-native-image-picker";
+
 import CustomButton from "../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
 import { launchImageLibrary } from "react-native-image-picker";
@@ -19,7 +18,6 @@ import CustomInput from "../components/CustomInput";
 import Loading from "../components/Loading";
 import { userContext } from "../context/Provider";
 
-const SERVER_URL = "http://localhost:3000";
 const SERVER_URL = "http://localhost:3000";
 
 const Profile = () => {
@@ -32,7 +30,6 @@ const Profile = () => {
   const createFormData = (photo, body = {}) => {
     const data = new FormData();
 
-    data.append("photo", {
     data.append("photo", {
       name: photo.fileName,
       type: photo.type,
@@ -112,7 +109,6 @@ const Profile = () => {
           }}
         >
           <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-          <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
             Profile Picture
           </Text>
           <View style={{ alignSelf: "center", height: 200 }}>
@@ -123,60 +119,61 @@ const Profile = () => {
                 justifyContent: "center",
               }}
             >
-            <View
-              style={{
-                flex: 1,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              {photo && (
-                <>
-                  <Image
-                    source={{ uri: photo.uri }}
-                    style={{ width: 300, height: 300 }}
-                  />
-                  <Button title="Upload Photo" onPress={handleUploadPhoto} />
-                </>
-              )}
-              <Button title="Choose Photo" onPress={handleChoosePhoto} />
+              <View
+                style={{
+                  flex: 1,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                {photo && (
+                  <>
+                    <Image
+                      source={{ uri: photo.uri }}
+                      style={{ width: 300, height: 300 }}
+                    />
+                    <Button title="Upload Photo" onPress={handleUploadPhoto} />
+                  </>
+                )}
+                <Button title="Choose Photo" onPress={handleChoosePhoto} />
+              </View>
+              {/* <Image source={icons.profile} /> */}
             </View>
-            {/* <Image source={icons.profile} /> */}
           </View>
-        </View>
-        <View
-          style={{
-            flex: 1,
-            alignItems: "center",
-            justifyContent: "center",
-            width: "100%",
-            bottom: 100,
-          }}
-        >
-          <Text
-            style={{ fontFamily: "SemiBold", fontSize: 14, marginRight: 330 }}
+          <View
+            style={{
+              flex: 1,
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+              bottom: 100,
+            }}
           >
-            Bio
-          </Text>
+            <Text
+              style={{ fontFamily: "SemiBold", fontSize: 14, marginRight: 330 }}
+            >
+              Bio
+            </Text>
 
-          <CustomInput
-            placeholder="About Yourself"
-            value={bio}
-            setValue={setBio}
-            multiline={true}
-            numberOfLines={10}
-          />
-        </View>
-        <View
-          style={{
-            flex: 1,
-            alignItems: "center",
-            justifyContent: "center",
-            width: "100%",
-            bottom: 120,
-          }}
-        >
-          <CustomButton text="Done" onPress={onBioSetup} type="primary" />
+            <CustomInput
+              placeholder="About Yourself"
+              value={bio}
+              setValue={setBio}
+              multiline={true}
+              numberOfLines={10}
+            />
+          </View>
+          <View
+            style={{
+              flex: 1,
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+              bottom: 120,
+            }}
+          >
+            <CustomButton text="Done" onPress={onBioSetup} type="primary" />
+          </View>
         </View>
       </Container>
     </ScrollView>
