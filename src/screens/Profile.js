@@ -65,6 +65,7 @@ const Profile = () => {
   };
 
   const onBioSetup = async () => {
+    if (!bio) return alert("Please fill up your bio");
     const body = { bio, email: user?.email };
     try {
       const result = await axios.patch(
