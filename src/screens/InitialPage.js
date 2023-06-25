@@ -2,12 +2,13 @@ import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import icons from "../../assets/icons";
+import InitContainer from "../components/initContainer";
 
 const InitialPage = () => {
   const navigation = useNavigation();
 
   return (
-    <View style={styles.container}>
+    <InitContainer>
       <Text style={styles.header}> Food Donation. </Text>
 
       <View style={{ paddingRight: 45, paddingLeft: 30 }}>
@@ -20,19 +21,11 @@ const InitialPage = () => {
           <Image source={icons.InitialBtn} style={styles.icon} />
         </Pressable>
       </View>
-    </View>
+    </InitContainer>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#B4AAF2",
-    // marginTop: StatusBar.currentHeight,
-  },
   header: {
     position: "absolute",
     fontFamily: "Bold",

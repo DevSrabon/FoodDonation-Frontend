@@ -15,6 +15,7 @@ import CustomInput from "../components/CustomInput";
 import Loading from "../components/Loading";
 import { AuthContext } from "../context/Provider";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import Container from "../components/container";
 
 const AddRestaurant = () => {
   const { loading, setLoading } = useContext(AuthContext);
@@ -53,7 +54,7 @@ const AddRestaurant = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <Container>
       {/* <Button
                 title="Back"
                 onPress={() => {
@@ -115,7 +116,7 @@ const AddRestaurant = () => {
       </View>
 
       {/* FSSAI License */}
-      {/* <View>
+      <View>
         <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
           FSSAI License
         </Text>
@@ -125,10 +126,10 @@ const AddRestaurant = () => {
           value={FSSAILicense}
           setValue={setFSSAILicense}
         />
-      </View> */}
+      </View>
 
       {/* PAN number */}
-      {/* <View>
+      <View>
         <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>PAN number</Text>
         <CustomInput
           placeholder="PAN Number"
@@ -136,22 +137,14 @@ const AddRestaurant = () => {
           setValue={setPanNumber}
           secureTextEntry={true}
         />
-      </View> */}
+      </View>
 
       <CustomButton text="Continue" onPress={onAddRestaurant} type="primary" />
-    </View>
+    </Container>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingLeft: 20,
-    // alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "white",
-  },
-
   stretch: {
     width: 60,
     height: 60,
