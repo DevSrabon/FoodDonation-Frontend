@@ -29,7 +29,8 @@ const Login = () => {
         console.log(err);
         alert(err);
         setLoading(false);
-      });
+      })
+      .finally(setLoading(false));
   };
 
   const onForgotPasswordPressed = () => {

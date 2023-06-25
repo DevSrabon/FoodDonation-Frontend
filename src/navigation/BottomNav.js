@@ -31,7 +31,7 @@ const BottomNav = () => {
       }}
     >
       <Tab.Screen
-        name="Main"
+        name="user"
         component={User}
         options={{
           title: "",

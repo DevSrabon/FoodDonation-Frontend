@@ -18,15 +18,24 @@ const AddRestaurant = () => {
   const navigation = useNavigation();
 
   const [restaurantName, setRestaurantName] = useState("");
-  const [location, setLocation] = useState("");
+  const [location, setLocation] = useState({ latitude: "", longitude: "" });
+
   const [fssaiLicense, setFSSAILicense] = useState("");
   const [panNumber, setPanNumber] = useState("");
   // const { loading, error, updateUserRole } = useUpdateUser();
   const { user, loading, setLoading } = userContext();
   const onAddRestaurant = async () => {
+    if (
+      !restaurantName ||
+      !location?.latitude ||
+      !location?.longitude ||
+      !fssaiLicense ||
+      !panNumber
+    )
+      return alert("Please fill-up all the information");
     const body = {
       restaurantName,
-      location,
+      location: location,
       fssaiLicense,
       panNumber,
       email: user?.email,
@@ -54,11 +63,10 @@ const AddRestaurant = () => {
   }
 
   const onPressAddress = (data, details) => {
-    const lat = details.geometry.location.lat;
-    const lng = details.geometry.location.lng;
+    const latitude = details.geometry.location.lat;
+    const longitude = details.geometry.location.lng;
 
-    console.log("Latitude:", lat);
-    console.log("Longitude:", lng);
+    setLocation((prev) => ({ ...prev, latitude, longitude }));
   };
 
   return (
