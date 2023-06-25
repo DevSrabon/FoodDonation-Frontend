@@ -8,6 +8,7 @@ import CustomInput from "../components/CustomInput";
 import Loading from "../components/Loading";
 import { AuthContext } from "../context/Provider";
 import useToken from "../hook/useToken";
+import Container from "../components/container";
 
 const Login = () => {
   const { signIn, promptAsync, user, request, loading, setLoading } =
@@ -57,7 +58,7 @@ const Login = () => {
     return <Loading />;
   }
   return (
-    <View style={styles.container}>
+    <Container>
       <Text
         style={{ fontFamily: "SemiBold", fontSize: 28, bottom: 20, right: 145 }}
       >
@@ -150,17 +151,11 @@ const Login = () => {
           <CustomButton text="Signup" onPress={onSignup} type="tertiary" />
         </Text>
       </View>
-    </View>
+    </Container>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "white",
-  },
   subContainer: {
     flexDirection: "row",
 

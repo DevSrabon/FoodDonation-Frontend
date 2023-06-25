@@ -9,6 +9,9 @@ import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import Loading from "../components/Loading";
 import { userContext } from "../context/Provider";
+import { AuthContext } from "../context/Provider";
+
+import Container from "../components/container";
 
 const AddRestaurant = () => {
   // const { loading, setLoading } = useContext(AuthContext);
@@ -67,7 +70,7 @@ const AddRestaurant = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <Container>
       {/* <Button
                 title="Back"
                 onPress={() => {
@@ -153,19 +156,11 @@ const AddRestaurant = () => {
       </View>
 
       <CustomButton text="Continue" onPress={onAddRestaurant} type="primary" />
-    </View>
+    </Container>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingLeft: 20,
-    // alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "white",
-  },
-
   stretch: {
     width: 60,
     height: 60,

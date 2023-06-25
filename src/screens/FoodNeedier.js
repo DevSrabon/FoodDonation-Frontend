@@ -4,6 +4,7 @@ import CustomButton from "../components/CustomButton";
 import Loading from "../components/Loading";
 import useUpdateUser from "../hook/useUpdateSubRoleUser";
 import { userContext } from "../context/Provider";
+import Container from "../components/container";
 
 const FoodNeedier = () => {
   const [update, setUpdate] = useState("");
@@ -19,7 +20,7 @@ const FoodNeedier = () => {
   if (loading) return <Loading />;
 
   return (
-    <View style={styles.container}>
+    <Container>
       <View style={styles.subContainer}>
         <Text
           style={{ fontFamily: "SemiBold", fontSize: 20, color: "#B4AAF2" }}
@@ -109,16 +110,11 @@ const FoodNeedier = () => {
       <View style={{ alignItems: "center", marginTop: 30 }}>
         <CustomButton text="Continue" onPress={onRoleSelect} type="primary" />
       </View>
-    </View>
+    </Container>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    backgroundColor: "white",
-  },
   subContainer: {
     alignItems: "flex-start",
     paddingLeft: 20,
