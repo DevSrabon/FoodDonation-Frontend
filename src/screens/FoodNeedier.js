@@ -11,7 +11,7 @@ const FoodNeedier = () => {
   const { loading, error, updateUserRole } = useUpdateUser();
 
   const onRoleSelect = async () => {
-    updateUserRole(update, user?.email, "user");
+    updateUserRole(update, user?.email, "addRestaurent");
   };
 
   if (error) return alert(error);

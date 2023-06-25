@@ -1,42 +1,48 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
+import axios from "axios";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import icons from "../../assets/icons";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import Loading from "../components/Loading";
-import { AuthContext } from "../context/Provider";
-import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import { userContext } from "../context/Provider";
 
 const AddRestaurant = () => {
-  const { loading, setLoading } = useContext(AuthContext);
+  // const { loading, setLoading } = useContext(AuthContext);
   const navigation = useNavigation();
 
-  const [RestaurantName, setRestaurantName] = useState("");
-  const [Location, setLocation] = useState("");
-  const [FSSAILicense, setFSSAILicense] = useState("");
-  const [PanNumber, setPanNumber] = useState("");
-
+  const [restaurantName, setRestaurantName] = useState("");
+  const [location, setLocation] = useState("");
+  const [fssaiLicense, setFSSAILicense] = useState("");
+  const [panNumber, setPanNumber] = useState("");
+  // const { loading, error, updateUserRole } = useUpdateUser();
+  const { user, loading, setLoading } = userContext();
   const onAddRestaurant = async () => {
-    navigation.navigate("DonateMeal");
-    const RestaurantName = { displayName: RestaurantName };
+    const body = {
+      restaurantName,
+      location,
+      fssaiLicense,
+      panNumber,
+      email: user?.email,
+    };
     try {
-      await setLoading(false);
+      const result = await axios.patch(
+        "https://food-donation-backend.vercel.app/api/v1/users/update-role",
+        body
+      );
+      if (result.data.status === "success")
+        return navigation.navigate("profile");
     } catch (error) {
       if (error.code === "This-restaurant-already-in-use") {
         alert("The Restaurant is already in use");
-        setLoading(false);
       } else {
         console.log("Error:", error);
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -68,7 +74,7 @@ const AddRestaurant = () => {
       </Text>
       <CustomInput
         placeholder="Restaurant Name"
-        value={RestaurantName}
+        value={restaurantName}
         setValue={setRestaurantName}
       />
       {/* Image add part */}
@@ -115,28 +121,28 @@ const AddRestaurant = () => {
       </View>
 
       {/* FSSAI License */}
-      {/* <View>
+      <View>
         <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
           FSSAI License
         </Text>
 
         <CustomInput
           placeholder="FSSAI License"
-          value={FSSAILicense}
+          value={fssaiLicense}
           setValue={setFSSAILicense}
         />
-      </View> */}
+      </View>
 
       {/* PAN number */}
-      {/* <View>
+      <View>
         <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>PAN number</Text>
         <CustomInput
           placeholder="PAN Number"
-          value={PanNumber}
+          value={panNumber}
           setValue={setPanNumber}
           secureTextEntry={true}
         />
-      </View> */}
+      </View>
 
       <CustomButton text="Continue" onPress={onAddRestaurant} type="primary" />
     </View>

@@ -1,25 +1,37 @@
-import { View, Text, StyleSheet, ScrollView, Image, Button, Platform } from "react-native";
-import React, { useState } from "react";
-import icons from "../../assets/icons";
-import CustomInput from "../components/CustomInput";
-import CustomButton from "../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
-import { launchImageLibrary } from 'react-native-image-picker';
+import axios from "axios";
+import React, { useState } from "react";
+import {
+  Button,
+  Image,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
+import { launchImageLibrary } from "react-native-image-picker";
+import CustomButton from "../components/CustomButton";
+import CustomInput from "../components/CustomInput";
+import Loading from "../components/Loading";
+import { userContext } from "../context/Provider";
 
-const SERVER_URL = 'http://localhost:3000';
+const SERVER_URL = "http://localhost:3000";
 
 const Profile = () => {
+  const [bio, setBio] = useState("");
   const navigation = useNavigation();
+  const { user, loading, setLoading } = userContext();
 
   const [photo, setPhoto] = useState(null);
 
   const createFormData = (photo, body = {}) => {
     const data = new FormData();
 
-    data.append('photo', {
+    data.append("photo", {
       name: photo.fileName,
       type: photo.type,
-      uri: Platform.OS === 'ios' ? photo.uri.replace('file://', '') : photo.uri,
+      uri: Platform.OS === "ios" ? photo.uri.replace("file://", "") : photo.uri,
     });
 
     Object.keys(body).forEach((key) => {
@@ -40,25 +52,39 @@ const Profile = () => {
 
   const handleUploadPhoto = () => {
     fetch(`${SERVER_URL}/api/upload`, {
-      method: 'POST',
-      body: createFormData(photo, { userId: '123' }),
+      method: "POST",
+      body: createFormData(photo, { userId: "123" }),
     })
       .then((response) => response.json())
       .then((response) => {
-        console.log('response', response);
+        console.log("response", response);
       })
       .catch((error) => {
-        console.log('error', error);
+        console.log("error", error);
       });
   };
 
-
-
-  const onBioSetup = () => {
-    console.warn("continue");
+  const onBioSetup = async () => {
+    const body = { bio, email: user?.email };
+    try {
+      const result = await axios.patch(
+        "https://food-donation-backend.vercel.app/api/v1/users/update-role",
+        body
+      );
+      if (result.data.status === "success") return navigation.navigate("user");
+    } catch (error) {
+      if (error.code === "This-restaurant-already-in-use") {
+        alert("The Restaurant is already in use");
+      } else {
+        console.log("Error:", error);
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const [bio, setBio] = useState();
+  if (loading) return <Loading />;
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -75,13 +101,17 @@ const Profile = () => {
             marginTop: 50,
           }}
         >
-          <Text
-            style={{ fontFamily: "SemiBold", fontSize: 14 }}
-          >
+          <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
             Profile Picture
           </Text>
           <View style={{ alignSelf: "center", height: 200 }}>
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+            <View
+              style={{
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
               {photo && (
                 <>
                   <Image
@@ -92,7 +122,6 @@ const Profile = () => {
                 </>
               )}
               <Button title="Choose Photo" onPress={handleChoosePhoto} />
-
             </View>
             {/* <Image source={icons.profile} /> */}
           </View>
@@ -133,7 +162,6 @@ const Profile = () => {
         </View>
       </View>
     </ScrollView>
-
   );
 };
 
