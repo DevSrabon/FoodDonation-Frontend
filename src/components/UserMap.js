@@ -17,6 +17,7 @@ const UserMap = () => {
   const { user } = userContext();
   const { loading, error, data } = useFetchData(`users?email=${user?.email}`);
 
+  console.log("🚀 ~ file: UserMap.js:20 ~ UserMap ~ data:", data);
   if (loading) return <Loading />;
 
   if (error) return alert(error);
@@ -70,18 +71,16 @@ const UserMap = () => {
         provider={PROVIDER_GOOGLE}
         style={styles.map}
         initialRegion={{
-          latitude: 11.70484,
-          longitude: 92.715733,
+          ...data?.data?.location,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
       >
         <Marker
-          title="user"
-          description="this is user info"
+          title={data?.data?.restaurantName}
+          description={data?.data?.bio}
           coordinate={{
-            latitude: 11.70484,
-            longitude: 92.715733,
+            ...data?.data?.location,
           }}
         />
       </MapView>
