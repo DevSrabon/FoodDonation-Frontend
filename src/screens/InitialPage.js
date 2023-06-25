@@ -1,11 +1,27 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useEffect } from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import icons from "../../assets/icons";
+import { userContext } from "../context/Provider";
 
 const InitialPage = () => {
   const navigation = useNavigation();
+  const { user, signOutUser } = userContext();
+  useEffect(() => {
+    if (user?.email) {
+      signOutUser;
+      AsyncStorage.removeItem("jwtToken");
+    }
+    // checkAuthStatus();
+  }, []);
 
+  const checkAuthStatus = async () => {
+    const storedToken = await AsyncStorage.getItem("jwtToken");
+    if (storedToken) {
+      navigation.navigate("login");
+    }
+  };
   return (
     <View style={styles.container}>
       <Text style={styles.header}> Food Donation. </Text>

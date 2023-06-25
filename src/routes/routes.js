@@ -1,6 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React, { useEffect } from "react";
+import React from "react";
 import { userContext } from "../context/Provider";
 import BottomNav from "../navigation/BottomNav";
 import Chat from "../screens/Chat";
@@ -21,9 +21,9 @@ export default function Routes() {
   const { user, signOutUser } = userContext();
 
   // SignOut While reload. ** We will remove it later.
-  useEffect(() => {
-    if (user?.email) return signOutUser;
-  }, []);
+  // useEffect(() => {
+  //   if (user?.email) return signOutUser;
+  // }, []);
 
   return (
     <NavigationContainer>

@@ -22,6 +22,7 @@ const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  // console.log("🚀 ~ file: Provider.js:25 ~ AuthProvider ~ user:", user);
   const [loading, setLoading] = useState(true);
   const googleProvider = new GoogleAuthProvider();
 
@@ -45,7 +46,7 @@ const AuthProvider = ({ children }) => {
 
   async function handleEffect() {
     const user = await getLocalUser();
-    console.log("user", user);
+    // console.log("user", user);
     if (!user) {
       if (response?.type === "success") {
         setToken(response.authentication.accessToken);

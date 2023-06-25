@@ -1,17 +1,31 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
 import { useEffect, useState } from "react";
-import { AsyncStorage } from "react-native";
+import { userContext } from "../context/Provider";
 const useToken = (email) => {
+  const { setLoading } = userContext();
   const [token, setToken] = useState("");
   useEffect(() => {
     if (email) {
-      fetch(`${process.env.URL}/?email=${email}`)
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.accessToken) {
-            AsyncStorage.setItem("token", data.accessToken);
-            setToken(data.accessToken);
+      const fetchData = async () => {
+        setLoading(true);
+        try {
+          const response = await axios.get(
+            `https://food-donation-backend.vercel.app/api/v1/users/jwt?email=${email}`
+          );
+
+          if (response.data.jwtToken) {
+            await AsyncStorage.setItem("jwtToken", response.data.jwtToken);
+            setToken(response.data.jwtToken);
+            await setLoading(false);
           }
-        });
+        } catch (error) {
+          console.error("Error fetching JWT token:", error);
+          setLoading(false);
+        }
+      };
+
+      fetchData();
     }
   }, [email]);
   return [token];
