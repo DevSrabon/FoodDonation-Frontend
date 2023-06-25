@@ -6,6 +6,7 @@ import Home from "../screens/Home";
 import Chat from "../screens/Chat";
 import Donor from "../screens/Donor";
 import User from "../screens/User";
+import DonorPage from "../screens/DonorPage";
 
 const Tab = createBottomTabNavigator();
 
@@ -58,8 +59,8 @@ const BottomNav = () => {
         }}
       />
       <Tab.Screen
-        name="donornext"
-        component={Donor}
+        name="donorPage"
+        component={DonorPage}
         options={{
           title: "",
           tabBarIcon: ({ focused, color }) => (
