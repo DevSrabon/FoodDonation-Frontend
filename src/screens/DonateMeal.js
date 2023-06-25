@@ -21,7 +21,6 @@ const DonateMeal = () => {
         { id: 2, label: 'Meal2' },
         { id: 3, label: 'Meal3' },
     ];
-
     const handleOptionChange = (value) => {
         setSelectedOptions(value);
     };
@@ -44,7 +43,6 @@ const DonateMeal = () => {
                 </View>
 
                 {/* Meal options */}
-
                 <View style={{
                     width: 150,
 
@@ -73,14 +71,11 @@ const DonateMeal = () => {
 
     const { loading, setLoading } =
         useContext(AuthContext);
-    
-  
     const handleNumberChange = (value) => {
         // Remove non-numeric characters
         const formattedValue = value.replace(/[^0-9]/g, '');
         setNumber(formattedValue);
     };
-
     const quantityTypes = [
         { id: 2, label: 'Kg' },
         { id: 3, label: 'L' },
@@ -91,9 +86,6 @@ const DonateMeal = () => {
         { id: 2, label: 'Drop' },
         { id: 3, label: 'Pickup' },
     ];
-
-
-
     const onDonateMeal = async () => {
         console.log("Donate meal screen")
     };
@@ -104,12 +96,13 @@ const DonateMeal = () => {
     return (
         <ScrollView >
             <View style={styles.container}>
+
                 <Text
                     style={{ fontFamily: "SemiBold", fontSize: 30, bottom: 20 }}
                 >
                     Donate
                 </Text>
-               
+
                 <View>
                     <FlatList
                         data={Array.from(Array(intNumber), (_, index) => index + 1)}
@@ -120,7 +113,6 @@ const DonateMeal = () => {
                 </View>
 
                 <View style={{ flexDirection: 'row', gap: 3, marginTop: 50, }}>
-                    {/* Item 2 */}
                     <View style={{ width: 150 }}>
                         <Text
                             style={{ fontFamily: "SemiBold", fontSize: 14 }}
@@ -137,7 +129,6 @@ const DonateMeal = () => {
                             />
                         </View>
                     </View>
-
 
                     {/* Item Quantity */}
                     <View style={{
@@ -219,6 +210,4 @@ const styles = StyleSheet.create({
         height: 40,
     },
 });
-
-
 export default DonateMeal;

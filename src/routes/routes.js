@@ -15,6 +15,7 @@ import RoleSelection from "../screens/RoleSelection";
 import Signup from "../screens/Signup";
 import Transporter from "../screens/Transporter";
 import User from "../screens/User";
+import UserCountWithinRadius from "../screens/UserCountWithinRadius";
 
 export default function Routes() {
   const Stack = createNativeStackNavigator();
@@ -32,7 +33,8 @@ export default function Routes() {
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="Bottom" component={BottomNav}></Stack.Screen>
-        <Stack.Screen name="initial" component={InitialPage}></Stack.Screen>
+        {/* <Stack.Screen name="initial" component={InitialPage}></Stack.Screen> */}
+        <Stack.Screen name="initial" component={UserCountWithinRadius}></Stack.Screen>
         <Stack.Screen name="intro" component={Intro}></Stack.Screen>
         <Stack.Screen name="login" component={Login}></Stack.Screen>
         <Stack.Screen name="signup" component={Signup}></Stack.Screen>

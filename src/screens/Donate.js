@@ -22,7 +22,9 @@ const Donate = () => {
     };
 
     const onDonate = async () => {
-        navigation.navigate("DonateMeal");
+        navigation.navigate("DonateMeal", {
+            number,
+          });
         const DonorName = { displayName: DonorName };
         try {
             await setLoading(false);

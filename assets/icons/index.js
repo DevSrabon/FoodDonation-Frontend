@@ -29,9 +29,7 @@ export default {
   settings,
   leftArrow,
   profile,
-
-  fixedHeight
-
+  fixedHeight,
   location,
   image1,
 

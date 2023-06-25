@@ -18,6 +18,7 @@ import RoleSelection from "../screens/RoleSelection";
 import Profile from "../screens/Profile";
 import DonorNext from "../screens/DonorNext";
 import { userContext } from "../context/Provider";
+import UserCountWithinRadius from "../screens/UserCountWithinRadius";
 
 const Stack = createNativeStackNavigator();
 
@@ -47,7 +48,8 @@ const StackNav = () => {
         ),
       }}
     >
-      <Stack.Screen name="initial" component={InitialPage}></Stack.Screen>
+      {/* <Stack.Screen name="initial" component={InitialPage}></Stack.Screen> */}
+      <Stack.Screen name="initial" component={UserCountWithinRadius}></Stack.Screen>
       <Stack.Screen name="intro" component={Intro}></Stack.Screen>
       <Stack.Screen name="login" component={Login}></Stack.Screen>
       <Stack.Screen name="signup" component={Signup}></Stack.Screen>

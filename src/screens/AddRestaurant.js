@@ -77,7 +77,6 @@ const AddRestaurant = () => {
                     </View>
 
                     <View style={{ height: 80, flexDirection: 'row', gap: 5, marginRight: 20 }}>
-
                         <Image
                             style={styles.stretch}
                             source={icons.google}
@@ -85,7 +84,6 @@ const AddRestaurant = () => {
                         <Image
                             style={styles.stretch}
                             source={icons.google}
-
                         />
                         <Image
                             style={styles.stretch}
@@ -105,7 +103,6 @@ const AddRestaurant = () => {
                     >
                         Location
                     </Text>
-
                     <CustomInput
                         placeholder="Location"
                         value={Location}
@@ -120,14 +117,12 @@ const AddRestaurant = () => {
                     >
                         FSSAI License
                     </Text>
-
                     <CustomInput
                         placeholder="FSSAI License"
                         value={FSSAILicense}
                         setValue={setFSSAILicense}
                     />
                 </View>
-
 
                 {/* PAN number */}
                 <View>
@@ -143,12 +138,9 @@ const AddRestaurant = () => {
                         secureTextEntry={true}
                     />
                 </View>
-
                 <CustomButton text="Continue" onPress={onAddRestaurant} type="primary" />
-
             </View>
         </ScrollView>
-
     );
 };
 
@@ -161,7 +153,6 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         backgroundColor: "white",
     },
-
     stretch: {
         width: 60,
         height: 60,
