@@ -10,11 +10,12 @@ import React from "react";
 import data from "../data/introData";
 import icons from "../../assets/icons";
 import { useNavigation } from "@react-navigation/native";
+import InitContainer from "../components/initContainer";
 
 const Intro = () => {
   const navigation = useNavigation();
   return (
-    <View style={styles.container}>
+    <InitContainer>
       <View style={styles.topContainer}></View>
       <View style={styles.subContainer}>
         <FlatList
@@ -57,15 +58,11 @@ const Intro = () => {
           pagingEnabled
         />
       </View>
-    </View>
+    </InitContainer>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#B4AAF2",
-  },
   topContainer: {
     flex: 1,
     backgroundColor: "#B4AAF2",

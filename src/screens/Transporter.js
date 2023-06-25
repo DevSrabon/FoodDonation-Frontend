@@ -4,6 +4,7 @@ import CustomButton from "../components/CustomButton";
 import Loading from "../components/Loading";
 import { userContext } from "../context/Provider";
 import useUpdateUser from "../hook/useUpdateSubRoleUser";
+import Container from "../components/container";
 
 const Transporter = () => {
   const [update, setUpdate] = useState("");
@@ -19,7 +20,7 @@ const Transporter = () => {
   if (loading) return <Loading />;
 
   return (
-    <View style={styles.container}>
+    <Container>
       <View style={styles.subContainer}>
         <Text
           style={{ fontFamily: "SemiBold", fontSize: 20, color: "#B4AAF2" }}
@@ -72,16 +73,11 @@ const Transporter = () => {
       <View style={{ alignItems: "center", marginTop: 30 }}>
         <CustomButton text="Continue" onPress={onRoleSelect} type="primary" />
       </View>
-    </View>
+    </Container>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    backgroundColor: "white",
-  },
   subContainer: {
     alignItems: "flex-start",
     paddingLeft: 20,

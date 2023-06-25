@@ -6,6 +6,7 @@ import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import Loading from "../components/Loading";
 import { userContext } from "../context/Provider";
+import Container from "../components/container";
 const Signup = () => {
   const { createUser, updateUser, user, promptAsync, loading, setLoading } =
     userContext();
@@ -49,7 +50,7 @@ const Signup = () => {
     return <Loading />;
   }
   return (
-    <View style={styles.container}>
+    <Container>
       <Text
         style={{ fontFamily: "SemiBold", fontSize: 28, bottom: 20, right: 145 }}
       >
@@ -128,17 +129,10 @@ const Signup = () => {
         Already signed up ?
         <CustomButton text="Login" onPress={onLogin} type="tertiary" />
       </Text>
-    </View>
+    </Container>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "white",
-  },
-});
+const styles = StyleSheet.create({});
 
 export default Signup;

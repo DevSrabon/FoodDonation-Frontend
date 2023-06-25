@@ -12,10 +12,14 @@ import {
 } from "react-native";
 import { launchImageLibrary } from "react-native-image-picker";
 import CustomButton from "../components/CustomButton";
+import { useNavigation } from "@react-navigation/native";
+import { launchImageLibrary } from "react-native-image-picker";
+import Container from "../components/container";
 import CustomInput from "../components/CustomInput";
 import Loading from "../components/Loading";
 import { userContext } from "../context/Provider";
 
+const SERVER_URL = "http://localhost:3000";
 const SERVER_URL = "http://localhost:3000";
 
 const Profile = () => {
@@ -29,8 +33,10 @@ const Profile = () => {
     const data = new FormData();
 
     data.append("photo", {
+    data.append("photo", {
       name: photo.fileName,
       type: photo.type,
+      uri: Platform.OS === "ios" ? photo.uri.replace("file://", "") : photo.uri,
       uri: Platform.OS === "ios" ? photo.uri.replace("file://", "") : photo.uri,
     });
 
@@ -54,12 +60,16 @@ const Profile = () => {
     fetch(`${SERVER_URL}/api/upload`, {
       method: "POST",
       body: createFormData(photo, { userId: "123" }),
+      method: "POST",
+      body: createFormData(photo, { userId: "123" }),
     })
       .then((response) => response.json())
       .then((response) => {
         console.log("response", response);
+        console.log("response", response);
       })
       .catch((error) => {
+        console.log("error", error);
         console.log("error", error);
       });
   };
@@ -87,7 +97,7 @@ const Profile = () => {
 
   return (
     <ScrollView>
-      <View style={styles.container}>
+      <Container>
         <View style={{ alignSelf: "flex-start" }}>
           <Text style={{ fontFamily: "SemiBold", fontSize: 28, marginTop: 30 }}>
             Your Profile
@@ -102,9 +112,17 @@ const Profile = () => {
           }}
         >
           <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
+          <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
             Profile Picture
           </Text>
           <View style={{ alignSelf: "center", height: 200 }}>
+            <View
+              style={{
+                flex: 1,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
             <View
               style={{
                 flex: 1,
@@ -160,18 +178,11 @@ const Profile = () => {
         >
           <CustomButton text="Done" onPress={onBioSetup} type="primary" />
         </View>
-      </View>
+      </Container>
     </ScrollView>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "white",
-  },
-});
+const styles = StyleSheet.create({});
 
 export default Profile;
