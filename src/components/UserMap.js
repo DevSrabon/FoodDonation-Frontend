@@ -1,11 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
-import icons from "../../assets/icons";
 import { userContext } from "../context/Provider";
 import useFetchData from "../hook/useFetchData";
-import CustomInput from "./CustomInput";
 import Loading from "./Loading";
 import SearchHeader from "./SearchHeader";
 
@@ -15,10 +13,14 @@ const GOOGLE_MAPS_APIKEY = "AIzaSyD7TKiBE0n8EsPH_snI7QjhGFagY0Vq3FQ";
 const UserMap = () => {
   const navigation = useNavigation();
   const [serach, setSearch] = useState(0);
-  const { user } = userContext();
+  const { user, setAllData } = userContext();
   const { loading, error, data } = useFetchData(`users?email=${user?.email}`);
 
-  console.log("🚀 ~ file: UserMap.js:20 ~ UserMap ~ data:", data);
+  useEffect(() => {
+    if (data) {
+      setAllData((prev) => ({ ...prev, userData: data }));
+    }
+  }, [data, setAllData]);
   if (loading) return <Loading />;
 
   if (error) return alert(error);
@@ -31,16 +33,16 @@ const UserMap = () => {
         provider={PROVIDER_GOOGLE}
         style={styles.map}
         initialRegion={{
-          ...data?.data?.location,
+          ...data?.location,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
       >
         <Marker
-          title={data?.data?.restaurantName}
-          description={data?.data?.bio}
+          title={data?.restaurantName}
+          description={data?.bio}
           coordinate={{
-            ...data?.data?.location,
+            ...data?.location,
           }}
         />
       </MapView>
