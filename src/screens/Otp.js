@@ -14,11 +14,7 @@ const Otp = () => {
   };
   return (
     <Container>
-      <Text
-        style={{ fontFamily: "SemiBold", fontSize: 28, right: 70, bottom: 150 }}
-      >
-        Check your Phone
-      </Text>
+      <Header>Check your Phone</Header>
       <Text
         style={{
           fontFamily: "Medium",

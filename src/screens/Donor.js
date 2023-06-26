@@ -27,9 +27,7 @@ const Donor = () => {
         >
           Donor,
         </Text>
-        <Text style={{ fontFamily: "SemiBold", fontSize: 24 }}>
-          Choose Your Role
-        </Text>
+        <Header>Choose Your Role</Header>
       </View>
       <View style={styles.boxContainer}>
         <Pressable

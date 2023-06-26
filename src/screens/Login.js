@@ -8,6 +8,7 @@ import CustomInput from "../components/CustomInput";
 import Loading from "../components/Loading";
 import { AuthContext } from "../context/Provider";
 import Container from "../components/container";
+import Header from "../components/Header";
 
 const Login = () => {
   const { signIn, promptAsync, user, request, loading, setLoading } =
@@ -57,11 +58,7 @@ const Login = () => {
   }
   return (
     <Container>
-      <Text
-        style={{ fontFamily: "SemiBold", fontSize: 28, bottom: 20, right: 145 }}
-      >
-        Login
-      </Text>
+      <Header>Login</Header>
       <Text
         style={{ fontFamily: "SemiBold", fontSize: 14, right: 160, top: 6 }}
       >

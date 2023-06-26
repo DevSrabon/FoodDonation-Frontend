@@ -7,6 +7,7 @@ import CustomInput from "../components/CustomInput";
 import Loading from "../components/Loading";
 import { userContext } from "../context/Provider";
 import Container from "../components/container";
+import Header from "../components/Header";
 const Signup = () => {
   const { createUser, updateUser, user, promptAsync, loading, setLoading } =
     userContext();
@@ -51,11 +52,7 @@ const Signup = () => {
   }
   return (
     <Container>
-      <Text
-        style={{ fontFamily: "SemiBold", fontSize: 28, bottom: 20, right: 145 }}
-      >
-        Signup
-      </Text>
+      <Header>Signup</Header>
       <Text
         style={{ fontFamily: "SemiBold", fontSize: 14, right: 150, top: 6 }}
       >
