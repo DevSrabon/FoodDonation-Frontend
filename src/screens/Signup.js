@@ -32,7 +32,7 @@ const Signup = () => {
         }
       );
       await setLoading(false);
-      if (res.status === 201) return navigation.navigate("login");
+      if (res.status === 201) return navigation.navigate("otp");
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
         alert("Email is already in use");

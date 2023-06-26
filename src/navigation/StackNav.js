@@ -1,7 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React, { useEffect } from "react";
+import React from "react";
 
 import Chat from "../screens/Chat";
 import Donor from "../screens/Donor";
@@ -13,14 +13,12 @@ import Login from "../screens/Login";
 import Otp from "../screens/Otp";
 import RoleSelection from "../screens/RoleSelection";
 
-import Profile from "../screens/Profile";
-import { userContext } from "../context/Provider";
 import AddRestaurant from "../screens/AddRestaurant";
-import DonateMeal from "../screens/DonateMeal";
 import Donate from "../screens/Donate";
+import DonateMeal from "../screens/DonateMeal";
+import Profile from "../screens/Profile";
 
 import Signup from "../screens/Signup";
-import User from "../screens/User";
 import Transporter from "../screens/Transporter";
 import BottomNav from "./BottomNav";
 
@@ -28,12 +26,6 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const StackNav = () => {
-  const { user, signOutUser } = userContext();
-
-  useEffect(() => {
-    if (user?.email) return signOutUser;
-  }, []);
-
   return (
     <NavigationContainer>
       <Stack.Navigator
