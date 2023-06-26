@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import icons from "../../assets/icons";
 import CustomInput from "../components/CustomInput";
 import Container from "../components/container";
+import Header from "../components/Header";
 
 const Home = () => {
   const [search, setSearch] = useState(0);

@@ -16,7 +16,6 @@ const InitialPage = () => {
     // }
     checkAuthStatus();
   }, []);
-
   const checkAuthStatus = async () => {
     const storedToken = await AsyncStorage.getItem("jwtToken");
     if (storedToken) {
