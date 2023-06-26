@@ -5,6 +5,7 @@ import Loading from "../components/Loading";
 import { userContext } from "../context/Provider";
 import useUpdateUser from "../hook/useUpdateSubRoleUser";
 import Container from "../components/container";
+import { Header } from "react-native/Libraries/NewAppScreen";
 
 const Transporter = () => {
   const [update, setUpdate] = useState("");
@@ -27,9 +28,7 @@ const Transporter = () => {
         >
           Transporter,
         </Text>
-        <Text style={{ fontFamily: "SemiBold", fontSize: 24 }}>
-          Choose Your Role
-        </Text>
+        <Header>Choose Your Role</Header>
       </View>
       <View style={styles.boxContainer}>
         <Pressable

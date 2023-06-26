@@ -13,6 +13,8 @@ import { AuthContext } from "../context/Provider";
 
 import Container from "../components/container";
 
+import Header from "../components/Header";
+
 const AddRestaurant = () => {
   // const { loading, setLoading } = useContext(AuthContext);
   const navigation = useNavigation();
@@ -77,9 +79,11 @@ const AddRestaurant = () => {
                     navigation.goBack();
                 }}
             /> */}
-      <Text style={{ fontFamily: "Bold", fontSize: 30, bottom: 10 }}>
+      {/* <Text style={{ fontFamily: "Bold", fontSize: 30, bottom: 10 }}>
         Add Restaurant
-      </Text>
+      </Text> */}
+      <Header>Add Restaurant</Header>
+
       <Text style={{ fontFamily: "Bold", fontSize: 14, top: 6 }}>
         Restaurant Name
       </Text>

@@ -5,6 +5,7 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import CustomButton from "../components/CustomButton";
 import Loading from "../components/Loading";
 import { userContext } from "../context/Provider";
+import Header from "../components/Header";
 
 const RoleSelection = () => {
   const navigation = useNavigation();
@@ -38,9 +39,7 @@ const RoleSelection = () => {
         >
           Welcome,
         </Text>
-        <Text style={{ fontFamily: "SemiBold", fontSize: 24 }}>
-          Choose Your Role
-        </Text>
+        <Header>Choose Your Role</Header>
       </View>
       <View style={styles.boxContainer}>
         <Pressable style={styles.box} onPress={() => setUpdate("donor")}>

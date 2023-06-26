@@ -17,6 +17,7 @@ import Container from "../components/container";
 import CustomInput from "../components/CustomInput";
 import Loading from "../components/Loading";
 import { userContext } from "../context/Provider";
+import Header from "../components/Header";
 
 const SERVER_URL = "http://localhost:3000";
 
@@ -96,11 +97,8 @@ const Profile = () => {
   return (
     <ScrollView>
       <Container>
-        <View style={{ alignSelf: "flex-start" }}>
-          <Text style={{ fontFamily: "SemiBold", fontSize: 28, marginTop: 30 }}>
-            Your Profile
-          </Text>
-        </View>
+        <Header> Your Profile</Header>
+        <View style={{ alignSelf: "flex-start" }}></View>
 
         <View
           style={{
