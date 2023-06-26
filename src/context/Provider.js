@@ -16,14 +16,18 @@ import {
 import React, { createContext, useContext, useEffect, useState } from "react";
 import app from "../firebase/firebase.config";
 WebBrowser.maybeCompleteAuthSession();
-export const AuthContext = createContext();
+export const AuthContext = createContext(null);
 
 const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  // console.log("🚀 ~ file: Provider.js:25 ~ AuthProvider ~ user:", user);
+  const [allData, setAllData] = useState({
+    userData: null,
+  });
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+
   const googleProvider = new GoogleAuthProvider();
 
   googleProvider.setCustomParameters({ prompt: "select_account" });
@@ -124,6 +128,10 @@ const AuthProvider = ({ children }) => {
     user,
     setLoading,
     updateUser,
+    allData,
+    setAllData,
+    error,
+    setError,
     request,
     promptAsync,
     loading,

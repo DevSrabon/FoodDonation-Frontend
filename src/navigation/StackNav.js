@@ -23,7 +23,6 @@ import Transporter from "../screens/Transporter";
 import BottomNav from "./BottomNav";
 
 const Stack = createNativeStackNavigator();
-const Tab = createBottomTabNavigator();
 
 const StackNav = () => {
   return (

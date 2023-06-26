@@ -12,7 +12,7 @@ const useFetchData = (url) => {
         const response = await axios.get(
           `https://food-donation-backend.vercel.app/api/v1/${url}`
         );
-        setData(response.data);
+        setData(response.data.data);
         setLoading(false);
       } catch (error) {
         setError(error);

@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import Checkbox from "expo-checkbox";
-import React, { useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Image,
   KeyboardAvoidingView,
@@ -14,15 +14,15 @@ import icons from "../../assets/icons";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import Loading from "../components/Loading";
-import { AuthContext } from "../context/Provider";
-import useToken from "../hook/useToken";
 import Container from "../components/container";
+import { userContext } from "../context/Provider";
+import useToken from "../hook/useToken";
 import Header from "../components/Header";
 import Label from "../components/label";
 
 const Login = () => {
   const { signIn, promptAsync, user, request, loading, setLoading } =
-    useContext(AuthContext);
+    userContext();
   const [email, setEmail] = useState("");
   const [createdEmail, setCreatedEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -30,9 +30,18 @@ const Login = () => {
   const [token] = useToken(createdEmail || user?.email);
   const navigation = useNavigation();
 
-  if (token) {
-    return navigation.navigate("user");
-  }
+  useEffect(() => {
+    if (token) {
+      navigation.navigate("user");
+    }
+  }, [token, navigation]);
+  // useEffect(() => {
+  //   if (token) {
+  //     navigation.navigate(
+  //       allData?.userData?.role == "needy" ? "user" : "donornext"
+  //     );
+  //   }
+  // }, [token, navigation, allData?.userData?.role]);
   const onSignInPressed = async () => {
     try {
       await signIn(email, password);
