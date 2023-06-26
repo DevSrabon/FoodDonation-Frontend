@@ -1,4 +1,10 @@
-import { StyleSheet, SafeAreaView, StatusBar } from "react-native";
+import {
+  StyleSheet,
+  SafeAreaView,
+  StatusBar,
+  Dimensions,
+  ScrollView,
+} from "react-native";
 import React from "react";
 
 const Container = (props) => {
@@ -14,6 +20,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
     marginTop: StatusBar.currentHeight,
     paddingHorizontal: 10,
     backgroundColor: "white",
