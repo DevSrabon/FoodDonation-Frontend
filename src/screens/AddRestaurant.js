@@ -9,7 +9,6 @@ import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import Loading from "../components/Loading";
 import { userContext } from "../context/Provider";
-import { AuthContext } from "../context/Provider";
 
 import Container from "../components/container";
 
@@ -19,7 +18,7 @@ const AddRestaurant = () => {
   // const { loading, setLoading } = useContext(AuthContext);
   const navigation = useNavigation();
 
-  const [restaurantName, setRestaurantName] = useState("");
+  const [categoryName, setCategoryName] = useState("");
   const [location, setLocation] = useState({ latitude: "", longitude: "" });
 
   const [fssaiLicense, setFSSAILicense] = useState("");
@@ -28,7 +27,7 @@ const AddRestaurant = () => {
   const { user, loading, setLoading } = userContext();
   const onAddRestaurant = async () => {
     if (
-      !restaurantName ||
+      !categoryName ||
       !location?.latitude ||
       !location?.longitude ||
       !fssaiLicense ||
@@ -36,7 +35,7 @@ const AddRestaurant = () => {
     )
       return alert("Please fill-up all the information");
     const body = {
-      restaurantName,
+      categoryName,
       location: location,
       fssaiLicense,
       panNumber,
@@ -89,8 +88,8 @@ const AddRestaurant = () => {
       </Text>
       <CustomInput
         placeholder="Restaurant Name"
-        value={restaurantName}
-        setValue={setRestaurantName}
+        value={categoryName}
+        setValue={setCategoryName}
       />
       {/* Image add part */}
       <View style={{ height: 120 }}>
