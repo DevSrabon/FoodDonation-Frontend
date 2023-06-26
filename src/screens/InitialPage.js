@@ -9,13 +9,13 @@ import InitContainer from "../components/initContainer";
 const InitialPage = () => {
   const navigation = useNavigation();
   const { user, signOutUser } = userContext();
-  useEffect(() => {
-    if (user?.email) {
-      signOutUser;
-      AsyncStorage.removeItem("jwtToken");
-    }
-    // checkAuthStatus();
-  }, []);
+  // useEffect(() => {
+  //   if (user?.email) {
+  //     signOutUser;
+  //     AsyncStorage.removeItem("jwtToken");
+  //   }
+  //   checkAuthStatus();
+  // }, []);
 
   const checkAuthStatus = async () => {
     const storedToken = await AsyncStorage.getItem("jwtToken");

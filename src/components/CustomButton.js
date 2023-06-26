@@ -26,7 +26,9 @@ const CustomButton = ({ onPress, text, type, bgColor, fgColor }) => {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     width: "100%",
+    maxHeight: 50,
     padding: 15,
     marginVertical: 5,
     alignItems: "center",
@@ -35,7 +37,14 @@ const styles = StyleSheet.create({
   container_primary: {
     backgroundColor: "#B4AAF2",
   },
-  container_tertiary: { width: "30%", padding: 0, marginVertical: 0 },
+  container_tertiary: {
+    width: "30%",
+    padding: 0,
+    // alignSelf: "center",
+
+    marginVertical: 0,
+    // marginHorizontal: 50,
+  },
   text: {
     fontFamily: "SemiBold",
     fontSize: 14,

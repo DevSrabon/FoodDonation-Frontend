@@ -7,6 +7,8 @@ import Chat from "../screens/Chat";
 import Donor from "../screens/Donor";
 import User from "../screens/User";
 import DonorPage from "../screens/DonorPage";
+import Donate from "../screens/Donate";
+import Login from "../screens/Login";
 
 const Tab = createBottomTabNavigator();
 
@@ -59,8 +61,8 @@ const BottomNav = () => {
         }}
       />
       <Tab.Screen
-        name="donorPage"
-        component={DonorPage}
+        name="donate"
+        component={Donate}
         options={{
           title: "",
           tabBarIcon: ({ focused, color }) => (
@@ -73,8 +75,8 @@ const BottomNav = () => {
         }}
       />
       <Tab.Screen
-        name="chat"
-        component={Chat}
+        name="login"
+        component={Login}
         options={{
           tabBarIcon: ({ focused, color }) => (
             <Ionicons
