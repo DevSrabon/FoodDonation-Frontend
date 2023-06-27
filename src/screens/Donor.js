@@ -7,10 +7,6 @@ import Container from "../components/container";
 import { userContext } from "../context/Provider";
 import useUpdateUser from "../hook/useUpdateSubRoleUser";
 
-import Container from "../components/container";
-import Header from "../components/Header";
-
-
 const Donor = () => {
   const [update, setUpdate] = useState("");
 

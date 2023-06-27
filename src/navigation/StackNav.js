@@ -28,7 +28,7 @@ const StackNav = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="initial"
+        initialRouteName="AddRestaurant"
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="initial" component={InitialPage} />
