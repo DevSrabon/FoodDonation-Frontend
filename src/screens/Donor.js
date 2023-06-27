@@ -1,10 +1,15 @@
 import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import CustomButton from "../components/CustomButton";
+import Header from "../components/Header";
 import Loading from "../components/Loading";
+import Container from "../components/container";
 import { userContext } from "../context/Provider";
 import useUpdateUser from "../hook/useUpdateSubRoleUser";
+
 import Container from "../components/container";
+import Header from "../components/Header";
+
 
 const Donor = () => {
   const [update, setUpdate] = useState("");
@@ -27,7 +32,7 @@ const Donor = () => {
         >
           Donor,
         </Text>
-        <Header>Choose Your Role</Header>
+        <Header> Choose Your Role</Header>
       </View>
       <View style={styles.boxContainer}>
         <Pressable

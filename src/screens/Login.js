@@ -1,19 +1,28 @@
 import { useNavigation } from "@react-navigation/native";
 import Checkbox from "expo-checkbox";
-import React, { useContext, useState } from "react";
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  Image,
+  KeyboardAvoidingView,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import icons from "../../assets/icons";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import Loading from "../components/Loading";
-import { AuthContext } from "../context/Provider";
-import useToken from "../hook/useToken";
 import Container from "../components/container";
+import { userContext } from "../context/Provider";
+import useToken from "../hook/useToken";
 import Header from "../components/Header";
+import Label from "../components/label";
 
 const Login = () => {
   const { signIn, promptAsync, user, request, loading, setLoading } =
-    useContext(AuthContext);
+    userContext();
   const [email, setEmail] = useState("");
   const [createdEmail, setCreatedEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,9 +30,18 @@ const Login = () => {
   const [token] = useToken(createdEmail || user?.email);
   const navigation = useNavigation();
 
-  if (token) {
-    return navigation.navigate("user");
-  }
+  useEffect(() => {
+    if (token) {
+      navigation.navigate("user");
+    }
+  }, [token, navigation]);
+  // useEffect(() => {
+  //   if (token) {
+  //     navigation.navigate(
+  //       allData?.userData?.role == "needy" ? "user" : "donornext"
+  //     );
+  //   }
+  // }, [token, navigation, allData?.userData?.role]);
   const onSignInPressed = async () => {
     try {
       await signIn(email, password);
@@ -59,106 +77,120 @@ const Login = () => {
     return <Loading />;
   }
   return (
-    <Container>
-      <Header>Login</Header>
-      <Text
-        style={{ fontFamily: "SemiBold", fontSize: 14, right: 160, top: 6 }}
-      >
-        E-mail
-      </Text>
+    <ScrollView style={{ flex: 1 }}>
+      <Container>
+        <Header>Login</Header>
 
-      <CustomInput placeholder="Your Email" value={email} setValue={setEmail} />
+        <Label>E-mail</Label>
+        <CustomInput
+          placeholder="Your Email"
+          value={email}
+          setValue={setEmail}
+        />
 
-      <Text
-        style={{ fontFamily: "SemiBold", fontSize: 14, right: 150, top: 6 }}
-      >
-        Password
-      </Text>
-      <CustomInput
-        placeholder="Your Password"
-        value={password}
-        setValue={setPassword}
-        secureTextEntry={true}
-      />
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          gap: 130,
-          marginBottom: 20,
-        }}
-      >
-        <View style={{ flexDirection: "row" }}>
-          <Checkbox
-            style={styles.checkbox}
-            value={isChecked}
-            onValueChange={setChecked}
-            color={isChecked ? "#B4AAF2" : undefined}
-          />
-          <Text
-            style={{ fontFamily: "Medium", fontSize: 12, color: "#747980" }}
+        <Label>Password</Label>
+        <CustomInput
+          placeholder="Your Password"
+          value={password}
+          setValue={setPassword}
+          secureTextEntry={true}
+        />
+
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "flex-start",
+            marginLeft: 18,
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              flexDirection: "row",
+            }}
           >
-            Remember me
-          </Text>
+            <Checkbox
+              style={styles.checkbox}
+              value={isChecked}
+              onValueChange={setChecked}
+              color={isChecked ? "#B4AAF2" : undefined}
+            />
+            <Text
+              style={{ fontFamily: "Medium", fontSize: 12, color: "#747980" }}
+            >
+              Remember me
+            </Text>
+          </View>
+
+          <CustomButton
+            text="Forgot Password"
+            onPress={onForgotPasswordPressed}
+            type="tertiary"
+          />
         </View>
 
-        <CustomButton
-          text="Forgot Password"
-          onPress={onForgotPasswordPressed}
-          type="tertiary"
-        />
-      </View>
+        <View style={{ flex: 1, width: "90%" }}>
+          {/* bottom: 20 */}
+          <CustomButton text="Login" onPress={onSignInPressed} type="primary" />
+        </View>
+        <View style={{ flex: 1, bottom: 20 }}>
+          <Text
+            style={{
+              fontFamily: "SemiBold",
+              fontSize: 14,
+              justifyContent: "center",
+              marginLeft: 75,
+            }}
+          >
+            or continue with
+          </Text>
 
-      <CustomButton text="Login" onPress={onSignInPressed} type="primary" />
+          <View style={styles.subContainer}>
+            <Pressable style={styles.box}>
+              <Image source={icons.fb} />
+            </Pressable>
+            <Pressable
+              style={styles.box}
+              disabled={!request}
+              onPress={() =>
+                promptAsync({ useProxy: false, showInRecents: true })
+              }
+            >
+              <Image source={icons.google} />
+            </Pressable>
+            <Pressable style={styles.box}>
+              <Image source={icons.linked} />
+            </Pressable>
+          </View>
+        </View>
 
-      <Text
-        style={{
-          fontFamily: "SemiBold",
-          fontSize: 12,
-          marginBottom: 10,
-          marginTop: 20,
-        }}
-      >
-        or continue with
-      </Text>
-      <View style={styles.subContainer}>
-        <Pressable style={styles.box}>
-          <Image source={icons.fb} />
-        </Pressable>
-        <Pressable
-          style={styles.box}
-          disabled={!request}
-          onPress={() => promptAsync({ useProxy: false, showInRecents: true })}
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "row",
+          }}
         >
-          <Image source={icons.google} />
-        </Pressable>
-        <Pressable style={styles.box}>
-          <Image source={icons.linked} />
-        </Pressable>
-      </View>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          top: 80,
-        }}
-      >
-        <Text style={{ fontFamily: "SemiBold", fontSize: 12 }}>
-          Don,t have an account?
-          <CustomButton text="Signup" onPress={onSignup} type="tertiary" />
-        </Text>
-      </View>
-    </Container>
+          <Text style={{ fontFamily: "SemiBold", fontSize: 12 }}>
+            Don,t have an account?
+            <CustomButton text="Signup" onPress={onSignup} type="tertiary" />
+          </Text>
+        </View>
+      </Container>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   subContainer: {
+    flex: 1,
     flexDirection: "row",
 
     gap: 20,
   },
   box: {
+    alignSelf: "center",
     width: 72,
     heigh: 68,
     padding: 16,

@@ -6,12 +6,14 @@ import CustomButton from "../components/CustomButton";
 import Loading from "../components/Loading";
 import { userContext } from "../context/Provider";
 import Header from "../components/Header";
+import Container from "../components/container";
 
 const RoleSelection = () => {
   const navigation = useNavigation();
   const [update, setUpdate] = useState("");
   const { user } = userContext();
   const [loading, setLoading] = useState(false);
+
   const onRoleSelect = async () => {
     setLoading(true);
     const body = { role: update, email: user?.email };
@@ -32,15 +34,36 @@ const RoleSelection = () => {
 
   if (loading) return <Loading />;
   return (
-    <View style={styles.container}>
-      <View style={styles.subContainer}>
+    <Container>
+      <View
+        style={{
+          flex: 1,
+          paddingHorizontal: 10,
+          alignSelf: "flex-start",
+          justifyContent: "center",
+        }}
+      >
         <Text
-          style={{ fontFamily: "SemiBold", fontSize: 20, color: "#B4AAF2" }}
+          style={{
+            fontFamily: "SemiBold",
+            fontSize: 20,
+            color: "#B4AAF2",
+          }}
         >
           Welcome,
         </Text>
+      </View>
+      <View
+        style={{
+          flex: 1,
+          alignSelf: "flex-start",
+          justifyContent: "flex-start",
+          bottom: 100,
+        }}
+      >
         <Header>Choose Your Role</Header>
       </View>
+
       <View style={styles.boxContainer}>
         <Pressable style={styles.box} onPress={() => setUpdate("donor")}>
           <Text
@@ -94,34 +117,28 @@ const RoleSelection = () => {
           </Text>
         </Pressable>
       </View>
-      <View style={{ alignItems: "center", marginTop: 30 }}>
+      <View
+        style={{ flex: 3, width: "90%", alignItems: "center", marginTop: 20 }}
+      >
         <CustomButton text="Continue" onPress={onRoleSelect} type="primary" />
       </View>
-    </View>
+    </Container>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    backgroundColor: "white",
-  },
-  subContainer: {
-    alignItems: "flex-start",
-    paddingLeft: 20,
-    marginBottom: 20,
-    bottom: 60,
-  },
   boxContainer: {
-    alignItems: "center",
-    bottom: 60,
+    flex: 1,
+    alignSelf: "center",
+    justifyContent: "flex-end",
+
+    // bottom: 60,
   },
   box: {
-    width: "90%",
+    width: 350,
     padding: 5,
     paddingLeft: 10,
-    paddingRight: 80,
+    // paddingRight: 80,
     marginVertical: 5,
     alignItems: "flex-start",
     borderRadius: 10,
