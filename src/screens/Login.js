@@ -22,10 +22,11 @@ import useToken from "../hook/useToken";
 const Login = () => {
   const { signIn, promptAsync, user, request, loading, setLoading } =
     userContext();
+  const [userEmail, setUserEmail] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isChecked, setChecked] = useState(false);
-  const [token] = useToken(user?.email);
+  const [token] = useToken(userEmail);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -42,7 +43,11 @@ const Login = () => {
   // }, [token, navigation, allData?.userData?.role]);
   const onSignInPressed = async () => {
     try {
-      await signIn(email, password);
+      const res = await signIn(email, password);
+      console.log("🚀 ~ file: Login.js:47 ~ onSignInPressed ~ res:", res);
+      if (res) {
+        setUserEmail(email);
+      }
     } catch (err) {
       console.log(err);
       alert(err);
