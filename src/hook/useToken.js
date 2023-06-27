@@ -15,12 +15,12 @@ const useToken = (email) => {
           );
 
           if (response.data.jwtToken) {
-            await AsyncStorage.setItem("jwtToken", response.data.jwtToken);
             setToken(response.data.jwtToken);
-            await setLoading(false);
+            await AsyncStorage.setItem("jwtToken", response.data.jwtToken);
           }
         } catch (error) {
-          console.error("Error fetching JWT token:", error);
+          console.error("Error fetching token:", error);
+        } finally {
           setLoading(false);
         }
       };

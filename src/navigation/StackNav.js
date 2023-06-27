@@ -1,4 +1,3 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
@@ -23,7 +22,6 @@ import Transporter from "../screens/Transporter";
 import BottomNav from "./BottomNav";
 
 const Stack = createNativeStackNavigator();
-const Tab = createBottomTabNavigator();
 
 const StackNav = () => {
   return (
@@ -41,8 +39,8 @@ const StackNav = () => {
         <Stack.Screen name="needy" component={FoodNeedier} />
         <Stack.Screen name="transporter" component={Transporter} />
         <Stack.Screen name="donor" component={Donor} />
-        <Stack.Screen name="addRestaurent" component={AddRestaurant} />
-        <Stack.Screen name="donatMeal" component={DonateMeal} />
+        <Stack.Screen name="addRestaurant" component={AddRestaurant} />
+        <Stack.Screen name="DonateMeal" component={DonateMeal} />
         <Stack.Screen name="donate" component={Donate} />
         <Stack.Screen name="profile" component={Profile} />
         <Stack.Screen name="chat" component={Chat} />

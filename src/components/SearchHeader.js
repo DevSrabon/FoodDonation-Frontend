@@ -2,32 +2,25 @@ import React, { useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import icons from "../../assets/icons";
 import { userContext } from "../context/Provider";
-import useFetchData from "../hook/useFetchData";
 import CustomInput from "./CustomInput";
-import Loading from "./Loading";
 
 const SearchHeader = () => {
-  const [serach, setSearch] = useState(0);
-  const { user } = userContext();
-  const { loading, error, data } = useFetchData(`users?email=${user?.email}`);
-
-  if (loading) return <Loading />;
-
-  if (error) return alert(error);
+  const [search, setSearch] = useState(0);
+  const { allData } = userContext();
 
   return (
     <View style={styles.container}>
       <View style={styles.headerView}>
         <Text style={styles.typography}>
           <Text style={{ fontSize: 18, color: "#B4AAF2" }}> Wellcome,</Text>{" "}
-          {data?.data?.name}
+          {allData?.userData?.name}
         </Text>
         <Image source={icons.notification} />
       </View>
       <View style={styles.searchView}>
         <CustomInput
           placeholder="Search here"
-          value={serach}
+          value={search}
           setValue={setSearch}
         />
         <Image source={icons.settings} />

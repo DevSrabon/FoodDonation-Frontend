@@ -23,13 +23,14 @@ const Donate = () => {
   const [number, setNumber] = useState("");
 
   const handleNumberChange = (value) => {
-    // Remove non-numeric characters
     const formattedValue = value.replace(/[^0-9]/g, "");
     setNumber(formattedValue);
   };
 
   const onDonate = async () => {
-    navigation.navigate("donatMeal");
+    navigation.navigate("DonateMeal", {
+      number,
+    });
     const DonorName = { displayName: DonorName };
     try {
       await setLoading(false);

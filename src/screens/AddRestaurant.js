@@ -2,24 +2,31 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 
 import axios from "axios";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ScrollView,
+} from "react-native";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import icons from "../../assets/icons";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import Loading from "../components/Loading";
 import { userContext } from "../context/Provider";
-import { AuthContext } from "../context/Provider";
 
 import Container from "../components/container";
 
 import Header from "../components/Header";
+import Label from "../components/label";
 
 const AddRestaurant = () => {
   // const { loading, setLoading } = useContext(AuthContext);
   const navigation = useNavigation();
 
-  const [restaurantName, setRestaurantName] = useState("");
+  const [categoryName, setCategoryName] = useState("");
   const [location, setLocation] = useState({ latitude: "", longitude: "" });
 
   const [fssaiLicense, setFSSAILicense] = useState("");
@@ -28,7 +35,7 @@ const AddRestaurant = () => {
   const { user, loading, setLoading } = userContext();
   const onAddRestaurant = async () => {
     if (
-      !restaurantName ||
+      !categoryName ||
       !location?.latitude ||
       !location?.longitude ||
       !fssaiLicense ||
@@ -36,7 +43,7 @@ const AddRestaurant = () => {
     )
       return alert("Please fill-up all the information");
     const body = {
-      restaurantName,
+      categoryName,
       location: location,
       fssaiLicense,
       panNumber,
@@ -64,6 +71,10 @@ const AddRestaurant = () => {
     return <Loading />;
   }
 
+  const onImageUpload = () => {
+    console.warn("image upload");
+  };
+
   const onPressAddress = (data, details) => {
     const latitude = details.geometry.location.lat;
     const longitude = details.geometry.location.lng;
@@ -72,99 +83,101 @@ const AddRestaurant = () => {
   };
 
   return (
-    <Container>
-      {/* <Button
-                title="Back"
-                onPress={() => {
-                    navigation.goBack();
-                }}
-            /> */}
-      {/* <Text style={{ fontFamily: "Bold", fontSize: 30, bottom: 10 }}>
-        Add Restaurant
-      </Text> */}
-      <Header>Add Restaurant</Header>
+    <ScrollView style={{ flex: 1 }}>
+      <Container>
+        <Header>Add Restaurant</Header>
+        <Label>Restaurant Name</Label>
+        <CustomInput
+          placeholder="Restaurant Name"
+          value={categoryName}
+          setValue={setCategoryName}
+        />
+        {/* Image add part */}
 
-      <Text style={{ fontFamily: "Bold", fontSize: 14, top: 6 }}>
-        Restaurant Name
-      </Text>
-      <CustomInput
-        placeholder="Restaurant Name"
-        value={restaurantName}
-        setValue={setRestaurantName}
-      />
-      {/* Image add part */}
-      <View style={{ height: 120 }}>
         <View
           style={{
-            height: 40,
+            // flex: 1,
             flexDirection: "row",
-            marginRight: 20,
+            alignItems: "center",
             justifyContent: "space-between",
           }}
         >
-          <Text style={{ fontFamily: "SemiBold", fontSize: 20, top: 6 }}>
-            Image
-          </Text>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Add+</Text>
-          </TouchableOpacity>
+          <Label>Image</Label>
+          <CustomButton text="Add+" onPress={onImageUpload} type="tertiary" />
         </View>
 
         <View
-          style={{ height: 80, flexDirection: "row", gap: 5, marginRight: 20 }}
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+            height: 80,
+            flexDirection: "row",
+            gap: 10,
+          }}
         >
           <Image style={styles.stretch} source={icons.google} />
           <Image style={styles.stretch} source={icons.google} />
           <Image style={styles.stretch} source={icons.google} />
           <Image style={styles.stretch} source={icons.google} />
         </View>
-      </View>
 
-      {/* Location */}
-      <View style={{ flex: 1 }}>
-        <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>Location</Text>
+        {/* Location */}
+        <View style={{ flex: 1, width: "90%", alignSelf: "center" }}>
+          <Label>Location</Label>
+          <GooglePlacesAutocomplete
+            fetchDetails={true}
+            placeholder="Location"
+            onPress={onPressAddress}
+            query={{
+              key: "AIzaSyDnSNNGQQ8AhLEmcsXJbmz1_MVrbOz55rM",
+              language: "en",
+            }}
+            styles={{
+              textInputContainer: styles.containerStyle,
+              textInput: styles.textInputStyle,
+            }}
+          />
+        </View>
 
-        <GooglePlacesAutocomplete
-          fetchDetails={true}
-          placeholder="search"
-          onPress={onPressAddress}
-          query={{
-            key: "AIzaSyDnSNNGQQ8AhLEmcsXJbmz1_MVrbOz55rM",
-            language: "en",
-          }}
-        />
-      </View>
-
-      {/* FSSAI License */}
-      <View>
-        <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-          FSSAI License
-        </Text>
-
+        {/* FSSAI License */}
+        <Label>FSSAI License</Label>
         <CustomInput
           placeholder="FSSAI License"
           value={fssaiLicense}
           setValue={setFSSAILicense}
         />
-      </View>
 
-      {/* PAN number */}
-      <View>
-        <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>PAN number</Text>
+        {/* PAN number */}
+        <Label>PAN number</Label>
         <CustomInput
           placeholder="PAN Number"
           value={panNumber}
           setValue={setPanNumber}
           secureTextEntry={true}
         />
-      </View>
-
-      <CustomButton text="Continue" onPress={onAddRestaurant} type="primary" />
-    </Container>
+        <View style={{ flex: 1, width: "90%" }}>
+          <CustomButton
+            text="Continue"
+            onPress={onAddRestaurant}
+            type="primary"
+          />
+        </View>
+      </Container>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingLeft: 20,
+    // alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "white",
+  },
+
   stretch: {
     width: 60,
     height: 60,
@@ -172,17 +185,15 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
     borderRadius: 8,
   },
-  button: {
-    backgroundColor: "white",
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    borderRadius: 8,
-    marginLeft: 150,
+  containerStyle: {
+    borderColor: "#A2A2A6",
+    borderWidth: 1,
+    borderRadius: 7,
+    paddingHorizontal: 2,
+    marginVertical: 5,
   },
-  buttonText: {
-    color: "gray",
-    fontSize: 18,
-    fontWeight: "bold",
+  textInputStyle: {
+    // fontSize: 16,
   },
 });
 

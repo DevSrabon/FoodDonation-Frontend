@@ -1,9 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
 import Checkbox from "expo-checkbox";
-import React, { useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Image,
-  KeyboardAvoidingView,
   Pressable,
   ScrollView,
   StyleSheet,
@@ -13,30 +12,42 @@ import {
 import icons from "../../assets/icons";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
-import Loading from "../components/Loading";
-import { AuthContext } from "../context/Provider";
-import useToken from "../hook/useToken";
-import Container from "../components/container";
 import Header from "../components/Header";
+import Loading from "../components/Loading";
+import Container from "../components/container";
 import Label from "../components/label";
+import { userContext } from "../context/Provider";
+import useToken from "../hook/useToken";
 
 const Login = () => {
   const { signIn, promptAsync, user, request, loading, setLoading } =
-    useContext(AuthContext);
+    userContext();
+  const [userEmail, setUserEmail] = useState("");
   const [email, setEmail] = useState("");
-  const [createdEmail, setCreatedEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isChecked, setChecked] = useState(false);
-  const [token] = useToken(createdEmail || user?.email);
+  const [token] = useToken(userEmail);
   const navigation = useNavigation();
 
-  if (token) {
-    return navigation.navigate("user");
-  }
+  useEffect(() => {
+    if (token) {
+      navigation.navigate("user");
+    }
+  }, [token, navigation]);
+  // useEffect(() => {
+  //   if (token) {
+  //     navigation.navigate(
+  //       allData?.userData?.role == "needy" ? "user" : "donornext"
+  //     );
+  //   }
+  // }, [token, navigation, allData?.userData?.role]);
   const onSignInPressed = async () => {
     try {
-      await signIn(email, password);
-      setCreatedEmail(email);
+      const res = await signIn(email, password);
+      console.log("🚀 ~ file: Login.js:47 ~ onSignInPressed ~ res:", res);
+      if (res) {
+        setUserEmail(email);
+      }
     } catch (err) {
       console.log(err);
       alert(err);
