@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import CustomButton from "../components/CustomButton";
+import Header from "../components/Header";
 import Loading from "../components/Loading";
-import useUpdateUser from "../hook/useUpdateSubRoleUser";
-import { userContext } from "../context/Provider";
 import Container from "../components/container";
+import { userContext } from "../context/Provider";
+import useUpdateUser from "../hook/useUpdateSubRoleUser";
 
 const FoodNeedier = () => {
   const [update, setUpdate] = useState("");
@@ -12,7 +13,7 @@ const FoodNeedier = () => {
   const { loading, error, updateUserRole } = useUpdateUser();
 
   const onRoleSelect = async () => {
-    updateUserRole(update, user?.email, "addRestaurent");
+    updateUserRole(update, user?.email, "addRestaurant");
   };
 
   if (error) return alert(error);

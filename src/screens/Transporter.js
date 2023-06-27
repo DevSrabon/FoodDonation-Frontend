@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Header } from "react-native/Libraries/NewAppScreen";
 import CustomButton from "../components/CustomButton";
 import Loading from "../components/Loading";
+import Container from "../components/container";
 import { userContext } from "../context/Provider";
 import useUpdateUser from "../hook/useUpdateSubRoleUser";
-import Container from "../components/container";
-import { Header } from "react-native/Libraries/NewAppScreen";
 
 const Transporter = () => {
   const [update, setUpdate] = useState("");
@@ -13,7 +13,7 @@ const Transporter = () => {
   const { loading, error, updateUserRole } = useUpdateUser();
 
   const onRoleSelect = async () => {
-    updateUserRole(update, user?.email, "addRestaurent");
+    updateUserRole(update, user?.email, "addRestaurant");
   };
 
   if (error) return alert(error);

@@ -10,15 +10,11 @@ import CustomInput from "../components/CustomInput";
 import Loading from "../components/Loading";
 import { userContext } from "../context/Provider";
 
-import Container from "../components/container";
-
-import Header from "../components/Header";
-
 const AddRestaurant = () => {
   // const { loading, setLoading } = useContext(AuthContext);
   const navigation = useNavigation();
 
-  const [categoryName, setCategoryName] = useState("");
+  const [restaurantName, setRestaurantName] = useState("");
   const [location, setLocation] = useState({ latitude: "", longitude: "" });
 
   const [fssaiLicense, setFSSAILicense] = useState("");
@@ -27,7 +23,7 @@ const AddRestaurant = () => {
   const { user, loading, setLoading } = userContext();
   const onAddRestaurant = async () => {
     if (
-      !categoryName ||
+      !restaurantName ||
       !location?.latitude ||
       !location?.longitude ||
       !fssaiLicense ||
@@ -35,7 +31,7 @@ const AddRestaurant = () => {
     )
       return alert("Please fill-up all the information");
     const body = {
-      categoryName,
+      restaurantName,
       location: location,
       fssaiLicense,
       panNumber,
@@ -71,25 +67,23 @@ const AddRestaurant = () => {
   };
 
   return (
-    <Container>
+    <View style={styles.container}>
       {/* <Button
                 title="Back"
                 onPress={() => {
                     navigation.goBack();
                 }}
             /> */}
-      {/* <Text style={{ fontFamily: "Bold", fontSize: 30, bottom: 10 }}>
+      <Text style={{ fontFamily: "Bold", fontSize: 30, bottom: 10 }}>
         Add Restaurant
-      </Text> */}
-      <Header>Add Restaurant</Header>
-
+      </Text>
       <Text style={{ fontFamily: "Bold", fontSize: 14, top: 6 }}>
         Restaurant Name
       </Text>
       <CustomInput
         placeholder="Restaurant Name"
-        value={categoryName}
-        setValue={setCategoryName}
+        value={restaurantName}
+        setValue={setRestaurantName}
       />
       {/* Image add part */}
       <View style={{ height: 120 }}>
@@ -159,11 +153,19 @@ const AddRestaurant = () => {
       </View>
 
       <CustomButton text="Continue" onPress={onAddRestaurant} type="primary" />
-    </Container>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingLeft: 20,
+    // alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "white",
+  },
+
   stretch: {
     width: 60,
     height: 60,

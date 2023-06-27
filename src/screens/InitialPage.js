@@ -9,19 +9,19 @@ import { userContext } from "../context/Provider";
 const InitialPage = () => {
   const navigation = useNavigation();
   const { user, signOutUser } = userContext();
-  useEffect(() => {
-    // if (user?.email) {
-    //   signOutUser;
-    //   AsyncStorage.removeItem("jwtToken");
-    // }
-    checkAuthStatus();
-  }, []);
-  const checkAuthStatus = async () => {
-    const storedToken = await AsyncStorage.getItem("jwtToken");
-    if (storedToken) {
-      navigation.navigate("login");
-    }
-  };
+  // useEffect(() => {
+  //   // if (user?.email) {
+  //   //   signOutUser;
+  //   //   AsyncStorage.removeItem("jwtToken");
+  //   // }
+  //   checkAuthStatus();
+  // }, []);
+  // const checkAuthStatus = async () => {
+  //   const storedToken = await AsyncStorage.getItem("jwtToken");
+  //   if (storedToken) {
+  //     navigation.navigate("login");
+  //   }
+  // };
   return (
     <InitContainer>
       <Text style={styles.header}> Food Donation. </Text>

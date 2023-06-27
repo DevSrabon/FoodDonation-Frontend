@@ -1,12 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
-import axios from "axios";
 import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import CustomButton from "../components/CustomButton";
-import Loading from "../components/Loading";
-import { userContext } from "../context/Provider";
 import Header from "../components/Header";
+import Loading from "../components/Loading";
 import Container from "../components/container";
+import { userContext } from "../context/Provider";
 
 const RoleSelection = () => {
   const navigation = useNavigation();
@@ -16,17 +15,29 @@ const RoleSelection = () => {
 
   const onRoleSelect = async () => {
     setLoading(true);
-    const body = { role: update, email: user?.email };
+    const body = { email: user.email, role: update };
     try {
-      const response = await axios.patch(
-        `https://food-donation-backend.vercel.app/api/v1/users/update-role`,
-        body
+      const response = await fetch(
+        "https://food-donation-backend.vercel.app/api/v1/users/update-role",
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(body),
+        }
       );
 
-      if (response.data.status === "success")
-        return navigation.navigate(response.data.data.role.toString());
+      if (response.ok) {
+        const responseData = await response.json();
+        if (responseData.status === "success") {
+          return navigation.navigate(responseData.data.role.toString());
+        }
+      } else {
+        throw new Error("Request failed with status " + response.status);
+      }
     } catch (error) {
-      alert("Error updating user:", error);
+      alert("Error updating user: " + error);
     } finally {
       setLoading(false);
     }

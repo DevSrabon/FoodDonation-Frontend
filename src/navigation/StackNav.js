@@ -1,4 +1,3 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
@@ -40,7 +39,7 @@ const StackNav = () => {
         <Stack.Screen name="needy" component={FoodNeedier} />
         <Stack.Screen name="transporter" component={Transporter} />
         <Stack.Screen name="donor" component={Donor} />
-        <Stack.Screen name="AddRestaurant" component={AddRestaurant} />
+        <Stack.Screen name="addRestaurant" component={AddRestaurant} />
         <Stack.Screen name="DonateMeal" component={DonateMeal} />
         <Stack.Screen name="donate" component={Donate} />
         <Stack.Screen name="profile" component={Profile} />
