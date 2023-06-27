@@ -7,28 +7,33 @@ import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import Loading from "../components/Loading";
 import { AuthContext } from "../context/Provider";
+import useToken from "../hook/useToken";
+import Container from "../components/container";
+import Header from "../components/Header";
 
 const Login = () => {
   const { signIn, promptAsync, user, request, loading, setLoading } =
     useContext(AuthContext);
   const [email, setEmail] = useState("");
+  const [createdEmail, setCreatedEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isChecked, setChecked] = useState(false);
+  const [token] = useToken(createdEmail || user?.email);
   const navigation = useNavigation();
 
-  const onSignInPressed = () => {
-    console.warn("signin");
-    signIn(email, password)
-      .then((result) => {
-        console.log(result);
-        setLoading(false);
-        navigation.navigate("roleSelection");
-      })
-      .catch((err) => {
-        console.log(err);
-        alert(err);
-        setLoading(false);
-      });
+  if (token) {
+    return navigation.navigate("user");
+  }
+  const onSignInPressed = async () => {
+    try {
+      await signIn(email, password);
+      setCreatedEmail(email);
+    } catch (err) {
+      console.log(err);
+      alert(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const onForgotPasswordPressed = () => {
@@ -54,12 +59,8 @@ const Login = () => {
     return <Loading />;
   }
   return (
-    <View style={styles.container}>
-      <Text
-        style={{ fontFamily: "SemiBold", fontSize: 28, bottom: 20, right: 145 }}
-      >
-        Login
-      </Text>
+    <Container>
+      <Header>Login</Header>
       <Text
         style={{ fontFamily: "SemiBold", fontSize: 14, right: 160, top: 6 }}
       >
@@ -147,17 +148,11 @@ const Login = () => {
           <CustomButton text="Signup" onPress={onSignup} type="tertiary" />
         </Text>
       </View>
-    </View>
+    </Container>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "white",
-  },
   subContainer: {
     flexDirection: "row",
 

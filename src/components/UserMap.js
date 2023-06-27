@@ -7,6 +7,7 @@ import { userContext } from "../context/Provider";
 import useFetchData from "../hook/useFetchData";
 import CustomInput from "./CustomInput";
 import Loading from "./Loading";
+import SearchHeader from "./SearchHeader";
 
 const origin = { latitude: 11.70484, longitude: 92.715733 };
 const GOOGLE_MAPS_APIKEY = "AIzaSyD7TKiBE0n8EsPH_snI7QjhGFagY0Vq3FQ";
@@ -17,71 +18,29 @@ const UserMap = () => {
   const { user } = userContext();
   const { loading, error, data } = useFetchData(`users?email=${user?.email}`);
 
+  console.log("🚀 ~ file: UserMap.js:20 ~ UserMap ~ data:", data);
   if (loading) return <Loading />;
 
   if (error) return alert(error);
 
   return (
     <View style={styles.mapContainer}>
-      <View
-        style={{
-          backgroundColor: "white",
-          width: "100%",
-          height: 400,
-          paddingVertical: 12,
-        }}
-      >
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            paddingHorizontal: 10,
-          }}
-        >
-          <Text style={{ fontFamily: "SemiBold", fontSize: 20 }}>
-            <Text
-              style={{ fontFamily: "SemiBold", fontSize: 18, color: "#B4AAF2" }}
-            >
-              {" "}
-              Wellcome,
-            </Text>{" "}
-            {data?.data?.name}
-          </Text>
-          <Image source={icons.notification} />
-        </View>
-        <View
-          style={{
-            flexDirection: "row",
-            width: "90%",
-            alignItems: "center",
-            justifyContent: "space-between",
-            marginHorizontal: 15,
-          }}
-        >
-          <CustomInput
-            placeholder="Search here"
-            value={serach}
-            setValue={setSearch}
-          />
-          <Image source={icons.settings} />
-        </View>
-      </View>
+      <SearchHeader />
+
       <MapView
         provider={PROVIDER_GOOGLE}
         style={styles.map}
         initialRegion={{
-          latitude: 11.70484,
-          longitude: 92.715733,
+          ...data?.data?.location,
           latitudeDelta: 0.0922,
           longitudeDelta: 0.0421,
         }}
       >
         <Marker
-          title="user"
-          description="this is user info"
+          title={data?.data?.restaurantName}
+          description={data?.data?.bio}
           coordinate={{
-            latitude: 11.70484,
-            longitude: 92.715733,
+            ...data?.data?.location,
           }}
         />
       </MapView>

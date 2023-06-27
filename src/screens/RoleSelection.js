@@ -3,13 +3,17 @@ import axios from "axios";
 import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import CustomButton from "../components/CustomButton";
+import Loading from "../components/Loading";
 import { userContext } from "../context/Provider";
+import Header from "../components/Header";
 
 const RoleSelection = () => {
   const navigation = useNavigation();
   const [update, setUpdate] = useState("");
   const { user } = userContext();
+  const [loading, setLoading] = useState(false);
   const onRoleSelect = async () => {
+    setLoading(true);
     const body = { role: update, email: user?.email };
     try {
       const response = await axios.patch(
@@ -18,11 +22,15 @@ const RoleSelection = () => {
       );
 
       if (response.data.status === "success")
-        return navigation.navigate(response.data.data.role);
+        return navigation.navigate(response.data.data.role.toString());
     } catch (error) {
-      console.log("Error updating user:", error);
+      alert("Error updating user:", error);
+    } finally {
+      setLoading(false);
     }
   };
+
+  if (loading) return <Loading />;
   return (
     <View style={styles.container}>
       <View style={styles.subContainer}>
@@ -31,9 +39,7 @@ const RoleSelection = () => {
         >
           Welcome,
         </Text>
-        <Text style={{ fontFamily: "SemiBold", fontSize: 24 }}>
-          Choose Your Role
-        </Text>
+        <Header>Choose Your Role</Header>
       </View>
       <View style={styles.boxContainer}>
         <Pressable style={styles.box} onPress={() => setUpdate("donor")}>

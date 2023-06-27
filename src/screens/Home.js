@@ -2,12 +2,14 @@ import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
 import React, { useState } from "react";
 import icons from "../../assets/icons";
 import CustomInput from "../components/CustomInput";
+import Container from "../components/container";
+import Header from "../components/Header";
 
 const Home = () => {
   const [search, setSearch] = useState(0);
 
   return (
-    <View style={styles.homeContainer}>
+    <Container>
       <ScrollView>
         <View
           style={{
@@ -26,7 +28,11 @@ const Home = () => {
           >
             <Text style={{ fontFamily: "SemiBold", fontSize: 20 }}>
               <Text
-                style={{ fontFamily: "SemiBold", fontSize: 18, color: "#B4AAF2" }}
+                style={{
+                  fontFamily: "SemiBold",
+                  fontSize: 18,
+                  color: "#B4AAF2",
+                }}
               >
                 {" "}
                 Wellcome,
@@ -70,16 +76,13 @@ const Home = () => {
               />
             </View>
             <View style={styles.profileTextContainer}>
-              <Text
-                style={{ fontFamily: "SemiBold", fontSize: 20, top: 6 }}
-              >
+              <Text style={{ fontFamily: "SemiBold", fontSize: 20, top: 6 }}>
                 Sourav Paul
               </Text>
               <Text style={styles.profileText}>Restaurant owner</Text>
             </View>
           </View>
           <View style={styles.contentCard}>
-
             <View style={styles.cardItemsContainer}>
               <Text style={styles.textItem1}>Exp 20min</Text>
               <Text style={styles.textItem2}>Dinner</Text>
@@ -87,21 +90,13 @@ const Home = () => {
           </View>
         </View>
       </ScrollView>
-
-    </View>
+    </Container>
   );
 };
 
 const styles = StyleSheet.create({
-  homeContainer: {
-    flex: 1,
-    paddingTop: 30,
-    justifyContent: "center",
-    backgroundColor: "white",
-
-  },
   image: {
-    width: '100%',
+    width: "100%",
     height: 200,
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
@@ -109,22 +104,22 @@ const styles = StyleSheet.create({
 
   // Card
   cardContainer: {
-    backgroundColor: '#ffffff',
+    backgroundColor: "#ffffff",
     borderRadius: 8,
-    shadowColor: '#000000',
+    shadowColor: "#000000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 2,
     margin: 10,
-    paddingHorizontal: 5
+    paddingHorizontal: 5,
   },
   cardImage: {
-    width: '100%',
+    width: "100%",
     height: 200,
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
-    marginTop: 5
+    marginTop: 5,
   },
   contentCard: {
     padding: 16,
@@ -132,11 +127,11 @@ const styles = StyleSheet.create({
 
   cardDescription: {
     fontSize: 16,
-    color: '#888888',
+    color: "#888888",
     marginTop: 16,
   },
   cardItemsContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
   },
 
   textItem1: {
@@ -152,15 +147,15 @@ const styles = StyleSheet.create({
   },
   // profile
   profileContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginTop: 10,
   },
   imageContainerProfile: {
     width: 60,
     height: 60,
     borderRadius: 50,
-    overflow: 'hidden',
+    overflow: "hidden",
     marginRight: 16,
   },
   profileImage: {
@@ -169,7 +164,7 @@ const styles = StyleSheet.create({
     height: null,
   },
   profileTextContainer: {
-    flexDirection: 'column',
+    flexDirection: "column",
   },
   profileText: {
     fontSize: 16,

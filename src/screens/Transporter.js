@@ -4,31 +4,31 @@ import CustomButton from "../components/CustomButton";
 import Loading from "../components/Loading";
 import { userContext } from "../context/Provider";
 import useUpdateUser from "../hook/useUpdateSubRoleUser";
+import Container from "../components/container";
+import { Header } from "react-native/Libraries/NewAppScreen";
 
-const Transporter = async () => {
+const Transporter = () => {
   const [update, setUpdate] = useState("");
   const { user } = userContext();
   const { loading, error, updateUserRole } = useUpdateUser();
 
   const onRoleSelect = async () => {
-    if (error) return alert(error);
-
-    updateUserRole(update, user?.email, "user");
+    updateUserRole(update, user?.email, "addRestaurent");
   };
+
+  if (error) return alert(error);
 
   if (loading) return <Loading />;
 
   return (
-    <View style={styles.container}>
+    <Container>
       <View style={styles.subContainer}>
         <Text
           style={{ fontFamily: "SemiBold", fontSize: 20, color: "#B4AAF2" }}
         >
           Transporter,
         </Text>
-        <Text style={{ fontFamily: "SemiBold", fontSize: 24 }}>
-          Choose Your Role
-        </Text>
+        <Header>Choose Your Role</Header>
       </View>
       <View style={styles.boxContainer}>
         <Pressable
@@ -72,16 +72,11 @@ const Transporter = async () => {
       <View style={{ alignItems: "center", marginTop: 30 }}>
         <CustomButton text="Continue" onPress={onRoleSelect} type="primary" />
       </View>
-    </View>
+    </Container>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    backgroundColor: "white",
-  },
   subContainer: {
     alignItems: "flex-start",
     paddingLeft: 20,

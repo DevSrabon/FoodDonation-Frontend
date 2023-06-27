@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, TextInput } from "react-native";
 import React from "react";
 import CustomButton from "../components/CustomButton";
 import { useNavigation } from "@react-navigation/native";
+import Container from "../components/container";
 
 const Otp = () => {
   const navigation = useNavigation();
@@ -12,12 +13,8 @@ const Otp = () => {
     console.warn("otp");
   };
   return (
-    <View style={styles.container}>
-      <Text
-        style={{ fontFamily: "SemiBold", fontSize: 28, right: 70, bottom: 150 }}
-      >
-        Check your Phone
-      </Text>
+    <Container>
+      <Header>Check your Phone</Header>
       <Text
         style={{
           fontFamily: "Medium",
@@ -50,17 +47,11 @@ const Otp = () => {
         Already signed up ?
         <CustomButton text="Resend Code" onPress={onResend} type="tertiary" />
       </Text>
-    </View>
+    </Container>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "white",
-  },
   input: {
     width: "13%",
 

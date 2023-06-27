@@ -12,10 +12,7 @@ import profile from "./profile.png";
 
 import fixedHeight from "./fixedHeight.png";
 
-
 import location from "./location.png";
-import image1 from "./image1.png";
-
 
 export default {
   InitialBtn,
@@ -31,6 +28,4 @@ export default {
   profile,
   fixedHeight,
   location,
-  image1,
-
 };
