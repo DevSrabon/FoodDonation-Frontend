@@ -23,7 +23,6 @@ const Donate = () => {
   const [number, setNumber] = useState("");
 
   const handleNumberChange = (value) => {
-    // Remove non-numeric characters
     const formattedValue = value.replace(/[^0-9]/g, "");
     setNumber(formattedValue);
   };
