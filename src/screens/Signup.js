@@ -4,11 +4,11 @@ import React, { useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
-import Loading from "../components/Loading";
-import { userContext } from "../context/Provider";
-import Container from "../components/container";
 import Header from "../components/Header";
+import Loading from "../components/Loading";
+import Container from "../components/container";
 import Label from "../components/label";
+import { userContext } from "../context/Provider";
 const Signup = () => {
   const { createUser, updateUser, user, promptAsync, loading, setLoading } =
     userContext();
@@ -32,16 +32,14 @@ const Signup = () => {
           phone: phoneNumber,
         }
       );
-      await setLoading(false);
       if (res.status === 201) return navigation.navigate("otp");
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
         alert("Email is already in use");
-        setLoading(false);
       } else {
-        alert("Error:", error);
-        setLoading(false);
+        alert("Error:", error.message);
       }
+    } finally {
       setLoading(false);
     }
   };

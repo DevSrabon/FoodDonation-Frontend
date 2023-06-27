@@ -17,11 +17,11 @@ const useToken = (email) => {
           if (response.data.jwtToken) {
             setToken(response.data.jwtToken);
             await AsyncStorage.setItem("jwtToken", response.data.jwtToken);
-            await setLoading(false);
           }
         } catch (error) {
           console.error("Error fetching token:", error);
-          await setLoading(false);
+        } finally {
+          setLoading(false);
         }
       };
 

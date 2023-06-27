@@ -170,6 +170,14 @@ const AddRestaurant = () => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingLeft: 20,
+    // alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "white",
+  },
+
   stretch: {
     width: 60,
     height: 60,
