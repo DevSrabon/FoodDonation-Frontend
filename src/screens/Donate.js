@@ -7,23 +7,25 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
+  ScrollView
 } from "react-native";
 
 import icons from "../../assets/icons";
 import CustomButton from "../components/CustomButton";
 import Loading from "../components/Loading";
 import { AuthContext } from "../context/Provider";
-import Container from "../components/container";
 
 const Donate = () => {
-  const { loading, setLoading } = useContext(AuthContext);
+  const { loading, setLoading } =
+    useContext(AuthContext);
   const navigation = useNavigation();
 
   const [Caption, setCaption] = useState("");
-  const [number, setNumber] = useState("");
+  const [number, setNumber] = useState('');
 
   const handleNumberChange = (value) => {
-    const formattedValue = value.replace(/[^0-9]/g, "");
+    // Remove non-numeric characters
+    const formattedValue = value.replace(/[^0-9]/g, '');
     setNumber(formattedValue);
   };
 
@@ -48,109 +50,125 @@ const Donate = () => {
     return <Loading />;
   }
   return (
-    <Container>
-      <>
-        {/* <Button 
+    <ScrollView>
+      <View style={styles.container}>
+        <>
+          {/* <Button 
                 title="Back"
                 onPress={() => {
                     navigation.goBack();
                 }}
             /> */}
-        <Text style={{ fontFamily: "SemiBold", fontSize: 30, bottom: 20 }}>
-          Donate
-        </Text>
-
-        {/* Restaurant Name */}
-        <View style={{ width: 310 }}>
-          <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-            Restaurant Name
+          <Text
+            style={{ fontFamily: "SemiBold", fontSize: 30, bottom: 20 }}
+          >
+            Donate
           </Text>
 
-          <TextInput
-            style={styles.disabledText}
-            editable={false}
-            placeholder="New Restaurant,Delhi"
-          />
-        </View>
-        <View style={{ width: 310 }}>
-          <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>Location</Text>
-
-          <TextInput
-            style={styles.disabledText}
-            editable={false}
-            placeholder="New delhi"
-          />
-        </View>
-
-        {/* Image */}
-        <View style={{ height: 120 }}>
-          <View
-            style={{
-              height: 40,
-              flexDirection: "row",
-              marginRight: 20,
-              justifyContent: "space-between",
-            }}
-          >
-            <Text style={{ fontFamily: "SemiBold", fontSize: 20, top: 6 }}>
-              Image
+          {/* Restaurant Name */}
+          <View style={{ width: 310 }}>
+            <Text
+              style={{ fontFamily: "SemiBold", fontSize: 14 }}
+            >
+              Restaurant Name
             </Text>
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonText}>Add+</Text>
-            </TouchableOpacity>
+
+            <TextInput
+              style={styles.disabledText}
+              editable={false}
+              placeholder="New Restaurant,Delhi"
+            />
+          </View>
+          <View style={{ width: 310 }}>
+            <Text
+              style={{ fontFamily: "SemiBold", fontSize: 14 }}
+            >
+              Location
+            </Text>
+
+            <TextInput
+              style={styles.disabledText}
+              editable={false}
+              placeholder="New delhi"
+            />
           </View>
 
-          <View
-            style={{
-              height: 80,
-              flexDirection: "row",
-              gap: 5,
-              marginRight: 20,
-            }}
-          >
-            <Image style={styles.stretch} source={icons.fb} />
+          {/* Image */}
+          <View style={{ height: 120 }}>
+            <View style={{ height: 40, flexDirection: 'row', marginRight: 20, justifyContent: 'space-between' }}>
+              <Text
+                style={{ fontFamily: "SemiBold", fontSize: 20, top: 6 }}
+              >
+                Image
+              </Text>
+              <TouchableOpacity style={styles.button}>
+                <Text style={styles.buttonText}>Add+</Text>
+              </TouchableOpacity>
+            </View>
+
+            <View style={{ height: 80, flexDirection: 'row', gap: 5, marginRight: 20 }}>
+              <Image
+                style={styles.stretch}
+                source={icons.fb}
+              />
+            </View>
           </View>
-        </View>
 
-        {/* Caption */}
-        <View style={{ width: 310 }}>
-          <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>Caption</Text>
+          {/* Caption */}
+          <View style={{ width: 310 }}>
+            <Text
+              style={{ fontFamily: "SemiBold", fontSize: 14 }}
+            >
+              Caption
+            </Text>
 
-          <TextInput
-            style={styles.inputText}
-            placeholder="Caption"
-            value={Caption}
-          />
-        </View>
+            <TextInput
+              style={styles.inputText}
+              placeholder="Caption"
+              value={Caption}
+            />
+          </View>
 
-        {/* No of items */}
-        <View style={{ width: 310 }}>
-          <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-            No of Items
-          </Text>
+          {/* No of items */}
+          <View style={{ width: 310 }}>
+            <Text
+              style={{ fontFamily: "SemiBold", fontSize: 14 }}
+            >
+              No of Items
+            </Text>
 
-          <TextInput
-            style={styles.inputText}
-            // editable={false}
-            keyboardType="numeric"
-            placeholder="No of Items"
-            value={number}
-            onChangeText={handleNumberChange}
-          />
-        </View>
-        <CustomButton text="Continue" onPress={onDonate} type="primary" />
-      </>
-    </Container>
+            <TextInput
+              style={styles.inputText}
+              // editable={false}
+              keyboardType="numeric"
+              placeholder="No of Items"
+              value={number}
+              onChangeText={handleNumberChange}
+            />
+            <CustomButton text="Continue" onPress={onDonate} type="primary" />
+          </View>
+        </>
+      </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingLeft: 30,
+    paddingTop: 60,
+    // alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "white",
+  },
+
   stretch: {
     width: 60,
     height: 60,
-    resizeMode: "stretch",
+    resizeMode: 'stretch',
     backgroundColor: "black",
-    borderRadius: 8,
+    borderRadius: 8
   },
 
   button: {
@@ -158,28 +176,28 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 10,
     borderRadius: 8,
-    marginLeft: 150,
+    marginLeft: 150
   },
 
   buttonText: {
-    color: "gray",
+    color: 'gray',
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: 'bold',
   },
   disabledText: {
     marginVertical: 10,
     paddingHorizontal: 10,
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: '#ccc',
     borderRadius: 5,
     height: 40,
-    backgroundColor: "#f2f2f2",
+    backgroundColor: '#f2f2f2',
   },
   inputText: {
     marginVertical: 10,
     paddingHorizontal: 10,
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: '#ccc',
     borderRadius: 5,
     height: 40,
   },

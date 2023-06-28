@@ -14,7 +14,7 @@ const Donor = () => {
   const { loading, error, updateUserRole } = useUpdateUser();
 
   const onRoleSelect = async () => {
-    updateUserRole(update, user?.email, "addRestaurant");
+    updateUserRole(update, user?.email, "AddRestaurant");
   };
 
   if (error) return alert(error);
