@@ -8,7 +8,7 @@ import {
   Text,
   TouchableOpacity,
   View,
-  ScrollView
+  ScrollView,
 } from "react-native";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import icons from "../../assets/icons";
@@ -20,6 +20,7 @@ import { userContext } from "../context/Provider";
 import Container from "../components/container";
 
 import Header from "../components/Header";
+import Label from "../components/label";
 
 const AddRestaurant = () => {
   // const { loading, setLoading } = useContext(AuthContext);
@@ -70,6 +71,10 @@ const AddRestaurant = () => {
     return <Loading />;
   }
 
+  const onImageUpload = () => {
+    console.warn("image upload");
+  };
+
   const onPressAddress = (data, details) => {
     const latitude = details.geometry.location.lat;
     const longitude = details.geometry.location.lng;
@@ -78,104 +83,101 @@ const AddRestaurant = () => {
   };
 
   return (
-    <ScrollView>
-      <View style={{ marginHorizontal: 20 }}>
-        {/* <Button
-                title="Back"
-                onPress={() => {
-                    navigation.goBack();
-                }}
-            /> */}
-        {/* <Text style={{ fontFamily: "Bold", fontSize: 30, bottom: 10 }}>
-        Add Restaurant
-      </Text> */}
+    <ScrollView style={{ flex: 1 }}>
+      <Container>
         <Header>Add Restaurant</Header>
-
-        <Text style={{ fontFamily: "Bold", fontSize: 14, top: 6 }}>
-          Restaurant Name
-        </Text>
-        
+        <Label>Restaurant Name</Label>
         <CustomInput
           placeholder="Restaurant Name"
           value={categoryName}
           setValue={setCategoryName}
         />
         {/* Image add part */}
-        <View style={{ height: 120 }}>
-          <View
-            style={{
-              height: 40,
-              flexDirection: "row",
-              marginRight: 20,
-              justifyContent: "space-between",
-            }}
-          >
-            <Text style={{ fontFamily: "SemiBold", fontSize: 20, top: 6 }}>
-              Image
-            </Text>
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonText}>Add+</Text>
-            </TouchableOpacity>
-          </View>
 
-          <View
-            style={{ height: 80, flexDirection: "row", gap: 5, marginRight: 20 }}
-          >
-            <Image style={styles.stretch} source={icons.google} />
-            <Image style={styles.stretch} source={icons.google} />
-            <Image style={styles.stretch} source={icons.google} />
-            <Image style={styles.stretch} source={icons.google} />
-          </View>
+        <View
+          style={{
+            // flex: 1,
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Label>Image</Label>
+          <CustomButton text="Add+" onPress={onImageUpload} type="tertiary" />
+        </View>
+
+        <View
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+            height: 80,
+            flexDirection: "row",
+            gap: 10,
+          }}
+        >
+          <Image style={styles.stretch} source={icons.google} />
+          <Image style={styles.stretch} source={icons.google} />
+          <Image style={styles.stretch} source={icons.google} />
+          <Image style={styles.stretch} source={icons.google} />
         </View>
 
         {/* Location */}
-        <View style={{ flex: 1 }}>
-          <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>Location</Text>
-
+        <View style={{ flex: 1, width: "90%", alignSelf: "center" }}>
+          <Label>Location</Label>
           <GooglePlacesAutocomplete
             fetchDetails={true}
-            placeholder="search"
+            placeholder="Location"
             onPress={onPressAddress}
             query={{
               key: "AIzaSyDnSNNGQQ8AhLEmcsXJbmz1_MVrbOz55rM",
               language: "en",
             }}
+            styles={{
+              textInputContainer: styles.containerStyle,
+              textInput: styles.textInputStyle,
+            }}
           />
         </View>
 
         {/* FSSAI License */}
-        <View>
-          <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-            FSSAI License
-          </Text>
-
-          <CustomInput
-            placeholder="FSSAI License"
-            value={fssaiLicense}
-            setValue={setFSSAILicense}
-          />
-        </View>
+        <Label>FSSAI License</Label>
+        <CustomInput
+          placeholder="FSSAI License"
+          value={fssaiLicense}
+          setValue={setFSSAILicense}
+        />
 
         {/* PAN number */}
-        <View>
-          <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>PAN number</Text>
-          <CustomInput
-            placeholder="PAN Number"
-            value={panNumber}
-            setValue={setPanNumber}
-            secureTextEntry={true}
+        <Label>PAN number</Label>
+        <CustomInput
+          placeholder="PAN Number"
+          value={panNumber}
+          setValue={setPanNumber}
+          secureTextEntry={true}
+        />
+        <View style={{ flex: 1, width: "90%" }}>
+          <CustomButton
+            text="Continue"
+            onPress={onAddRestaurant}
+            type="primary"
           />
         </View>
-
-        <CustomButton text="Continue" onPress={onAddRestaurant} type="primary" />
-
-      </View>
-
+      </Container>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingLeft: 20,
+    // alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "white",
+  },
+
   stretch: {
     width: 60,
     height: 60,
@@ -183,17 +185,15 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
     borderRadius: 8,
   },
-  button: {
-    backgroundColor: "white",
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    borderRadius: 8,
-    marginLeft: 150,
+  containerStyle: {
+    borderColor: "#A2A2A6",
+    borderWidth: 1,
+    borderRadius: 7,
+    paddingHorizontal: 2,
+    marginVertical: 5,
   },
-  buttonText: {
-    color: "gray",
-    fontSize: 18,
-    fontWeight: "bold",
+  textInputStyle: {
+    // fontSize: 16,
   },
 });
 

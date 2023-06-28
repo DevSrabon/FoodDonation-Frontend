@@ -18,6 +18,8 @@ import CustomInput from "../components/CustomInput";
 import Loading from "../components/Loading";
 import { userContext } from "../context/Provider";
 import Header from "../components/Header";
+import icons from "../../assets/icons";
+import Label from "../components/label";
 
 const SERVER_URL = "http://localhost:3000";
 
@@ -95,84 +97,83 @@ const Profile = () => {
   if (loading) return <Loading />;
 
   return (
-    <ScrollView>
+    <ScrollView style={{ flex: 1 }}>
       <Container>
         <Header> Your Profile</Header>
-        <View style={{ alignSelf: "flex-start" }}></View>
 
         <View
           style={{
             flex: 1,
-            alignSelf: "center",
-            marginTop: 50,
+            alignItems: "center",
+            justifyContent: "flex-start",
+            bottom: 130,
           }}
         >
-          <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
+          <Text
+            style={{ fontFamily: "SemiBold", fontSize: 14, marginBottom: 5 }}
+          >
             Profile Picture
           </Text>
-          <View style={{ alignSelf: "center", height: 200 }}>
-            <View
-              style={{
-                flex: 1,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <View
-                style={{
-                  flex: 1,
-                  alignItems: "center",
-                  justifyContent: "center",
-                }}
-              >
-                {photo && (
-                  <>
-                    <Image
-                      source={{ uri: photo.uri }}
-                      style={{ width: 300, height: 300 }}
-                    />
-                    <Button title="Upload Photo" onPress={handleUploadPhoto} />
-                  </>
-                )}
-                <Button title="Choose Photo" onPress={handleChoosePhoto} />
-              </View>
-              {/* <Image source={icons.profile} /> */}
-            </View>
-          </View>
-          <View
-            style={{
-              flex: 1,
-              alignItems: "center",
-              justifyContent: "center",
-              width: "100%",
-              bottom: 100,
-            }}
-          >
-            <Text
-              style={{ fontFamily: "SemiBold", fontSize: 14, marginRight: 330 }}
-            >
-              Bio
-            </Text>
 
-            <CustomInput
-              placeholder="About Yourself"
-              value={bio}
-              setValue={setBio}
-              multiline={true}
-              numberOfLines={10}
-            />
-          </View>
           <View
             style={{
-              flex: 1,
               alignItems: "center",
               justifyContent: "center",
-              width: "100%",
-              bottom: 120,
+              // borderColor: "red",
+              width: 55,
+              height: 55,
+              borderRadius: 50,
+              // borderWidth: 1,
             }}
           >
-            <CustomButton text="Done" onPress={onBioSetup} type="primary" />
+            <Image source={icons.profile} />
           </View>
+          {photo && (
+            <>
+              <Image
+                source={{ uri: photo.uri }}
+                style={{
+                  width: 300,
+                  height: 300,
+                }}
+              />
+
+              <Button title="Upload Photo" onPress={handleUploadPhoto} />
+            </>
+          )}
+          <Button title="Choose Photo" onPress={handleChoosePhoto} />
+        </View>
+
+        {/* <Image source={icons.profile} /> */}
+
+        <View
+          style={{
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+            width: "100%",
+            bottom: 170,
+          }}
+        >
+          <Label>Bio</Label>
+          <CustomInput
+            placeholder="About Yourself"
+            value={bio}
+            setValue={setBio}
+            multiline={true}
+            numberOfLines={10}
+          />
+        </View>
+        <View
+          style={{
+            flex: 1,
+            bottom: 220,
+            alignItems: "center",
+            justifyContent: "center",
+            width: "90%",
+          }}
+        >
+          <CustomButton text="Done" onPress={onBioSetup} type="primary" />
         </View>
       </Container>
     </ScrollView>
