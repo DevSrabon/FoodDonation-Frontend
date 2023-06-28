@@ -7,7 +7,7 @@ import {
   Image,
   TouchableOpacity,
   TextInput,
-  ScrollView
+  ScrollView,
 } from "react-native";
 
 import icons from "../../assets/icons";
@@ -16,16 +16,15 @@ import Loading from "../components/Loading";
 import { AuthContext } from "../context/Provider";
 
 const Donate = () => {
-  const { loading, setLoading } =
-    useContext(AuthContext);
+  const { loading, setLoading } = useContext(AuthContext);
   const navigation = useNavigation();
 
   const [Caption, setCaption] = useState("");
-  const [number, setNumber] = useState('');
+  const [number, setNumber] = useState("");
 
   const handleNumberChange = (value) => {
     // Remove non-numeric characters
-    const formattedValue = value.replace(/[^0-9]/g, '');
+    const formattedValue = value.replace(/[^0-9]/g, "");
     setNumber(formattedValue);
   };
 
@@ -59,17 +58,13 @@ const Donate = () => {
                     navigation.goBack();
                 }}
             /> */}
-          <Text
-            style={{ fontFamily: "SemiBold", fontSize: 30, bottom: 20 }}
-          >
+          <Text style={{ fontFamily: "SemiBold", fontSize: 30, bottom: 20 }}>
             Donate
           </Text>
 
           {/* Restaurant Name */}
           <View style={{ width: 310 }}>
-            <Text
-              style={{ fontFamily: "SemiBold", fontSize: 14 }}
-            >
+            <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
               Restaurant Name
             </Text>
 
@@ -80,9 +75,7 @@ const Donate = () => {
             />
           </View>
           <View style={{ width: 310 }}>
-            <Text
-              style={{ fontFamily: "SemiBold", fontSize: 14 }}
-            >
+            <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
               Location
             </Text>
 
@@ -95,10 +88,15 @@ const Donate = () => {
 
           {/* Image */}
           <View style={{ height: 120 }}>
-            <View style={{ height: 40, flexDirection: 'row', marginRight: 20, justifyContent: 'space-between' }}>
-              <Text
-                style={{ fontFamily: "SemiBold", fontSize: 20, top: 6 }}
-              >
+            <View
+              style={{
+                height: 40,
+                flexDirection: "row",
+                marginRight: 20,
+                justifyContent: "space-between",
+              }}
+            >
+              <Text style={{ fontFamily: "SemiBold", fontSize: 20, top: 6 }}>
                 Image
               </Text>
               <TouchableOpacity style={styles.button}>
@@ -106,19 +104,21 @@ const Donate = () => {
               </TouchableOpacity>
             </View>
 
-            <View style={{ height: 80, flexDirection: 'row', gap: 5, marginRight: 20 }}>
-              <Image
-                style={styles.stretch}
-                source={icons.fb}
-              />
+            <View
+              style={{
+                height: 80,
+                flexDirection: "row",
+                gap: 5,
+                marginRight: 20,
+              }}
+            >
+              <Image style={styles.stretch} source={icons.fb} />
             </View>
           </View>
 
           {/* Caption */}
           <View style={{ width: 310 }}>
-            <Text
-              style={{ fontFamily: "SemiBold", fontSize: 14 }}
-            >
+            <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
               Caption
             </Text>
 
@@ -131,9 +131,7 @@ const Donate = () => {
 
           {/* No of items */}
           <View style={{ width: 310 }}>
-            <Text
-              style={{ fontFamily: "SemiBold", fontSize: 14 }}
-            >
+            <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
               No of Items
             </Text>
 
@@ -166,9 +164,9 @@ const styles = StyleSheet.create({
   stretch: {
     width: 60,
     height: 60,
-    resizeMode: 'stretch',
+    resizeMode: "stretch",
     backgroundColor: "black",
-    borderRadius: 8
+    borderRadius: 8,
   },
 
   button: {
@@ -176,28 +174,28 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 10,
     borderRadius: 8,
-    marginLeft: 150
+    marginLeft: 150,
   },
 
   buttonText: {
-    color: 'gray',
+    color: "gray",
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   disabledText: {
     marginVertical: 10,
     paddingHorizontal: 10,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 5,
     height: 40,
-    backgroundColor: '#f2f2f2',
+    backgroundColor: "#f2f2f2",
   },
   inputText: {
     marginVertical: 10,
     paddingHorizontal: 10,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: "#ccc",
     borderRadius: 5,
     height: 40,
   },
