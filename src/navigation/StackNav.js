@@ -19,6 +19,7 @@ import Profile from "../screens/Profile";
 import Signup from "../screens/Signup";
 import Transporter from "../screens/Transporter";
 import BottomNav from "./BottomNav";
+import InitialPage from "../screens/InitialPage";
 
 const Stack = createNativeStackNavigator();
 
