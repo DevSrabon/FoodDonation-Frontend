@@ -7,9 +7,6 @@ import Container from "../components/container";
 import { userContext } from "../context/Provider";
 import useUpdateUser from "../hook/useUpdateSubRoleUser";
 
-import Container from "../components/container";
-import Header from "../components/Header";
-
 
 const Donor = () => {
   const [update, setUpdate] = useState("");
@@ -18,7 +15,7 @@ const Donor = () => {
   const { loading, error, updateUserRole } = useUpdateUser();
 
   const onRoleSelect = async () => {
-    updateUserRole(update, user?.email, "addRestaurent");
+    updateUserRole(update, user?.email, "AddRestaurant");
   };
 
   if (error) return alert(error);

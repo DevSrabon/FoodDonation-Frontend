@@ -2,7 +2,14 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 
 import axios from "axios";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ScrollView
+} from "react-native";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import icons from "../../assets/icons";
 import CustomButton from "../components/CustomButton";
@@ -71,95 +78,100 @@ const AddRestaurant = () => {
   };
 
   return (
-    <Container>
-      {/* <Button
+    <ScrollView>
+      <View style={{ marginHorizontal: 20 }}>
+        {/* <Button
                 title="Back"
                 onPress={() => {
                     navigation.goBack();
                 }}
             /> */}
-      {/* <Text style={{ fontFamily: "Bold", fontSize: 30, bottom: 10 }}>
+        {/* <Text style={{ fontFamily: "Bold", fontSize: 30, bottom: 10 }}>
         Add Restaurant
       </Text> */}
-      <Header>Add Restaurant</Header>
+        <Header>Add Restaurant</Header>
 
-      <Text style={{ fontFamily: "Bold", fontSize: 14, top: 6 }}>
-        Restaurant Name
-      </Text>
-      <CustomInput
-        placeholder="Restaurant Name"
-        value={categoryName}
-        setValue={setCategoryName}
-      />
-      {/* Image add part */}
-      <View style={{ height: 120 }}>
-        <View
-          style={{
-            height: 40,
-            flexDirection: "row",
-            marginRight: 20,
-            justifyContent: "space-between",
-          }}
-        >
-          <Text style={{ fontFamily: "SemiBold", fontSize: 20, top: 6 }}>
-            Image
-          </Text>
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Add+</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View
-          style={{ height: 80, flexDirection: "row", gap: 5, marginRight: 20 }}
-        >
-          <Image style={styles.stretch} source={icons.google} />
-          <Image style={styles.stretch} source={icons.google} />
-          <Image style={styles.stretch} source={icons.google} />
-          <Image style={styles.stretch} source={icons.google} />
-        </View>
-      </View>
-
-      {/* Location */}
-      <View style={{ flex: 1 }}>
-        <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>Location</Text>
-
-        <GooglePlacesAutocomplete
-          fetchDetails={true}
-          placeholder="search"
-          onPress={onPressAddress}
-          query={{
-            key: "AIzaSyDnSNNGQQ8AhLEmcsXJbmz1_MVrbOz55rM",
-            language: "en",
-          }}
-        />
-      </View>
-
-      {/* FSSAI License */}
-      <View>
-        <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-          FSSAI License
+        <Text style={{ fontFamily: "Bold", fontSize: 14, top: 6 }}>
+          Restaurant Name
         </Text>
-
+        
         <CustomInput
-          placeholder="FSSAI License"
-          value={fssaiLicense}
-          setValue={setFSSAILicense}
+          placeholder="Restaurant Name"
+          value={categoryName}
+          setValue={setCategoryName}
         />
+        {/* Image add part */}
+        <View style={{ height: 120 }}>
+          <View
+            style={{
+              height: 40,
+              flexDirection: "row",
+              marginRight: 20,
+              justifyContent: "space-between",
+            }}
+          >
+            <Text style={{ fontFamily: "SemiBold", fontSize: 20, top: 6 }}>
+              Image
+            </Text>
+            <TouchableOpacity style={styles.button}>
+              <Text style={styles.buttonText}>Add+</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View
+            style={{ height: 80, flexDirection: "row", gap: 5, marginRight: 20 }}
+          >
+            <Image style={styles.stretch} source={icons.google} />
+            <Image style={styles.stretch} source={icons.google} />
+            <Image style={styles.stretch} source={icons.google} />
+            <Image style={styles.stretch} source={icons.google} />
+          </View>
+        </View>
+
+        {/* Location */}
+        <View style={{ flex: 1 }}>
+          <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>Location</Text>
+
+          <GooglePlacesAutocomplete
+            fetchDetails={true}
+            placeholder="search"
+            onPress={onPressAddress}
+            query={{
+              key: "AIzaSyDnSNNGQQ8AhLEmcsXJbmz1_MVrbOz55rM",
+              language: "en",
+            }}
+          />
+        </View>
+
+        {/* FSSAI License */}
+        <View>
+          <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
+            FSSAI License
+          </Text>
+
+          <CustomInput
+            placeholder="FSSAI License"
+            value={fssaiLicense}
+            setValue={setFSSAILicense}
+          />
+        </View>
+
+        {/* PAN number */}
+        <View>
+          <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>PAN number</Text>
+          <CustomInput
+            placeholder="PAN Number"
+            value={panNumber}
+            setValue={setPanNumber}
+            secureTextEntry={true}
+          />
+        </View>
+
+        <CustomButton text="Continue" onPress={onAddRestaurant} type="primary" />
+
       </View>
 
-      {/* PAN number */}
-      <View>
-        <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>PAN number</Text>
-        <CustomInput
-          placeholder="PAN Number"
-          value={panNumber}
-          setValue={setPanNumber}
-          secureTextEntry={true}
-        />
-      </View>
-
-      <CustomButton text="Continue" onPress={onAddRestaurant} type="primary" />
-    </Container>
+    </ScrollView>
   );
 };
 
