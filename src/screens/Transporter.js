@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { Header } from "react-native/Libraries/NewAppScreen";
+import Header from "../components/Header";
 import CustomButton from "../components/CustomButton";
 import Loading from "../components/Loading";
 import Container from "../components/container";
 import { userContext } from "../context/Provider";
+
 import useUpdateUser from "../hook/useUpdateSubRoleUser";
 
 const Transporter = () => {
@@ -22,12 +23,32 @@ const Transporter = () => {
 
   return (
     <Container>
-      <View style={styles.subContainer}>
+      <View
+        style={{
+          flex: 1,
+          paddingHorizontal: 10,
+          alignSelf: "flex-start",
+          justifyContent: "center",
+        }}
+      >
         <Text
-          style={{ fontFamily: "SemiBold", fontSize: 20, color: "#B4AAF2" }}
+          style={{
+            fontFamily: "SemiBold",
+            fontSize: 20,
+            color: "#B4AAF2",
+          }}
         >
           Transporter,
         </Text>
+      </View>
+      <View
+        style={{
+          flex: 1,
+          alignSelf: "flex-start",
+          justifyContent: "flex-start",
+          bottom: 130,
+        }}
+      >
         <Header>Choose Your Role</Header>
       </View>
       <View style={styles.boxContainer}>
@@ -69,7 +90,15 @@ const Transporter = () => {
           </Text>
         </Pressable>
       </View>
-      <View style={{ alignItems: "center", marginTop: 30 }}>
+      <View
+        style={{
+          flex: 1,
+          width: "90%",
+          alignItems: "center",
+          marginTop: 20,
+          bottom: 200,
+        }}
+      >
         <CustomButton text="Continue" onPress={onRoleSelect} type="primary" />
       </View>
     </Container>
@@ -77,26 +106,23 @@ const Transporter = () => {
 };
 
 const styles = StyleSheet.create({
-  subContainer: {
-    alignItems: "flex-start",
-    paddingLeft: 20,
-    marginBottom: 20,
-    bottom: 60,
-  },
   boxContainer: {
-    alignItems: "center",
-    bottom: 60,
+    flex: 1,
+    alignSelf: "center",
+    justifyContent: "flex-end",
+    bottom: 150,
   },
   box: {
-    width: "90%",
+    width: 340,
     padding: 5,
     paddingLeft: 10,
-    paddingRight: 80,
+    paddingRight: 20,
     marginVertical: 5,
     alignItems: "flex-start",
     borderRadius: 10,
     backgroundColor: "#F5F6F7",
     borderColor: "#F5F6F7",
+    bottom: 80,
   },
 });
 

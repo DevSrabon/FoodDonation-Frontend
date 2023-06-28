@@ -142,14 +142,12 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: "center",
     justifyContent: "flex-end",
-
-    // bottom: 60,
   },
   box: {
-    width: 350,
+    width: 340,
     padding: 5,
     paddingLeft: 10,
-    // paddingRight: 80,
+    paddingRight: 20,
     marginVertical: 5,
     alignItems: "flex-start",
     borderRadius: 10,

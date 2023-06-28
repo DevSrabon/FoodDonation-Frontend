@@ -7,6 +7,7 @@ import { userContext } from "../context/Provider";
 import Chat from "../screens/Chat";
 import Donor from "../screens/Donor";
 import User from "../screens/User";
+import Donate from "../screens/Donate";
 
 const Tab = createBottomTabNavigator();
 const BottomNav = () => {
@@ -78,8 +79,8 @@ const BottomNav = () => {
       />
       {allData?.userData?.role !== "needy" ? (
         <Tab.Screen
-          name="donornext"
-          component={Donor}
+          name="donate"
+          component={Donate}
           options={{
             title: "Donate",
             tabBarIcon: ({ focused, color }) => (
@@ -93,8 +94,8 @@ const BottomNav = () => {
         />
       ) : (
         <Tab.Screen
-          name="donornext"
-          component={Donor}
+          name="chat"
+          component={Chat}
           options={{
             title: "Help",
             tabBarIcon: ({ focused, color }) => (

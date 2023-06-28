@@ -6,7 +6,6 @@ import Chat from "../screens/Chat";
 import Donor from "../screens/Donor";
 import FoodNeedier from "../screens/FoodNeedier";
 import Home from "../screens/Home";
-import InitialPage from "../screens/InitialPage";
 import Intro from "../screens/Intro";
 import Login from "../screens/Login";
 import Otp from "../screens/Otp";
@@ -20,7 +19,7 @@ import Profile from "../screens/Profile";
 import Signup from "../screens/Signup";
 import Transporter from "../screens/Transporter";
 import BottomNav from "./BottomNav";
-// import LinkList from "react-native/Libraries/NewAppScreen/components/LearnMoreLinks";
+import LinkList from "react-native/Libraries/NewAppScreen/components/LearnMoreLinks";
 
 const Stack = createNativeStackNavigator();
 
@@ -28,9 +27,10 @@ const StackNav = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="profile"
+        initialRouteName="initial"
         screenOptions={{ headerShown: false }}
       >
+        <Stack.Screen name="initial" component={InitialPage} />
         <Stack.Screen name="initial" component={Profile} />
         {/* <Stack.Screen name="initial" component={InitialPage} /> */}
         <Stack.Screen name="intro" component={Intro} />
