@@ -83,7 +83,11 @@ const AddRestaurant = () => {
   };
 
   return (
-    <ScrollView style={{ flex: 1 }}>
+    <ScrollView
+      nestedScrollEnabled={true}
+      style={{ flex: 1 }}
+      keyboardShouldPersistTaps="handled"
+    >
       <Container>
         <Header>Add Restaurant</Header>
         <Label>Restaurant Name</Label>
