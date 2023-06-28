@@ -20,7 +20,7 @@ import Profile from "../screens/Profile";
 import Signup from "../screens/Signup";
 import Transporter from "../screens/Transporter";
 import BottomNav from "./BottomNav";
-import LinkList from "react-native/Libraries/NewAppScreen/components/LearnMoreLinks";
+// import LinkList from "react-native/Libraries/NewAppScreen/components/LearnMoreLinks";
 
 const Stack = createNativeStackNavigator();
 
@@ -31,7 +31,7 @@ const StackNav = () => {
         initialRouteName="profile"
         screenOptions={{ headerShown: false }}
       >
-        <Stack.Screen name="initial" component={Donate} />
+        <Stack.Screen name="initial" component={Profile} />
         {/* <Stack.Screen name="initial" component={InitialPage} /> */}
         <Stack.Screen name="intro" component={Intro} />
         <Stack.Screen name="login" component={Login} />
@@ -44,7 +44,7 @@ const StackNav = () => {
         <Stack.Screen name="addRestaurant" component={AddRestaurant} />
         <Stack.Screen name="DonateMeal" component={DonateMeal} />
         <Stack.Screen name="donate" component={Donate} />
-        <Stack.Screen name="profile" component={Profile} />
+        {/* <Stack.Screen name="profile" component={Profile} /> */}
         <Stack.Screen name="chat" component={Chat} />
         <Stack.Screen name="home" component={Home} />
         <Stack.Screen name="user">
