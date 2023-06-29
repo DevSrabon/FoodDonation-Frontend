@@ -30,7 +30,6 @@ const StackNav = () => {
         initialRouteName="initial"
         screenOptions={{ headerShown: false }}
       >
-        {/* <Stack.Screen name="initial" component={Donate} /> */}
         <Stack.Screen name="initial" component={InitialPage} />
         <Stack.Screen name="intro" component={Intro} />
         <Stack.Screen name="login" component={Login} />
