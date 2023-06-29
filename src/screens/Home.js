@@ -1,13 +1,16 @@
-import { View, Text, Image, StyleSheet, ScrollView } from "react-native";
 import React, { useState } from "react";
+import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import icons from "../../assets/icons";
 import CustomInput from "../components/CustomInput";
+import Loading from "../components/Loading";
 import Container from "../components/container";
-import Header from "../components/Header";
+import useFetchData from "../hook/useFetchData";
 
 const Home = () => {
   const [search, setSearch] = useState(0);
-
+  const { loading, error, data } = useFetchData("posts/getPost");
+  if (loading) return <Loading />;
+  if (error) return alert(error.message);
   return (
     <Container>
       <ScrollView>
@@ -58,37 +61,39 @@ const Home = () => {
             <Image source={icons.settings} />
           </View>
         </View>
-        <View style={styles.cardContainer}>
-          <Image
-            source={icons.fixedHeight} // Replace with the path to your image
-            style={styles.cardImage}
-            resizeMode="cover"
-          />
-          <Text style={styles.cardDescription}>
-            We focus on ergonomics and meeting you where you work.
-          </Text>
-          <View style={styles.profileContainer}>
-            <View style={styles.imageContainerProfile}>
-              <Image
-                source={icons.profile} // Replace with the path to your image
-                style={styles.profileImage}
-                resizeMode="cover"
-              />
+        {data?.map((item) => (
+          <View style={styles.cardContainer}>
+            <Image
+              source={icons.fixedHeight} // Replace with the path to your image
+              style={styles.cardImage}
+              resizeMode="cover"
+            />
+            <Text style={styles.cardDescription}>
+              We focus on ergonomics and meeting you where you work.
+            </Text>
+            <View style={styles.profileContainer}>
+              <View style={styles.imageContainerProfile}>
+                <Image
+                  source={icons.profile} // Replace with the path to your image
+                  style={styles.profileImage}
+                  resizeMode="cover"
+                />
+              </View>
+              <View style={styles.profileTextContainer}>
+                <Text style={{ fontFamily: "SemiBold", fontSize: 20, top: 6 }}>
+                  {item.userName}
+                </Text>
+                <Text style={styles.profileText}>{item.postCategoryName}</Text>
+              </View>
             </View>
-            <View style={styles.profileTextContainer}>
-              <Text style={{ fontFamily: "SemiBold", fontSize: 20, top: 6 }}>
-                Sourav Paul
-              </Text>
-              <Text style={styles.profileText}>Restaurant owner</Text>
+            <View style={styles.contentCard}>
+              <View style={styles.cardItemsContainer}>
+                <Text style={styles.textItem1}>Exp 20min</Text>
+                <Text style={styles.textItem2}>Dinner</Text>
+              </View>
             </View>
           </View>
-          <View style={styles.contentCard}>
-            <View style={styles.cardItemsContainer}>
-              <Text style={styles.textItem1}>Exp 20min</Text>
-              <Text style={styles.textItem2}>Dinner</Text>
-            </View>
-          </View>
-        </View>
+        ))}
       </ScrollView>
     </Container>
   );
