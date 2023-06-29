@@ -39,7 +39,7 @@ const UserMap = () => {
         }}
       >
         <Marker
-          title={data?.restaurantName}
+          title={data?.categoryName}
           description={data?.bio}
           coordinate={{
             ...data?.location,
