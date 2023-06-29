@@ -1,7 +1,13 @@
 // Import the functions you need from the SDKs you need
 
-import { getApps, getApp, initializeApp } from "firebase/app";
-import { getStorage } from "@firebase/storage";
+import { getApp, getApps, initializeApp } from "firebase/app";
+import {
+  getDownloadURL,
+  getStorage,
+  listAll,
+  ref,
+  uploadBytesResumable,
+} from "firebase/storage";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -13,7 +19,7 @@ const firebaseConfig = {
   projectId: "food-donation-13ce7",
   storageBucket: "food-donation-13ce7.appspot.com",
   messagingSenderId: "447966582861",
-  appId: "1:447966582861:web:906897fbc7176fc22aa404"
+  appId: "1:447966582861:web:906897fbc7176fc22aa404",
 };
 
 // Initialize Firebase
@@ -21,7 +27,58 @@ const firebaseConfig = {
 
 // export default app;
 
-const app = getApps.length > 0 ? getApp(app) : initializeApp(firebaseConfig);
-const storage = getStorage(app);
+if (getApps().length === 0) {
+  initializeApp(firebaseConfig);
+}
+const fbApp = getApp();
+const fbStorage = getStorage();
 
-export { app, storage };
+const listFiles = async () => {
+  const storage = getStorage();
+
+  // Create a reference under which you want to list
+  const listRef = ref(storage, "images");
+
+  // Find all the prefixes and items.
+  const listResp = await listAll(listRef);
+  return listResp.items;
+};
+
+/**
+ *
+ * @param {*} uri
+ * @param {*} name
+ */
+const uploadToFirebase = async (uri, name, onProgress) => {
+  const fetchResponse = await fetch(uri);
+  const theBlob = await fetchResponse.blob();
+
+  const imageRef = ref(getStorage(), `images/${name}`);
+
+  const uploadTask = uploadBytesResumable(imageRef, theBlob);
+
+  return new Promise((resolve, reject) => {
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        onProgress && onProgress(progress);
+      },
+      (error) => {
+        // Handle unsuccessful uploads
+        console.log(error);
+        reject(error);
+      },
+      async () => {
+        const downloadUrl = await getDownloadURL(uploadTask.snapshot.ref);
+        resolve({
+          downloadUrl,
+          metadata: uploadTask.snapshot.metadata,
+        });
+      }
+    );
+  });
+};
+
+export { fbApp as app, fbStorage, listFiles, uploadToFirebase };
