@@ -62,7 +62,7 @@ const Home = () => {
           </View>
         </View>
         {data?.map((item) => (
-          <View style={styles.cardContainer}>
+          <View key={item._id} style={styles.cardContainer}>
             <Image
               source={icons.fixedHeight} // Replace with the path to your image
               style={styles.cardImage}
