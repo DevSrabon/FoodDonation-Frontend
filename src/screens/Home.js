@@ -5,6 +5,7 @@ import CustomInput from "../components/CustomInput";
 import Loading from "../components/Loading";
 import Container from "../components/container";
 import useFetchData from "../hook/useFetchData";
+import SearchHeader from "../components/SearchHeader";
 
 const Home = () => {
   const [search, setSearch] = useState(0);
@@ -13,54 +14,8 @@ const Home = () => {
   if (error) return alert(error.message);
   return (
     <Container>
-      <ScrollView>
-        <View
-          style={{
-            backgroundColor: "white",
-            width: "100%",
-            height: 100,
-            // paddingVertical: 12,
-          }}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              paddingHorizontal: 10,
-            }}
-          >
-            <Text style={{ fontFamily: "SemiBold", fontSize: 20 }}>
-              <Text
-                style={{
-                  fontFamily: "SemiBold",
-                  fontSize: 18,
-                  color: "#B4AAF2",
-                }}
-              >
-                {" "}
-                Wellcome,
-              </Text>{" "}
-              Paul
-            </Text>
-            <Image source={icons.notification} />
-          </View>
-          <View
-            style={{
-              flexDirection: "row",
-              width: "90%",
-              alignItems: "center",
-              justifyContent: "space-between",
-              marginHorizontal: 15,
-            }}
-          >
-            <CustomInput
-              placeholder="Search here"
-              value={search}
-              setValue={setSearch}
-            />
-            <Image source={icons.settings} />
-          </View>
-        </View>
+      <SearchHeader />
+      <ScrollView style={{ flex: 1, bottom: 250 }}>
         {data?.map((item) => (
           <View key={item._id} style={styles.cardContainer}>
             <Image
