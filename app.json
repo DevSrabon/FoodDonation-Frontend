@@ -20,11 +20,21 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.FoodDonation"
+      "package": "com.mahbubmorshed.FoodDonation",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyDnSNNGQQ8AhLEmcsXJbmz1_MVrbOz55rM"
+        }
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "scheme": "myApp"
+    "scheme": "myApp",
+    "extra": {
+      "eas": {
+        "projectId": "da86565a-f3c8-4d26-bc1b-24fa753f59c4"
+      }
+    }
   }
 }

@@ -7,6 +7,7 @@ import { userContext } from "../context/Provider";
 import Chat from "../screens/Chat";
 import Donate from "../screens/Donate";
 import User from "../screens/User";
+import Donate from "../screens/Donate";
 
 const Tab = createBottomTabNavigator();
 const BottomNav = () => {
