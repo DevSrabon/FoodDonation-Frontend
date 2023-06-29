@@ -5,7 +5,7 @@ import Home from "../screens/Home";
 // import Donate from "../screens/Donate";
 import { userContext } from "../context/Provider";
 import Chat from "../screens/Chat";
-import Donor from "../screens/Donor";
+import Donate from "../screens/Donate";
 import User from "../screens/User";
 import Donate from "../screens/Donate";
 
@@ -94,8 +94,8 @@ const BottomNav = () => {
         />
       ) : (
         <Tab.Screen
-          name="chat"
-          component={Chat}
+          name="donate"
+          component={Donate}
           options={{
             title: "Help",
             tabBarIcon: ({ focused, color }) => (

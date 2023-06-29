@@ -1,49 +1,91 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
+  Image,
+  ScrollView,
   StyleSheet,
   Text,
-  View,
-  Image,
-  TouchableOpacity,
   TextInput,
-  ScrollView,
+  TouchableOpacity,
+  View,
 } from "react-native";
 
+import axios from "axios";
 import icons from "../../assets/icons";
 import CustomButton from "../components/CustomButton";
 import Loading from "../components/Loading";
 import { AuthContext } from "../context/Provider";
 
 const Donate = () => {
-  const { loading, setLoading } = useContext(AuthContext);
+  const { loading, setLoading, allData } = useContext(AuthContext);
+  const { name, role, subRole, email, location, categoryName, phone } =
+    allData.userData;
   const navigation = useNavigation();
-
-  const [Caption, setCaption] = useState("");
-  const [number, setNumber] = useState("");
-
+  const [address, setAddress] = useState("");
+  const [caption, setCaption] = useState("");
+  const [noOfItem, setNoOfItem] = useState("");
+  const longitude = location?.longitude;
+  const latitude = location?.latitude;
   const handleNumberChange = (value) => {
     // Remove non-numeric characters
     const formattedValue = value.replace(/[^0-9]/g, "");
-    setNumber(formattedValue);
+    setNoOfItem(formattedValue);
   };
 
   const onDonate = async () => {
-    navigation.navigate("DonateMeal", {
-      number,
-    });
-    const DonorName = { displayName: DonorName };
+    setLoading(true);
+    const body = {
+      userName: name,
+      postCategoryName: categoryName,
+      email,
+      location,
+      role,
+      caption,
+      noOfItem,
+    };
     try {
-      await setLoading(false);
+      const res = await axios.post(
+        `https://food-donation-backend.vercel.app/api/v1/posts/createPost`,
+        body
+      );
+      if (res.data.status === "success") {
+        navigation.navigate("DonateMeal", {
+          number: noOfItem,
+          resData: res.data.data,
+        });
+      }
     } catch (error) {
       if (error.code === "This-Donor-already-in-use") {
         alert("The Donor is already in use");
-        setLoading(false);
       } else {
         console.log("Error:", error);
       }
+    } finally {
+      setLoading(false);
     }
   };
+
+  const getAddressFromCoordinates = async () => {
+    try {
+      const response = await axios.get(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyD7TKiBE0n8EsPH_snI7QjhGFagY0Vq3FQ`
+      );
+
+      const results = response.data.results;
+      if (results.length > 0) {
+        const formattedAddress = results[0].formatted_address;
+        setAddress(formattedAddress);
+      } else {
+        setAddress("No results found");
+      }
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  };
+
+  useEffect(() => {
+    getAddressFromCoordinates();
+  }, [latitude, longitude]);
 
   if (loading) {
     return <Loading />;
@@ -71,7 +113,7 @@ const Donate = () => {
             <TextInput
               style={styles.disabledText}
               editable={false}
-              placeholder="New Restaurant,Delhi"
+              placeholder={subRole}
             />
           </View>
           <View style={{ width: 310 }}>
@@ -82,7 +124,7 @@ const Donate = () => {
             <TextInput
               style={styles.disabledText}
               editable={false}
-              placeholder="New delhi"
+              placeholder={address}
             />
           </View>
 
@@ -125,7 +167,8 @@ const Donate = () => {
             <TextInput
               style={styles.inputText}
               placeholder="Caption"
-              value={Caption}
+              value={caption}
+              onChangeText={(text) => setCaption(text)}
             />
           </View>
 
@@ -140,7 +183,7 @@ const Donate = () => {
               // editable={false}
               keyboardType="numeric"
               placeholder="No of Items"
-              value={number}
+              value={noOfItem}
               onChangeText={handleNumberChange}
             />
             <CustomButton text="Continue" onPress={onDonate} type="primary" />
