@@ -97,7 +97,7 @@ const Donate = () => {
       noOfItem,
       imageUrls,
     };
-    navigation.navigate("DonateMeal", {
+    navigation.navigate("helpMeal", {
       number: noOfItem,
       resData: body,
     });
@@ -137,13 +137,13 @@ const Donate = () => {
           <Text
             style={{ fontFamily: "SemiBold", fontSize: 30, marginBottom: 20 }}
           >
-            Donate
+            Help
           </Text>
 
           {/* Restaurant Name */}
           <View style={{ width: 310 }}>
             <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-              Restaurant Name
+              Organization Name
             </Text>
             <Text>{subRole}</Text>
           </View>

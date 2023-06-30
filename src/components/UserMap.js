@@ -6,6 +6,7 @@ import { userContext } from "../context/Provider";
 import useFetchData from "../hook/useFetchData";
 import Loading from "./Loading";
 import SearchHeader from "./SearchHeader";
+import MapModal from "./MapModal";
 
 const origin = { latitude: 11.70484, longitude: 92.715733 };
 const GOOGLE_MAPS_APIKEY = "AIzaSyD7TKiBE0n8EsPH_snI7QjhGFagY0Vq3FQ";
@@ -43,6 +44,9 @@ const UserMap = () => {
           description={data?.bio}
           coordinate={{
             ...data?.location,
+          }}
+          onPress={() => {
+            <MapModal />;
           }}
         />
       </MapView>

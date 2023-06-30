@@ -6,7 +6,9 @@ import Home from "../screens/Home";
 import { userContext } from "../context/Provider";
 import Chat from "../screens/Chat";
 import Donate from "../screens/Donate";
+import Help from "../screens/Help";
 import User from "../screens/User";
+import MapModal from "../components/MapModal";
 
 const Tab = createBottomTabNavigator();
 const BottomNav = () => {
@@ -93,8 +95,8 @@ const BottomNav = () => {
         />
       ) : (
         <Tab.Screen
-          name="donate"
-          component={Donate}
+          name="help"
+          component={Help}
           options={{
             title: "Help",
             tabBarIcon: ({ focused, color }) => (
@@ -108,8 +110,8 @@ const BottomNav = () => {
         />
       )}
       <Tab.Screen
-        name="chat"
-        component={Chat}
+        name="mapModal"
+        component={MapModal}
         options={{
           tabBarIcon: ({ focused, color }) => (
             <Ionicons
