@@ -20,6 +20,7 @@ import Signup from "../screens/Signup";
 import Transporter from "../screens/Transporter";
 import BottomNav from "./BottomNav";
 import LinkList from "react-native/Libraries/NewAppScreen/components/LearnMoreLinks";
+import InitialPage from '../screens/InitialPage';
 
 const Stack = createNativeStackNavigator();
 
@@ -31,8 +32,6 @@ const StackNav = () => {
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="initial" component={InitialPage} />
-        <Stack.Screen name="initial" component={Profile} />
-        {/* <Stack.Screen name="initial" component={InitialPage} /> */}
         <Stack.Screen name="intro" component={Intro} />
         <Stack.Screen name="login" component={Login} />
         <Stack.Screen name="signup" component={Signup} />
