@@ -44,10 +44,7 @@ const Login = () => {
   const onSignInPressed = async () => {
     try {
       const res = await signIn(email, password);
-      console.log("🚀 ~ file: Login.js:47 ~ onSignInPressed ~ res:", res);
-      if (res) {
-        setUserEmail(email);
-      }
+      setUserEmail(email);
     } catch (err) {
       console.log(err);
       alert(err);
