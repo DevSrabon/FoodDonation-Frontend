@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import icons from "../../assets/icons";
-import CustomInput from "../components/CustomInput";
 import Loading from "../components/Loading";
-import Container from "../components/container";
-import useFetchData from "../hook/useFetchData";
 import SearchHeader from "../components/SearchHeader";
+import Container from "../components/container";
+import { userContext } from "../context/Provider";
+import useFetchData from "../hook/useFetchData";
 
 const Home = () => {
   const [search, setSearch] = useState(0);
-  const { loading, error, data } = useFetchData("posts/getPost");
+  const { allData } = userContext();
+  const { loading, error, data } = useFetchData(
+    `posts/getPost?role=${allData?.userData?.role}`
+  );
   if (loading) return <Loading />;
   if (error) return alert(error.message);
   return (
@@ -23,9 +26,7 @@ const Home = () => {
               style={styles.cardImage}
               resizeMode="cover"
             />
-            <Text style={styles.cardDescription}>
-              We focus on ergonomics and meeting you where you work.
-            </Text>
+            <Text style={styles.cardDescription}>{item.caption}</Text>
             <View style={styles.profileContainer}>
               <View style={styles.imageContainerProfile}>
                 <Image

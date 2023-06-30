@@ -15,7 +15,9 @@ const UserMap = () => {
   const [serach, setSearch] = useState(0);
   const { user, setAllData } = userContext();
   const { loading, error, data } = useFetchData(`users?email=${user?.email}`);
-
+  const { data: mapUsers } = useFetchData(
+    `users/map?latitude=${data?.location?.latitude}&longitude=${data?.location?.longitude}&role=${data?.role}`
+  );
   useEffect(() => {
     if (data) {
       setAllData((prev) => ({ ...prev, userData: data }));
@@ -39,12 +41,24 @@ const UserMap = () => {
         }}
       >
         <Marker
+          pinColor="red"
           title={data?.categoryName}
-          description={data?.bio}
+          description={data?.role}
           coordinate={{
             ...data?.location,
           }}
         />
+        {mapUsers?.map((user, i) => (
+          <Marker
+            key={i}
+            title={user.categoryName}
+            description={user?.role}
+            pinColor="yellow"
+            coordinate={{
+              ...user?.location,
+            }}
+          />
+        ))}
       </MapView>
     </View>
   );
