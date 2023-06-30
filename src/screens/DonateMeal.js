@@ -1,5 +1,6 @@
 import { Picker } from "@react-native-picker/picker";
 import { useRoute } from "@react-navigation/native";
+import axios from "axios";
 import React, { useContext, useState } from "react";
 import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import CustomButton from "../components/CustomButton";
@@ -9,6 +10,8 @@ import { AuthContext } from "../context/Provider";
 const DonateMeal = () => {
   const route = useRoute();
   const numbers = route.params.number;
+  const resData = route.params.resData;
+  console.log("🚀 ~ file: DonateMeal.js:13 ~ DonateMeal ~ resData:", resData);
 
   const [listItems, setListItems] = useState([]);
 
@@ -21,7 +24,7 @@ const DonateMeal = () => {
   React.useEffect(() => {
     const items = [];
     for (let i = 1; i <= numbers; i++) {
-      items.push({ id: i, value: "", type: "" });
+      items.push({ id: i, value: "", qType: "" });
     }
     setListItems(items);
   }, [numbers]);
@@ -35,14 +38,14 @@ const DonateMeal = () => {
     setListItems(updatedItems);
   };
 
-  const [quantitySelection, setQuantitySelection] = useState({
-    quantity: 0,
+  const [quantitiesDetail, setQuantitiesDetail] = useState({
+    quantity: 1,
     quantityType: "",
     order: "",
   });
 
   const handleQualityChange = (value, property) => {
-    setQuantitySelection((prev) => ({ ...prev, [property]: value }));
+    setQuantitiesDetail((prev) => ({ ...prev, [property]: value }));
   };
 
   const quantityTypes = [
@@ -60,7 +63,18 @@ const DonateMeal = () => {
   const { loading, setLoading } = useContext(AuthContext);
 
   const onDonateMeal = async () => {
-    console.log("Donate meal listItems values ====", listItems);
+    const body = { _id: resData._id, listItems, quantitiesDetail };
+    try {
+      const res = await axios.patch(
+        `https://food-donation-backend.vercel.app/api/v1/posts/updatePost`,
+        body
+      );
+      if (res.data.status === "success") {
+        alert("success");
+      }
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   if (loading) {
@@ -133,7 +147,7 @@ const DonateMeal = () => {
                 style={styles.inputText}
                 keyboardType="numeric"
                 placeholder="0"
-                value={quantitySelection.quantity.toString()}
+                value={quantitiesDetail.quantity.toString()}
                 onChangeText={(text) => handleQualityChange(text, "quantity")}
               />
             </View>
@@ -150,7 +164,7 @@ const DonateMeal = () => {
             </Text>
             <View style={styles.inputText}>
               <Picker
-                selectedValue={quantitySelection.quantityType.toString()}
+                selectedValue={quantitiesDetail.quantityType.toString()}
                 onValueChange={(text) =>
                   handleQualityChange(text, "quantityType")
                 }
@@ -178,7 +192,7 @@ const DonateMeal = () => {
           <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>Order</Text>
           <View style={styles.inputText}>
             <Picker
-              selectedValue={quantitySelection.order}
+              selectedValue={quantitiesDetail.order}
               onValueChange={(value) => handleQualityChange(value, "order")}
               mode="dropdown"
             >
