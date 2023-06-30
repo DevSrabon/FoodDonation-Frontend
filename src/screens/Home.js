@@ -19,7 +19,7 @@ const Home = () => {
         {data?.map((item) => (
           <View key={item._id} style={styles.cardContainer}>
             <Image
-              source={icons.fixedHeight} // Replace with the path to your image
+              source={{ uri: item?.imageUrls?.[0] } || icons.fixedHeight} // Replace with the path to your image
               style={styles.cardImage}
               resizeMode="cover"
             />

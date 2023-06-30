@@ -82,8 +82,11 @@ const Donate = () => {
     setNoOfItem(formattedValue);
   };
 
-  const onDonate = async () => {
-    setLoading(true);
+  const onDonate = () => {
+    if (imageUrls > 4 || caption === "")
+      return Alert.alert(
+        "Please Select at Least 4 image and fill up all input field"
+      );
     const body = {
       userName: name,
       postCategoryName: categoryName,
@@ -92,37 +95,23 @@ const Donate = () => {
       role,
       caption,
       noOfItem,
+      imageUrls,
     };
-    try {
-      const res = await axios.post(
-        `https://food-donation-backend.vercel.app/api/v1/posts/createPost`,
-        body
-      );
-      if (res.data.status === "success") {
-        navigation.navigate("DonateMeal", {
-          number: noOfItem,
-          resData: res.data.data,
-        });
-      }
-    } catch (error) {
-      if (error.code === "This-Donor-already-in-use") {
-        alert("The Donor is already in use");
-      } else {
-        console.log("Error:", error);
-      }
-    } finally {
-      setLoading(false);
-    }
+    navigation.navigate("DonateMeal", {
+      number: noOfItem,
+      resData: body,
+    });
   };
 
   const getAddressFromCoordinates = async () => {
     try {
       const response = await axios.get(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=YOUR_API_KEY`
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyD7TKiBE0n8EsPH_snI7QjhGFagY0Vq3FQ`
       );
+      console.log("🚀 ~ file: Donate.js:111 ~  ~ response:", response);
 
       const results = response.data.results;
-      if (results.length > 0) {
+      if (results.length) {
         const formattedAddress = results[0].formatted_address;
         setAddress(formattedAddress);
       } else {
