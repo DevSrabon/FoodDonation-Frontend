@@ -39,9 +39,10 @@ const MapModal = () => {
 const styles = StyleSheet.create({
   centeredView: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+
     marginTop: 22,
+    height: 200,
+    width: "100%",
   },
   modalView: {
     margin: 20,
