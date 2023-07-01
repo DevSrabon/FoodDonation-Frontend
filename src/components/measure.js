@@ -1,8 +1,8 @@
-import { View, Text, StyleSheet, Image } from "react-native";
-import { Feather } from "@expo/vector-icons";
-import { useState } from "react";
+import { StyleSheet, Text, View } from "react-native";
+import useFetchData from "../hook/useFetchData";
+import Loading from "./Loading";
 
-const Measure = () => {
+const Measure = ({ email }) => {
   // const [quantity, setQuantity] = useState(0);
 
   // const increaseQuantity = () => {
@@ -14,6 +14,11 @@ const Measure = () => {
   //     setQuantity(quantity - 1);
   //   }
   // };
+  const { error, loading, data } = useFetchData(
+    `posts/getPostByEmail?email=${email}&fields=caption,listItems`
+  );
+  if (loading) return <Loading />;
+  if (error) return alert("No Post Found");
   return (
     <View
       style={{
@@ -28,44 +33,35 @@ const Measure = () => {
       <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
         Food Availability
       </Text>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <Text style={{ fontFamily: "Medium", fontSize: 13 }}>Cakes : 1kg</Text>
-        <View style={styles.footer}>
-          <Text style={styles.quantity}>10</Text>
+      {data?.listItems?.map((item) => (
+        <View
+          key={item.id}
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Text style={{ fontFamily: "Medium", fontSize: 13 }}>
+            {item.value} : {item.quantityType}
+          </Text>
+          <View style={styles.footer}>
+            {/* <Feather
+            onPress={decreaseQuantity}
+            name="minus-circle"
+            size={18}
+            color="gray"
+          /> */}
+            <Text style={styles.quantity}>{item.quantity}</Text>
+            {/* <Feather
+            onPress={increaseQuantity}
+            name="plus-circle"
+            size={18}
+            color="gray"
+          /> */}
+          </View>
         </View>
-      </View>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <Text style={{ fontFamily: "Medium", fontSize: 13 }}>Milk : 1.7L</Text>
-        <View style={styles.footer}>
-          <Text style={styles.quantity}>10</Text>
-        </View>
-      </View>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
-        <Text style={{ fontFamily: "Medium", fontSize: 13 }}>
-          Cookies : 500g
-        </Text>
-        <View style={styles.footer}>
-          <Text style={styles.quantity}>10</Text>
-        </View>
-      </View>
+      ))}
     </View>
   );
 };
