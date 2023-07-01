@@ -14,15 +14,15 @@ import RoleSelection from "../screens/RoleSelection";
 
 import AddRestaurant from "../screens/AddRestaurant";
 import Donate from "../screens/Donate";
+import DonateMeal from "../screens/DonateMeal";
 import Help from "../screens/Help";
 import HelpMeal from "../screens/HelpMeal";
-import DonateMeal from "../screens/DonateMeal";
 import Profile from "../screens/Profile";
 
+import MapModal from "../components/MapModal";
 import Signup from "../screens/Signup";
 import Transporter from "../screens/Transporter";
 import BottomNav from "./BottomNav";
-import MapModal from "../components/MapModal";
 
 const Stack = createNativeStackNavigator();
 
@@ -30,7 +30,7 @@ const StackNav = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="initial"
+        initialRouteName="addRestaurant"
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="initial" component={InitialPage} />
