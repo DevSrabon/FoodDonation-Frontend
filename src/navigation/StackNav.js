@@ -30,7 +30,7 @@ const StackNav = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="addRestaurant"
+        initialRouteName="initial"
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="initial" component={InitialPage} />
