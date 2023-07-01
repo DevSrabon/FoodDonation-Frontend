@@ -3,14 +3,13 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import {
   Alert,
-  Image,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity,
   View,
 } from "react-native";
+import AddImages from "../components/AddImages";
 import CustomButton from "../components/CustomButton";
 import Loading from "../components/Loading";
 import { AuthContext } from "../context/Provider";
@@ -109,25 +108,7 @@ const Donate = () => {
           </View>
 
           {/* Image */}
-          <View style={{ height: 120 }}>
-            <View style={styles.imageHeader}>
-              <Text style={styles.imageHeaderText}>Image</Text>
-              <TouchableOpacity onPress={takePhoto} style={styles.addButton}>
-                <Text style={styles.addButtonLabel}>Add+</Text>
-              </TouchableOpacity>
-            </View>
-
-            <View style={styles.imageContainer}>
-              {imageUrls.length > 0 &&
-                imageUrls.map((img, index) => (
-                  <Image
-                    key={index}
-                    style={styles.image}
-                    source={{ uri: img }}
-                  />
-                ))}
-            </View>
-          </View>
+          <AddImages imageUrls={imageUrls} takePhoto={takePhoto} />
 
           {/* Caption */}
           <View style={{ width: 310 }}>

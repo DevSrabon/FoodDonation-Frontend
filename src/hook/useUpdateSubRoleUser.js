@@ -18,7 +18,9 @@ const useUpdateUser = () => {
       );
 
       if (response.data.status === "success") {
-        navigation.navigate(navigate);
+        navigation.navigate(navigate, {
+          resData: response.data,
+        });
       }
     } catch (error) {
       setError(error);
