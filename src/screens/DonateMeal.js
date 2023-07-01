@@ -15,9 +15,9 @@ const DonateMeal = () => {
   const [listItems, setListItems] = useState([]);
 
   const mealOptions = [
-    { id: 1, label: "Meal Type" },
-    { id: 2, label: "Meal2" },
-    { id: 3, label: "Meal3" },
+    { id: 1, label: "Vegetarian" },
+    { id: 2, label: "Non-Vegetarian" },
+    // { id: 3, label: "Meal3" },
   ];
 
   React.useEffect(() => {

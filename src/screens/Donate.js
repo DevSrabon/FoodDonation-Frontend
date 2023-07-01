@@ -88,54 +88,56 @@ const Donate = () => {
   }
 
   return (
-    <Container>
-      <Header>Donate</Header>
-      <View
-        style={{
-          flex: 1,
-          alignSelf: "flex-start",
-          justifyContent: "flex-start",
-          gap: 10,
-          bottom: 100,
-        }}
-      >
-        <Label>{subRole}</Label>
-        <View style={{ flexDirection: "row", marginLeft: 15 }}>
-          <Image source={icons.location} style={{ marginRight: 0 }} />
-          <Label>{address}</Label>
+    <ScrollView style={{ flex: 1 }}>
+      <Container>
+        <Header>Donate</Header>
+        <View
+          style={{
+            flex: 1,
+            alignSelf: "flex-start",
+            justifyContent: "flex-start",
+            gap: 10,
+            bottom: 100,
+          }}
+        >
+          <Label>{subRole}</Label>
+          <View style={{ flexDirection: "row", marginLeft: 15 }}>
+            <Image source={icons.location} style={{ marginRight: 0 }} />
+            <Label>{address}</Label>
+          </View>
         </View>
-      </View>
-      <View style={styles.inputCon}>
-        <Label>Caption</Label>
-        <CustomInput
-          placeholder="Caption"
-          value={caption}
-          setValue={setCaption}
-        />
-      </View>
-      <View style={styles.inputCon}>
-        <Label>No of Items</Label>
-        <CustomInput
-          placeholder="No of Items"
-          keyboardType="numeric"
-          value={noOfItem}
-          setValue={handleNumberChange}
-        />
-      </View>
+        <View style={styles.inputCon}>
+          <Label>Caption</Label>
+          <CustomInput
+            placeholder="Caption"
+            value={caption}
+            setValue={setCaption}
+          />
+        </View>
+        <View style={styles.inputCon}>
+          <Label>No of Items</Label>
+          <CustomInput
+            placeholder="No of Items"
+            keyboardType="numeric"
+            value={noOfItem}
+            setValue={handleNumberChange}
+          />
+        </View>
 
-      <AddImages imageUrls={imageUrls} takePhoto={takePhoto} />
+        <AddImages imageUrls={imageUrls} takePhoto={takePhoto} />
 
-      {/* <TextInput
+        {/* <TextInput
         style={styles.inputText}
         keyboardType="numeric"
         placeholder="No of Items"
         value={noOfItem}
         onChangeText={handleNumberChange}
       /> */}
-      <View style={{ flex: 1, width: "90%" }}>
-        <CustomButton text="Continue" onPress={onDonate} type="primary" />
-      </View>
-    </Container>
+        <View style={{ flex: 1, width: "90%" }}>
+          <CustomButton text="Continue" onPress={onDonate} type="primary" />
+        </View>
+      </Container>
+    </ScrollView>
   );
 };
 
