@@ -37,19 +37,7 @@ const Measure = () => {
       >
         <Text style={{ fontFamily: "Medium", fontSize: 13 }}>Cakes : 1kg</Text>
         <View style={styles.footer}>
-          {/* <Feather
-            onPress={decreaseQuantity}
-            name="minus-circle"
-            size={18}
-            color="gray"
-          /> */}
           <Text style={styles.quantity}>10</Text>
-          {/* <Feather
-            onPress={increaseQuantity}
-            name="plus-circle"
-            size={18}
-            color="gray"
-          /> */}
         </View>
       </View>
       <View
@@ -61,19 +49,7 @@ const Measure = () => {
       >
         <Text style={{ fontFamily: "Medium", fontSize: 13 }}>Milk : 1.7L</Text>
         <View style={styles.footer}>
-          {/* <Feather
-            onPress={decreaseQuantity}
-            name="minus-circle"
-            size={18}
-            color="gray"
-          /> */}
           <Text style={styles.quantity}>10</Text>
-          {/* <Feather
-            onPress={increaseQuantity}
-            name="plus-circle"
-            size={18}
-            color="gray"
-          /> */}
         </View>
       </View>
       <View
@@ -87,19 +63,7 @@ const Measure = () => {
           Cookies : 500g
         </Text>
         <View style={styles.footer}>
-          {/* <Feather
-            onPress={decreaseQuantity}
-            name="minus-circle"
-            size={18}
-            color="gray"
-          /> */}
           <Text style={styles.quantity}>10</Text>
-          {/* <Feather
-            onPress={increaseQuantity}
-            name="plus-circle"
-            size={18}
-            color="gray"
-          /> */}
         </View>
       </View>
     </View>

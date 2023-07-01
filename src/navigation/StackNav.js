@@ -25,7 +25,6 @@ import Transporter from "../screens/Transporter";
 import BottomNav from "./BottomNav";
 import DonorPage from "../screens/DonorPage";
 
-
 const Stack = createNativeStackNavigator();
 
 const StackNav = () => {
