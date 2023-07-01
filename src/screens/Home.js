@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import icons from "../../assets/icons";
 import Loading from "../components/Loading";
@@ -9,23 +9,58 @@ import useFetchData from "../hook/useFetchData";
 
 const Home = () => {
   const [search, setSearch] = useState(0);
-  const { allData, setAllData } = userContext();
+  const { allData } = userContext();
+
+  const [timeRemaining, setTimeRemaining] = useState(0);
+
+  useEffect(() => {
+    const timeLimit = 25 * 60 * 1000; // 25 minutes in milliseconds
+    const startTime = new Date(allData.userData.createdAt).getTime();
+    const endTime = startTime + timeLimit;
+
+    const updateRemainingTime = () => {
+      const currentTime = new Date().getTime();
+      const remainingTime = endTime - currentTime;
+
+      if (remainingTime > 0) {
+        setTimeRemaining(remainingTime);
+      } else {
+        // Time limit reached, perform desired actions here
+        // console.log('Time limit reached!');
+        setTimeRemaining(0);
+      }
+    };
+
+    const intervalId = setInterval(updateRemainingTime, 1000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [allData.userData.createdAt]);
+
+  const formatTime = (timeInMilliseconds) => {
+    const minutes = Math.floor(timeInMilliseconds / (1000 * 60));
+    const seconds = Math.floor((timeInMilliseconds % (1000 * 60)) / 1000);
+    return `${minutes.toString().padStart(2, "0")}:${seconds
+      .toString()
+      .padStart(2, "0")}`;
+  };
+
   const { loading, error, data } = useFetchData(
     `posts/getPost?role=${allData?.userData?.role}`
   );
-  useEffect(() => {
-    if (data) {
-      setAllData((prev) => ({ ...prev, postData: data }));
-    }
-  }, [data, setAllData]);
+  // console.log("all user data ===", allData.userData.createdAt);
+
   if (loading) return <Loading />;
   if (error) return alert(error.message);
   return (
     <Container>
       <SearchHeader />
+
       <ScrollView style={{ flex: 1, bottom: 250 }}>
         {data?.map((item) => (
           <View key={item._id} style={styles.cardContainer}>
+            <Text>Time Remaining: {formatTime(timeRemaining)}</Text>
             <Image
               source={{ uri: item?.imageUrls?.[0] } || icons.fixedHeight} // Replace with the path to your image
               style={styles.cardImage}
@@ -49,7 +84,9 @@ const Home = () => {
             </View>
             <View style={styles.contentCard}>
               <View style={styles.cardItemsContainer}>
-                <Text style={styles.textItem1}>Exp 20min</Text>
+                <Text style={styles.textItem1}>
+                  {timeRemaining ? "Available" : "Expired"}
+                </Text>
                 <Text style={styles.textItem2}>Dinner</Text>
               </View>
             </View>
