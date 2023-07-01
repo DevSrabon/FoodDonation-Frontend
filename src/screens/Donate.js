@@ -1,70 +1,22 @@
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import * as ImagePicker from "expo-image-picker";
 import React, { useContext, useEffect, useState } from "react";
 import {
   Alert,
-  Image,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity,
   View,
 } from "react-native";
+import AddImages from "../components/AddImages";
 import CustomButton from "../components/CustomButton";
 import Loading from "../components/Loading";
 import { AuthContext } from "../context/Provider";
-import { listFiles, uploadToFirebase } from "../firebase/firebase.config";
+import useImagePicker from "../hook/useImagePicker";
 
 const Donate = () => {
-  const [files, setFiles] = useState([]);
-  const [imageUrls, setImageUrls] = useState([]);
-  useEffect(() => {
-    listFiles().then((listResp) => {
-      const files = listResp.map((value) => {
-        return { name: value.fullPath };
-      });
-
-      setFiles(files);
-    });
-  }, []);
-
-  // console.log(files);
-
-  const takePhoto = async () => {
-    setLoading(true);
-    try {
-      const cameraResp = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
-      });
-
-      if (!cameraResp.canceled) {
-        const { uri } = cameraResp.assets[0];
-        const fileName = uri.split("/").pop();
-        const uploadResp = await uploadToFirebase(uri, fileName, (v) =>
-          console.log(v)
-        );
-        // console.log(uploadResp);
-
-        listFiles().then((listResp) => {
-          const files = listResp.map((value) => {
-            return { name: value.fullPath };
-          });
-          setImageUrls((prevUrls) => [...prevUrls, uploadResp.downloadUrl]);
-
-          setFiles(files);
-        });
-      }
-    } catch (e) {
-      Alert.alert("Error Uploading Image " + e.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const { loading: imageLoading, imageUrls, takePhoto } = useImagePicker();
 
   const { loading, setLoading, allData } = useContext(AuthContext);
   const { name, role, subRole, email, location, categoryName, phone } =
@@ -126,7 +78,7 @@ const Donate = () => {
     getAddressFromCoordinates();
   }, [latitude, longitude]);
 
-  if (loading) {
+  if (loading || imageLoading) {
     return <Loading />;
   }
 
@@ -156,25 +108,7 @@ const Donate = () => {
           </View>
 
           {/* Image */}
-          <View style={{ height: 120 }}>
-            <View style={styles.imageHeader}>
-              <Text style={styles.imageHeaderText}>Image</Text>
-              <TouchableOpacity onPress={takePhoto} style={styles.addButton}>
-                <Text style={styles.addButtonLabel}>Add+</Text>
-              </TouchableOpacity>
-            </View>
-
-            <View style={styles.imageContainer}>
-              {imageUrls.length > 0 &&
-                imageUrls.map((img, index) => (
-                  <Image
-                    key={index}
-                    style={styles.image}
-                    source={{ uri: img }}
-                  />
-                ))}
-            </View>
-          </View>
+          <AddImages imageUrls={imageUrls} takePhoto={takePhoto} />
 
           {/* Caption */}
           <View style={{ width: 310 }}>

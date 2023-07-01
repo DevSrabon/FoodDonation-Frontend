@@ -1,17 +1,9 @@
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import React, { useState } from "react";
 
 import axios from "axios";
-import {
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  ScrollView,
-} from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import icons from "../../assets/icons";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import Loading from "../components/Loading";
@@ -19,19 +11,22 @@ import { userContext } from "../context/Provider";
 
 import Container from "../components/container";
 
+import AddImages from "../components/AddImages";
 import Header from "../components/Header";
 import Label from "../components/label";
+import useImagePicker from "../hook/useImagePicker";
 
 const AddRestaurant = () => {
-  // const { loading, setLoading } = useContext(AuthContext);
-  const navigation = useNavigation();
+  const route = useRoute();
+  const { resData } = route.params;
 
+  const navigation = useNavigation();
+  const { loading: imageLoading, imageUrls, takePhoto } = useImagePicker();
   const [categoryName, setCategoryName] = useState("");
   const [location, setLocation] = useState({ latitude: "", longitude: "" });
 
   const [fssaiLicense, setFSSAILicense] = useState("");
   const [panNumber, setPanNumber] = useState("");
-  // const { loading, error, updateUserRole } = useUpdateUser();
   const { user, loading, setLoading } = userContext();
   const onAddRestaurant = async () => {
     if (
@@ -48,6 +43,7 @@ const AddRestaurant = () => {
       fssaiLicense,
       panNumber,
       email: user?.email,
+      image: imageUrls,
     };
     try {
       const result = await axios.patch(
@@ -67,13 +63,9 @@ const AddRestaurant = () => {
     }
   };
 
-  if (loading) {
+  if (loading || imageLoading) {
     return <Loading />;
   }
-
-  const onImageUpload = () => {
-    console.warn("image upload");
-  };
 
   const onPressAddress = (data, details) => {
     const latitude = details.geometry.location.lat;
@@ -89,43 +81,16 @@ const AddRestaurant = () => {
       keyboardShouldPersistTaps="handled"
     >
       <Container>
-        <Header>Add Restaurant</Header>
-        <Label>Restaurant Name</Label>
+        <Header>Add {resData?.data?.subRole}</Header>
+        <Label>{resData?.data?.subRole} Name</Label>
         <CustomInput
-          placeholder="Restaurant Name"
+          placeholder={`${resData?.data?.subRole} Name`}
           value={categoryName}
           setValue={setCategoryName}
         />
         {/* Image add part */}
 
-        <View
-          style={{
-            // flex: 1,
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <Label>Image</Label>
-          <CustomButton text="Add+" onPress={onImageUpload} type="tertiary" />
-        </View>
-
-        <View
-          style={{
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-            width: "100%",
-            height: 80,
-            flexDirection: "row",
-            gap: 10,
-          }}
-        >
-          <Image style={styles.stretch} source={icons.google} />
-          <Image style={styles.stretch} source={icons.google} />
-          <Image style={styles.stretch} source={icons.google} />
-          <Image style={styles.stretch} source={icons.google} />
-        </View>
+        <AddImages imageUrls={imageUrls} takePhoto={takePhoto} />
 
         {/* Location */}
         <View style={{ flex: 1, width: "90%", alignSelf: "center" }}>
