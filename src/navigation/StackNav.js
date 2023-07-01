@@ -23,6 +23,8 @@ import MapModal from "../components/MapModal";
 import Signup from "../screens/Signup";
 import Transporter from "../screens/Transporter";
 import BottomNav from "./BottomNav";
+import DonorPage from "../screens/DonorPage";
+
 
 const Stack = createNativeStackNavigator();
 
@@ -43,6 +45,7 @@ const StackNav = () => {
         <Stack.Screen name="needy" component={FoodNeedier} />
         <Stack.Screen name="transporter" component={Transporter} />
         <Stack.Screen name="donor" component={Donor} />
+        <Stack.Screen name="donorPage" component={DonorPage} />
         <Stack.Screen name="addRestaurant" component={AddRestaurant} />
         <Stack.Screen name="DonateMeal" component={DonateMeal} />
         <Stack.Screen name="donate" component={Donate} />
