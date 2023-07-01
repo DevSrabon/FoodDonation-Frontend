@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import icons from "../../assets/icons";
 import Loading from "../components/Loading";
@@ -9,10 +9,15 @@ import useFetchData from "../hook/useFetchData";
 
 const Home = () => {
   const [search, setSearch] = useState(0);
-  const { allData } = userContext();
+  const { allData, setAllData } = userContext();
   const { loading, error, data } = useFetchData(
     `posts/getPost?role=${allData?.userData?.role}`
   );
+  useEffect(() => {
+    if (data) {
+      setAllData((prev) => ({ ...prev, postData: data }));
+    }
+  }, [data, setAllData]);
   if (loading) return <Loading />;
   if (error) return alert(error.message);
   return (

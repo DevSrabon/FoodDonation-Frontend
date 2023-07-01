@@ -60,7 +60,6 @@ const Donate = () => {
       const response = await axios.get(
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyD7TKiBE0n8EsPH_snI7QjhGFagY0Vq3FQ`
       );
-      console.log("🚀 ~ file: Donate.js:111 ~  ~ response:", response);
 
       const results = response.data.results;
       if (results.length) {
