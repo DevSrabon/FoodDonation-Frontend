@@ -2,16 +2,8 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 
 import axios from "axios";
-import {
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  ScrollView,
-} from "react-native";
+import { Image, ScrollView, StyleSheet, View } from "react-native";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import icons from "../../assets/icons";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import Loading from "../components/Loading";
@@ -21,11 +13,12 @@ import Container from "../components/container";
 
 import Header from "../components/Header";
 import Label from "../components/label";
+import useImagePicker from "../hook/useImagePicker";
 
 const AddRestaurant = () => {
   // const { loading, setLoading } = useContext(AuthContext);
   const navigation = useNavigation();
-
+  const { loading: imageLoading, imageUrls, takePhoto } = useImagePicker();
   const [categoryName, setCategoryName] = useState("");
   const [location, setLocation] = useState({ latitude: "", longitude: "" });
 
@@ -48,6 +41,7 @@ const AddRestaurant = () => {
       fssaiLicense,
       panNumber,
       email: user?.email,
+      image: imageUrls,
     };
     try {
       const result = await axios.patch(
@@ -67,7 +61,7 @@ const AddRestaurant = () => {
     }
   };
 
-  if (loading) {
+  if (loading || imageLoading) {
     return <Loading />;
   }
 
@@ -107,7 +101,7 @@ const AddRestaurant = () => {
           }}
         >
           <Label>Image</Label>
-          <CustomButton text="Add+" onPress={onImageUpload} type="tertiary" />
+          <CustomButton text="Add+" onPress={takePhoto} type="tertiary" />
         </View>
 
         <View
@@ -121,10 +115,10 @@ const AddRestaurant = () => {
             gap: 10,
           }}
         >
-          <Image style={styles.stretch} source={icons.google} />
-          <Image style={styles.stretch} source={icons.google} />
-          <Image style={styles.stretch} source={icons.google} />
-          <Image style={styles.stretch} source={icons.google} />
+          {imageUrls.length > 0 &&
+            imageUrls.map((img, index) => (
+              <Image key={index} style={styles.stretch} source={{ uri: img }} />
+            ))}
         </View>
 
         {/* Location */}
