@@ -60,7 +60,9 @@ const UserMap = () => {
             ...data?.location,
           }}
         >
-          <Callout onPress={() => navigation.navigate("donorPage")}>
+          <Callout
+            onPress={() => navigation.navigate("donorPage", { user: data })}
+          >
             <MapCallout user={data} />
             {/* <Text>This is {data?.categoryName}</Text> */}
           </Callout>
