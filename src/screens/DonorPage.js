@@ -6,6 +6,7 @@ import icons from "../../assets/icons";
 import CustomButton from "../components/CustomButton";
 import Container from "../components/container";
 import Measure from "../components/measure";
+
 const DonorPage = () => {
   const route = useRoute();
   const { user } = route.params;

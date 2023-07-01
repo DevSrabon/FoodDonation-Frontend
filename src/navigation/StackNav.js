@@ -24,7 +24,6 @@ import DonorPage from "../screens/DonorPage";
 import Signup from "../screens/Signup";
 import Transporter from "../screens/Transporter";
 import BottomNav from "./BottomNav";
-import DonorPage from "../screens/DonorPage";
 
 const Stack = createNativeStackNavigator();
 
