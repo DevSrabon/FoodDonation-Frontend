@@ -15,11 +15,16 @@ import RoleSelection from "../screens/RoleSelection";
 import AddRestaurant from "../screens/AddRestaurant";
 import Donate from "../screens/Donate";
 import DonateMeal from "../screens/DonateMeal";
+import Help from "../screens/Help";
+import HelpMeal from "../screens/HelpMeal";
 import Profile from "../screens/Profile";
 
+import MapModal from "../components/MapModal";
 import Signup from "../screens/Signup";
 import Transporter from "../screens/Transporter";
 import BottomNav from "./BottomNav";
+import DonorPage from "../screens/DonorPage";
+
 
 const Stack = createNativeStackNavigator();
 
@@ -40,9 +45,13 @@ const StackNav = () => {
         <Stack.Screen name="needy" component={FoodNeedier} />
         <Stack.Screen name="transporter" component={Transporter} />
         <Stack.Screen name="donor" component={Donor} />
+        <Stack.Screen name="donorPage" component={DonorPage} />
         <Stack.Screen name="addRestaurant" component={AddRestaurant} />
         <Stack.Screen name="DonateMeal" component={DonateMeal} />
         <Stack.Screen name="donate" component={Donate} />
+        <Stack.Screen name="help" component={Help} />
+        <Stack.Screen name="helpMeal" component={HelpMeal} />
+        <Stack.Screen name="mapModal" component={MapModal} />
         {/* <Stack.Screen name="profile" component={Profile} /> */}
         <Stack.Screen name="chat" component={Chat} />
         <Stack.Screen name="home" component={Home} />
