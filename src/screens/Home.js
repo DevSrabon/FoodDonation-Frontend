@@ -41,14 +41,15 @@ const Home = () => {
   const formatTime = (timeInMilliseconds) => {
     const minutes = Math.floor(timeInMilliseconds / (1000 * 60));
     const seconds = Math.floor((timeInMilliseconds % (1000 * 60)) / 1000);
-    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    return `${minutes.toString().padStart(2, "0")}:${seconds
+      .toString()
+      .padStart(2, "0")}`;
   };
 
   const { loading, error, data } = useFetchData(
     `posts/getPost?role=${allData?.userData?.role}`
   );
   // console.log("all user data ===", allData.userData.createdAt);
-
 
   if (loading) return <Loading />;
   if (error) return alert(error.message);
@@ -57,7 +58,6 @@ const Home = () => {
       <SearchHeader />
 
       <ScrollView style={{ flex: 1, bottom: 250 }}>
-
         {data?.map((item) => (
           <View key={item._id} style={styles.cardContainer}>
             <Text>Time Remaining: {formatTime(timeRemaining)}</Text>
@@ -84,7 +84,9 @@ const Home = () => {
             </View>
             <View style={styles.contentCard}>
               <View style={styles.cardItemsContainer}>
-                <Text style={styles.textItem1}>{timeRemaining ? ("Available") : ("Expired")}</Text>
+                <Text style={styles.textItem1}>
+                  {timeRemaining ? "Available" : "Expired"}
+                </Text>
                 <Text style={styles.textItem2}>Dinner</Text>
               </View>
             </View>
