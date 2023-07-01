@@ -10,6 +10,7 @@ import Measure from "../components/measure";
 const DonorPage = () => {
   const route = useRoute();
   const { user } = route.params;
+  console.log("🚀 ~ file: DonorPage.js:12 ~ DonorPage ~ user:", user);
   const [address, setAddress] = useState();
   const latitude = user.location.latitude;
   const longitude = user.location.longitude;
