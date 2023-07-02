@@ -54,23 +54,23 @@ const UserMap = () => {
           </Callout>
         </Marker>
 
-        {mapUsers?.length &&
-          mapUsers?.map((user, i) => (
-            <Marker
-              key={i}
-              pinColor="yellow"
-              coordinate={{
-                ...user?.location,
-              }}
-            >
-              <Callout
-                onPress={() => navigation.navigate("donorPage", { user })}
+        {mapUsers?.length
+          ? mapUsers?.map((user, i) => (
+              <Marker
+                key={i}
+                pinColor="yellow"
+                coordinate={{
+                  ...user?.location,
+                }}
               >
-                <MapCallout user={user} key={i}></MapCallout>
-              </Callout>
-            </Marker>
-          ))}
-
+                <Callout
+                  onPress={() => navigation.navigate("donorPage", { user })}
+                >
+                  <MapCallout user={user} key={i}></MapCallout>
+                </Callout>
+              </Marker>
+            ))
+          : null}
       </MapView>
     </View>
   );
