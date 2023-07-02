@@ -133,7 +133,9 @@ const Login = () => {
           {/* bottom: 20 */}
           <CustomButton text="Login" onPress={onSignInPressed} type="primary" />
         </View>
+
         {/* <View style={styles.subContainer}>
+
           <Pressable
             style={styles.box}
             disabled={!request}
@@ -144,6 +146,7 @@ const Login = () => {
             <Image source={icons.google} />
           </Pressable>
         </View> */}
+
         <View style={{ flex: 1, width: "90%" }}>
           {/* bottom: 20 */}
           <CustomButton
