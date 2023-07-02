@@ -14,7 +14,7 @@ const Home = () => {
   const [timeRemaining, setTimeRemaining] = useState(0);
 
   useEffect(() => {
-    const timeLimit = 2225 * 60 * 1000; // 25 minutes in milliseconds
+    const timeLimit = 50 * 60 * 1000; // 50 minutes in milliseconds
     const startTime = new Date(allData.userData.createdAt).getTime();
     const endTime = startTime + timeLimit;
 
@@ -30,9 +30,7 @@ const Home = () => {
         setTimeRemaining(0);
       }
     };
-
     const intervalId = setInterval(updateRemainingTime, 1000);
-
     return () => {
       clearInterval(intervalId);
     };
@@ -82,7 +80,7 @@ const Home = () => {
             </View>
             <View style={styles.contentCard}>
               <View style={styles.cardItemsContainer}>
-                <Text style={styles.textItem1}>{timeRemaining ? (`Expired ${formatTime(timeRemaining)} min`) : (`Expired`)}</Text>
+                <Text style={styles.textItem1}>{timeRemaining ? (`Exp ${formatTime(timeRemaining)} min`) : (`Expired`)}</Text>
                 <Text style={styles.textItem2}>Dinner</Text>
               </View>
             </View>
