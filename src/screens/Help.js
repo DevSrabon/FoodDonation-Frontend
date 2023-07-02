@@ -145,7 +145,7 @@ const Donate = () => {
             <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
               Organization Name
             </Text>
-            <Text>{subRole}</Text>
+            <Text>{categoryName}</Text>
           </View>
 
           <View style={{ width: 310 }}>

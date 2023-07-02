@@ -15,9 +15,9 @@ const DonateMeal = () => {
   const [listItems, setListItems] = useState([]);
 
   const mealOptions = [
-    { id: 1, label: "Meal Type" },
-    { id: 2, label: "Meal2" },
-    { id: 3, label: "Meal3" },
+    { id: 1, label: "Vegetarian" },
+    { id: 2, label: "Non-Vegetarian" },
+    // { id: 3, label: "Meal3" },
   ];
 
   React.useEffect(() => {
@@ -46,11 +46,12 @@ const DonateMeal = () => {
   const [orderType, setOrderType] = useState("");
 
   const quantityTypes = [
+    { quantityId: 1, label: "Gram " },
     { quantityId: 2, label: "Kg" },
+    { quantityId: 3, label: "ml " },
     { quantityId: 3, label: "L" },
     { quantityId: 4, label: "Pcs " },
   ];
-
   const orderOptions = [
     { id: 1, label: "Drop or Pickup" },
     { id: 2, label: "Drop" },
@@ -81,7 +82,7 @@ const DonateMeal = () => {
     <ScrollView>
       <View style={styles.container}>
         <Text style={{ fontFamily: "SemiBold", fontSize: 30, bottom: 10 }}>
-          Donate
+          Help
         </Text>
         {/* Testing item list */}
         <View style={{ flex: 1 }}>
