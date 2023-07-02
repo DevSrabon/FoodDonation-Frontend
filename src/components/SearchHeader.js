@@ -12,7 +12,7 @@ const SearchHeader = () => {
     <View style={styles.container}>
       <View style={styles.headerView}>
         <Text style={styles.typography}>
-          <Text style={{ fontSize: 18, color: "#B4AAF2" }}> Wellcome,</Text>{" "}
+          <Text style={{ fontSize: 18, color: "#B4AAF2" }}> Welcome,</Text>{" "}
           {allData?.userData?.name}
         </Text>
         <Image source={icons.notification} />
