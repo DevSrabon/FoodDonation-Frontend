@@ -53,6 +53,7 @@ const UserMap = () => {
             <MapCallout user={data} />
           </Callout>
         </Marker>
+
         {mapUsers?.length &&
           mapUsers?.map((user, i) => (
             <Marker
@@ -69,6 +70,7 @@ const UserMap = () => {
               </Callout>
             </Marker>
           ))}
+
       </MapView>
     </View>
   );
