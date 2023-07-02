@@ -8,6 +8,7 @@ const CustomInput = ({
   secureTextEntry,
   multiline,
   numberOfLines,
+  keyboardType,
 }) => {
   return (
     <View style={styles.container}>
@@ -19,6 +20,7 @@ const CustomInput = ({
         secureTextEntry={secureTextEntry}
         multiline={multiline}
         numberOfLines={numberOfLines}
+        keyboardType={keyboardType}
       />
     </View>
   );

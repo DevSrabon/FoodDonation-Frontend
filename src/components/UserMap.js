@@ -41,21 +41,8 @@ const UserMap = () => {
           longitudeDelta: 0.0421,
         }}
       >
-        {/* <MapViewDirections
-          origin={{
-            ...data?.location,
-          }}
-          destination={{
-            ...data?.location,
-          }}
-          apikey={GOOGLE_MAPS_APIKEY}
-          strokeWidth={3}
-          strokeColor="hotpink"
-        /> */}
         <Marker
           pinColor="red"
-          // title={data?.categoryName}
-          // description={data?.role}
           coordinate={{
             ...data?.location,
           }}
@@ -64,30 +51,26 @@ const UserMap = () => {
             onPress={() => navigation.navigate("donorPage", { user: data })}
           >
             <MapCallout user={data} />
-            {/* <Text>This is {data?.categoryName}</Text> */}
           </Callout>
         </Marker>
-        {mapUsers?.length
-          ? mapUsers?.map((user, i) => (
-              <Marker
-                key={i}
-                // title={user.categoryName}
-                // description={user?.role}
-                pinColor="yellow"
-                coordinate={{
-                  ...user?.location,
-                }}
+
+        {mapUsers?.length &&
+          mapUsers?.map((user, i) => (
+            <Marker
+              key={i}
+              pinColor="yellow"
+              coordinate={{
+                ...user?.location,
+              }}
+            >
+              <Callout
+                onPress={() => navigation.navigate("donorPage", { user })}
               >
-                <Callout
-                  onPress={() => navigation.navigate("donorPage", { user })}
-                >
-                  <MapCallout user={user} key={i}>
-                    {/* <Text>That is {data?.categoryName}</Text> */}
-                  </MapCallout>
-                </Callout>
-              </Marker>
-            ))
-          : null}
+                <MapCallout user={user} key={i}></MapCallout>
+              </Callout>
+            </Marker>
+          ))}
+
       </MapView>
     </View>
   );
@@ -96,9 +79,6 @@ const UserMap = () => {
 const styles = StyleSheet.create({
   mapContainer: {
     ...StyleSheet.absoluteFillObject,
-    //the container will fill the whole screen.
-    // justifyContent: "flex-end",
-    // alignItems: "center",
     flex: 1,
     marginTop: 20,
     backgroundColor: "#fff",

@@ -22,7 +22,6 @@ const AddImages = ({ imageUrls, takePhoto }) => {
 };
 const styles = StyleSheet.create({
   imageHeader: {
-    backgroundColor: "#fffff",
     flexDirection: "row",
     justifyContent: "space-between",
     marginLeft: 20,
@@ -32,7 +31,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   addButton: {
-    backgroundColor: "white",
     paddingHorizontal: 16,
     paddingVertical: 10,
     borderRadius: 8,

@@ -1,10 +1,4 @@
-import {
-  StyleSheet,
-  SafeAreaView,
-  StatusBar,
-  Dimensions,
-  ScrollView,
-} from "react-native";
+import { StyleSheet, SafeAreaView, StatusBar, Dimensions } from "react-native";
 import React from "react";
 
 const Container = (props) => {
