@@ -1,23 +1,22 @@
-import { View, Text, Image } from "react-native";
 import React from "react";
+import { Image, Platform, View } from "react-native";
 import { WebView } from "react-native-webview";
-import { Platform } from "react-native";
 
-const MapCallout = () => {
+const MapCallout = ({ user }) => {
   const isAndroid = Platform.OS === "android";
   return (
     <View style={{ padding: 10, maxWidth: 120, alignItems: "center" }}>
       {isAndroid ? (
         <WebView
           source={{
-            uri: "https://saiwa.ai/wp-content/uploads/2022/12/Image-Processing-.webp",
+            uri: user?.image[0],
           }}
           style={{ borderRadius: 10, width: 120, height: 100 }}
         />
       ) : (
         <Image
           source={{
-            uri: "https://saiwa.ai/wp-content/uploads/2022/12/Image-Processing-.webp",
+            uri: user?.image[0],
           }}
           style={{ borderRadius: 10, width: 120, height: 100 }}
         />

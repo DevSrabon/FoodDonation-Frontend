@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import {
   Alert,
+  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -14,6 +15,11 @@ import CustomButton from "../components/CustomButton";
 import Loading from "../components/Loading";
 import { AuthContext } from "../context/Provider";
 import useImagePicker from "../hook/useImagePicker";
+import Container from "../components/container";
+import Label from "../components/label";
+import Header from "../components/Header";
+import icons from "../../assets/icons";
+import CustomInput from "../components/CustomInput";
 
 const Donate = () => {
   const { loading: imageLoading, imageUrls, takePhoto } = useImagePicker();
@@ -60,7 +66,6 @@ const Donate = () => {
       const response = await axios.get(
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyD7TKiBE0n8EsPH_snI7QjhGFagY0Vq3FQ`
       );
-      console.log("🚀 ~ file: Donate.js:111 ~  ~ response:", response);
 
       const results = response.data.results;
       if (results.length) {
@@ -83,73 +88,65 @@ const Donate = () => {
   }
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <>
-          <Text
-            style={{ fontFamily: "SemiBold", fontSize: 30, marginBottom: 20 }}
-          >
-            Donate
-          </Text>
-
-          {/* Restaurant Name */}
-          <View style={{ width: 310 }}>
-            <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-              Restaurant Name
-            </Text>
-            <Text>{subRole}</Text>
+    <ScrollView style={{ flex: 1 }}>
+      <Container>
+        <Header>Donate</Header>
+        <View
+          style={{
+            flex: 1,
+            alignSelf: "flex-start",
+            justifyContent: "flex-start",
+            gap: 10,
+            bottom: 100,
+          }}
+        >
+          <Label>{subRole}</Label>
+          <View style={{ flexDirection: "row", marginLeft: 15 }}>
+            <Image source={icons.location} style={{ marginRight: 0 }} />
+            <Label>{address}</Label>
           </View>
+        </View>
+        <View style={styles.inputCon}>
+          <Label>Caption</Label>
+          <CustomInput
+            placeholder="Caption"
+            value={caption}
+            setValue={setCaption}
+          />
+        </View>
+        <View style={styles.inputCon}>
+          <Label>No of Items</Label>
+          <CustomInput
+            placeholder="No of Items"
+            keyboardType="numeric"
+            value={noOfItem}
+            setValue={handleNumberChange}
+          />
+        </View>
 
-          <View style={{ width: 310 }}>
-            <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-              Location
-            </Text>
-            <Text>{address}</Text>
-          </View>
+        <AddImages imageUrls={imageUrls} takePhoto={takePhoto} />
 
-          {/* Image */}
-          <AddImages imageUrls={imageUrls} takePhoto={takePhoto} />
-
-          {/* Caption */}
-          <View style={{ width: 310 }}>
-            <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-              Caption
-            </Text>
-            <TextInput
-              style={styles.inputText}
-              placeholder="Caption"
-              value={caption}
-              onChangeText={(text) => setCaption(text)}
-            />
-          </View>
-
-          {/* No of items */}
-          <View style={{ width: 310 }}>
-            <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-              No of Items
-            </Text>
-            <TextInput
-              style={styles.inputText}
-              keyboardType="numeric"
-              placeholder="No of Items"
-              value={noOfItem}
-              onChangeText={handleNumberChange}
-            />
-            <CustomButton text="Continue" onPress={onDonate} type="primary" />
-          </View>
-        </>
-      </View>
+        {/* <TextInput
+        style={styles.inputText}
+        keyboardType="numeric"
+        placeholder="No of Items"
+        value={noOfItem}
+        onChangeText={handleNumberChange}
+      /> */}
+        <View style={{ flex: 1, width: "90%" }}>
+          <CustomButton text="Continue" onPress={onDonate} type="primary" />
+        </View>
+      </Container>
     </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingLeft: 30,
-    paddingTop: 60,
+  inputCon: {
     justifyContent: "center",
-    backgroundColor: "white",
+    alignItems: "center",
+    width: "100%",
+    bottom: 130,
   },
   disabledText: {
     marginVertical: 10,

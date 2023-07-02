@@ -50,7 +50,6 @@ const Home = () => {
   );
   // console.log("all user data ===", allData.userData.createdAt);
 
-
   if (loading) return <Loading />;
   if (error) return alert(error.message);
   return (

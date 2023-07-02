@@ -1,11 +1,41 @@
-import { View, Text, Image } from "react-native";
-import React from "react";
-import Container from "../components/container";
+import { useRoute } from "@react-navigation/native";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Image, Text, View } from "react-native";
 import icons from "../../assets/icons";
-import Measure from "../components/measure";
 import CustomButton from "../components/CustomButton";
+import Container from "../components/container";
+import Measure from "../components/measure";
 
 const DonorPage = () => {
+  const route = useRoute();
+  const { user } = route.params;
+  console.log("🚀 ~ file: DonorPage.js:12 ~ DonorPage ~ user:", user);
+  const [address, setAddress] = useState();
+  const latitude = user.location.latitude;
+  const longitude = user.location.longitude;
+  const getAddressFromCoordinates = async () => {
+    try {
+      const response = await axios.get(
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyD7TKiBE0n8EsPH_snI7QjhGFagY0Vq3FQ`
+      );
+
+      const results = response.data.results;
+      if (results.length) {
+        const formattedAddress = results[0].formatted_address;
+        setAddress(formattedAddress);
+      } else {
+        setAddress("No results found");
+      }
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  };
+
+  useEffect(() => {
+    getAddressFromCoordinates();
+  }, [latitude, longitude]);
+
   const onAccept = () => {
     console.warn("Accept");
   };
@@ -20,6 +50,7 @@ const DonorPage = () => {
           flex: 1,
           justifyContent: "flex-start",
           alignSelf: "center",
+          width: "90%",
         }}
       >
         <Text
@@ -29,12 +60,12 @@ const DonorPage = () => {
             fontSize: 18,
           }}
         >
-          Cafe Bilhares
+          {user?.categoryName}
         </Text>
         <View style={{ flexDirection: "row" }}>
           <Image source={icons.location} />
           <Text style={{ fontFamily: "SemiBold", fontSize: 10 }}>
-            North landing Guide road. Rd. MGR Avenue, New Delhi 85486
+            {address}
           </Text>
         </View>
         <View
@@ -44,7 +75,10 @@ const DonorPage = () => {
             borderRadius: 7,
           }}
         >
-          <Image source={icons.fixedHeight} />
+          <Image
+            source={{ uri: user?.image?.[0] }}
+            style={{ width: "100%", height: 180, resizeMode: "stretch" }}
+          />
         </View>
         <View style={{ flexDirection: "row", marginTop: 10, gap: 10 }}>
           <View
@@ -55,7 +89,7 @@ const DonorPage = () => {
             }}
           >
             <Text style={{ fontFamily: "Medium", fontSize: 10 }}>
-              Orphanage
+              {user?.subRole}
             </Text>
           </View>
           <View
@@ -104,7 +138,7 @@ const DonorPage = () => {
           </View>
         </View>
         <View>
-          <Measure />
+          <Measure email={user.email} />
         </View>
         <View
           style={{
@@ -116,20 +150,25 @@ const DonorPage = () => {
             marginBottom: 10,
           }}
         >
-          <Image source={icons.profile} />
+          <Image
+            source={{ uri: user?.photo }}
+            style={{ width: 50, height: 50, borderRadius: 50 }}
+          />
           <View>
             <Text style={{ fontFamily: "SemiBold", fontSize: 16 }}>
-              Sourav Paul
+              {user?.name}
             </Text>
             <Text style={{ fontFamily: "Medium", fontSize: 12 }}>
-              Restaurant owner
+              {user?.role}
             </Text>
           </View>
         </View>
-        <View style={{ alignItems: "center", gap: 10, marginTop: 10 }}>
-          <CustomButton text="Accept" onPress={onAccept} type="primary" />
-          <CustomButton text="Decline" onPress={onDecline} type="primary" />
-        </View>
+        {user?.role === "donor" && (
+          <View style={{ alignItems: "center", gap: 10, marginTop: 10 }}>
+            <CustomButton text="Accept" onPress={onAccept} type="primary" />
+            <CustomButton text="Decline" onPress={onDecline} type="primary" />
+          </View>
+        )}
       </View>
     </Container>
   );
