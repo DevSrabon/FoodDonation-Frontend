@@ -1,25 +1,17 @@
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import {
-  Alert,
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import { Alert, Image, ScrollView, StyleSheet, View } from "react-native";
+import icons from "../../assets/icons";
 import AddImages from "../components/AddImages";
 import CustomButton from "../components/CustomButton";
+import CustomInput from "../components/CustomInput";
+import Header from "../components/Header";
 import Loading from "../components/Loading";
-import { AuthContext } from "../context/Provider";
-import useImagePicker from "../hook/useImagePicker";
 import Container from "../components/container";
 import Label from "../components/label";
-import Header from "../components/Header";
-import icons from "../../assets/icons";
-import CustomInput from "../components/CustomInput";
+import { AuthContext } from "../context/Provider";
+import useImagePicker from "../hook/useImagePicker";
 
 const Donate = () => {
   const { loading: imageLoading, imageUrls, takePhoto } = useImagePicker();
@@ -100,7 +92,7 @@ const Donate = () => {
             bottom: 100,
           }}
         >
-          <Label>{subRole}</Label>
+          <Label>{categoryName}</Label>
           <View style={{ flexDirection: "row", marginLeft: 15 }}>
             <Image source={icons.location} style={{ marginRight: 0 }} />
             <Label>{address}</Label>

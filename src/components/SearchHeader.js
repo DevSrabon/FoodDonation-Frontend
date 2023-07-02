@@ -1,29 +1,41 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
-import icons from "../../assets/icons";
+import { StyleSheet, Text, View } from "react-native";
 import { userContext } from "../context/Provider";
-import CustomInput from "./CustomInput";
 
 const SearchHeader = () => {
   const [search, setSearch] = useState(0);
-  const { allData } = userContext();
-
+  const { allData, user, signOutUser } = userContext();
+  const navigation = useNavigation();
+  const handleSignOut = () => {
+    if (user?.email) signOutUser();
+    navigation.navigate("login");
+  };
   return (
     <View style={styles.container}>
       <View style={styles.headerView}>
-        <Text style={styles.typography}>
-          <Text style={{ fontSize: 18, color: "#B4AAF2" }}> Welcome,</Text>{" "}
-          {allData?.userData?.name}
-        </Text>
-        <Image source={icons.notification} />
-      </View>
-      <View style={styles.searchView}>
-        <CustomInput
-          placeholder="Search here"
-          value={search}
-          setValue={setSearch}
-        />
-        <Image source={icons.settings} />
+        <View style={{ marginTop: 5 }}>
+          <Text style={styles.typography}>
+            <Text style={{ fontSize: 18, color: "#B4AAF2" }}> Welcome,</Text>{" "}
+          </Text>
+          <Text style={{ marginLeft: 10 }}>
+            {allData?.userData?.name || "Guest"}
+          </Text>
+        </View>
+        {/* <Image source={icons.notification} /> */}
+        <View style={styles.searchView}>
+          <Text
+            onPress={handleSignOut}
+            style={{
+              backgroundColor: "#B4AAF2",
+              padding: 8,
+              borderRadius: 10,
+              color: "white",
+            }}
+          >
+            Log out
+          </Text>
+        </View>
       </View>
     </View>
   );
@@ -41,10 +53,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   searchView: {
-    flexDirection: "row",
-    width: "90%",
-    alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
     marginHorizontal: 15,
   },
   typography: {

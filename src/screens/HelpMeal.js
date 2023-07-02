@@ -68,7 +68,7 @@ const DonateMeal = () => {
         body
       );
       if (res.data.status === "success") {
-        alert("success");
+        alert("Submitted");
       }
     } catch (error) {
       alert(error.message);
