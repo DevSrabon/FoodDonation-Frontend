@@ -14,12 +14,13 @@ import {
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDBFyEHcYhJrNwtDpbKNr2Z7-OCElXefb0",
-  authDomain: "food-donation-13ce7.firebaseapp.com",
-  projectId: "food-donation-13ce7",
-  storageBucket: "food-donation-13ce7.appspot.com",
-  messagingSenderId: "447966582861",
-  appId: "1:447966582861:web:906897fbc7176fc22aa404",
+  apiKey: "AIzaSyDT0a_Fit3atjgLhdHPFBtkXBwI5d90BUs",
+  authDomain: "food-donation-390506.firebaseapp.com",
+  projectId: "food-donation-390506",
+  storageBucket: "food-donation-390506.appspot.com",
+  messagingSenderId: "1076467046409",
+  appId: "1:1076467046409:web:c97ffda18ec0f89dd240d8",
+  measurementId: "G-V4N7FRLGL9",
 };
 
 // Initialize Firebase

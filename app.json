@@ -2,6 +2,7 @@
   "expo": {
     "name": "Food-Donation",
     "slug": "Food-Donation",
+    "plugins": ["@react-native-google-signin/google-signin"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -20,6 +21,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
+      "googleServicesFile": "./google-services.json",
       "package": "com.mahbubmorshed.FoodDonation",
       "config": {
         "googleMaps": {
