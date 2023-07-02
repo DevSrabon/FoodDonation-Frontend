@@ -1,15 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 import Checkbox from "expo-checkbox";
 import React, { useEffect, useState } from "react";
-import {
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
-import icons from "../../assets/icons";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import Header from "../components/Header";
@@ -20,8 +13,15 @@ import { userContext } from "../context/Provider";
 import useToken from "../hook/useToken";
 
 const Login = () => {
-  const { signIn, promptAsync, user, request, loading, setLoading } =
-    userContext();
+  const {
+    signIn,
+    promptAsync,
+    user,
+    request,
+    setAllData,
+    loading,
+    setLoading,
+  } = userContext();
   const [userEmail, setUserEmail] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -57,12 +57,15 @@ const Login = () => {
     console.warn("Forgot Password");
   };
 
-  const onSignInFacebook = () => {
-    console.warn("Facebook");
-  };
-
-  const onGuestPressed = () => {
-    console.warn("Guest");
+  const onGuestPressed = async () => {
+    const res = await axios.get(
+      "https://food-donation-backend.vercel.app/api/v1/users?email=guest@gmail.com"
+    );
+    console.log(res.data.data.role);
+    if (res.status === 200) {
+      setAllData((prev) => ({ ...prev, guestData: res.data.data.role }));
+      navigation.navigate("home");
+    }
   };
 
   const onSignup = () => {
@@ -130,7 +133,9 @@ const Login = () => {
           {/* bottom: 20 */}
           <CustomButton text="Login" onPress={onSignInPressed} type="primary" />
         </View>
-        <View style={styles.subContainer}>
+
+        {/* <View style={styles.subContainer}>
+
           <Pressable
             style={styles.box}
             disabled={!request}
@@ -140,7 +145,8 @@ const Login = () => {
           >
             <Image source={icons.google} />
           </Pressable>
-        </View>
+        </View> */}
+
         <View style={{ flex: 1, width: "90%" }}>
           {/* bottom: 20 */}
           <CustomButton
