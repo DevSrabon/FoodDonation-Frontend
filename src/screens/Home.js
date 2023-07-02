@@ -56,8 +56,7 @@ const Home = () => {
   return (
     <Container>
       <SearchHeader />
-
-      <ScrollView style={{ flex: 1, bottom: 250 }}>
+      <ScrollView style={{ width: "100%", bottom: 150 }}>
         {data?.map((item) => (
           <View key={item._id} style={styles.cardContainer}>
             <Text>Time Remaining: {formatTime(timeRemaining)}</Text>
