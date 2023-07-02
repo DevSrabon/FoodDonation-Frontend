@@ -61,12 +61,8 @@ const Login = () => {
     console.warn("Facebook");
   };
 
-  const onSignInGoogle = () => {
-    console.warn("Google");
-  };
-
-  const onSignInLinkedin = () => {
-    console.warn("linkedin");
+  const onGuestPressed = () => {
+    console.warn("Guest");
   };
 
   const onSignup = () => {
@@ -134,7 +130,26 @@ const Login = () => {
           {/* bottom: 20 */}
           <CustomButton text="Login" onPress={onSignInPressed} type="primary" />
         </View>
-        <View style={{ flex: 1, bottom: 20 }}>
+        <View style={styles.subContainer}>
+          <Pressable
+            style={styles.box}
+            disabled={!request}
+            onPress={() =>
+              promptAsync({ useProxy: false, showInRecents: true })
+            }
+          >
+            <Image source={icons.google} />
+          </Pressable>
+        </View>
+        <View style={{ flex: 1, width: "90%" }}>
+          {/* bottom: 20 */}
+          <CustomButton
+            text="Signin as a Guest"
+            onPress={onGuestPressed}
+            type="primary"
+          />
+        </View>
+        {/* <View style={{ flex: 1, bottom: 20 }}>
           <Text
             style={{
               fontFamily: "SemiBold",
@@ -145,25 +160,7 @@ const Login = () => {
           >
             or continue with
           </Text>
-
-          <View style={styles.subContainer}>
-            <Pressable style={styles.box}>
-              <Image source={icons.fb} />
-            </Pressable>
-            <Pressable
-              style={styles.box}
-              disabled={!request}
-              onPress={() =>
-                promptAsync({ useProxy: false, showInRecents: true })
-              }
-            >
-              <Image source={icons.google} />
-            </Pressable>
-            <Pressable style={styles.box}>
-              <Image source={icons.linked} />
-            </Pressable>
-          </View>
-        </View>
+        </View> */}
 
         <View
           style={{
@@ -184,9 +181,8 @@ const Login = () => {
 const styles = StyleSheet.create({
   subContainer: {
     flex: 1,
-    flexDirection: "row",
-
-    gap: 20,
+    alignItems: "center",
+    justifyContent: "center",
   },
   box: {
     alignSelf: "center",
