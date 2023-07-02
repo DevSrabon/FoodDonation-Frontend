@@ -14,7 +14,7 @@ const Home = () => {
   const [timeRemaining, setTimeRemaining] = useState(0);
 
   useEffect(() => {
-    const timeLimit = 25 * 60 * 1000; // 25 minutes in milliseconds
+    const timeLimit = 2225 * 60 * 1000; // 25 minutes in milliseconds
     const startTime = new Date(allData.userData.createdAt).getTime();
     const endTime = startTime + timeLimit;
 
@@ -40,8 +40,9 @@ const Home = () => {
 
   const formatTime = (timeInMilliseconds) => {
     const minutes = Math.floor(timeInMilliseconds / (1000 * 60));
-    const seconds = Math.floor((timeInMilliseconds % (1000 * 60)) / 1000);
-    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    // const seconds = Math.floor((timeInMilliseconds % (1000 * 60)) / 1000);
+    return `${minutes.toString().padStart(2, '0')}`;
+    // return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   };
 
   const { loading, error, data } = useFetchData(
@@ -55,12 +56,10 @@ const Home = () => {
   return (
     <Container>
       <SearchHeader />
-
       <ScrollView style={{ flex: 1, bottom: 250 }}>
-
         {data?.map((item) => (
           <View key={item._id} style={styles.cardContainer}>
-            <Text>Time Remaining: {formatTime(timeRemaining)}</Text>
+            {/* <Text>Time Remaining: {formatTime(timeRemaining)}</Text> */}
             <Image
               source={{ uri: item?.imageUrls?.[0] } || icons.fixedHeight} // Replace with the path to your image
               style={styles.cardImage}
@@ -84,7 +83,7 @@ const Home = () => {
             </View>
             <View style={styles.contentCard}>
               <View style={styles.cardItemsContainer}>
-                <Text style={styles.textItem1}>{timeRemaining ? ("Available") : ("Expired")}</Text>
+                <Text style={styles.textItem1}>{timeRemaining ? (`Expired ${formatTime(timeRemaining)} min`) : (`Expired`)}</Text>
                 <Text style={styles.textItem2}>Dinner</Text>
               </View>
             </View>
