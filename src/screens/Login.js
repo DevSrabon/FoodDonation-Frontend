@@ -146,7 +146,18 @@ const Login = () => {
             <Image source={icons.google} />
           </Pressable>
         </View> */}
-
+        <View style={{ flex: 1, width: "90%" }}>
+          <Text
+            style={{
+              fontFamily: "Medium",
+              fontSize: 12,
+              color: "#747980",
+              textAlign: "center",
+            }}
+          >
+            Or
+          </Text>
+        </View>
         <View style={{ flex: 1, width: "90%" }}>
           {/* bottom: 20 */}
           <CustomButton
