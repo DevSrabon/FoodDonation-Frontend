@@ -2,7 +2,6 @@
   "expo": {
     "name": "Food-Donation",
     "slug": "Food-Donation",
-    "plugins": ["@react-native-google-signin/google-signin"],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -14,14 +13,14 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.mahbubmorshed.FoodDonation"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "googleServicesFile": "./google-services.json",
       "package": "com.mahbubmorshed.FoodDonation",
       "config": {
         "googleMaps": {
@@ -32,7 +31,7 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "scheme": "myApp",
+    "scheme": "Food-Donation",
     "extra": {
       "eas": {
         "projectId": "da86565a-f3c8-4d26-bc1b-24fa753f59c4"
