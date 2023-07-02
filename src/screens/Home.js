@@ -22,6 +22,7 @@ const Home = () => {
   //   const startTime = new Date(allData.userData.createdAt).getTime();
   //   const endTime = startTime + timeLimit;
 
+
   //   const updateRemainingTime = () => {
   //     const currentTime = new Date().getTime();
   //     const remainingTime = endTime - currentTime;
@@ -50,6 +51,7 @@ const Home = () => {
   //     .padStart(2, "0")}`;
   // };
 
+
   // console.log("all user data ===", allData.userData.createdAt);
 
   if (loading) return <Loading />;
@@ -57,7 +59,7 @@ const Home = () => {
   return (
     <Container>
       <SearchHeader />
-      <ScrollView style={{ width: "100%", bottom: 150 }}>
+      <ScrollView style={{ flex: 1, bottom: 250 }}>
         {data?.map((item) => (
           <View key={item._id} style={styles.cardContainer}>
             {/* <Text>Time Remaining: {formatTime(timeRemaining)}</Text> */}
@@ -84,6 +86,7 @@ const Home = () => {
             </View>
             <View style={styles.contentCard}>
               <View style={styles.cardItemsContainer}>
+
                 <Text style={styles.textItem1}>
                   {/* {timeRemaining ? "Available" : "Expired"} */}
                 </Text>
