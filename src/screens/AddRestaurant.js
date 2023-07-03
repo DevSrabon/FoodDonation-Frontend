@@ -111,7 +111,7 @@ const AddRestaurant = () => {
         </View>
 
         {/* FSSAI License */}
-        <Label>FSSAI License</Label>
+        <Label>FSSAI License / Other License</Label>
         <CustomInput
           placeholder="FSSAI License"
           value={fssaiLicense}

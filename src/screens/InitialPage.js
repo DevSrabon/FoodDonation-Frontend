@@ -1,6 +1,5 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
-import React, { useEffect } from "react";
+import React from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import icons from "../../assets/icons";
 import InitContainer from "../components/initContainer";
@@ -24,12 +23,11 @@ const InitialPage = () => {
   // };
   return (
     <InitContainer>
-      <Text style={styles.header}> Food Donation. </Text>
+      <Text style={styles.header}> Bhojan Mitra </Text>
 
       <View style={{ paddingRight: 45, paddingLeft: 30 }}>
         <Text style={styles.detail}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Risus, est ac
-          iaculis euismod
+          Optimize Food Waste. Transforming leftovers into a sustainable future
         </Text>
 
         <Pressable onPress={() => navigation.navigate("intro")}>
