@@ -1,5 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import React from "react";
+import {
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import icons from "../../assets/icons";
 import Loading from "../components/Loading";
 import SearchHeader from "../components/SearchHeader";
@@ -10,67 +18,61 @@ import TimeLimitComponent from "./TimeLimitComponent";
 
 const Home = () => {
   const { allData } = userContext();
-  console.log("🚀 ~ file: Home.js:13 ~ Home ~ allData:", allData);
 
   const { loading, error, data } = useFetchData(
     `posts/getPost?role=${allData?.userData?.role || allData?.guestData}`
   );
-
+  const navigation = useNavigation();
   if (loading) return <Loading />;
   if (error) return alert(error.message);
   return (
     <Container>
       <SearchHeader />
-      <View
-        style={{
-          flex: 1,
-          width: "100%",
-          justifyContent: "flex-start",
-        }}
-      >
-        <ScrollView>
-          {data?.map((item) => (
-            <View key={item._id} style={styles.cardContainer}>
+      <ScrollView style={{ flex: 1, bottom: 250 }}>
+        {data?.map((item) => (
+          <View key={item._id} style={styles.cardContainer}>
+            <Pressable
+              onPress={() => navigation.navigate("donorPage", { user: item })}
+            >
               <Image
-                source={{ uri: item?.imageUrls?.[0] } || icons.fixedHeight} // Replace with the path to your image
+                source={{ uri: item?.imageUrls?.[0] } || icons.fixedHeight}
                 style={styles.cardImage}
                 resizeMode="cover"
               />
-              <Text style={styles.cardDescription}>{item.caption}</Text>
-              <View style={styles.profileContainer}>
-                <View style={styles.imageContainerProfile}>
-                  <Image
-                    source={icons.profile}
-                    style={styles.profileImage}
-                    resizeMode="cover"
-                  />
-                </View>
-                <View style={styles.profileTextContainer}>
-                  <Text
-                    style={{ fontFamily: "SemiBold", fontSize: 20, top: 6 }}
-                  >
-                    {item.userName}
-                  </Text>
-                  <Text style={styles.profileText}>
-                    {item.postCategoryName}
-                  </Text>
-                </View>
+            </Pressable>
+            <Text style={styles.cardDescription}>{item.caption}</Text>
+            <View style={styles.profileContainer}>
+              <View style={styles.imageContainerProfile}>
+                <Image
+                  source={icons.profile}
+                  style={styles.profileImage}
+                  resizeMode="cover"
+                />
               </View>
-              <View style={styles.contentCard}>
-                <View style={styles.cardItemsContainer}>
-                  <Text style={styles.textItem1}>
-                    <TimeLimitComponent
-                      key={item._id}
-                      previousTime={item.updatedAt}
-                    ></TimeLimitComponent>
-                  </Text>
-                  <Text style={styles.textItem2}>Dinner</Text>
-                </View>
+              <View style={styles.profileTextContainer}>
+                <Text style={{ fontFamily: "SemiBold", fontSize: 20, top: 6 }}>
+                  {item.userName}
+                </Text>
+                <Text style={styles.profileText}>{item.postCategoryName}</Text>
+                <Text style={styles.roleText}>
+                  {item.role.replace(/^./, item.role[0].toUpperCase())}
+                </Text>
               </View>
             </View>
-          ))}
-        </ScrollView>
-      </View>
+            <View style={styles.contentCard}>
+              <View style={styles.cardItemsContainer}>
+                <Text style={styles.textItem1}>
+                  <TimeLimitComponent
+                    key={item._id}
+                    previousTime={item.updatedAt}
+                  ></TimeLimitComponent>
+                </Text>
+                <Text style={styles.textItem2}>Dinner</Text>
+              </View>
+            </View>
+          </View>
+        ))}
+      </ScrollView>
     </Container>
   );
 };
@@ -150,6 +152,10 @@ const styles = StyleSheet.create({
   profileText: {
     fontSize: 16,
     marginTop: 8,
+  },
+  roleText: {
+    fontSize: 16,
+    fontWeight: "500",
   },
 });
 

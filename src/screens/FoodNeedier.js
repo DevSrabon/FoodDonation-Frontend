@@ -53,7 +53,10 @@ const FoodNeedier = () => {
 
       <View style={styles.boxContainer}>
         <Pressable
-          style={styles.box}
+          style={[
+            styles.box,
+            update === "Non-Profit Organization" && styles.selectedBox,
+          ]}
           onPress={() => setUpdate("Non-Profit Organization")}
         >
           <Text
@@ -72,7 +75,10 @@ const FoodNeedier = () => {
             Person or an Organization who donates the food
           </Text>
         </Pressable>
-        <Pressable style={styles.box} onPress={() => setUpdate("Orphanage")}>
+        <Pressable
+          style={[styles.box, update === "Orphanage" && styles.selectedBox]}
+          onPress={() => setUpdate("Orphanage")}
+        >
           <Text
             style={{ fontFamily: "SemiBold", fontSize: 14, color: "#252525" }}
           >
@@ -89,7 +95,10 @@ const FoodNeedier = () => {
             Person or an Organization who helps Transporting the food
           </Text>
         </Pressable>
-        <Pressable style={styles.box} onPress={() => setUpdate("Food Banks")}>
+        <Pressable
+          style={[styles.box, update === "Food Banks" && styles.selectedBox]}
+          onPress={() => setUpdate("Food Banks")}
+        >
           <Text
             style={{ fontFamily: "SemiBold", fontSize: 14, color: "#252525" }}
           >
@@ -107,7 +116,7 @@ const FoodNeedier = () => {
           </Text>
         </Pressable>
         <Pressable
-          style={styles.box}
+          style={[styles.box, update === "Normal People" && styles.selectedBox]}
           onPress={() => setUpdate("Normal People")}
         >
           <Text
@@ -160,6 +169,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#F5F6F7",
     borderColor: "#F5F6F7",
     bottom: 80,
+  },
+  selectedBox: {
+    backgroundColor: "#efedf8",
+    borderWidth: 1,
+    borderColor: "#B4AAF2",
+    borderRadius: 6,
   },
 });
 

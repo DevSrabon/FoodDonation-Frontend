@@ -28,7 +28,7 @@ const Profile = () => {
   const { user, loading, setLoading } = userContext();
 
   const onBioSetup = async () => {
-    if (!bio) return alert("Please fill up your bio");
+    if (!imageUrls.length || !bio) return alert("Please fill up your bio");
     const body = { bio, photo: imageUrls[0], email: user?.email };
     try {
       const result = await axios.patch(
