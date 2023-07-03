@@ -16,47 +16,61 @@ const Home = () => {
     `posts/getPost?role=${allData?.userData?.role || allData?.guestData}`
   );
 
-
   if (loading) return <Loading />;
   if (error) return alert(error.message);
   return (
     <Container>
       <SearchHeader />
-      <ScrollView style={{ flex: 1, bottom: 250 }}>
-        {data?.map((item) => (
-          <View key={item._id} style={styles.cardContainer}>
-            <Image
-              source={{ uri: item?.imageUrls?.[0] } || icons.fixedHeight} // Replace with the path to your image
-              style={styles.cardImage}
-              resizeMode="cover"
-            />
-            <Text style={styles.cardDescription}>{item.caption}</Text>
-            <View style={styles.profileContainer}>
-              <View style={styles.imageContainerProfile}>
-                <Image
-                  source={icons.profile} 
-                  style={styles.profileImage}
-                  resizeMode="cover"
-                />
+      <View
+        style={{
+          flex: 1,
+          width: "100%",
+          justifyContent: "flex-start",
+        }}
+      >
+        <ScrollView>
+          {data?.map((item) => (
+            <View key={item._id} style={styles.cardContainer}>
+              <Image
+                source={{ uri: item?.imageUrls?.[0] } || icons.fixedHeight} // Replace with the path to your image
+                style={styles.cardImage}
+                resizeMode="cover"
+              />
+              <Text style={styles.cardDescription}>{item.caption}</Text>
+              <View style={styles.profileContainer}>
+                <View style={styles.imageContainerProfile}>
+                  <Image
+                    source={icons.profile}
+                    style={styles.profileImage}
+                    resizeMode="cover"
+                  />
+                </View>
+                <View style={styles.profileTextContainer}>
+                  <Text
+                    style={{ fontFamily: "SemiBold", fontSize: 20, top: 6 }}
+                  >
+                    {item.userName}
+                  </Text>
+                  <Text style={styles.profileText}>
+                    {item.postCategoryName}
+                  </Text>
+                </View>
               </View>
-              <View style={styles.profileTextContainer}>
-                <Text style={{ fontFamily: "SemiBold", fontSize: 20, top: 6 }}>
-                  {item.userName}
-                </Text>
-                <Text style={styles.profileText}>{item.postCategoryName}</Text>
+              <View style={styles.contentCard}>
+                <View style={styles.cardItemsContainer}>
+                  <Text style={styles.textItem1}>
+                    <TimeLimitComponent
+                      key={item._id}
+                      previousTime={item.updatedAt}
+                    ></TimeLimitComponent>
+                  </Text>
+                  <Text style={styles.textItem2}>Dinner</Text>
+                </View>
               </View>
             </View>
-            <View style={styles.contentCard}>
-              <View style={styles.cardItemsContainer}>
-                <Text style={styles.textItem1}>
-                   <TimeLimitComponent key={item._id} previousTime={item.updatedAt}></TimeLimitComponent>
-                </Text>
-                <Text style={styles.textItem2}>Dinner</Text>
-              </View>
-            </View>
-          </View>
-        ))}
-      </ScrollView>
+          ))}
+        </ScrollView>
+      </View>
     </Container>
   );
 };

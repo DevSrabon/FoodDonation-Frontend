@@ -44,12 +44,13 @@ const SearchHeader = () => {
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    height: 400,
     paddingVertical: 12,
   },
   headerView: {
     flexDirection: "row",
+    alignItems: "center",
     justifyContent: "space-between",
+
     paddingHorizontal: 10,
   },
   searchView: {
