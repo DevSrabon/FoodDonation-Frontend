@@ -2,43 +2,34 @@ import { StyleSheet, Text, View, TouchableOpacity, Image, TextInput, Dimensions 
 import React, { useCallback, useEffect, useState } from 'react'
 import { Bubble, Composer, GiftedChat, InputToolbar, Send } from 'react-native-gifted-chat'
 import { useRoute } from '@react-navigation/native'
-//import firestore from '@react-native-firebase/firestore';
+import firestore from '@react-native-firebase/firestore';
+import { userContext } from "../context/Provider";
 const Ww = Dimensions.get('screen').width;
 import Container from "../components/container";
 
 const Chat = () => {
   const [messages, setMessage] = useState([])
+  const { allData } = userContext();
 
   const route = useRoute();
 
   useEffect(() => {
 
 
-    setMessage([
-      {
-        _id: 1,
-        text: 'Hello developer',
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: 'React Native',
-          avatar: 'https://placeimg.com/140/140/any',
-        },
-      },
-    ])
+    
 
-    // const subscriber = firestore()
-    //   .collection('chats')
-    //   .doc(route.params.email + route.params.data.email)
-    //   .collection('messages')
-    //   .orderBy('createdAt', 'desc');
-    // subscriber.onSnapshot(querysnapshot => {
-    //   const allmessages = querysnapshot.docs.map(item => {
-    //     return { ...item._data, createdAt: item._data.createdAt };
-    //   });
-    //   setMessageList(allmessages);
-    // });
-    // return () => subscriber();
+    const subscriber = firestore()
+      .collection('chats')
+      .doc(route.params.email + route.params.data.email)
+      .collection('messages')
+      .orderBy('createdAt', 'desc');
+    subscriber.onSnapshot(querysnapshot => {
+      const allmessages = querysnapshot.docs.map(item => {
+        return { ...item._data, createdAt: item._data.createdAt };
+      });
+      setMessage(allmessages);
+    });
+    return () => subscriber();
   }, []);
 
 
@@ -57,11 +48,11 @@ const Chat = () => {
 
   const onSend = useCallback(async (messages = []) => {
     const msg = messages[0];
+    console.log(allData)
     const myMsg = {
       ...msg,
-      //sendBy: route.params.data.email,
-      // sendTo: route.params.data.email,
-     // createdAt: Date.parse(msg.createdAt),
+      
+      createdAt: Date.parse(msg.createdAt),
     };
     setMessage(previousMessages =>
       GiftedChat.append(previousMessages, myMsg),
@@ -127,7 +118,7 @@ const Chat = () => {
         onSend={messages => onSend(messages)}
 
         user={{
-          _id: '2',
+          _id: '1',
         }}
         alwaysShowSend={true}
         renderSend={
