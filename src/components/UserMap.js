@@ -17,15 +17,19 @@ const UserMap = () => {
   const { user, setAllData } = userContext();
   // const { loading, error, data } = useFetchData(`users?email=srabon3@gmail.com`);
   const { loading, error, data } = useFetchData(`users?email=${user?.email}`);
-  const { data: mapUsers } = useFetchData(
+  const { data: mapUsers, loading: isLoading } = useFetchData(
     `users/map?latitude=${data?.location?.latitude}&longitude=${data?.location?.longitude}&role=${data?.role}`
   );
   useEffect(() => {
-    if (data) {
-      setAllData((prev) => ({ ...prev, userData: data }));
+    if (data && mapUsers) {
+      setAllData((prev) => ({
+        ...prev,
+        userData: data,
+        mapUsers: [...mapUsers],
+      }));
     }
-  }, [data, setAllData]);
-  if (loading) return <Loading />;
+  }, [data, mapUsers, setAllData]);
+  if (loading || isLoading) return <Loading />;
 
   if (error) return alert(error.message);
 

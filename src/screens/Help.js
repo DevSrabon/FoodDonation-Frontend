@@ -16,6 +16,11 @@ import CustomButton from "../components/CustomButton";
 import Loading from "../components/Loading";
 import { AuthContext } from "../context/Provider";
 import { listFiles, uploadToFirebase } from "../firebase/firebase.config";
+import Container from "../components/container";
+import Header from "../components/Header";
+import Label from "../components/label";
+import AddImages from "../components/AddImages";
+import CustomInput from "../components/CustomInput";
 
 const Donate = () => {
   const [files, setFiles] = useState([]);
@@ -130,92 +135,81 @@ const Donate = () => {
   }
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <>
-          <Text
-            style={{ fontFamily: "SemiBold", fontSize: 30, marginBottom: 20 }}
-          >
-            Help
-          </Text>
-
-          {/* Restaurant Name */}
-          <View style={{ width: 310 }}>
-            <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-              Organization Name
-            </Text>
-            <Text>{categoryName}</Text>
-          </View>
-
-          <View style={{ width: 310 }}>
-            <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-              Location
-            </Text>
-            <Text>{address}</Text>
-          </View>
-
-          {/* Image */}
-          <View style={{ height: 120 }}>
-            <View style={styles.imageHeader}>
-              <Text style={styles.imageHeaderText}>Image</Text>
-              <TouchableOpacity onPress={takePhoto} style={styles.addButton}>
-                <Text style={styles.addButtonLabel}>Add+</Text>
-              </TouchableOpacity>
-            </View>
-
-            <View style={styles.imageContainer}>
-              {imageUrls.length > 0 &&
-                imageUrls.map((img, index) => (
-                  <Image
-                    key={index}
-                    style={styles.image}
-                    source={{ uri: img }}
-                  />
-                ))}
-            </View>
-          </View>
-
-          {/* Caption */}
-          <View style={{ width: 310 }}>
-            <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-              Caption
-            </Text>
-            <TextInput
-              style={styles.inputText}
-              placeholder="Caption"
-              value={caption}
-              onChangeText={(text) => setCaption(text)}
-            />
-          </View>
-
-          {/* No of items */}
-          <View style={{ width: 310 }}>
-            <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-              No of Items
-            </Text>
-            <TextInput
-              style={styles.inputText}
-              keyboardType="numeric"
-              placeholder="No of Items"
-              value={noOfItem}
-              onChangeText={handleNumberChange}
-            />
-            <CustomButton text="Continue" onPress={onDonate} type="primary" />
-          </View>
-        </>
+    <Container>
+      <Header>Help</Header>
+      <View style={{ flex: 1, alignSelf: "flex-start", bottom: 50 }}>
+        <Label>Organization Name</Label>
+        <Label>{categoryName}</Label>
+        <Label>Location</Label>
+        <Label>{address}</Label>
       </View>
-    </ScrollView>
+
+      <View
+        style={{ flex: 1, width: "100%", alignItems: "center", bottom: 70 }}
+      >
+        <Label>Caption</Label>
+        <CustomInput
+          placeholder="Caption"
+          value={caption}
+          setValue={setCaption}
+        />
+
+        <Label>No of Items</Label>
+        <CustomInput
+          placeholder="No of Items"
+          keyboardType="numeric"
+          value={noOfItem}
+          setValue={handleNumberChange}
+        />
+      </View>
+
+      <AddImages imageUrls={imageUrls} takePhoto={takePhoto} />
+
+      {/* Image */}
+      {/* <View
+        style={{
+          flex: 1,
+          height: 120,
+
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      > */}
+      {/* <View style={styles.imageHeader}>
+          <Text style={styles.imageHeaderText}>Image</Text>
+          <TouchableOpacity onPress={takePhoto} style={styles.addButton}>
+            <Text style={styles.addButtonLabel}>Add+</Text>
+          </TouchableOpacity>
+        </View> */}
+
+      {/* <View style={styles.imageContainer}>
+        {imageUrls.length > 0 &&
+          imageUrls.map((img, index) => (
+            <Image key={index} style={styles.image} source={{ uri: img }} />
+          ))}
+      </View> */}
+      {/* </View> */}
+
+      {/* No of items */}
+
+      {/* <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
+          No of Items
+        </Text>
+        <TextInput
+          style={styles.inputText}
+          keyboardType="numeric"
+          placeholder="No of Items"
+          value={noOfItem}
+          onChangeText={handleNumberChange}
+        /> */}
+      <View style={{ flex: 1, width: "90%", bottom: 10 }}>
+        <CustomButton text="Continue" onPress={onDonate} type="primary" />
+      </View>
+    </Container>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingLeft: 30,
-    paddingTop: 60,
-    justifyContent: "center",
-    backgroundColor: "white",
-  },
   disabledText: {
     marginVertical: 10,
     paddingHorizontal: 10,
