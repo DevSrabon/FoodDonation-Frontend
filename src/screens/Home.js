@@ -1,53 +1,28 @@
-import React, { useState, useEffect } from "react";
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import React from "react";
+import {
+  Image,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import icons from "../../assets/icons";
 import Loading from "../components/Loading";
 import SearchHeader from "../components/SearchHeader";
 import Container from "../components/container";
 import { userContext } from "../context/Provider";
 import useFetchData from "../hook/useFetchData";
+import TimeLimitComponent from "./TimeLimitComponent";
 
 const Home = () => {
-  const [search, setSearch] = useState(0);
   const { allData } = userContext();
 
-  const [timeRemaining, setTimeRemaining] = useState(0);
-
-  useEffect(() => {
-    const timeLimit = 50 * 60 * 1000; // 50 minutes in milliseconds
-    const startTime = new Date(allData.userData.createdAt).getTime();
-    const endTime = startTime + timeLimit;
-
-    const updateRemainingTime = () => {
-      const currentTime = new Date().getTime();
-      const remainingTime = endTime - currentTime;
-
-      if (remainingTime > 0) {
-        setTimeRemaining(remainingTime);
-      } else {
-        // Time limit reached, perform desired actions here
-        // console.log('Time limit reached!');
-        setTimeRemaining(0);
-      }
-    };
-    const intervalId = setInterval(updateRemainingTime, 1000);
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, [allData.userData.createdAt]);
-
-  const formatTime = (timeInMilliseconds) => {
-    const minutes = Math.floor(timeInMilliseconds / (1000 * 60));
-    // const seconds = Math.floor((timeInMilliseconds % (1000 * 60)) / 1000);
-    return `${minutes.toString().padStart(2, '0')}`;
-    // return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-  };
-
   const { loading, error, data } = useFetchData(
-    `posts/getPost?role=${allData?.userData?.role}`
+    `posts/getPost?role=${allData?.userData?.role || allData?.guestData}`
   );
-  // console.log("all user data ===", allData.userData.createdAt);
-
+  const navigation = useNavigation();
   if (loading) return <Loading />;
   if (error) return alert(error.message);
   return (
@@ -56,17 +31,20 @@ const Home = () => {
       <ScrollView style={{ flex: 1, bottom: 250 }}>
         {data?.map((item) => (
           <View key={item._id} style={styles.cardContainer}>
-            {/* <Text>Time Remaining: {formatTime(timeRemaining)}</Text> */}
-            <Image
-              source={{ uri: item?.imageUrls?.[0] } || icons.fixedHeight} // Replace with the path to your image
-              style={styles.cardImage}
-              resizeMode="cover"
-            />
+            <Pressable
+              onPress={() => navigation.navigate("donorPage", { user: item })}
+            >
+              <Image
+                source={{ uri: item?.imageUrls?.[0] } || icons.fixedHeight}
+                style={styles.cardImage}
+                resizeMode="cover"
+              />
+            </Pressable>
             <Text style={styles.cardDescription}>{item.caption}</Text>
             <View style={styles.profileContainer}>
               <View style={styles.imageContainerProfile}>
                 <Image
-                  source={icons.profile} // Replace with the path to your image
+                  source={icons.profile}
                   style={styles.profileImage}
                   resizeMode="cover"
                 />
@@ -76,11 +54,19 @@ const Home = () => {
                   {item.userName}
                 </Text>
                 <Text style={styles.profileText}>{item.postCategoryName}</Text>
+                <Text style={styles.roleText}>
+                  {item.role.replace(/^./, item.role[0].toUpperCase())}
+                </Text>
               </View>
             </View>
             <View style={styles.contentCard}>
               <View style={styles.cardItemsContainer}>
-                <Text style={styles.textItem1}>{timeRemaining ? (`Exp ${formatTime(timeRemaining)} min`) : (`Expired`)}</Text>
+                <Text style={styles.textItem1}>
+                  <TimeLimitComponent
+                    key={item._id}
+                    previousTime={item.updatedAt}
+                  ></TimeLimitComponent>
+                </Text>
                 <Text style={styles.textItem2}>Dinner</Text>
               </View>
             </View>
@@ -166,6 +152,10 @@ const styles = StyleSheet.create({
   profileText: {
     fontSize: 16,
     marginTop: 8,
+  },
+  roleText: {
+    fontSize: 16,
+    fontWeight: "500",
   },
 });
 

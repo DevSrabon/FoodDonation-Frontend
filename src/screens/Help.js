@@ -83,9 +83,9 @@ const Donate = () => {
   };
 
   const onDonate = () => {
-    if (imageUrls > 4 || caption === "")
+    if (imageUrls > 1 || caption === "")
       return Alert.alert(
-        "Please Select at Least 4 image and fill up all input field"
+        "Please Select at Least 1 image and fill up all input field"
       );
     const body = {
       userName: name,
@@ -108,7 +108,6 @@ const Donate = () => {
       const response = await axios.get(
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyD7TKiBE0n8EsPH_snI7QjhGFagY0Vq3FQ`
       );
-      console.log("🚀 ~ file: Donate.js:111 ~  ~ response:", response);
 
       const results = response.data.results;
       if (results.length) {
@@ -145,7 +144,7 @@ const Donate = () => {
             <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
               Organization Name
             </Text>
-            <Text>{subRole}</Text>
+            <Text>{categoryName}</Text>
           </View>
 
           <View style={{ width: 310 }}>
