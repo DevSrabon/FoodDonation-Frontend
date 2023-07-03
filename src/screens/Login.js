@@ -10,7 +10,6 @@ import Loading from "../components/Loading";
 import Container from "../components/container";
 import Label from "../components/label";
 import { userContext } from "../context/Provider";
-import useToken from "../hook/useToken";
 
 const Login = () => {
   const {
@@ -22,29 +21,22 @@ const Login = () => {
     loading,
     setLoading,
   } = userContext();
-  const [userEmail, setUserEmail] = useState("");
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isChecked, setChecked] = useState(false);
-  const [token] = useToken(userEmail);
+
   const navigation = useNavigation();
 
   useEffect(() => {
-    if (token) {
+    if (user?.email) {
       navigation.navigate("user");
     }
-  }, [token, navigation]);
-  // useEffect(() => {
-  //   if (token) {
-  //     navigation.navigate(
-  //       allData?.userData?.role == "needy" ? "user" : "donornext"
-  //     );
-  //   }
-  // }, [token, navigation, allData?.userData?.role]);
+  }, [user?.email]);
   const onSignInPressed = async () => {
     try {
       const res = await signIn(email, password);
-      setUserEmail(email);
+      console.log("res", res);
     } catch (err) {
       console.log(err);
       alert(err);
