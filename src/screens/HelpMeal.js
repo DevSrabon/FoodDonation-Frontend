@@ -4,12 +4,12 @@ import axios from "axios";
 import React, { useContext, useState } from "react";
 import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import CustomButton from "../components/CustomButton";
-import Loading from "../components/Loading";
-import { AuthContext } from "../context/Provider";
-import Container from "../components/container";
-import Header from "../components/Header";
-import Label from "../components/label";
 import CustomInput from "../components/CustomInput";
+import Header from "../components/Header";
+import Loading from "../components/Loading";
+import Container from "../components/container";
+import Label from "../components/label";
+import { AuthContext } from "../context/Provider";
 
 const DonateMeal = () => {
   const route = useRoute();
@@ -96,7 +96,7 @@ const DonateMeal = () => {
                   <CustomInput
                     placeholder={`Item ${item.id}`}
                     value={item.value}
-                    setValue={handleValueChange()}
+                    setValue={(text) => handleValueChange(text, index, "value")}
                   />
                   {/* <TextInput
                     style={styles.inputText}

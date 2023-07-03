@@ -1,40 +1,49 @@
-import { StyleSheet, Text, View, TouchableOpacity, Image, TextInput, Dimensions } from 'react-native'
-import React, { useCallback, useEffect, useState } from 'react'
-import { Bubble, Composer, GiftedChat, InputToolbar, Send } from 'react-native-gifted-chat'
-import { useRoute } from '@react-navigation/native'
-import firestore from '@react-native-firebase/firestore';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  TextInput,
+  Dimensions,
+} from "react-native";
+import React, { useCallback, useEffect, useState } from "react";
+import {
+  Bubble,
+  Composer,
+  GiftedChat,
+  InputToolbar,
+  Send,
+} from "react-native-gifted-chat";
+import { useRoute } from "@react-navigation/native";
+// import firestore from '@react-native-firebase/firestore';
 import { userContext } from "../context/Provider";
-const Ww = Dimensions.get('screen').width;
+const Ww = Dimensions.get("screen").width;
 import Container from "../components/container";
 
 const Chat = () => {
-  const [messages, setMessage] = useState([])
+  const [messages, setMessage] = useState([]);
   const { allData } = userContext();
 
   const route = useRoute();
 
-  useEffect(() => {
+  // useEffect(() => {
 
-
-    
-
-    const subscriber = firestore()
-      .collection('chats')
-      .doc(route.params.email + route.params.data.email)
-      .collection('messages')
-      .orderBy('createdAt', 'desc');
-    subscriber.onSnapshot(querysnapshot => {
-      const allmessages = querysnapshot.docs.map(item => {
-        return { ...item._data, createdAt: item._data.createdAt };
-      });
-      setMessage(allmessages);
-    });
-    return () => subscriber();
-  }, []);
-
+  //   const subscriber = firestore()
+  //     .collection('chats')
+  //     .doc(route.params.email + route.params.data.email)
+  //     .collection('messages')
+  //     .orderBy('createdAt', 'desc');
+  //   subscriber.onSnapshot(querysnapshot => {
+  //     const allmessages = querysnapshot.docs.map(item => {
+  //       return { ...item._data, createdAt: item._data.createdAt };
+  //     });
+  //     setMessage(allmessages);
+  //   });
+  //   return () => subscriber();
+  // }, []);
 
   // const checkCollectionExists = async () => {
-
 
   //   try {
   //     const collectionRef = firestore().collection(route.params.email);
@@ -48,14 +57,14 @@ const Chat = () => {
 
   const onSend = useCallback(async (messages = []) => {
     const msg = messages[0];
-    console.log(allData)
+    console.log(allData);
     const myMsg = {
       ...msg,
-      
+
       createdAt: Date.parse(msg.createdAt),
     };
-    setMessage(previousMessages =>
-      GiftedChat.append(previousMessages, myMsg),
+    setMessage((previousMessages) =>
+      GiftedChat.append(previousMessages, myMsg)
     );
 
     // firestore()
@@ -89,112 +98,119 @@ const Chat = () => {
     //         });
     //     }
     //   })
-
   }, []);
 
   //console.log(messages)
 
-
   return (
     <View style={{ flex: 1 }}>
-      <View style={styles.itemContainer} >
-        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-          <TouchableOpacity onPress={() => navigation.navigate('Home')}>
-          <Image style={{ width: 30, height: 30, marginLeft: 10 }} source={require('../../assets/icons/leftArrow.png')}></Image>
+      <View style={styles.itemContainer}>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+            <Image
+              style={{ width: 30, height: 30, marginLeft: 10 }}
+              source={require("../../assets/icons/leftArrow.png")}
+            ></Image>
           </TouchableOpacity>
-          <Image style={{ width: 30, height: 30, marginLeft: 10 }} source={require('../../assets/icons/profile.png')}></Image>
-          <Text style={{ fontSize: 25, fontWeight: '400', marginLeft: 10, color: '#fff' }}>name</Text>
+          <Image
+            style={{ width: 30, height: 30, marginLeft: 10 }}
+            source={require("../../assets/icons/profile.png")}
+          ></Image>
+          <Text
+            style={{
+              fontSize: 25,
+              fontWeight: "400",
+              marginLeft: 10,
+              color: "#fff",
+            }}
+          >
+            name
+          </Text>
         </View>
         {/* <View style={{ flexDirection: 'row', }}>
           <FontAwesomeIcon icon={faVideo} style={{ color: '#fff' }} size={23}></FontAwesomeIcon>
           <FontAwesomeIcon icon={faPhone} style={{ marginLeft: 20, color: '#fff' }} size={20}></FontAwesomeIcon>
           <FontAwesomeIcon icon={faEllipsisVertical} style={{ marginLeft: 10, color: '#fff' }} size={23}></FontAwesomeIcon>
         </View> */}
-
       </View>
 
       <GiftedChat
         messages={messages}
-        onSend={messages => onSend(messages)}
-
+        onSend={(messages) => onSend(messages)}
         user={{
-          _id: '1',
+          _id: "1",
         }}
         alwaysShowSend={true}
-        renderSend={
-          props => {
-            return (
-              <Send {...props}>
-                <View {...props} style={styles.Sendbutton}>
-                  <Image style={{ width: 30, height: 30, left: 4 }} source={require('../../assets/icons/send.png')}></Image>
-                </View>
-              </Send>
-            )
-          }}
-
-
-        renderInputToolbar={props => {
+        renderSend={(props) => {
           return (
-
-            <InputToolbar  {...props} containerStyle={styles.InputToolbar}>
-            </InputToolbar>
-
-          )
+            <Send {...props}>
+              <View {...props} style={styles.Sendbutton}>
+                <Image
+                  style={{ width: 30, height: 30, left: 4 }}
+                  source={require("../../assets/icons/send.png")}
+                ></Image>
+              </View>
+            </Send>
+          );
+        }}
+        renderInputToolbar={(props) => {
+          return (
+            <InputToolbar
+              {...props}
+              containerStyle={styles.InputToolbar}
+            ></InputToolbar>
+          );
         }}
         textInputProps={{
-          style: { color: '#fff', paddingHorizontal: 15, width: Ww - 64 } // Set the text color here
+          style: { color: "#fff", paddingHorizontal: 15, width: Ww - 64 }, // Set the text color here
         }}
-        renderBubble={props => {
+        renderBubble={(props) => {
           return (
-
             <Bubble
               {...props}
               textStyle={{
-                right: { color: 'white' },
-                left: { color: 'white' },
+                right: { color: "white" },
+                left: { color: "white" },
               }}
               wrapperStyle={{
-                right: { backgroundColor: '#007AFF' },
-                left: { backgroundColor: '#1f2c34' },
+                right: { backgroundColor: "#007AFF" },
+                left: { backgroundColor: "#1f2c34" },
               }}
             />
-
-          )
+          );
         }}
-        messagesContainerStyle={{ paddingBottom: 20, }}
+        messagesContainerStyle={{ paddingBottom: 20 }}
       />
     </View>
-  )
-}
+  );
+};
 
-export default Chat
+export default Chat;
 
 const styles = StyleSheet.create({
   itemContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    backgroundColor: '#273236',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    backgroundColor: "#273236",
     paddingHorizontal: 10,
-    height: 60
+    height: 60,
   },
   InputToolbar: {
-    backgroundColor: '#1f2c34',
+    backgroundColor: "#1f2c34",
     borderRadius: 30,
     marginRight: 60,
     marginLeft: 5,
-    marginBottom: 5
+    marginBottom: 5,
   },
   Sendbutton: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#00a884',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#00a884",
     height: 45,
     width: 45,
     borderRadius: 50,
     // left: 55,
-
   },
-})
-
+});
