@@ -6,6 +6,7 @@ import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import CustomButton from "../components/CustomButton";
 import Loading from "../components/Loading";
 import { AuthContext } from "../context/Provider";
+import CustomInput from "../components/CustomInput";
 
 const DonateMeal = () => {
   const route = useRoute();
@@ -102,7 +103,7 @@ const DonateMeal = () => {
                       >
                         Item {item.id}
                       </Text>
-                      <TextInput
+                      <CustomInput
                         style={styles.inputText}
                         value={item.value}
                         onChangeText={(text) =>
@@ -142,7 +143,7 @@ const DonateMeal = () => {
                         Item Quantity
                       </Text>
                       <View style={{ width: 140 }}>
-                        <TextInput
+                        <CustomInput
                           style={styles.inputText}
                           keyboardType="numeric"
                           placeholder="0"
@@ -211,7 +212,6 @@ const DonateMeal = () => {
               ))}
             </Picker>
           </View>
-
           <CustomButton text="Continue" onPress={onDonateMeal} type="primary" />
         </View>
       </View>
@@ -235,8 +235,8 @@ const styles = StyleSheet.create({
     marginLeft: 150,
   },
   inputText: {
-    marginVertical: 10,
-    paddingHorizontal: 10,
+    marginVertical: 5,
+    paddingHorizontal: 5,
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 5,

@@ -15,6 +15,7 @@ const UserMap = () => {
   const navigation = useNavigation();
   const [serach, setSearch] = useState(0);
   const { user, setAllData } = userContext();
+  // const { loading, error, data } = useFetchData(`users?email=srabon3@gmail.com`);
   const { loading, error, data } = useFetchData(`users?email=${user?.email}`);
   const { data: mapUsers } = useFetchData(
     `users/map?latitude=${data?.location?.latitude}&longitude=${data?.location?.longitude}&role=${data?.role}`
