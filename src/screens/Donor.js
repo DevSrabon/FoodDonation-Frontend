@@ -52,7 +52,10 @@ const Donor = () => {
       </View>
       <View style={styles.boxContainer}>
         <Pressable
-          style={styles.box}
+          style={[
+            styles.box,
+            update === "Restaurant Owner" && styles.selectedBox,
+          ]}
           onPress={() => setUpdate("Restaurant Owner")}
         >
           <Text
@@ -72,7 +75,10 @@ const Donor = () => {
           </Text>
         </Pressable>
         <Pressable
-          style={styles.box}
+          style={[
+            styles.box,
+            update === "Catering Services" && styles.selectedBox,
+          ]}
           onPress={() => setUpdate("Catering Services")}
         >
           <Text
@@ -92,7 +98,7 @@ const Donor = () => {
           </Text>
         </Pressable>
         <Pressable
-          style={styles.box}
+          style={[styles.box, update === "Grocery Store" && styles.selectedBox]}
           onPress={() => setUpdate("Grocery Store")}
         >
           <Text
@@ -112,7 +118,7 @@ const Donor = () => {
           </Text>
         </Pressable>
         <Pressable
-          style={styles.box}
+          style={[styles.box, update === "Normal People" && styles.selectedBox]}
           onPress={() => setUpdate("Normal People")}
         >
           <Text
@@ -165,6 +171,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#F5F6F7",
     borderColor: "#F5F6F7",
     bottom: 80,
+  },
+  selectedBox: {
+    backgroundColor: "#efedf8",
+    borderWidth: 1,
+    borderColor: "#B4AAF2",
+    borderRadius: 6,
   },
 });
 

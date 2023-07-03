@@ -4,12 +4,10 @@ import * as WebBrowser from "expo-web-browser";
 
 import {
   GoogleAuthProvider,
-  RecaptchaVerifier,
   createUserWithEmailAndPassword,
   getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
-  signInWithPhoneNumber,
   signOut,
   updateProfile,
 } from "firebase/auth";
@@ -102,23 +100,10 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     return signOut(auth);
   };
-  function setUpRecaptha(number) {
-    const recaptchaVerifier = new RecaptchaVerifier(
-      "recaptcha-container",
-      {},
-      auth
-    );
-    recaptchaVerifier.render();
-    return signInWithPhoneNumber(auth, number, recaptchaVerifier);
-  }
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      console.log(currentUser);
-      if (!currentUser) {
-        AsyncStorage.removeItem("jwtToken");
-      }
       setLoading(false);
     });
 
