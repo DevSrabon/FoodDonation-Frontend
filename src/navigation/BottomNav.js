@@ -8,7 +8,6 @@ import Chat from "../screens/Chat";
 import Donate from "../screens/Donate";
 import Help from "../screens/Help";
 import User from "../screens/User";
-import MapModal from "../components/MapModal";
 
 const Tab = createBottomTabNavigator();
 const BottomNav = () => {
@@ -110,8 +109,8 @@ const BottomNav = () => {
         />
       )}
       <Tab.Screen
-        name="mapModal"
-        component={MapModal}
+        name="Chat"
+        component={Chat}
         options={{
           tabBarIcon: ({ focused, color }) => (
             <Ionicons
