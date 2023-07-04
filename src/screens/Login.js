@@ -1,15 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 import Checkbox from "expo-checkbox";
 import React, { useEffect, useState } from "react";
-import {
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
-import icons from "../../assets/icons";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import Header from "../components/Header";
@@ -17,34 +10,33 @@ import Loading from "../components/Loading";
 import Container from "../components/container";
 import Label from "../components/label";
 import { userContext } from "../context/Provider";
-import useToken from "../hook/useToken";
 
 const Login = () => {
-  const { signIn, promptAsync, user, request, loading, setLoading } =
-    userContext();
-  const [userEmail, setUserEmail] = useState("");
+  const {
+    signIn,
+    promptAsync,
+    user,
+    request,
+    setAllData,
+    loading,
+    setLoading,
+  } = userContext();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isChecked, setChecked] = useState(false);
-  const [token] = useToken(userEmail);
+
   const navigation = useNavigation();
 
   useEffect(() => {
-    if (token) {
+    if (user?.email) {
       navigation.navigate("user");
     }
-  }, [token, navigation]);
-  // useEffect(() => {
-  //   if (token) {
-  //     navigation.navigate(
-  //       allData?.userData?.role == "needy" ? "user" : "donornext"
-  //     );
-  //   }
-  // }, [token, navigation, allData?.userData?.role]);
+  }, [user?.email]);
   const onSignInPressed = async () => {
     try {
       const res = await signIn(email, password);
-      setUserEmail(email);
+      console.log("res", res);
     } catch (err) {
       console.log(err);
       alert(err);
@@ -57,12 +49,15 @@ const Login = () => {
     console.warn("Forgot Password");
   };
 
-  const onSignInFacebook = () => {
-    console.warn("Facebook");
-  };
-
-  const onGuestPressed = () => {
-    console.warn("Guest");
+  const onGuestPressed = async () => {
+    const res = await axios.get(
+      "https://food-donation-backend.vercel.app/api/v1/users?email=guest@gmail.com"
+    );
+    console.log(res.data.data.role);
+    if (res.status === 200) {
+      setAllData((prev) => ({ ...prev, guestData: res.data.data.role }));
+      navigation.navigate("home");
+    }
   };
 
   const onSignup = () => {
@@ -130,7 +125,9 @@ const Login = () => {
           {/* bottom: 20 */}
           <CustomButton text="Login" onPress={onSignInPressed} type="primary" />
         </View>
-        <View style={styles.subContainer}>
+
+        {/* <View style={styles.subContainer}>
+
           <Pressable
             style={styles.box}
             disabled={!request}
@@ -140,6 +137,18 @@ const Login = () => {
           >
             <Image source={icons.google} />
           </Pressable>
+        </View> */}
+        <View style={{ flex: 1, width: "90%" }}>
+          <Text
+            style={{
+              fontFamily: "Medium",
+              fontSize: 12,
+              color: "#747980",
+              textAlign: "center",
+            }}
+          >
+            Or
+          </Text>
         </View>
         <View style={{ flex: 1, width: "90%" }}>
           {/* bottom: 20 */}

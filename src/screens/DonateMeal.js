@@ -46,7 +46,9 @@ const DonateMeal = () => {
   const [orderType, setOrderType] = useState("");
 
   const quantityTypes = [
+    { quantityId: 1, label: "Gram " },
     { quantityId: 2, label: "Kg" },
+    { quantityId: 3, label: "ml " },
     { quantityId: 3, label: "L" },
     { quantityId: 4, label: "Pcs " },
   ];
@@ -67,7 +69,7 @@ const DonateMeal = () => {
         body
       );
       if (res.data.status === "success") {
-        alert("success");
+        alert("Submitted");
       }
     } catch (error) {
       alert(error.message);

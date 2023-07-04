@@ -37,7 +37,7 @@ const RoleSelection = () => {
         throw new Error("Request failed with status " + response.status);
       }
     } catch (error) {
-      alert("Error updating user: " + error);
+      alert("Error updating user: " + error.message);
     } finally {
       setLoading(false);
     }
@@ -76,7 +76,10 @@ const RoleSelection = () => {
       </View>
 
       <View style={styles.boxContainer}>
-        <Pressable style={styles.box} onPress={() => setUpdate("donor")}>
+        <Pressable
+          style={[styles.box, update === "donor" && styles.selectedBox]}
+          onPress={() => setUpdate("donor")}
+        >
           <Text
             style={{ fontFamily: "SemiBold", fontSize: 14, color: "#252525" }}
           >
@@ -93,7 +96,10 @@ const RoleSelection = () => {
             Person or an Organization who donates the food
           </Text>
         </Pressable>
-        <Pressable style={styles.box} onPress={() => setUpdate("transporter")}>
+        <Pressable
+          style={[styles.box, update === "transporter" && styles.selectedBox]}
+          onPress={() => setUpdate("transporter")}
+        >
           <Text
             style={{ fontFamily: "SemiBold", fontSize: 14, color: "#252525" }}
           >
@@ -110,7 +116,10 @@ const RoleSelection = () => {
             Person or an Organization who helps Transporting the food
           </Text>
         </Pressable>
-        <Pressable style={styles.box} onPress={() => setUpdate("needy")}>
+        <Pressable
+          style={[styles.box, update === "needy" && styles.selectedBox]}
+          onPress={() => setUpdate("needy")}
+        >
           <Text
             style={{ fontFamily: "SemiBold", fontSize: 14, color: "#252525" }}
           >
@@ -153,6 +162,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: "#F5F6F7",
     borderColor: "#F5F6F7",
+  },
+  selectedBox: {
+    backgroundColor: "#efedf8",
+    borderWidth: 1,
+    borderColor: "#B4AAF2",
+    borderRadius: 6,
   },
 });
 export default RoleSelection;

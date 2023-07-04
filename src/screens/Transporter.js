@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import Header from "../components/Header";
 import CustomButton from "../components/CustomButton";
+import Header from "../components/Header";
 import Loading from "../components/Loading";
 import Container from "../components/container";
 import { userContext } from "../context/Provider";
@@ -53,7 +53,10 @@ const Transporter = () => {
       </View>
       <View style={styles.boxContainer}>
         <Pressable
-          style={styles.box}
+          style={[
+            styles.box,
+            update === "Non-Profit Organization" && styles.selectedBox,
+          ]}
           onPress={() => setUpdate("Non-Profit Organization")}
         >
           <Text
@@ -72,7 +75,10 @@ const Transporter = () => {
             Person or an Organization who donates the food
           </Text>
         </Pressable>
-        <Pressable style={styles.box} onPress={() => setUpdate("Food Banks")}>
+        <Pressable
+          style={[styles.box, update === "Food Banks" && styles.selectedBox]}
+          onPress={() => setUpdate("Food Banks")}
+        >
           <Text
             style={{ fontFamily: "SemiBold", fontSize: 14, color: "#252525" }}
           >
@@ -123,6 +129,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#F5F6F7",
     borderColor: "#F5F6F7",
     bottom: 80,
+  },
+  selectedBox: {
+    backgroundColor: "#efedf8",
+    borderWidth: 1,
+    borderColor: "#B4AAF2",
+    borderRadius: 6,
   },
 });
 

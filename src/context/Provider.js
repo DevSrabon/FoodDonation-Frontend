@@ -4,12 +4,10 @@ import * as WebBrowser from "expo-web-browser";
 
 import {
   GoogleAuthProvider,
-  RecaptchaVerifier,
   createUserWithEmailAndPassword,
   getAuth,
   onAuthStateChanged,
   signInWithEmailAndPassword,
-  signInWithPhoneNumber,
   signOut,
   updateProfile,
 } from "firebase/auth";
@@ -35,13 +33,13 @@ const AuthProvider = ({ children }) => {
   const [token, setToken] = useState("");
   const [request, response, promptAsync] = Google.useAuthRequest({
     androidClientId:
-      "1076467046409-sct5drjcd8896r7qc80lvgmajfnev5fs.apps.googleusercontent.com",
+      "178444591689-p05431klj4usrm1k3m9uba351krecfno.apps.googleusercontent.com",
     iosClientId:
-      "1076467046409-eauic2ru65l4b6lustejji71tjar5h40.apps.googleusercontent.com",
+      "178444591689-hoqm5ttkdm2paodnv41qfog43q1v6s25.apps.googleusercontent.com",
     webClientId:
-      "1076467046409-f7dik116mreamar2fls2anor8aicijlp.apps.googleusercontent.com",
+      "178444591689-av11lgp73ugj5hb7haj9jbmpflcahkvk.apps.googleusercontent.com",
     expoClientId:
-      "1076467046409-aefr4jm44k4boabqd8jrl9bakvbb5m5d.apps.googleusercontent.com",
+      "178444591689-p9dcahq7j98tuohg98rtn90atb0ttolu.apps.googleusercontent.com",
   });
 
   useEffect(() => {
@@ -63,7 +61,7 @@ const AuthProvider = ({ children }) => {
   }
 
   const getLocalUser = async () => {
-    const data = await AsyncStorage.getItem("@srabonbarua");
+    const data = await AsyncStorage.getItem("@mahbubmorshed");
     if (!data) return null;
     return JSON.parse(data);
   };
@@ -76,7 +74,7 @@ const AuthProvider = ({ children }) => {
       });
 
       const user = await response.json();
-      await AsyncStorage.setItem("@srabonbarua", JSON.stringify(user));
+      await AsyncStorage.setItem("@mahbubmorshed", JSON.stringify(user));
       setLoading(true);
       setUser(user);
     } catch (error) {
@@ -102,15 +100,6 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     return signOut(auth);
   };
-  function setUpRecaptha(number) {
-    const recaptchaVerifier = new RecaptchaVerifier(
-      "recaptcha-container",
-      {},
-      auth
-    );
-    recaptchaVerifier.render();
-    return signInWithPhoneNumber(auth, number, recaptchaVerifier);
-  }
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
