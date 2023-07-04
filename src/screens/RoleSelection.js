@@ -1,3 +1,4 @@
+
 import { useNavigation } from "@react-navigation/native";
 import React, { useRef, useState } from "react";
 import { Pressable, StyleSheet, Text, View,Image,Animated } from "react-native";
@@ -9,9 +10,9 @@ import { userContext } from "../context/Provider";
 
 const RoleSelection = () => {
   const navigation = useNavigation();
-  const [update,  setupdate] = useState("");
+  const { user } = userContext();
+  const [update, setUpdate] = useState("");
   const [updatecategory, setupdatecategory] = useState("")
- // const { user } = userContext();
   const [loading, setLoading] = useState(false);
   const [donaropen, setdonaropen] = useState(false);
   const [transporteropen, settransporteropen] = useState(false)
@@ -61,33 +62,33 @@ const RoleSelection = () => {
   } 
   }
   const onRoleSelect = async () => {
-    // setLoading(true);
-    // const body = { email: user.email, role: update };
-    // try {
-    //   const response = await fetch(
-    //     "https://food-donation-backend.vercel.app/api/v1/users/update-role",
-    //     {
-    //       method: "PATCH",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify(body),
-    //     }
-    //   );
+     setLoading(true);
+    const body = { role: update };
+    try {
+      const response = await fetch(
+        `https://food-donation-backend.vercel.app/api/v1/users/update-role?email=${user?.email}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(body),
+        }
+      );
 
-    //   if (response.ok) {
-    //     const responseData = await response.json();
-    //     if (responseData.status === "success") {
-    //       return navigation.navigate(responseData.data.role.toString());
-    //     }
-    //   } else {
-    //     throw new Error("Request failed with status " + response.status);
-    //   }
-    // } catch (error) {
-    //   alert("Error updating user: " + error.message);
-    // } finally {
-    //   setLoading(false);
-   // }
+      if (response.ok) {
+        const responseData = await response.json();
+        if (responseData.status === "success") {
+          return navigation.navigate(responseData.data.role.toString());
+        }
+      } else {
+        throw new Error("Request failed with status " + response.status);
+      }
+    } catch (error) {
+      alert("Error updating user: " + error.message);
+    } finally {
+      setLoading(false);
+    }
   };
   function Check() {
     console.warn('clicked');
