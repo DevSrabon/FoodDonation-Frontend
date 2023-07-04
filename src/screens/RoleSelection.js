@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import React, { useState } from "react";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import CustomButton from "../components/CustomButton";
@@ -9,16 +9,17 @@ import { userContext } from "../context/Provider";
 
 const RoleSelection = () => {
   const navigation = useNavigation();
-  const [update, setUpdate] = useState("");
   const { user } = userContext();
+  const [update, setUpdate] = useState("");
+
   const [loading, setLoading] = useState(false);
 
   const onRoleSelect = async () => {
     setLoading(true);
-    const body = { email: user.email, role: update };
+    const body = { role: update };
     try {
       const response = await fetch(
-        "https://food-donation-backend.vercel.app/api/v1/users/update-role",
+        `https://food-donation-backend.vercel.app/api/v1/users/update-role?email=${user?.email}`,
         {
           method: "PATCH",
           headers: {

@@ -9,11 +9,11 @@ const useUpdateUser = () => {
   const updateUserRole = async (update, email, navigate) => {
     setLoading(true);
 
-    const body = { subRole: update, email };
+    const body = { subRole: update };
 
     try {
       const response = await axios.patch(
-        "https://food-donation-backend.vercel.app/api/v1/users/update-role",
+        `https://food-donation-backend.vercel.app/api/v1/users/update-role?email=${email}`,
         body
       );
 
