@@ -18,11 +18,12 @@ import DonateMeal from "../screens/DonateMeal";
 import Help from "../screens/Help";
 import HelpMeal from "../screens/HelpMeal";
 import Profile from "../screens/Profile";
-import MapModal from "../components/MapModal";
 import DonorPage from "../screens/DonorPage";
 import Signup from "../screens/Signup";
 import Transporter from "../screens/Transporter";
 import BottomNav from "./BottomNav";
+import CustomTouch from "../components/CustomTouch";
+import CustomModal from "../components/CustomModal";
 
 const Stack = createNativeStackNavigator();
 
@@ -30,9 +31,12 @@ const StackNav = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="initial"
+        initialRouteName="modal"
         screenOptions={{ headerShown: false }}
       >
+        <Stack.Screen name="touch" component={CustomTouch} />
+        <Stack.Screen name="modal" component={CustomModal} />
+
         <Stack.Screen name="initial" component={InitialPage} />
         <Stack.Screen name="profile" component={Profile} />
         <Stack.Screen name="intro" component={Intro} />
@@ -49,7 +53,7 @@ const StackNav = () => {
         <Stack.Screen name="donate" component={Donate} />
         <Stack.Screen name="help" component={Help} />
         <Stack.Screen name="helpMeal" component={HelpMeal} />
-        <Stack.Screen name="mapModal" component={MapModal} />
+
         {/* <Stack.Screen name="profile" component={Profile} /> */}
         <Stack.Screen name="chat" component={Chat} />
         <Stack.Screen name="home" component={Home} />
