@@ -20,9 +20,10 @@ export default function App() {
   }
 
   return (
-    <AuthProvider>
-      <StackNav />
-      <ExpoStatusBar style="auto" />
-    </AuthProvider>
+    // <AuthProvider>
+      
+    // </AuthProvider>
+    <StackNav />
+    // <ExpoStatusBar style="auto" />
   );
 }
