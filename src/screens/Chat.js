@@ -17,6 +17,8 @@ import {
 } from "react-native-gifted-chat";
 import { useRoute } from "@react-navigation/native";
 // import firestore from '@react-native-firebase/firestore';
+
+import { getDatabase, ref, onValue, push } from 'firebase/database';
 import { userContext } from "../context/Provider";
 const Ww = Dimensions.get("screen").width;
 import Container from "../components/container";
@@ -24,7 +26,59 @@ import Container from "../components/container";
 const Chat = () => {
   const [messages, setMessage] = useState([]);
   const { allData } = userContext();
+  const db = getDatabase();
+  function Message({ item }) {
 
+    const isCurrentUser = item.user === auth.currentUser.email;
+    return (
+      <View style={[styles.message, isCurrentUser ? styles.currentUserMessage : null]}>
+        <Text style={[styles.user]}>
+          {item.user2}
+        </Text>
+        <Text style={[styles.text, isCurrentUser ? styles.currentUserText : null]}>
+          {item.text}
+          </Text>
+        <Text style={[styles.date, isCurrentUser ? styles.currentUserDate : null]}>
+          {new Date(item.createdAt).toLocaleTimeString()}
+         
+        
+        </Text>
+        
+      </View>
+    );
+  }
+  
+   
+    useEffect(() => {
+      onValue(ref(db, `messages`), (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+          setMessages(Object.values(data));
+        }
+      });
+    }, []);
+  
+    function sendMessage() {
+     /* onValue(ref(db, `rooms/${dd}/${uid}`), (snapshot) => {
+        const namee = snapshot.val();})*/
+      if (message.trim()) {
+        const newMessage = {
+          id: Date.now().toString(),
+          text: message.trim(),
+          user2: nme2,
+          user:auth.currentUser.email,
+          createdAt: new Date().toISOString(),
+        };
+        push(ref(db, `messages`), newMessage);
+        setMessage('');
+      }
+    }
+  
+  
+   
+    function renderItem({ item }) {
+      return <Message item={item} />;
+    }
   const route = useRoute();
 
   // useEffect(() => {
