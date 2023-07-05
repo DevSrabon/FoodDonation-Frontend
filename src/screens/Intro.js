@@ -11,11 +11,19 @@ import data from "../data/introData";
 import icons from "../../assets/icons";
 import { useNavigation } from "@react-navigation/native";
 import InitContainer from "../components/initContainer";
+import LottieView from "lottie-react-native";
 
 const Intro = () => {
   const navigation = useNavigation();
   return (
     <InitContainer>
+      <LottieView
+        key="animation"
+        autoPlay
+        loop
+        resizeMode="cover"
+        source={require("../../assets/animation.json")}
+      />
       <View style={styles.topContainer}></View>
       <View style={styles.subContainer}>
         <FlatList
