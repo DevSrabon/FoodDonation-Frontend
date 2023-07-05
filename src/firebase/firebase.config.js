@@ -1,6 +1,10 @@
 // Import the functions you need from the SDKs you need
 
 import { getApp, getApps, initializeApp } from "firebase/app";
+import "firebase/compat/app";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
 import {
   getDownloadURL,
   getStorage,
@@ -8,7 +12,6 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
-
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -30,6 +33,9 @@ const firebaseConfig = {
 
 if (getApps().length === 0) {
   initializeApp(firebaseConfig);
+}
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
 }
 const fbApp = getApp();
 const fbStorage = getStorage();
