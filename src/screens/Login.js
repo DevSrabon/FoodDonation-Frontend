@@ -84,7 +84,7 @@ const Login = () => {
   }
   return (
     <ScrollView style={{ flex: 1 }}>
-      <Container>
+      <Container style={{ alignItems: "center" }}>
         <Header>Login</Header>
 
         <Label>E-mail</Label>
@@ -137,8 +137,7 @@ const Login = () => {
           />
         </View>
 
-        <View style={{ flex: 1, width: "90%" }}>
-          {/* bottom: 20 */}
+        <View style={{ flex: 1, width: "90%", bottom: 20 }}>
           <CustomButton text="Login" onPress={onSignInPressed} type="primary" />
         </View>
 
@@ -154,38 +153,14 @@ const Login = () => {
             <Image source={icons.google} />
           </Pressable>
         </View> */}
-        <View style={{ flex: 1, width: "90%" }}>
-          <Text
-            style={{
-              fontFamily: "Medium",
-              fontSize: 12,
-              color: "#747980",
-              textAlign: "center",
-            }}
-          >
-            Or
-          </Text>
-        </View>
-        <View style={{ flex: 1, width: "90%" }}>
-          {/* bottom: 20 */}
+
+        <View style={{ flex: 1, width: "90%", bottom: 60 }}>
           <CustomButton
             text="Signin as a Guest"
             onPress={onGuestPressed}
             type="primary"
           />
         </View>
-        {/* <View style={{ flex: 1, bottom: 20 }}>
-          <Text
-            style={{
-              fontFamily: "SemiBold",
-              fontSize: 14,
-              justifyContent: "center",
-              marginLeft: 75,
-            }}
-          >
-            or continue with
-          </Text>
-        </View> */}
 
         <View
           style={{

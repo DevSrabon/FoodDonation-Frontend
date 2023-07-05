@@ -21,3 +21,22 @@
       }
     }
   }
+
+  {
+    "cli": {
+      "version": ">= 3.14.0"
+    },
+    "build": {
+      "development": {
+        "developmentClient": true,
+        "distribution": "internal"
+      },
+      "preview": {
+        "distribution": "internal"
+      },
+      "production": {}
+    },
+    "submit": {
+      "production": {}
+    }
+  }

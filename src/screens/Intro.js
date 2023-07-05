@@ -18,14 +18,13 @@ const Intro = () => {
   return (
     <InitContainer>
       <LottieView
-        style={{ width: 300, top: 30 }}
+        style={{ width: 350, top: 30 }}
         key="animation"
         autoPlay
         loop
         resizeMode="center"
-        source={require("../../assets/donate.json")}
+        source={require("../../assets/girl.json")}
       />
-      {/* <View style={{ width: "40%" }}></View> */}
 
       <View style={styles.topContainer}></View>
       <View style={styles.subContainer}>

@@ -7,6 +7,9 @@ import CustomButton from "../components/CustomButton";
 import Loading from "../components/Loading";
 import { AuthContext } from "../context/Provider";
 import CustomInput from "../components/CustomInput";
+import Container from "../components/container";
+import Label from "../components/label";
+import Header from "../components/Header";
 
 const DonateMeal = () => {
   const route = useRoute();
@@ -16,9 +19,9 @@ const DonateMeal = () => {
   const [listItems, setListItems] = useState([]);
 
   const mealOptions = [
-    { id: 1, label: "Vegetarian" },
-    { id: 2, label: "Non-Vegetarian" },
-    // { id: 3, label: "Meal3" },
+    { id: 1, label: "Non-Veg or Veg" },
+    { id: 2, label: "Veg" },
+    { id: 3, label: "Non-Veg" },
   ];
 
   React.useEffect(() => {
@@ -81,112 +84,103 @@ const DonateMeal = () => {
     return <Loading />;
   }
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <Text style={{ fontFamily: "SemiBold", fontSize: 30, bottom: 10 }}>
-          Donate
-        </Text>
-        {/* Testing item list */}
-        <View style={{ flex: 1 }}>
-          <View>
-            {/* Testing item list */}
-            <View>
-              {listItems.map((item, index) => (
-                <View key={index} style={{ marginBottom: 20 }}>
-                  <View style={{ flexDirection: "row", gap: 20 }}>
-                    <View style={{ width: 150 }}>
-                      <Text
-                        style={{
-                          fontFamily: "SemiBold",
-                          fontSize: 14,
-                        }}
-                      >
-                        Item {item.id}
-                      </Text>
-                      <CustomInput
-                        style={styles.inputText}
-                        value={item.value}
-                        onChangeText={(text) =>
-                          handleValueChange(text, index, "value")
-                        }
-                        placeholder={`Item ${item.id}`}
-                      />
-                    </View>
-                    {/* Meal options */}
-                    <View style={{ width: 150 }}>
-                      <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-                        Meal Type {item.id}
-                      </Text>
-                      <View style={styles.inputText}>
-                        <Picker
-                          selectedValue={item.value}
-                          onValueChange={(text) =>
-                            handleValueChange(text, index, "qType")
-                          }
-                          mode="dropdown"
-                          multiple={true}
-                        >
-                          {mealOptions.map((option) => (
-                            <Picker.Item
-                              key={option.id}
-                              label={option.label}
-                              value={option.label}
-                            />
-                          ))}
-                        </Picker>
-                      </View>
-                    </View>
-                  </View>
-                  <View style={{ flexDirection: "row", gap: 20, marginTop: 5 }}>
-                    <View style={{ width: 150 }}>
-                      <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-                        Item Quantity
-                      </Text>
-                      <View style={{ width: 140 }}>
-                        <CustomInput
-                          style={styles.inputText}
-                          keyboardType="numeric"
-                          placeholder="0"
-                          value={item.quantity}
-                          onChangeText={(text) =>
-                            handleValueChange(text, index, "quantity")
-                          }
-                        />
-                      </View>
-                    </View>
+    <Container>
+      <ScrollView>
+        <Header>Help</Header>
 
-                    {/* Item Quantity */}
-                    <View
-                      style={{
-                        width: 150,
-                      }}
+        <View style={{ flex: 1 }}>
+          {listItems.map((item, index) => (
+            <View key={index} style={{ marginBottom: 20 }}>
+              <View style={{ flexDirection: "row", gap: 20 }}>
+                <View style={{ width: 150 }}>
+                  <Label> Item {item.id}</Label>
+                  <CustomInput
+                    placeholder={`Item ${item.id}`}
+                    value={item.value}
+                    setValue={(text) => handleValueChange(text, index, "value")}
+                  />
+                  {/* <TextInput
+                    style={styles.inputText}
+                    value={item.value}
+                    onChangeText={(text) =>
+                      handleValueChange(text, index, "value")
+                    }
+                    placeholder={`Item ${item.id}`}
+                  /> */}
+                </View>
+                {/* Meal options */}
+                <View style={{ width: 150 }}>
+                  <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
+                    Meal Type {item.id}
+                  </Text>
+                  <View style={styles.inputText}>
+                    <Picker
+                      selectedValue={item.value}
+                      onValueChange={(text) =>
+                        handleValueChange(text, index, "qType")
+                      }
+                      mode="dropdown"
+                      multiple={true}
                     >
-                      <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-                        Quantity Type
-                      </Text>
-                      <View style={styles.inputText}>
-                        <Picker
-                          selectedValue={item.quantityType}
-                          onValueChange={(text) =>
-                            handleValueChange(text, index, "quantityType")
-                          }
-                          mode="dropdown"
-                        >
-                          {quantityTypes.map((option) => (
-                            <Picker.Item
-                              key={option.quantityId}
-                              label={option.label}
-                              value={option.label}
-                            />
-                          ))}
-                        </Picker>
-                      </View>
-                    </View>
+                      {mealOptions.map((option) => (
+                        <Picker.Item
+                          key={option.id}
+                          label={option.label}
+                          value={option.label}
+                        />
+                      ))}
+                    </Picker>
                   </View>
                 </View>
-              ))}
+              </View>
+              <View style={{ flexDirection: "row", gap: 20, marginTop: 5 }}>
+                <View style={{ width: 150 }}>
+                  <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
+                    Item Quantity
+                  </Text>
+                  <View style={{ width: 140 }}>
+                    <TextInput
+                      style={styles.inputText}
+                      keyboardType="numeric"
+                      placeholder="0"
+                      value={item.quantity}
+                      onChangeText={(text) =>
+                        handleValueChange(text, index, "quantity")
+                      }
+                    />
+                  </View>
+                </View>
+
+                {/* Item Quantity */}
+                <View
+                  style={{
+                    width: 150,
+                  }}
+                >
+                  <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
+                    Quantity Type
+                  </Text>
+                  <View style={styles.inputText}>
+                    <Picker
+                      selectedValue={item.quantityType}
+                      onValueChange={(text) =>
+                        handleValueChange(text, index, "quantityType")
+                      }
+                      mode="dropdown"
+                    >
+                      {quantityTypes.map((option) => (
+                        <Picker.Item
+                          key={option.quantityId}
+                          label={option.label}
+                          value={option.label}
+                        />
+                      ))}
+                    </Picker>
+                  </View>
+                </View>
+              </View>
             </View>
-          </View>
+          ))}
         </View>
 
         {/* Order */}
@@ -196,26 +190,10 @@ const DonateMeal = () => {
             marginTop: 30,
           }}
         >
-          <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>Order</Text>
-          <View style={styles.inputText}>
-            <Picker
-              selectedValue={orderType}
-              onValueChange={(value) => setOrderType(value)}
-              mode="dropdown"
-            >
-              {orderOptions.map((option) => (
-                <Picker.Item
-                  key={option.id}
-                  label={option.label}
-                  value={option.label}
-                />
-              ))}
-            </Picker>
-          </View>
           <CustomButton text="Continue" onPress={onDonateMeal} type="primary" />
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </Container>
   );
 };
 
