@@ -23,6 +23,8 @@ import Profile from "../screens/Profile";
 import Signup from "../screens/Signup";
 import Transporter from "../screens/Transporter";
 import BottomNav from "./BottomNav";
+import User from "../screens/User";
+import UserMap from "../components/UserMap";
 
 const Stack = createNativeStackNavigator();
 
@@ -33,6 +35,7 @@ const StackNav = () => {
         initialRouteName="initial"
         screenOptions={{ headerShown: false }}
       >
+        {/* <Stack.Screen name="initial" component={User} /> */}
         <Stack.Screen name="initial" component={InitialPage} />
         <Stack.Screen name="profile" component={Profile} />
         <Stack.Screen name="intro" component={Intro} />
