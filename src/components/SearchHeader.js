@@ -8,7 +8,7 @@ const SearchHeader = () => {
   const { allData, user, signOutUser } = userContext();
   const navigation = useNavigation();
   const handleSignOut = () => {
-    if (user?.email) signOutUser();
+    signOutUser();
     navigation.navigate("login");
   };
   return (

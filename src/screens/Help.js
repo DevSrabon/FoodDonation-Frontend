@@ -136,37 +136,38 @@ const Donate = () => {
 
   return (
     <Container>
-      <Header>Help</Header>
-      <View style={{ flex: 1, alignSelf: "flex-start", bottom: 50 }}>
-        <Label>Organization Name</Label>
-        <Label>{categoryName}</Label>
-        <Label>Location</Label>
-        <Label>{address}</Label>
-      </View>
+      <ScrollView>
+        <Header>Help</Header>
+        <View style={{ flex: 1, alignSelf: "flex-start", bottom: 50 }}>
+          <Label>Organization Name</Label>
+          <Label>{categoryName}</Label>
+          <Label>Location</Label>
+          <Label>{address}</Label>
+        </View>
 
-      <View
-        style={{ flex: 1, width: "100%", alignItems: "center", bottom: 70 }}
-      >
-        <Label>Caption</Label>
-        <CustomInput
-          placeholder="Caption"
-          value={caption}
-          setValue={setCaption}
-        />
+        <View
+          style={{ flex: 1, width: "100%", alignItems: "center", bottom: 70 }}
+        >
+          <Label>Caption</Label>
+          <CustomInput
+            placeholder="Caption"
+            value={caption}
+            setValue={setCaption}
+          />
 
-        <Label>No of Items</Label>
-        <CustomInput
-          placeholder="No of Items"
-          keyboardType="numeric"
-          value={noOfItem}
-          setValue={handleNumberChange}
-        />
-      </View>
+          <Label>No of Items</Label>
+          <CustomInput
+            placeholder="No of Items"
+            keyboardType="numeric"
+            value={noOfItem}
+            setValue={handleNumberChange}
+          />
+        </View>
 
-      <AddImages imageUrls={imageUrls} takePhoto={takePhoto} />
+        <AddImages imageUrls={imageUrls} takePhoto={takePhoto} />
 
-      {/* Image */}
-      {/* <View
+        {/* Image */}
+        {/* <View
         style={{
           flex: 1,
           height: 120,
@@ -175,24 +176,24 @@ const Donate = () => {
           justifyContent: "space-between",
         }}
       > */}
-      {/* <View style={styles.imageHeader}>
+        {/* <View style={styles.imageHeader}>
           <Text style={styles.imageHeaderText}>Image</Text>
           <TouchableOpacity onPress={takePhoto} style={styles.addButton}>
             <Text style={styles.addButtonLabel}>Add+</Text>
           </TouchableOpacity>
         </View> */}
 
-      {/* <View style={styles.imageContainer}>
+        {/* <View style={styles.imageContainer}>
         {imageUrls.length > 0 &&
           imageUrls.map((img, index) => (
             <Image key={index} style={styles.image} source={{ uri: img }} />
           ))}
       </View> */}
-      {/* </View> */}
+        {/* </View> */}
 
-      {/* No of items */}
+        {/* No of items */}
 
-      {/* <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
+        {/* <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
           No of Items
         </Text>
         <TextInput
@@ -202,9 +203,10 @@ const Donate = () => {
           value={noOfItem}
           onChangeText={handleNumberChange}
         /> */}
-      <View style={{ flex: 1, width: "90%", bottom: 10 }}>
-        <CustomButton text="Continue" onPress={onDonate} type="primary" />
-      </View>
+        <View style={{ flex: 1, width: "90%", bottom: 10 }}>
+          <CustomButton text="Continue" onPress={onDonate} type="primary" />
+        </View>
+      </ScrollView>
     </Container>
   );
 };
