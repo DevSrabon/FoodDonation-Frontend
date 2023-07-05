@@ -10,7 +10,7 @@ import {
   View,
 } from "react-native";
 
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import icons from "../../assets/icons";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
@@ -21,6 +21,11 @@ import { userContext } from "../context/Provider";
 import useImagePicker from "../hook/useImagePicker";
 
 const Profile = () => {
+
+  const route = useRoute();
+  const role=route.params.role;
+  const subRole=route.params.subrole;
+
   const { loading: imageLoading, imageUrls, takePhoto } = useImagePicker();
 
   const [bio, setBio] = useState("");
@@ -29,7 +34,7 @@ const Profile = () => {
 
   const onBioSetup = async () => {
     if (!imageUrls.length || !bio) return alert("Please fill up your bio");
-    const body = { bio, photo: imageUrls[0] };
+    const body = { bio, photo: imageUrls[0], email: user?.email,role,subRole };
     try {
       const result = await axios.patch(
         `https://food-donation-backend.vercel.app/api/v1/users/update-role?email=${user?.email}`,
