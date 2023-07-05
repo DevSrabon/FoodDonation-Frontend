@@ -18,12 +18,15 @@ const Intro = () => {
   return (
     <InitContainer>
       <LottieView
+        style={{ width: 300, top: 30 }}
         key="animation"
         autoPlay
         loop
-        resizeMode="cover"
-        source={require("../../assets/animation.json")}
+        resizeMode="center"
+        source={require("../../assets/donate.json")}
       />
+      {/* <View style={{ width: "40%" }}></View> */}
+
       <View style={styles.topContainer}></View>
       <View style={styles.subContainer}>
         <FlatList
@@ -73,7 +76,7 @@ const Intro = () => {
 const styles = StyleSheet.create({
   topContainer: {
     flex: 1,
-    backgroundColor: "#B4AAF2",
+    // backgroundColor: "#B4AAF2",
   },
   subContainer: {
     flex: 1,
