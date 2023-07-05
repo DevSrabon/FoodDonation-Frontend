@@ -20,7 +20,8 @@ const firebasePhoneConfig = {
 // const app = initializeApp(firebaseConfig);
 
 // export default app;
-
+/*
 if (!firebase.apps.length) {
   firebase.initializeApp(firebasePhoneConfig);
 }
+*/

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet,Linking } from 'react-native';
-import { auth } from '../context/Provider';
+import { auth, userContext } from '../context/Provider';
 import { getDatabase, ref, onValue, push } from 'firebase/database';
 const db = getDatabase();
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import displayName from '../context/Provider';
 function Message({ item }) {
+ 
   console.log(displayName);
   const isCurrentUser = item.user === auth.currentUser.email;
   return (

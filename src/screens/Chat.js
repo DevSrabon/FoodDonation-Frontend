@@ -6,7 +6,7 @@ import Chat1 from './Chat1';
 
 const Users = () => {
   const navigation = useNavigation();
-
+  
   return (
     <View style={{ marginTop: 50 }}>
       <ScrollView>
