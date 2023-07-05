@@ -1,7 +1,7 @@
 import { useRoute } from "@react-navigation/native";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Image, Pressable, Text, View,Dimensions } from "react-native";
+import { Image, Pressable, Text, View, Dimensions } from "react-native";
 import icons from "../../assets/icons";
 import CustomButton from "../components/CustomButton";
 import Container from "../components/container";
@@ -46,8 +46,6 @@ const DonorPage = () => {
 
   return (
     <Container>
-
-     
       <View
         style={{
           flex: 1,
@@ -56,12 +54,6 @@ const DonorPage = () => {
           width: "90%",
         }}
       >
-         <View style={{width:'100%',paddingVertical:5}}>
-        <Pressable>
-        <Image source={require('../../assets/icons/leftArrow.png')} style={{height:35,width:35,right:3}}></Image>
-        </Pressable>
-      </View>
-
         <Text
           style={{
             //
@@ -70,7 +62,7 @@ const DonorPage = () => {
           }}
         >
           {/* {user?.categoryName} */}
-         Cafe Bilhares
+          Cafe Bilhares
         </Text>
         <View style={{ flexDirection: "row" }}>
           <Image source={icons.location} />
@@ -88,7 +80,7 @@ const DonorPage = () => {
         >
           <Image
             // source={{ uri: user?.image?.[0] }}
-            source={require('../../assets/icons/fixedHeight.png')}
+            source={require("../../assets/icons/fixedHeight.png")}
             style={{ width: "100%", height: 180, resizeMode: "stretch" }}
           />
         </View>
@@ -151,15 +143,26 @@ const DonorPage = () => {
           </View>
         </View>
         <View>
-          <Measure email={'anantkuswaha@gmail.com'} />
+          <Measure email={"anantkuswaha@gmail.com"} />
           {/* user.email */}
         </View>
 
-        <View style={{width:'100%',height:128,
-        backgroundColor:'#efedf8',borderRadius:5,
-        borderColor:'#b4aaf2',borderWidth:1,marginVertical:10,paddingHorizontal:10,
-        paddingVertical:5}}>
-         <Text style={{fontSize:16,fontFamily: "SemiBold"}}>Food Availability</Text>
+        <View
+          style={{
+            width: "100%",
+            height: 128,
+            backgroundColor: "#efedf8",
+            borderRadius: 5,
+            borderColor: "#b4aaf2",
+            borderWidth: 1,
+            marginVertical: 10,
+            paddingHorizontal: 10,
+            paddingVertical: 5,
+          }}
+        >
+          <Text style={{ fontSize: 16, fontFamily: "SemiBold" }}>
+            Food Availability
+          </Text>
         </View>
         <View
           style={{
@@ -169,18 +172,17 @@ const DonorPage = () => {
             // marginVertical: 10,
             marginTop: 5,
             marginBottom: 10,
-          
           }}
         >
           <Image
             // source={{ uri: user?.photo }}
-            source={require('../../assets/icons/profile.png')}
+            source={require("../../assets/icons/profile.png")}
             style={{ width: 50, height: 50, borderRadius: 50 }}
           />
           <View>
             <Text style={{ fontFamily: "SemiBold", fontSize: 16 }}>
               {/* {user?.name} */}
-              Sourav Paul          
+              Sourav Paul
             </Text>
             <Text style={{ fontFamily: "Medium", fontSize: 12 }}>
               {/* {user?.role} */}
@@ -190,9 +192,11 @@ const DonorPage = () => {
         </View>
         {/* user?.role === "donor" */}
         {1 && (
-          <View style={{ alignItems: "center", gap: 10, marginTop: 10 }}>
-            <CustomButton onPress={onAccept} text="Accept"  type="primary" />
-            <CustomButton  onPress={onDecline} text="Decline" type="primary" />
+          <View
+            style={{ flex: 1, alignItems: "center", gap: 10, marginTop: 10 }}
+          >
+            <CustomButton onPress={onAccept} text="Accept" type="primary" />
+            <CustomButton onPress={onDecline} text="Decline" type="primary" />
           </View>
         )}
       </View>
