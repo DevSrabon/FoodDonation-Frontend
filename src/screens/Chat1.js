@@ -4,12 +4,13 @@ import { auth, userContext } from '../context/Provider';
 import { getDatabase, ref, onValue, push } from 'firebase/database';
 const db = getDatabase();
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import { encryptMessage, decryptMessage } from './Encrypt';
 import displayName from '../context/Provider';
 import { useRoute } from '@react-navigation/core';
 function Message({ item }) {
  
-  console.log(displayName);
+  const decryptedText = decryptMessage(item.text);
+  
   const isCurrentUser = item.user === auth.currentUser.displayName;
   return (
     <View style={[styles.message, isCurrentUser ? styles.currentUserMessage : null]}>
@@ -17,7 +18,7 @@ function Message({ item }) {
         {item.user}
       </Text>
       <Text style={[styles.text, isCurrentUser ? styles.currentUserText : null]}>
-        {item.text}
+        {decryptedText}
         </Text>
       <Text style={[styles.date, isCurrentUser ? styles.currentUserDate : null]}>
         {new Date(item.createdAt).toLocaleTimeString()}
@@ -34,11 +35,10 @@ function Message({ item }) {
   const [messages, setMessages] = useState([]);
 
   const route = useRoute();
-  const { userId } = route.params;
+  const { userchatId } = route.params;
   useEffect(() => {
-    onValue(ref(db, `rooms/${userId}/messages`), (snapshot) => {
+    onValue(ref(db, `rooms/${userchatId}/messages`), (snapshot) => {
       const data = snapshot.val();
-      console.log(data);
       if (data) {
         setMessages(Object.values(data));
       }
@@ -47,15 +47,15 @@ function Message({ item }) {
 
   function sendMessage() {
     if (message.trim()) {
+      const encryptedMessag = encryptMessage(message.trim());
       const newMessage = {
         id: Date.now().toString(),
-        text: message.trim(),
+        text: encryptedMessag,
         user:auth.currentUser.displayName,
         createdAt: new Date().toISOString(),
       };
       
-      push(ref(db, `rooms/${userId}/messages`), newMessage);
-      console.log(newMessage);
+      push(ref(db, `rooms/${userchatId}/messages`), newMessage);
       setMessage('');
 
     }
@@ -64,7 +64,6 @@ function Message({ item }) {
 
  
   function renderItem({ item }) {
-    console.log(item);
     return <Message item={item} />;
   }
 

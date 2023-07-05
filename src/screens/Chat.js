@@ -6,19 +6,19 @@ import Chat1 from './Chat1';
 
 const users = [
   {
-    id: 1,
+    chatid: 1,
     name: 'Dinesh Lal',
     message: 'Hey! I have some food for you',
     profileImage: require('../../assets/icons/profile.png'),
   },
   {
-    id: 2,
+    chatid: 2,
     name: 'M Vinod',
     message: 'Hey! I have some food for you',
     profileImage: require('../../assets/icons/profile.png'),
   },
   {
-    id: 3,
+    chatid: 3,
     name: 'Ananth Raj',
     message: 'Hey! I have some food for you',
     profileImage: require('../../assets/icons/profile.png'),
@@ -29,15 +29,15 @@ const users = [
 const Users = () => {
   const navigation = useNavigation();
 
-  const handleUserPress = (userId) => {
-    navigation.navigate('Chat1', { userId });
+  const handleUserPress = (userchatId) => {
+    navigation.navigate('Chat1', { userchatId });
   };
 
   return (
     <View style={{ marginTop: 50 }}>
       <ScrollView>
         {users.map(user => (
-          <TouchableOpacity key={user.id} onPress={() => handleUserPress(user.id)}>
+          <TouchableOpacity key={user.chatid} onPress={() => handleUserPress(user.chatid)}>
             <View style={{ flexDirection: 'row', padding: 20, alignItems: 'center' }}>
               <Image source={user.profileImage} style={{ width: 60, height: 60, borderRadius: 30 }} />
               <View>
