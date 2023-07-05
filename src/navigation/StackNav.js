@@ -12,7 +12,6 @@ import Login from "../screens/Login";
 import Otp from "../screens/Otp";
 import RoleSelection from "../screens/RoleSelection";
 
-//import MapModal from "../components/MapModal";
 import AddRestaurant from "../screens/AddRestaurant";
 import Donate from "../screens/Donate";
 import DonateMeal from "../screens/DonateMeal";
@@ -33,7 +32,9 @@ const StackNav = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
+
         initialRouteName="login"
+
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="touch" component={CustomTouch} />

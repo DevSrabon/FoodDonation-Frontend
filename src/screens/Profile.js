@@ -29,10 +29,10 @@ const Profile = () => {
 
   const onBioSetup = async () => {
     if (!imageUrls.length || !bio) return alert("Please fill up your bio");
-    const body = { bio, photo: imageUrls[0], email: user?.email };
+    const body = { bio, photo: imageUrls[0] };
     try {
       const result = await axios.patch(
-        "https://food-donation-backend.vercel.app/api/v1/users/update-bio",
+        `https://food-donation-backend.vercel.app/api/v1/users/update-role?email=${user?.email}`,
         body
       );
       if (result.data.status === "success") return navigation.navigate("user");

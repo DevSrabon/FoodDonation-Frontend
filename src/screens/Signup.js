@@ -1,7 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
+import PhoneInput from "react-native-phone-number-input";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import Header from "../components/Header";
@@ -16,33 +17,58 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
+
+  const [value, setValue] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const phoneInput = useRef(null);
 
   const onSignup = async () => {
     const userName = { displayName: firstName + " " + lastName };
+    let checkValid = false;
+
+    if (phoneInput.current) {
+      checkValid = phoneInput.current.isValidNumber(value);
+    }
+
     try {
-      await createUser(email, password);
-      await updateUser(userName);
-      const res = await axios.post(
-        "https://food-donation-backend.vercel.app/api/v1/users",
-        {
+      if (!checkValid) {
+        throw new Error("Please provide a valid phone number");
+      }
+      // const res = await axios.post(
+      //   "https://food-donation-backend.vercel.app/api/v1/users",
+      //   {
+      //     name: userName.displayName,
+      //     email,
+      //     phone: phoneNumber,
+      //   }
+      // );
+      // if (res.status === 201)
+      //   return navigation.navigate("roleSelection");
+
+      navigation.navigate("otp", {
+        body: {
           name: userName.displayName,
           email,
-          phone: phoneNumber,
-        }
-      );
-      if (res.status === 201) return navigation.navigate("otp");
+          password,
+          phone: phoneNumber.replace(/^(\+[0-9]{2})([0-9]*)$/, "$1 $2"),
+        },
+      });
     } catch (error) {
-      if (error.code === "auth/email-already-in-use") {
-        alert("Email is already in use");
-      } else {
-        alert("Error:", error.message);
+      if (error.message === "Please provide a valid phone number") {
+        alert(error.message);
+      } else if (error.code === "auth/email-already-in-use") {
+        alert(
+          "The email address is already in use. Please try a different email."
+        );
+      } else if (error.code === "auth/weak-password") {
+        alert("The password is too weak. Please choose a stronger password.");
       }
     } finally {
       setLoading(false);
     }
   };
+
   const onLogin = () => {
     navigation.navigate("login");
   };
@@ -69,10 +95,22 @@ const Signup = () => {
         />
 
         <Label>Phone Number</Label>
-        <CustomInput
+        {/* <CustomInput
           placeholder="Your Phone Number"
           value={phoneNumber}
           setValue={setPhoneNumber}
+        /> */}
+        <PhoneInput
+          ref={phoneInput}
+          defaultValue={value}
+          defaultCode="BD"
+          layout="second"
+          onChangeText={(text) => {
+            setValue(text);
+          }}
+          onChangeFormattedText={(text) => {
+            setPhoneNumber(text);
+          }}
         />
 
         <Label>E-mail</Label>
