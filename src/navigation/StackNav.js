@@ -20,11 +20,11 @@ import Help from "../screens/Help";
 import HelpMeal from "../screens/HelpMeal";
 import Profile from "../screens/Profile";
 
+import CustomModal from "../components/CustomModal";
+import CustomTouch from "../components/CustomTouch";
 import Signup from "../screens/Signup";
 import Transporter from "../screens/Transporter";
 import BottomNav from "./BottomNav";
-import CustomTouch from "../components/CustomTouch";
-import CustomModal from "../components/CustomModal";
 
 const Stack = createNativeStackNavigator();
 
@@ -32,7 +32,7 @@ const StackNav = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="roleSelection"
+        initialRouteName="initial"
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="touch" component={CustomTouch} />
