@@ -37,7 +37,7 @@ const Profile = () => {
     const body = { bio, photo: imageUrls[0], email: user?.email,role,subRole };
     try {
       const result = await axios.patch(
-        "https://food-donation-backend.vercel.app/api/v1/users/update-bio",
+        `https://food-donation-backend.vercel.app/api/v1/users/update-role?email=${user?.email}`,
         body
       );
       if (result.data.status === "success") return navigation.navigate("user");

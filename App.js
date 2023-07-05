@@ -1,10 +1,8 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useFonts } from "expo-font";
+import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import AuthProvider from "./src/context/Provider";
 import StackNav from "./src/navigation/StackNav";
-import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 
 export default function App() {
   const Stack = createNativeStackNavigator();
@@ -20,10 +18,9 @@ export default function App() {
   }
 
   return (
-    // <AuthProvider>
-      
-    // </AuthProvider>
-    <StackNav />
-    // <ExpoStatusBar style="auto" />
+    <AuthProvider>
+      <StackNav />
+      <ExpoStatusBar style="auto" />
+    </AuthProvider>
   );
 }

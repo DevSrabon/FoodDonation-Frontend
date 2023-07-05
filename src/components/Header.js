@@ -5,10 +5,10 @@ const Header = (props) => {
   return (
     <View
       style={{
-        flex: 1,
         alignSelf: "flex-start",
         marginTop: 50,
         marginLeft: 15,
+        marginBottom: 10,
       }}
     >
       <Text style={{ ...styles.typography, ...props.style }}>
