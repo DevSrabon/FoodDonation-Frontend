@@ -2,15 +2,17 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { userContext } from "../context/Provider";
+import Loading from "./Loading";
 
 const SearchHeader = () => {
   const [search, setSearch] = useState(0);
-  const { allData, user, signOutUser } = userContext();
+  const { allData, loading, signOutUser } = userContext();
   const navigation = useNavigation();
-  const handleSignOut = () => {
-    signOutUser();
+  const handleSignOut = async () => {
+    await signOutUser();
     navigation.navigate("login");
   };
+  if (loading) return <Loading />;
   return (
     <View style={styles.container}>
       <View style={styles.headerView}>

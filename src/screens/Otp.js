@@ -12,7 +12,7 @@ import Label from "../components/label";
 import axios from "axios";
 import Loading from "../components/Loading";
 import { userContext } from "../context/Provider";
-import { firebasePhoneConfig } from "./config";
+import { firebaseConfig } from "../firebase/firebase.config";
 
 const Otp = () => {
   const navigation = useNavigation();
@@ -89,7 +89,7 @@ const Otp = () => {
       <Container>
         <FirebaseRecaptchaVerifierModal
           ref={recaptchaVerifier}
-          firebaseConfig={firebasePhoneConfig}
+          firebaseConfig={firebaseConfig}
         />
         <Header>Signup</Header>
         {!phoneNumber ? (

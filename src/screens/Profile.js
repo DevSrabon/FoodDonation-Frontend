@@ -24,7 +24,7 @@ const Profile = () => {
 
   const route = useRoute();
   const role=route.params.role;
-  const subrole=route.params.subrole;
+  const subRole=route.params.subrole;
 
   const { loading: imageLoading, imageUrls, takePhoto } = useImagePicker();
 
@@ -34,7 +34,7 @@ const Profile = () => {
 
   const onBioSetup = async () => {
     if (!imageUrls.length || !bio) return alert("Please fill up your bio");
-    const body = { bio, photo: imageUrls[0] };
+    const body = { bio, photo: imageUrls[0], email: user?.email,role,subRole };
     try {
       const result = await axios.patch(
         `https://food-donation-backend.vercel.app/api/v1/users/update-role?email=${user?.email}`,

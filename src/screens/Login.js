@@ -1,4 +1,4 @@
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import Checkbox from "expo-checkbox";
 import React, { useEffect, useState } from "react";
@@ -25,15 +25,15 @@ const Login = () => {
   const [isChecked, setChecked] = useState(false);
 
   const navigation = useNavigation();
+  const isFocus = useIsFocused();
   useEffect(() => {
-    if (user?.email) {
+    if (user?.email && isFocus) {
       navigation.navigate("user");
     }
-  }, [user?.email]);
+  }, [user?.email, isFocus]);
   const onSignInPressed = async () => {
     try {
       const res = await signIn(email, password);
-      console.log("res", res);
     } catch (error) {
       let errorMessage = "An error occurred during sign-in.";
 
