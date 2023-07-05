@@ -6,10 +6,11 @@ const db = getDatabase();
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import displayName from '../context/Provider';
+import { useRoute } from '@react-navigation/core';
 function Message({ item }) {
  
   console.log(displayName);
-  const isCurrentUser = item.user === auth.currentUser.email;
+  const isCurrentUser = item.user === auth.currentUser.displayName;
   return (
     <View style={[styles.message, isCurrentUser ? styles.currentUserMessage : null]}>
       <Text style={[styles.user]}>
@@ -32,8 +33,10 @@ function Message({ item }) {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
 
+  const route = useRoute();
+  const { userId } = route.params;
   useEffect(() => {
-    onValue(ref(db, `rooms/messages`), (snapshot) => {
+    onValue(ref(db, `rooms/${userId}/messages`), (snapshot) => {
       const data = snapshot.val();
       console.log(data);
       if (data) {
@@ -47,11 +50,11 @@ function Message({ item }) {
       const newMessage = {
         id: Date.now().toString(),
         text: message.trim(),
-        user:auth.currentUser.email,
+        user:auth.currentUser.displayName,
         createdAt: new Date().toISOString(),
       };
       
-      push(ref(db, `rooms/messages`), newMessage);
+      push(ref(db, `rooms/${userId}/messages`), newMessage);
       console.log(newMessage);
       setMessage('');
 
@@ -140,7 +143,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#eee',
     padding: 10,
-    //margin: 100,
+    marginBottom: 100,
   },
 
   cameraIcon: {

@@ -4,21 +4,49 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useNavigation } from '@react-navigation/native';
 import Chat1 from './Chat1';
 
+const users = [
+  {
+    id: 1,
+    name: 'Dinesh Lal',
+    message: 'Hey! I have some food for you',
+    profileImage: require('../../assets/icons/profile.png'),
+  },
+  {
+    id: 2,
+    name: 'M Vinod',
+    message: 'Hey! I have some food for you',
+    profileImage: require('../../assets/icons/profile.png'),
+  },
+  {
+    id: 3,
+    name: 'Ananth Raj',
+    message: 'Hey! I have some food for you',
+    profileImage: require('../../assets/icons/profile.png'),
+  },
+  // Add more user objects here
+];
+
 const Users = () => {
   const navigation = useNavigation();
-  
+
+  const handleUserPress = (userId) => {
+    navigation.navigate('Chat1', { userId });
+  };
+
   return (
     <View style={{ marginTop: 50 }}>
       <ScrollView>
-        <TouchableOpacity onPress={() => navigation.navigate('Chat1')}>
-          <View style={{ flexDirection: 'row', padding: 20, alignItems: 'center' }}>
-            <Image source={require('../../assets/icons/profile.png')} style={{ width: 60, height: 60, borderRadius: 30 }} />
-            <View>
-              <Text style={{ fontSize: 17, fontWeight: 'bold', paddingLeft: 20 }}>Dinesh Lal</Text>
-              <Text style={{ fontSize: 15, paddingLeft: 20 }}>Hey! I have some food for you</Text>
+        {users.map(user => (
+          <TouchableOpacity key={user.id} onPress={() => handleUserPress(user.id)}>
+            <View style={{ flexDirection: 'row', padding: 20, alignItems: 'center' }}>
+              <Image source={user.profileImage} style={{ width: 60, height: 60, borderRadius: 30 }} />
+              <View>
+                <Text style={{ fontSize: 17, fontWeight: 'bold', paddingLeft: 20 }}>{user.name}</Text>
+                <Text style={{ fontSize: 15, paddingLeft: 20 }}>{user.message}</Text>
+              </View>
             </View>
-          </View>
-        </TouchableOpacity>
+          </TouchableOpacity>
+        ))}
       </ScrollView>
     </View>
   );
@@ -28,7 +56,7 @@ const Stack = createNativeStackNavigator();
 
 const Chat = () => {
   return (
-    <Stack.Navigator  >
+    <Stack.Navigator>
       <Stack.Screen name="Users" component={Users} options={{ headerShown: false }} />
       <Stack.Screen name="Chat1" component={Chat1} />
     </Stack.Navigator>
