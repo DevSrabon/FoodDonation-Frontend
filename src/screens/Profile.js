@@ -10,7 +10,7 @@ import {
   View,
 } from "react-native";
 
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import icons from "../../assets/icons";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
@@ -21,6 +21,11 @@ import { userContext } from "../context/Provider";
 import useImagePicker from "../hook/useImagePicker";
 
 const Profile = () => {
+
+  const route = useRoute();
+  const role=route.params.role;
+  const subrole=route.params.subrole;
+
   const { loading: imageLoading, imageUrls, takePhoto } = useImagePicker();
 
   const [bio, setBio] = useState("");
