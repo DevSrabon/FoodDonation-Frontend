@@ -75,7 +75,7 @@ const DonateMeal = ({routeName="Help Meal"}) => {
     </ScrollView>
   );
 };
-
+}
 
 export default DonateMeal;
 

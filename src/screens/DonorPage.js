@@ -9,16 +9,23 @@ import Measure from "../components/measure";
 import { TouchableOpacity } from "react-native-web";
 import CreateChat from "../components/CreateChat";
 import Chat, { handleCreateUser } from "./Chat";
-import ListenForChatAdd from "../components/ListenForChatAdd";
+import ListenForChatAdd  from "../components/ListenForChatAdd";
 
 import { userContext } from "../context/Provider";
+import { list } from "@firebase/storage";
+import { async } from "@firebase/util";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const DonorPage = () => {
   const route = useRoute();
   const { user } = route.params;
+  
+
+  console.log("user", user);
   const navigation = useNavigation();
   const [address, setAddress] = useState();
   const latitude = user.location.latitude;
   const longitude = user.location.longitude;
+  const [state, setState] = useState(false);
   const getAddressFromCoordinates = async () => {
     try {
       const response = await axios.get(
@@ -41,17 +48,15 @@ const DonorPage = () => {
     getAddressFromCoordinates();
   }, [latitude, longitude]);
 
-  const onAccept = () => {
+   const onAccept = () => {
+   
     
-    console.warn("Accept");
-    <ListenForChatAdd/>
-   //create a chat for needy 
-//Sender should listen for reciver accpt if true then sender should have a chat open using a room id
-  }
+   //ListenForChatAdd();
     navigation.navigate("map", { routesMapData: user });
+    console.warn("Accepgs");
   };
   const onDecline = () => {
-    console.warn("AccDeclineept");
+    console.warn("Decline");
   };
 
   return (
@@ -207,12 +212,14 @@ const DonorPage = () => {
         {/* user?.role === "donor" */}
 
         <View style={{ flex: 1, alignItems: "center", gap: 10, marginTop: 10 }}>
-          <CustomButton onPress={onAccept} text="Accept" type="primary" />
+          <CustomButton onPress={()=>{onAccept()}} text="Accept" type="primary" />
           <CustomButton onPress={onDecline} text="Decline" type="primary" />
         </View>
       </View>
+      
+      
     </Container>
   );
-
-
+          };
+         
 export default DonorPage;

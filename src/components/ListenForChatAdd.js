@@ -2,9 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { RandomNumber, handleCreateUser } from '../screens/Chat';
 
 import { getDatabase, ref, onValue, push } from 'firebase/database';
+import { View } from 'react-native-web';
+import { async } from '@firebase/util';
+
 const db = getDatabase();
 
-const ListenForChatAdd = () => {
+export const ListenForChatAdd =()=>{
+  console.log("dddddddddddddddddddddddddddddddd")
+  const user={role:"donor"};
+  
   console.log("ListenForChatAdd");  
   const a = RandomNumber();
   const [message, setMessage] = useState('');
@@ -15,7 +21,11 @@ const ListenForChatAdd = () => {
     //if user.role is donor then listen for help accept from transporter
     //if user.role is transporter then listen for help accept from donor
 
-    if(user.role==="doner"){
+
+    /*useEffect(() => {
+      //when donor create post after that this will continue to listen
+      //until someone accept
+      if(user.role==="doner"){
         //listen for accept from needy
         
         
@@ -23,19 +33,7 @@ const ListenForChatAdd = () => {
           handleCreateUser(user,setUser,"Donor","donor",a);
           //send message Donor has been added
           
-          function sendMessage1() {
-            if (message.trim()) {
-              const newMessage = {
-                text: "Donor has been added",
-              };
-              
-              push(ref(db, `rooms/${userchatId}/messages`), newMessage);
-              setMessage('');
-
-        
-            }
-            
-          }
+          
           
           sendMessage1();
      
@@ -48,17 +46,7 @@ const ListenForChatAdd = () => {
           
           handleCreateUser(user,setUser,"Needy","needy",a);
           
-          function sendMessage2() {
-            if (message.trim()) {
-              const newMessage = {
-                text: "Needy has been added",
-              };
-              
-              push(ref(db, `rooms/${userchatId}/messages`), newMessage);
-              setMessage('');
-        
-            }
-          }
+          
           
           sendMessage2();
     }
@@ -70,64 +58,54 @@ const ListenForChatAdd = () => {
           
           handleCreateUser(user,setUser,"Transporter","transporter",a);
           
-          function sendMessage3() {
-            if (message.trim()) {
-              const newMessage = {
-                text: "Transporter has been added",
-              };
-              
-              push(ref(db, `rooms/${userchatId}/messages`), newMessage);
-              setMessage('');
-        
-            }
-          }
+          
     
           sendMessage3();
     }
 
     
-  useEffect(() => {
-    //when donor create post after that this will continue to listen
-    //until someone accept
-
-
+      //sendMessage1();
+    }, [accept]);
+       
+    useEffect(() => {
+     //when needy create help needy create post after that this will continue to listen
+    //until someone donate
+      sendMessage2();
+    }, [ donate]);
     
     function sendMessage1() {
-      if (message.trim()) {
-        const newMessage = {
+    
+        const message = {
           text: "Donor has been added",
         };
         
-        push(ref(db, `rooms/${userchatId}/messages`), newMessage);
+        push(ref(db, `rooms/${userchatId}/messages`), message);
         setMessage('');
-      }
-      
+
     }
-    sendMessage1();
-  }, [accept]);
-     
-  useEffect(() => {
-   //when needy create help needy create post after that this will continue to listen
-  //until someone donate
-     function sendMessage2() {
-      if (message.trim()) {
+    function sendMessage2() {
+      
         const newMessage = {
           text: "Needy has been added",
         };
         
         push(ref(db, `rooms/${userchatId}/messages`), newMessage);
         setMessage('');
-      }
-      
+  
+    }
+    function sendMessage3() {
+   
+        const newMessage = {
+          text: "Transporter has been added",
+        };
+        
+        push(ref(db, `rooms/${userchatId}/messages`), newMessage);
+        setMessage('');
+  
     }
     
-    sendMessage2();
-  
+  */
 
-  }, [ donate]);
-  
-
-  return null;
+  return (<View></View>);
 };
 
-export default ListenForChatAdd;
