@@ -6,9 +6,11 @@ const Header = (props) => {
     <View
       style={{
         alignSelf: "flex-start",
-        marginTop: 50,
-        marginLeft: 15,
+       marginTop: 10,
+       // marginLeft: 15,
+      
         marginBottom: 10,
+       // backgroundColor:'lightblue'
       }}
     >
       <Text style={{ ...styles.typography, ...props.style }}>
@@ -23,6 +25,7 @@ const styles = StyleSheet.create({
     fontFamily: "SemiBold",
     fontSize: 24,
     color: "#312E49",
+
   },
 });
 
