@@ -23,6 +23,7 @@ const UserMap = () => {
   const { data: mapUsers, loading: isLoading } = useFetchData(
     `users/map?latitude=${data?.location?.latitude}&longitude=${data?.location?.longitude}&role=${data?.role}`
   );
+
   useEffect(() => {
     if (data && mapUsers) {
       setAllData((prev) => ({
@@ -39,7 +40,6 @@ const UserMap = () => {
   return (
     <View style={styles.mapContainer}>
       <SearchHeader />
-
       <MapView
         provider={PROVIDER_GOOGLE}
         style={styles.map}
@@ -64,20 +64,20 @@ const UserMap = () => {
 
         {mapUsers?.length
           ? mapUsers?.map((user, i) => (
-              <Marker
-                key={i}
-                pinColor="yellow"
-                coordinate={{
-                  ...user?.location,
-                }}
+            <Marker
+              key={i}
+              pinColor="yellow"
+              coordinate={{
+                ...user?.location,
+              }}
+            >
+              <Callout
+                onPress={() => navigation.navigate("donorPage", { user })}
               >
-                <Callout
-                  onPress={() => navigation.navigate("donorPage", { user })}
-                >
-                  <MapCallout user={user} key={i}></MapCallout>
-                </Callout>
-              </Marker>
-            ))
+                <MapCallout user={user} key={i}></MapCallout>
+              </Callout>
+            </Marker>
+          ))
           : null}
       </MapView>
     </View>

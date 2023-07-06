@@ -62,6 +62,7 @@ const StackNav = () => {
         {/* <Stack.Screen name="profile" component={Profile} /> */}
         <Stack.Screen name="Chat" component={Chat} />
         <Stack.Screen name="home" component={Home} />
+        {/* <Stack.Screen name="Notify" component={Notify} /> */}
         <Stack.Screen name="user">
           {() => (
             <Stack.Navigator

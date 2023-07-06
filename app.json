@@ -11,7 +11,9 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.mahbubmorshed.FoodDonation"
@@ -41,6 +43,11 @@
           "appId": "1:23464134108:web:01fbc81112453346333b19",
           "measurementId": "G-1HY7TNGKRN"
         }
+      }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "90e53ab0-1ef4-4bfb-8253-38dcaaef624c"
       }
     }
   },
