@@ -1,7 +1,6 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import React, { useState } from "react";
 
-import axios from "axios";
 import { ScrollView, StyleSheet, View } from "react-native";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import CustomButton from "../components/CustomButton";
@@ -18,7 +17,8 @@ import useImagePicker from "../hook/useImagePicker";
 
 const AddRestaurant = () => {
   const route = useRoute();
-  const { resData } = route.params;
+  const role = route.params.role;
+  const subRole = route.params.subRole;
 
   const navigation = useNavigation();
   const { loading: imageLoading, imageUrls, takePhoto } = useImagePicker();
@@ -28,37 +28,25 @@ const AddRestaurant = () => {
   const [fssaiLicense, setFSSAILicense] = useState("");
   const [panNumber, setPanNumber] = useState("");
   const { user, loading, setLoading } = userContext();
-  const onAddRestaurant = async () => {
+  const onAddRestaurant = () => {
     if (
+      !imageUrls?.length ||
       !categoryName ||
       !location?.latitude ||
       !location?.longitude ||
       !fssaiLicense ||
       !panNumber
-    )
+    ) {
       return alert("Please fill-up all the information");
-    const body = {
-      categoryName,
-      location: location,
-      fssaiLicense,
-      panNumber,
-      image: imageUrls,
-    };
-    try {
-      const result = await axios.patch(
-        `https://food-donation-backend.vercel.app/api/v1/users/update-role?email=${user?.email}`,
-        body
-      );
-      if (result.data.status === "success")
-        return navigation.navigate("profile");
-    } catch (error) {
-      if (error.code === "This-restaurant-already-in-use") {
-        alert("The Restaurant is already in use");
-      } else {
-        console.log("Error:", error);
-      }
-    } finally {
-      setLoading(false);
+    } else {
+      const body = {
+        categoryName,
+        location: location,
+        fssaiLicense,
+        panNumber,
+        image: imageUrls,
+      };
+      navigation.navigate("profile", { role, subRole, body });
     }
   };
 
@@ -80,10 +68,10 @@ const AddRestaurant = () => {
       keyboardShouldPersistTaps="handled"
     >
       <Container>
-        <Header>Add {resData?.data?.subRole}</Header>
-        <Label>{resData?.data?.subRole} Name</Label>
+        <Header>Add {subRole}</Header>
+        <Label>{subRole} Name</Label>
         <CustomInput
-          placeholder={`${resData?.data?.subRole} Name`}
+          placeholder={`${subRole} Name`}
           value={categoryName}
           setValue={setCategoryName}
         />

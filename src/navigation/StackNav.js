@@ -60,7 +60,7 @@ const StackNav = () => {
         
 
         {/* <Stack.Screen name="profile" component={Profile} /> */}
-        <Stack.Screen name="chat" component={Chat} />
+        <Stack.Screen name="Chat" component={Chat} />
         <Stack.Screen name="home" component={Home} />
         <Stack.Screen name="user">
           {() => (
