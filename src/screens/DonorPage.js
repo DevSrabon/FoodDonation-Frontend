@@ -1,17 +1,16 @@
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Image, Pressable, Text, View, Dimensions } from "react-native";
+import { Image, Text, View } from "react-native";
 import icons from "../../assets/icons";
 import CustomButton from "../components/CustomButton";
 import Container from "../components/container";
 import Measure from "../components/measure";
-import { TouchableOpacity } from "react-native-web";
-
+import { userContext } from "../context/Provider";
 const DonorPage = () => {
   const route = useRoute();
   const { user } = route.params;
-  console.log("🚀 ~ file: DonorPage.js:12 ~ DonorPage ~ user:", user);
+  const navigation = useNavigation();
   const [address, setAddress] = useState();
   const latitude = user.location.latitude;
   const longitude = user.location.longitude;
@@ -26,10 +25,10 @@ const DonorPage = () => {
         const formattedAddress = results[0].formatted_address;
         setAddress(formattedAddress);
       } else {
-        setAddress("No results found");
+        setAddress("No Location found");
       }
     } catch (error) {
-      console.log("Error:", error);
+      console.warn("Error:", error);
     }
   };
 
@@ -38,14 +37,14 @@ const DonorPage = () => {
   }, [latitude, longitude]);
 
   const onAccept = () => {
-    console.warn("Accept");
+    navigation.navigate("map", { routesMapData: user });
   };
   const onDecline = () => {
     console.warn("AccDeclineept");
   };
 
   return (
-    <Container>
+    <Container key={user?._id}>
       <View
         style={{
           flex: 1,
@@ -61,14 +60,14 @@ const DonorPage = () => {
             fontSize: 18,
           }}
         >
-          {/* {user?.categoryName} */}
-          Cafe Bilhares
+          {user?.categoryName || user?.postCategoryName}
+          {/* Cafe Bilhares */}
         </Text>
         <View style={{ flexDirection: "row" }}>
           <Image source={icons.location} />
           <Text style={{ fontFamily: "SemiBold", fontSize: 10 }}>
-            {/* {address} */}
-            Rewa boda bag mp
+            {address}
+            {/* Rewa boda bag mp */}
           </Text>
         </View>
         <View
@@ -79,8 +78,8 @@ const DonorPage = () => {
           }}
         >
           <Image
-            // source={{ uri: user?.image?.[0] }}
-            source={require("../../assets/icons/fixedHeight.png")}
+            source={{ uri: user?.image?.[0] || user?.imageUrls?.[0] }}
+            // source={require("../../assets/icons/fixedHeight.png")}
             style={{ width: "100%", height: 180, resizeMode: "stretch" }}
           />
         </View>
@@ -93,8 +92,8 @@ const DonorPage = () => {
             }}
           >
             <Text style={{ fontFamily: "Medium", fontSize: 10 }}>
-              {/* {user?.subRole} */}
-              donar
+              {user?.subRole || user?.role}
+              {/* donar */}
             </Text>
           </View>
           <View
@@ -143,11 +142,11 @@ const DonorPage = () => {
           </View>
         </View>
         <View>
-          <Measure email={"anantkuswaha@gmail.com"} />
+          <Measure email={user?.email} />
           {/* user.email */}
         </View>
 
-        <View
+        {/* <View
           style={{
             width: "100%",
             height: 128,
@@ -163,7 +162,7 @@ const DonorPage = () => {
           <Text style={{ fontSize: 16, fontFamily: "SemiBold" }}>
             Food Availability
           </Text>
-        </View>
+        </View> */}
         <View
           style={{
             flexDirection: "row",
@@ -175,30 +174,31 @@ const DonorPage = () => {
           }}
         >
           <Image
-            // source={{ uri: user?.photo }}
-            source={require("../../assets/icons/profile.png")}
+            source={
+              {
+                uri: user?.photo,
+              } || icons.profile
+            }
+            // source={require("../../assets/icons/profile.png")}
             style={{ width: 50, height: 50, borderRadius: 50 }}
           />
           <View>
             <Text style={{ fontFamily: "SemiBold", fontSize: 16 }}>
-              {/* {user?.name} */}
-              Sourav Paul
+              {user?.userName || user?.name}
+              {/* Sourav Paul */}
             </Text>
             <Text style={{ fontFamily: "Medium", fontSize: 12 }}>
-              {/* {user?.role} */}
-              Restaurent owner
+              {user?.role}
+              {/* Restaurent owner */}
             </Text>
           </View>
         </View>
         {/* user?.role === "donor" */}
-        {1 && (
-          <View
-            style={{ flex: 1, alignItems: "center", gap: 10, marginTop: 10 }}
-          >
-            <CustomButton onPress={onAccept} text="Accept" type="primary" />
-            <CustomButton onPress={onDecline} text="Decline" type="primary" />
-          </View>
-        )}
+
+        <View style={{ flex: 1, alignItems: "center", gap: 10, marginTop: 10 }}>
+          <CustomButton onPress={onAccept} text="Accept" type="primary" />
+          <CustomButton onPress={onDecline} text="Decline" type="primary" />
+        </View>
       </View>
     </Container>
   );

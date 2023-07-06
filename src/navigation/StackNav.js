@@ -25,6 +25,7 @@ import CustomTouch from "../components/CustomTouch";
 import Signup from "../screens/Signup";
 import Transporter from "../screens/Transporter";
 import BottomNav from "./BottomNav";
+import RoutesMap from "../screens/RoutesMap";
 
 const Stack = createNativeStackNavigator();
 
@@ -58,6 +59,7 @@ const StackNav = () => {
         {/* <Stack.Screen name="profile" component={Profile} /> */}
         <Stack.Screen name="chat" component={Chat} />
         <Stack.Screen name="home" component={Home} />
+        <Stack.Screen name="routesMap" component={RoutesMap} />
         <Stack.Screen name="user">
           {() => (
             <Stack.Navigator

@@ -11,6 +11,7 @@ import CustomInput from "../components/CustomInput";
 const DonateMeal = () => {
   const route = useRoute();
   const numbers = route.params.number;
+
   const resData = route.params.resData;
 
   const [listItems, setListItems] = useState([]);

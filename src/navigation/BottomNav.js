@@ -34,7 +34,7 @@ const BottomNav = () => {
     >
       {allData?.userData?.role !== "needy" ? (
         <Tab.Screen
-          name="user"
+          name="map"
           component={User}
           options={{
             title: "Needy",
@@ -49,7 +49,7 @@ const BottomNav = () => {
         />
       ) : (
         <Tab.Screen
-          name="user"
+          name="map"
           component={User}
           options={{
             title: "Donor",

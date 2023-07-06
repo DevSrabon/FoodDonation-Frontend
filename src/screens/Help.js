@@ -2,25 +2,16 @@ import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import * as ImagePicker from "expo-image-picker";
 import React, { useContext, useEffect, useState } from "react";
-import {
-  Alert,
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Alert, ScrollView, StyleSheet, View } from "react-native";
+import AddImages from "../components/AddImages";
 import CustomButton from "../components/CustomButton";
+import CustomInput from "../components/CustomInput";
+import Header from "../components/Header";
 import Loading from "../components/Loading";
+import Container from "../components/container";
+import Label from "../components/label";
 import { AuthContext } from "../context/Provider";
 import { listFiles, uploadToFirebase } from "../firebase/firebase.config";
-import Container from "../components/container";
-import Header from "../components/Header";
-import Label from "../components/label";
-import AddImages from "../components/AddImages";
-import CustomInput from "../components/CustomInput";
 
 const Donate = () => {
   const [files, setFiles] = useState([]);
@@ -72,7 +63,7 @@ const Donate = () => {
   };
 
   const { loading, setLoading, allData } = useContext(AuthContext);
-  const { name, role, subRole, email, location, categoryName, phone } =
+  const { name, role, subRole, email, location, categoryName, phone, photo } =
     allData.userData;
   const navigation = useNavigation();
   const [address, setAddress] = useState("");
@@ -98,7 +89,10 @@ const Donate = () => {
       email,
       location,
       role,
+      subRole,
+      photo,
       caption,
+      phone,
       noOfItem,
       imageUrls,
     };
