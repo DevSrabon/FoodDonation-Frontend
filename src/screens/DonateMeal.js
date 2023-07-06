@@ -88,17 +88,62 @@ const DonateMeal = () => {
       <ScrollView>
         <Header>Help</Header>
 
-        <View style={{ flex: 1 }}>
+        <View
+          style={{
+            flex: 1,
+            alignItems: "center",
+          }}
+        >
           {listItems.map((item, index) => (
-            <View key={index} style={{ marginBottom: 20 }}>
-              <View style={{ flexDirection: "row", gap: 20 }}>
-                <View style={{ width: 150 }}>
-                  <Label> Item {item.id}</Label>
+            <View
+              key={index}
+              style={{ alignItems: "center", marginBottom: 10 }}
+            >
+              <View style={{ flexDirection: "row" }}>
+                <View style={{ width: "48%" }}>
+                  <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
+                    Item {item.id}
+                  </Text>
                   <CustomInput
                     placeholder={`Item ${item.id}`}
                     value={item.value}
                     setValue={(text) => handleValueChange(text, index, "value")}
                   />
+                </View>
+                <View style={{ width: "48%" }}>
+                  <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
+                    Meal Type
+                  </Text>
+                  {/* <Label style={{ marginLeft: 10 }}>Meal Type {item.id}</Label> */}
+
+                  <View style={styles.inputText}>
+                    <Picker
+                      selectedValue={item.value}
+                      onValueChange={(text) =>
+                        handleValueChange(text, index, "qType")
+                      }
+                      mode="dropdown"
+                      multiple={true}
+                    >
+                      {mealOptions.map((option) => (
+                        <Picker.Item
+                          key={option.id}
+                          label={option.label}
+                          value={option.label}
+                        />
+                      ))}
+                    </Picker>
+                  </View>
+                </View>
+              </View>
+              <View style={{ flexDirection: "row", gap: 20 }}>
+                <View style={{ width: 150 }}>
+                  {/* <Label> Item {item.id}</Label>
+                  <CustomInput
+                    placeholder={`Item ${item.id}`}
+                    value={item.value}
+                    setValue={(text) => handleValueChange(text, index, "value")}
+                  /> */}
                   {/* <TextInput
                     style={styles.inputText}
                     value={item.value}
@@ -109,7 +154,7 @@ const DonateMeal = () => {
                   /> */}
                 </View>
                 {/* Meal options */}
-                <View style={{ width: 150 }}>
+                {/* <View style={{ width: 150 }}>
                   <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
                     Meal Type {item.id}
                   </Text>
@@ -131,14 +176,22 @@ const DonateMeal = () => {
                       ))}
                     </Picker>
                   </View>
-                </View>
+                </View> */}
               </View>
-              <View style={{ flexDirection: "row", gap: 20, marginTop: 5 }}>
-                <View style={{ width: 150 }}>
+              <View style={{ flexDirection: "row" }}>
+                <View style={{ width: "48%" }}>
                   <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
                     Item Quantity
                   </Text>
-                  <View style={{ width: 140 }}>
+                  <CustomInput
+                    placeholder="0"
+                    value={item.quantity}
+                    setValue={(text) =>
+                      handleValueChange(text, index, "quantity")
+                    }
+                    keyboardType="numeric"
+                  />
+                  {/* <View style={{}}>
                     <TextInput
                       style={styles.inputText}
                       keyboardType="numeric"
@@ -148,15 +201,12 @@ const DonateMeal = () => {
                         handleValueChange(text, index, "quantity")
                       }
                     />
-                  </View>
+                  </View> */}
                 </View>
 
                 {/* Item Quantity */}
-                <View
-                  style={{
-                    width: 150,
-                  }}
-                >
+
+                <View style={{ width: "48%" }}>
                   <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
                     Quantity Type
                   </Text>
@@ -183,11 +233,11 @@ const DonateMeal = () => {
           ))}
         </View>
 
-        {/* Order */}
         <View
           style={{
-            width: 350,
-            marginTop: 30,
+            alignSelf: "center",
+            width: "90%",
+            bottom: 15,
           }}
         >
           <CustomButton text="Continue" onPress={onDonateMeal} type="primary" />
@@ -198,13 +248,13 @@ const DonateMeal = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingLeft: 20,
-    paddingTop: 50,
-    justifyContent: "center",
-    backgroundColor: "white",
-  },
+  // container: {
+  //   flex: 1,
+  //   paddingLeft: 20,
+  //   paddingTop: 50,
+  //   justifyContent: "center",
+  //   backgroundColor: "white",
+  // },
   button: {
     backgroundColor: "white",
     paddingHorizontal: 16,
@@ -213,12 +263,21 @@ const styles = StyleSheet.create({
     marginLeft: 150,
   },
   inputText: {
-    marginVertical: 5,
-    paddingHorizontal: 5,
+    borderColor: "#A2A2A6",
     borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    height: 40,
+    borderRadius: 7,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    marginVertical: 5,
+    marginBottom: 20,
+    justifyContent: "center",
+    // alignSelf: "flex-start",
+    // marginVertical: 5,
+    // paddingHorizontal: 5,
+    // borderWidth: 1,
+    // borderColor: "#ccc",
+    // borderRadius: 5,
+    height: 38,
   },
 });
 export default DonateMeal;
