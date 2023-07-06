@@ -20,6 +20,7 @@ const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  console.log("🚀 ~ file: Provider.js:23 ~ AuthProvider ~ user:", user);
   const [allData, setAllData] = useState({
     userData: null,
   });
@@ -136,4 +137,4 @@ export const userContext = () => {
   const context = useContext(AuthContext);
   return context;
 };
-export { auth };
+export {auth}

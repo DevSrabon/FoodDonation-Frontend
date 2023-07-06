@@ -1,169 +1,93 @@
-import React, { useState, useEffect } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  FlatList,
-  TouchableOpacity,
-  StyleSheet,
-  Linking,
-} from "react-native";
-// import { auth } from "../config/firebase";
-import { auth } from "../context/Provider";
-import { getDatabase, ref, onValue, push } from "firebase/database";
-const db = getDatabase();
-import Icon from "react-native-vector-icons/FontAwesome";
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image } from 'react-native';
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useNavigation } from '@react-navigation/native';
+import Chat1 from './Chat1';
+import { useRoute } from "@react-navigation/core";
 
-function Message({ item }) {
-  const isCurrentUser = item.user === auth.currentUser.email;
-  return (
-    <View
-      style={[styles.message, isCurrentUser ? styles.currentUserMessage : null]}
-    >
-      <Text style={[styles.user]}>{item.user}</Text>
-      <Text
-        style={[styles.text, isCurrentUser ? styles.currentUserText : null]}
-      >
-        {item.text}
-      </Text>
-      <Text
-        style={[styles.date, isCurrentUser ? styles.currentUserDate : null]}
-      >
-        {new Date(item.createdAt).toLocaleTimeString()}
-      </Text>
-    </View>
-  );
+let sum = 0;
+
+export function RandomNumber() {
+  const randomNumber = Math.floor(Math.random() * 1000);
+  sum += randomNumber;
+  return sum;
 }
 
-const Chat = () => {
-  const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([]);
+export function handleCreateUser(users, setUsers) {
+  const newUser = {
+    chatid: RandomNumber(),
+    name: 'New User',
+    message: 'Hey! I am a new user',
+    profileImage: require('../../assets/icons/profile.png'),
+  };
 
-  useEffect(() => {
-    onValue(ref(db, `rooms/messages`), (snapshot) => {
-      const data = snapshot.val();
-      if (data) {
-        setMessages(Object.values(data));
-      }
-    });
-  }, []);
+  setUsers([...users, newUser]);
+}
 
-  function sendMessage() {
-    /* onValue(ref(db, `rooms/${dd}/${uid}`), (snapshot) => {
-      const namee = snapshot.val();})*/
-    if (message.trim()) {
-      const newMessage = {
-        id: Date.now().toString(),
-        text: message.trim(),
-        user: auth.currentUser.email,
-        createdAt: new Date().toISOString(),
-      };
-      push(ref(db, `rooms/messages`), newMessage);
-      setMessage("");
-    }
-  }
+const Users = () => {
+  const [users, setUsers] = useState([
+    {
+      chatid: 1,
+      name: 'Dinesh Lal',
+      message: 'Hey! I have some food for you',
+      profileImage: require('../../assets/icons/profile.png'),
+    },
+    {
+      chatid: 2,
+      name: 'M Vinod',
+      message: 'Hey! I have some food for you',
+      profileImage: require('../../assets/icons/profile.png'),
+    },
+    {
+      chatid: 3,
+      name: 'Ananth Raj',
+      message: 'Hey! I have some food for you',
+      profileImage: require('../../assets/icons/profile.png'),
+    },
+    // Add more user objects here
+  ]);
 
-  function renderItem({ item }) {
-    return <Message item={item} />;
-  }
+  const navigation = useNavigation();
+
+  const handleUserPress = (userchatId) => {
+    navigation.navigate('Chat1', { userchatId });
+  };
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        style={styles.messagesContainer}
-        data={messages}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-      />
-      <View style={styles.inputContainer}>
-        <TouchableOpacity>
-          <Icon
-            name="camera"
-            size={25}
-            color="#999"
-            style={styles.cameraIcon}
-          />
-        </TouchableOpacity>
-        <TextInput
-          value={message}
-          onChangeText={setMessage}
-          placeholder="Type your message here"
-          style={styles.input}
-        />
-        <TouchableOpacity onPress={sendMessage}>
-          <Text style={styles.sendButton}>Send</Text>
-        </TouchableOpacity>
-      </View>
+    <View style={{ marginTop: 50 }}>
+      <ScrollView>
+        {users.map((user) => (
+          <TouchableOpacity key={user.chatid} onPress={() => handleUserPress(user.chatid)}>
+            <View style={{ flexDirection: 'row', padding: 20, alignItems: 'center' }}>
+              <Image source={user.profileImage} style={{ width: 60, height: 60, borderRadius: 30 }} />
+              <View>
+                <Text style={{ fontSize: 17, fontWeight: 'bold', paddingLeft: 20 }}>{user.name}</Text>
+                <Text style={{ fontSize: 15, paddingLeft: 20 }}>{user.message}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
+      <TouchableOpacity onPress={() => handleCreateUser(users, setUsers)}>
+        <Text>Add New User</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "stretch",
-    justifyContent: "center",
-  },
+const Stack = createNativeStackNavigator();
 
-  messagesContainer: {
-    flex: 1,
-  },
-  message: {
-    backgroundColor: "#f0f0f0",
-    borderRadius: 10,
-    padding: 10,
-    alignSelf: "flex-start",
-    marginBottom: 10,
-    paddingRight: 20,
-  },
-  text: {
-    fontSize: 16,
-  },
-  date: {
-    fontSize: 8,
-    color: "#666",
+const Chat = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen name="Users" component={Users} options={{ headerShown: false }} />
+      <Stack.Screen name="Chat1" component={Chat1} />
+    </Stack.Navigator>
+  );
+};
 
-    marginLeft: 5,
-    alignSelf: "flex-end",
-  },
-  currentUserMessage: {
-    backgroundColor: "#B4AAF2",
-    alignSelf: "flex-end",
-  },
-  currentUserText: {
-    color: "#000",
-  },
-  currentUserDate: {
-    color: "#444",
-  },
-  inputContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#eee",
-    padding: 10,
-  },
-  cameraIcon: {
-    marginRight: 10,
-  },
-  input: {
-    flex: 1,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    padding: 10,
-    borderRadius: 20,
-    marginRight: 10,
-    bottom: 150,
-  },
-  sendButton: {
-    color: "blue",
-  },
-  user: {
-    fontSize: 12,
-    color: "black",
-    textDecorationStyle: "solid",
-    underline: true,
-    alignSelf: "flex-start",
-  },
-});
 export default Chat;
+
+const styles = StyleSheet.create({
+  // Your styles here
+});

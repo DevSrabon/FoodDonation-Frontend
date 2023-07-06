@@ -25,9 +25,8 @@ import CustomTouch from "../components/CustomTouch";
 import Signup from "../screens/Signup";
 import Transporter from "../screens/Transporter";
 import BottomNav from "./BottomNav";
-import User from "../screens/User";
-import UserMap from "../components/UserMap";
-import Notify from "../screens/Notify";
+//import InputAnim from "../components/InputAnim";
+
 
 const Stack = createNativeStackNavigator();
 
@@ -35,7 +34,7 @@ const StackNav = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="initial"
+        initialRouteName="roleSelection"
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="touch" component={CustomTouch} />
@@ -57,9 +56,11 @@ const StackNav = () => {
         <Stack.Screen name="donate" component={Donate} />
         <Stack.Screen name="help" component={Help} />
         <Stack.Screen name="helpMeal" component={HelpMeal} />
+       
+        
 
         {/* <Stack.Screen name="profile" component={Profile} /> */}
-        <Stack.Screen name="chat" component={Chat} />
+        <Stack.Screen name="Chat" component={Chat} />
         <Stack.Screen name="home" component={Home} />
         {/* <Stack.Screen name="Notify" component={Notify} /> */}
         <Stack.Screen name="user">

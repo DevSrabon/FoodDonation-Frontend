@@ -1,6 +1,10 @@
 // Import the functions you need from the SDKs you need
 
 import { getApp, getApps, initializeApp } from "firebase/app";
+import "firebase/compat/app";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
 import {
   getDownloadURL,
   getStorage,
@@ -8,7 +12,6 @@ import {
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
-
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -16,11 +19,12 @@ import {
 const firebaseConfig = {
   apiKey: "AIzaSyD5azHRt8vDkrYclsFD8HQuBzoCN_Ov9MU",
   authDomain: "food-donation-new-9fa4a.firebaseapp.com",
+  databaseURL: "https://food-donation-new-9fa4a-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "food-donation-new-9fa4a",
   storageBucket: "food-donation-new-9fa4a.appspot.com",
   messagingSenderId: "23464134108",
   appId: "1:23464134108:web:01fbc81112453346333b19",
-  measurementId: "G-1HY7TNGKRN",
+  measurementId: "G-1HY7TNGKRN"
 };
 
 // Initialize Firebase
@@ -31,6 +35,9 @@ const firebaseConfig = {
 if (getApps().length === 0) {
   initializeApp(firebaseConfig);
 }
+// if (!firebase.apps.length) {
+//   firebase.initializeApp(firebaseConfig);
+// }
 const fbApp = getApp();
 const fbStorage = getStorage();
 

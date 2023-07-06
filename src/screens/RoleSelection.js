@@ -1,7 +1,13 @@
-
 import { useNavigation } from "@react-navigation/native";
 import React, { useRef, useState } from "react";
-import { Pressable, StyleSheet, Text, View,Image,Animated } from "react-native";
+import {
+  Animated,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import CustomButton from "../components/CustomButton";
 import Header from "../components/Header";
 import Loading from "../components/Loading";
@@ -10,13 +16,15 @@ import { userContext } from "../context/Provider";
 
 const RoleSelection = () => {
   const navigation = useNavigation();
-  const { user } = userContext();
   const [update, setUpdate] = useState("");
-  const [updatecategory, setupdatecategory] = useState("")
+  const [updatecategory, setUpdatecategory] = useState("");
+  const [n, setn] = useState(0);
+  // const { user } = userContext();
+
   const [loading, setLoading] = useState(false);
-  const [donaropen, setdonaropen] = useState(false);
-  const [transporteropen, settransporteropen] = useState(false)
-  const [foodneederopen, setfoodneederopen] = useState(false)
+  const [donaropen, setDonaropen] = useState(false);
+  const [transporteropen, setTransporteropen] = useState(false);
+  const [foodneederopen, setFoodneederopen] = useState(false);
   const AniDonar = useRef(new Animated.Value(1500)).current;
   const Anitransporter = useRef(new Animated.Value(1500)).current;
   const Anifoodneeder = useRef(new Animated.Value(1500)).current;
@@ -44,54 +52,21 @@ const RoleSelection = () => {
     }).start();
   }
 
-  const toggle = (props) => {
-    
-    if(props.n==1){
-    setdonaropen(!donaropen)
-    DonarAni()
-    }
-
-    else if(props.n==2)  {
-    settransporteropen(!transporteropen)
-    transporterAni()
-  } 
-  
-  else if(props.n==3) {
-    setfoodneederopen(!foodneederopen)
-    foodneederAni()
-  } 
-  }
-  const onRoleSelect = async () => {
-     setLoading(true);
-    const body = { role: update };
-    try {
-      const response = await fetch(
-        `https://food-donation-backend.vercel.app/api/v1/users/update-role?email=${user?.email}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(body),
-        }
-      );
-
-      if (response.ok) {
-        const responseData = await response.json();
-        if (responseData.status === "success") {
-          return navigation.navigate(responseData.data.role.toString());
-        }
-      } else {
-        throw new Error("Request failed with status " + response.status);
-      }
-    } catch (error) {
-      alert("Error updating user: " + error.message);
-    } finally {
-      setLoading(false);
+  const toggle = () => {
+    if (n == 1) {
+      setDonaropen(!donaropen);
+      DonarAni();
+    } else if (n == 2) {
+      setTransporteropen(!transporteropen);
+      transporterAni();
+    } else if (n == 3) {
+      setFoodneederopen(!foodneederopen);
+      foodneederAni();
     }
   };
+
   function Check() {
-    console.warn('clicked');
+    console.warn("clicked");
   }
 
   if (loading) return <Loading />;
@@ -129,7 +104,9 @@ const RoleSelection = () => {
       <View style={styles.boxContainer}>
         <Pressable
           style={[styles.box, update === "donor" && styles.selectedBox]}
-          onPress={() => {setupdate("donor"),toggle({n:1})}}
+          onPress={() => {
+            setUpdate("donor"), setn(1);
+          }}
         >
           <Text
             style={{ fontFamily: "SemiBold", fontSize: 14, color: "#252525" }}
@@ -149,7 +126,9 @@ const RoleSelection = () => {
         </Pressable>
         <Pressable
           style={[styles.box, update === "transporter" && styles.selectedBox]}
-          onPress={() => {setupdate("transporter"),toggle({n:2})}}
+          onPress={() => {
+            setUpdate("transporter"), setn(2);
+          }}
         >
           <Text
             style={{ fontFamily: "SemiBold", fontSize: 14, color: "#252525" }}
@@ -169,7 +148,9 @@ const RoleSelection = () => {
         </Pressable>
         <Pressable
           style={[styles.box, update === "needy" && styles.selectedBox]}
-          onPress={() => {setupdate("needy"),toggle({n:3})}}
+          onPress={() => {
+            setUpdate("needy"), setn(3);
+          }}
         >
           <Text
             style={{ fontFamily: "SemiBold", fontSize: 14, color: "#252525" }}
@@ -191,39 +172,61 @@ const RoleSelection = () => {
       <View
         style={{ flex: 3, width: "90%", alignItems: "center", marginTop: 20 }}
       >
-        <CustomButton text="Continue" onPress={onRoleSelect} type="primary" />
-      </View>
-   {/* //////////////////////////////////1111 */}
-    <Animated.View style={{position:'absolute',width:'100%',
-    height:500,backgroundColor:'#fff',top:30, 
-     paddingHorizontal: 10,paddingVertical:20, transform: [{ translateY:AniDonar }]}}>
-      
-      
-      <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-      <Text
-          style={{
-            fontFamily: "SemiBold",
-            fontSize: 20,
-            color: "#B4AAF2",
+        <CustomButton
+          text="Continue"
+          onPress={() => {
+            toggle();
           }}
-        >
-          Donar,
-        </Text>
-        <Pressable style={{padding:10}} onPress={()=>toggle({n:1})}>
-        <Image style={{width:20,height:20,}} source={require('../../assets/icons/close.png')} >
-        </Image>
-      </Pressable>
+          type="primary"
+        />
+      </View>
+      {/* //////////////////////////////////1111 */}
+      <Animated.View
+        style={{
+          position: "absolute",
+          width: "100%",
+          height: 500,
+          backgroundColor: "#fff",
+          top: 30,
+          paddingHorizontal: 10,
+          paddingVertical: 20,
+          transform: [{ translateY: AniDonar }],
+        }}
+      >
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <Text
+            style={{
+              fontFamily: "SemiBold",
+              fontSize: 20,
+              color: "#B4AAF2",
+            }}
+          >
+            Donar,
+          </Text>
+          <Pressable style={{ padding: 10 }} onPress={() => toggle()}>
+            <Image
+              style={{ width: 20, height: 20 }}
+              source={require("../../assets/icons/close.png")}
+            ></Image>
+          </Pressable>
         </View>
 
-   <Text style={{
+        <Text
+          style={{
             fontFamily: "SemiBold",
             fontSize: 22,
-            color:'black',
-          }}>Choose Your role</Text>
+            color: "black",
+          }}
+        >
+          Choose Your role
+        </Text>
 
         <Pressable
-          style={[styles.Modalbox, updatecategory === "RestaurantOwner" && styles.selectedBox]}
-          onPress={() =>  setupdatecategory("RestaurantOwner")}
+          style={[
+            styles.Modalbox,
+            updatecategory === "RestaurantOwner" && styles.selectedBox,
+          ]}
+          onPress={() => setUpdatecategory("RestaurantOwner")}
         >
           <Text
             style={{ fontFamily: "SemiBold", fontSize: 14, color: "#252525" }}
@@ -242,13 +245,16 @@ const RoleSelection = () => {
           </Text>
         </Pressable>
         <Pressable
-          style={[styles.Modalbox, updatecategory === "CateringService" && styles.selectedBox]}
-          onPress={() =>  setupdatecategory("CateringService")}
+          style={[
+            styles.Modalbox,
+            updatecategory === "CateringService" && styles.selectedBox,
+          ]}
+          onPress={() => setUpdatecategory("CateringService")}
         >
           <Text
             style={{ fontFamily: "SemiBold", fontSize: 14, color: "#252525" }}
           >
-           Catering Service
+            Catering Service
           </Text>
           <Text
             style={{
@@ -262,13 +268,16 @@ const RoleSelection = () => {
           </Text>
         </Pressable>
         <Pressable
-          style={[styles.Modalbox, updatecategory === "GroceryStore" && styles.selectedBox]}
-          onPress={() =>  setupdatecategory("GroceryStore")}
+          style={[
+            styles.Modalbox,
+            updatecategory === "GroceryStore" && styles.selectedBox,
+          ]}
+          onPress={() => setUpdatecategory("GroceryStore")}
         >
           <Text
             style={{ fontFamily: "SemiBold", fontSize: 14, color: "#252525" }}
           >
-          Grocery Store
+            Grocery Store
           </Text>
           <Text
             style={{
@@ -282,59 +291,89 @@ const RoleSelection = () => {
           </Text>
         </Pressable>
         <Pressable
-          style={[styles.Modalbox, updatecategory === "Normalpeople" && styles.selectedBox]}
-          onPress={() => { setupdatecategory("Normalpeople")}}
-        >
-          <Text
-            style={{ fontFamily: "SemiBold", fontSize: 14, color: "#252525" }}
-          >
-         Normal people
-          </Text>
-          <Text
-            style={{
-              fontFamily: "Medium",
-              fontSize: 13,
-              color: "#667085",
-              paddingVertical: 8,
-            }}
-          >
-            Person or an Organization who needs the food
-          </Text>
-        </Pressable>
-
-        <CustomButton text="Continue" onPress={() =>Check()} type="primary" />
-    </Animated.View>
-   {/* //////////////////////////////////222 */}
-    <Animated.View style={{position:'absolute',width:'100%',
-    height:500,backgroundColor:'#fff',top:30, 
-     paddingHorizontal: 10,paddingVertical:20, transform: [{ translateY:Anitransporter }]}}>
-      
-      
-      <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-      <Text
-          style={{
-            fontFamily: "SemiBold",
-            fontSize: 20,
-            color: "#B4AAF2",
+          style={[
+            styles.Modalbox,
+            updatecategory === "Normalpeople" && styles.selectedBox,
+          ]}
+          onPress={() => {
+            setUpdatecategory("Normalpeople");
           }}
         >
-          Transporter,
-        </Text>
-        <Pressable style={{padding:10}} onPress={()=>toggle({n:2})}>
-        <Image style={{width:20,height:20,}} source={require('../../assets/icons/close.png')} >
-        </Image>
-      </Pressable>
+          <Text
+            style={{ fontFamily: "SemiBold", fontSize: 14, color: "#252525" }}
+          >
+            Normal people
+          </Text>
+          <Text
+            style={{
+              fontFamily: "Medium",
+              fontSize: 13,
+              color: "#667085",
+              paddingVertical: 8,
+            }}
+          >
+            Person or an Organization who needs the food
+          </Text>
+        </Pressable>
+
+        <CustomButton
+          text="Continue"
+          onPress={() =>
+            navigation.navigate("addRestaurant", {
+              role: update,
+              subRole: updatecategory,
+            })
+          }
+          type="primary"
+        />
+      </Animated.View>
+      {/* //////////////////////////////////222 */}
+      <Animated.View
+        style={{
+          position: "absolute",
+          width: "100%",
+          height: 500,
+          backgroundColor: "#fff",
+          top: 30,
+          paddingHorizontal: 10,
+          paddingVertical: 20,
+          transform: [{ translateY: Anitransporter }],
+        }}
+      >
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <Text
+            style={{
+              fontFamily: "SemiBold",
+              fontSize: 20,
+              color: "#B4AAF2",
+            }}
+          >
+            Transporter,
+          </Text>
+          <Pressable style={{ padding: 10 }} onPress={() => toggle()}>
+            <Image
+              style={{ width: 20, height: 20 }}
+              source={require("../../assets/icons/close.png")}
+            ></Image>
+          </Pressable>
         </View>
 
-   <Text style={{
+        <Text
+          style={{
             fontFamily: "SemiBold",
             fontSize: 22,
-            color:'black',
-          }}>Choose Your role</Text>
+            color: "black",
+          }}
+        >
+          Choose Your role
+        </Text>
 
         <Pressable
-          style={[styles.Modalbox, updatecategory === "Nonprofit" && styles.selectedBox]}
-          onPress={() =>  setupdatecategory("Nonprofit")}
+          style={[
+            styles.Modalbox,
+            updatecategory === "Nonprofit" && styles.selectedBox,
+          ]}
+          onPress={() => setUpdatecategory("Nonprofit")}
         >
           <Text
             style={{ fontFamily: "SemiBold", fontSize: 14, color: "#252525" }}
@@ -353,13 +392,16 @@ const RoleSelection = () => {
           </Text>
         </Pressable>
         <Pressable
-          style={[styles.Modalbox, updatecategory === "Foodbanks" && styles.selectedBox]}
-          onPress={() =>  setupdatecategory("Foodbanks")}
+          style={[
+            styles.Modalbox,
+            updatecategory === "Foodbanks" && styles.selectedBox,
+          ]}
+          onPress={() => setUpdatecategory("Foodbanks")}
         >
           <Text
             style={{ fontFamily: "SemiBold", fontSize: 14, color: "#252525" }}
           >
-           Food banks
+            Food banks
           </Text>
           <Text
             style={{
@@ -372,47 +414,70 @@ const RoleSelection = () => {
             Person or an Organization who needs the food
           </Text>
         </Pressable>
-       
-       
 
-        <CustomButton text="Continue" onPress={() =>Check()} type="primary" />
-    </Animated.View>
-    {/* /////////////////////////////3333 */}
-    <Animated.View style={{position:'absolute',width:'100%',
-    height:500,backgroundColor:'#fff',top:30, 
-     paddingHorizontal: 10,paddingVertical:20, transform: [{ translateY:Anifoodneeder }]}}>
-      
-      
-      <View style={{flexDirection:'row',justifyContent:'space-between'}}>
-      <Text
-          style={{
-            fontFamily: "SemiBold",
-            fontSize: 20,
-            color: "#B4AAF2",
-          }}
-        >
-          Food Needier,
-        </Text>
-        <Pressable style={{padding:10}} onPress={()=>toggle({n:3})}>
-        <Image style={{width:20,height:20,}} source={require('../../assets/icons/close.png')} >
-        </Image>
-      </Pressable>
+        <CustomButton
+          text="Continue"
+          onPress={() =>
+            navigation.navigate("addRestaurant", {
+              role: update,
+              subRole: updatecategory,
+            })
+          }
+          type="primary"
+        />
+      </Animated.View>
+      {/* /////////////////////////////3333 */}
+      <Animated.View
+        style={{
+          position: "absolute",
+          width: "100%",
+          height: 500,
+          backgroundColor: "#fff",
+          top: 30,
+          paddingHorizontal: 10,
+          paddingVertical: 20,
+          transform: [{ translateY: Anifoodneeder }],
+        }}
+      >
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <Text
+            style={{
+              fontFamily: "SemiBold",
+              fontSize: 20,
+              color: "#B4AAF2",
+            }}
+          >
+            Food Needier,
+          </Text>
+          <Pressable style={{ padding: 10 }} onPress={() => toggle()}>
+            <Image
+              style={{ width: 20, height: 20 }}
+              source={require("../../assets/icons/close.png")}
+            ></Image>
+          </Pressable>
         </View>
 
-    <Text style={{
+        <Text
+          style={{
             fontFamily: "SemiBold",
             fontSize: 22,
-            color:'black',
-          }}>Choose Your role</Text>
+            color: "black",
+          }}
+        >
+          Choose Your role
+        </Text>
 
         <Pressable
-          style={[styles.Modalbox, updatecategory === "Nonprofit" && styles.selectedBox]}
-          onPress={() =>  setupdatecategory("Nonprofit")}
+          style={[
+            styles.Modalbox,
+            updatecategory === "Nonprofit" && styles.selectedBox,
+          ]}
+          onPress={() => setUpdatecategory("Nonprofit")}
         >
           <Text
             style={{ fontFamily: "SemiBold", fontSize: 14, color: "#252525" }}
           >
-           Non profit Organization
+            Non profit Organization
           </Text>
           <Text
             style={{
@@ -426,13 +491,16 @@ const RoleSelection = () => {
           </Text>
         </Pressable>
         <Pressable
-          style={[styles.Modalbox, updatecategory === "Orphanage" && styles.selectedBox]}
-          onPress={() =>  setupdatecategory("Orphanage")}
+          style={[
+            styles.Modalbox,
+            updatecategory === "Orphanage" && styles.selectedBox,
+          ]}
+          onPress={() => setUpdatecategory("Orphanage")}
         >
           <Text
             style={{ fontFamily: "SemiBold", fontSize: 14, color: "#252525" }}
           >
-          Orphanage
+            Orphanage
           </Text>
           <Text
             style={{
@@ -446,13 +514,16 @@ const RoleSelection = () => {
           </Text>
         </Pressable>
         <Pressable
-          style={[styles.Modalbox, updatecategory === "foodbanks" && styles.selectedBox]}
-          onPress={() =>  setupdatecategory("foodbanks")}
+          style={[
+            styles.Modalbox,
+            updatecategory === "foodbanks" && styles.selectedBox,
+          ]}
+          onPress={() => setUpdatecategory("foodbanks")}
         >
           <Text
             style={{ fontFamily: "SemiBold", fontSize: 14, color: "#252525" }}
           >
-          Food banks
+            Food banks
           </Text>
           <Text
             style={{
@@ -465,11 +536,18 @@ const RoleSelection = () => {
             Person or an Organization who needs the food
           </Text>
         </Pressable>
-       
-       
 
-        <CustomButton text="Continue" onPress={() =>Check()} type="primary" />
-    </Animated.View>
+        <CustomButton
+          text="Continue"
+          onPress={() =>
+            navigation.navigate("addRestaurant", {
+              role: update,
+              subRole: updatecategory,
+            })
+          }
+          type="primary"
+        />
+      </Animated.View>
     </Container>
   );
 };
@@ -497,8 +575,8 @@ const styles = StyleSheet.create({
     borderColor: "#B4AAF2",
     borderRadius: 6,
   },
-  Modalbox:{
-    width: '100%',
+  Modalbox: {
+    width: "100%",
     padding: 5,
     paddingLeft: 10,
     paddingRight: 20,
