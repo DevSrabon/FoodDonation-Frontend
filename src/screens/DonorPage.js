@@ -7,10 +7,21 @@ import CustomButton from "../components/CustomButton";
 import Container from "../components/container";
 import Measure from "../components/measure";
 import { TouchableOpacity } from "react-native-web";
+import CreateChat from "../components/CreateChat";
+import Chat, { handleCreateUser } from "./Chat";
 
-const DonorPage = () => {
+const DonorPage = ({ users: initialUsers }) => {
   const route = useRoute();
   const { user } = route.params;
+  const userEmail = user.email;
+  const userRole = user.role;
+  const userName = user.name;
+  
+  const [users, setUsers] = useState(initialUsers);
+  const [newName, setNewName] = useState('');
+  const [newProfileImage, setNewProfileImage] = useState(''); 
+
+  console.log(userEmail + " " + userRole + " " + userName);
   console.log("🚀 ~ file: DonorPage.js:12 ~ DonorPage ~ user:", user);
   const [address, setAddress] = useState();
   const latitude = user.location.latitude;
@@ -38,8 +49,11 @@ const DonorPage = () => {
   }, [latitude, longitude]);
 
   const onAccept = () => {
+    
     console.warn("Accept");
-  };
+   //create a chat for needy 
+//Sender should listen for reciver accpt if true then sender should have a chat open using a room id
+  }
   const onDecline = () => {
     console.warn("AccDeclineept");
   };
