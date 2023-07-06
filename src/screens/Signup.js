@@ -53,7 +53,7 @@ const Signup = () => {
   }
   return (
     <ScrollView style={{ flex: 1 }}>
-      <Container>
+      <Container style={{ alignItems: "center" }}>
         <Header>Signup</Header>
 
         <Label>First Name</Label>

@@ -130,18 +130,21 @@ const Donate = () => {
 
   return (
     <Container>
-      <ScrollView>
-        <Header>Help</Header>
-        <View style={{ flex: 1, alignSelf: "flex-start", bottom: 50 }}>
+      <Header>Help</Header>
+      <ScrollView style={{ flex: 1 }}>
+        <View
+          style={{
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <Label>Organization Name</Label>
           <Label>{categoryName}</Label>
           <Label>Location</Label>
           <Label>{address}</Label>
         </View>
 
-        <View
-          style={{ flex: 1, width: "100%", alignItems: "center", bottom: 70 }}
-        >
+        <View style={{ width: "100%", alignItems: "center", marginTop: 20 }}>
           <Label>Caption</Label>
           <CustomInput
             placeholder="Caption"
@@ -160,44 +163,13 @@ const Donate = () => {
 
         <AddImages imageUrls={imageUrls} takePhoto={takePhoto} />
 
-        {/* Image */}
-        {/* <View
-        style={{
-          flex: 1,
-          height: 120,
-
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      > */}
-        {/* <View style={styles.imageHeader}>
-          <Text style={styles.imageHeaderText}>Image</Text>
-          <TouchableOpacity onPress={takePhoto} style={styles.addButton}>
-            <Text style={styles.addButtonLabel}>Add+</Text>
-          </TouchableOpacity>
-        </View> */}
-
-        {/* <View style={styles.imageContainer}>
-        {imageUrls.length > 0 &&
-          imageUrls.map((img, index) => (
-            <Image key={index} style={styles.image} source={{ uri: img }} />
-          ))}
-      </View> */}
-        {/* </View> */}
-
-        {/* No of items */}
-
-        {/* <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-          No of Items
-        </Text>
-        <TextInput
-          style={styles.inputText}
-          keyboardType="numeric"
-          placeholder="No of Items"
-          value={noOfItem}
-          onChangeText={handleNumberChange}
-        /> */}
-        <View style={{ flex: 1, width: "90%", bottom: 10 }}>
+        <View
+          style={{
+            flex: 1,
+            alignSelf: "center",
+            width: "90%",
+          }}
+        >
           <CustomButton text="Continue" onPress={onDonate} type="primary" />
         </View>
       </ScrollView>
@@ -205,59 +177,6 @@ const Donate = () => {
   );
 };
 
-const styles = StyleSheet.create({
-  disabledText: {
-    marginVertical: 10,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    height: 40,
-    backgroundColor: "#f2f2f2",
-  },
-  inputText: {
-    marginVertical: 10,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    height: 40,
-  },
-  imageHeader: {
-    height: 40,
-    flexDirection: "row",
-    marginRight: 20,
-    justifyContent: "space-between",
-  },
-  imageHeaderText: {
-    fontFamily: "SemiBold",
-    fontSize: 20,
-    top: 6,
-  },
-  addButton: {
-    backgroundColor: "white",
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    borderRadius: 8,
-  },
-  addButtonLabel: {
-    color: "gray",
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  imageContainer: {
-    height: 80,
-    flexDirection: "row",
-    gap: 5,
-    marginRight: 20,
-  },
-  image: {
-    width: 60,
-    height: 60,
-    resizeMode: "stretch",
-    backgroundColor: "black",
-    borderRadius: 8,
-  },
-});
+const styles = StyleSheet.create({});
 
 export default Donate;

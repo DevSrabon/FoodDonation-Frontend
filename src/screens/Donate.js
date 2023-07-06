@@ -88,10 +88,8 @@ const Donate = () => {
       <ScrollView style={{ flex: 1 }}>
         <View
           style={{
-            // flex: 1,
             alignItems: "center",
             justifyContent: "center",
-            // bottom: 50,
           }}
         >
           <Label>Organization Name</Label>
