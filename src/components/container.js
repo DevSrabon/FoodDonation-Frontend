@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     // justifyContent: "center",
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height,
-    marginTop: StatusBar.currentHeight,
+   // marginTop: StatusBar.currentHeight,
     paddingHorizontal: 10,
     backgroundColor: "white",
   },

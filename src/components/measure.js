@@ -15,10 +15,11 @@ const Measure = ({ email }) => {
   //   }
   // };
   const { error, loading, data } = useFetchData(
-    `posts/getPostByEmail?email=${email}&fields=caption,listItems`
+    `posts/getPostByEmail?email=${email}`
   );
+  console.log("🚀 ~ file: measure.js:18 ~ Measure ~ data:", data);
   if (loading) return <Loading />;
-  if (error) return alert("No Post Found");
+  if (!data?.listItems?.length) return alert("No Post Found");
   return (
     <View
       style={{
@@ -31,7 +32,7 @@ const Measure = ({ email }) => {
       }}
     >
       <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-        Food Availability
+        {data?.role === "needy" ? "Food Needed" : "Food Availability"}
       </Text>
       {data?.listItems?.map((item) => (
         <View
@@ -43,7 +44,7 @@ const Measure = ({ email }) => {
           }}
         >
           <Text style={{ fontFamily: "Medium", fontSize: 13 }}>
-            {item.value} : {item.quantityType}
+            {item.value}
           </Text>
           <View style={styles.footer}>
             {/* <Feather
@@ -52,7 +53,9 @@ const Measure = ({ email }) => {
             size={18}
             color="gray"
           /> */}
-            <Text style={styles.quantity}>{item.quantity}</Text>
+            <Text style={styles.quantity}>
+              {item.quantity}/{item.quantityType}
+            </Text>
             {/* <Feather
             onPress={increaseQuantity}
             name="plus-circle"

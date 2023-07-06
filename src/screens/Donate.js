@@ -17,7 +17,7 @@ const Donate = () => {
   const { loading: imageLoading, imageUrls, takePhoto } = useImagePicker();
 
   const { loading, setLoading, allData } = useContext(AuthContext);
-  const { name, role, subRole, email, location, categoryName, phone } =
+  const { name, role, subRole, email, location, categoryName, phone, photo } =
     allData.userData;
   const navigation = useNavigation();
   const [address, setAddress] = useState("");
@@ -43,7 +43,10 @@ const Donate = () => {
       email,
       location,
       role,
+      subRole,
+      photo,
       caption,
+      phone,
       noOfItem,
       imageUrls,
     };
@@ -85,10 +88,8 @@ const Donate = () => {
       <ScrollView style={{ flex: 1 }}>
         <View
           style={{
-            // flex: 1,
             alignItems: "center",
             justifyContent: "center",
-            // bottom: 50,
           }}
         >
           <Label>Organization Name</Label>
