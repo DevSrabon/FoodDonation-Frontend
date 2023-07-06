@@ -79,6 +79,7 @@ const Users = () => {
 const Stack = createNativeStackNavigator();
 
 const Chat = () => {
+  
   return (
     <Stack.Navigator>
       <Stack.Screen name="Users" component={Users} options={{ headerShown: false }} />
@@ -91,9 +92,9 @@ const Chat = () => {
               onPress={() => {
                 // Action to perform when the button is pressed
                 // For example, you can navigate to another screen
-                navigation.navigate('Users');
+                navigation.navigate("map");
               }}
-              title="Button"
+              title="Map"
             />
           ),
         })}

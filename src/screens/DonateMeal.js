@@ -265,12 +265,6 @@ const styles = StyleSheet.create({
   },
 });
 
-    <ScrollView>
-      <Meal routeName={routeName}/>
-    </ScrollView>
-  );
-};
-
 
 
 export default DonateMeal;

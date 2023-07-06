@@ -213,6 +213,6 @@ const DonorPage = () => {
       </View>
     </Container>
   );
-};
+
 
 export default DonorPage;
