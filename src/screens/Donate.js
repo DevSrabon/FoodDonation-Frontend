@@ -17,7 +17,7 @@ const Donate = () => {
   const { loading: imageLoading, imageUrls, takePhoto } = useImagePicker();
 
   const { loading, setLoading, allData } = useContext(AuthContext);
-  const { name, role, subRole, email, location, categoryName, phone } =
+  const { name, role, subRole, email, location, categoryName, phone, photo } =
     allData.userData;
   const navigation = useNavigation();
   const [address, setAddress] = useState("");
@@ -43,7 +43,10 @@ const Donate = () => {
       email,
       location,
       role,
+      subRole,
+      photo,
       caption,
+      phone,
       noOfItem,
       imageUrls,
     };

@@ -1,9 +1,6 @@
-import { Picker } from "@react-native-picker/picker";
-import { useRoute } from "@react-navigation/native";
-import axios from "axios";
+
 import React, { useContext, useState } from "react";
 import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
-import CustomButton from "../components/CustomButton";
 import Loading from "../components/Loading";
 import { AuthContext } from "../context/Provider";
 import CustomInput from "../components/CustomInput";
@@ -14,6 +11,7 @@ import Header from "../components/Header";
 const DonateMeal = () => {
   const route = useRoute();
   const numbers = route.params.number;
+
   const resData = route.params.resData;
 
   const [listItems, setListItems] = useState([]);
@@ -63,27 +61,13 @@ const DonateMeal = () => {
     { id: 3, label: "Pickup" },
   ];
 
+
   const { loading, setLoading } = useContext(AuthContext);
-
-  const onDonateMeal = async () => {
-    const body = { listItems, orderType, ...resData };
-    try {
-      const res = await axios.post(
-        `https://food-donation-backend.vercel.app/api/v1/posts/createPost`,
-        body
-      );
-      if (res.data.status === "success") {
-        alert("Submitted");
-      }
-    } catch (error) {
-      alert(error.message);
-    }
-  };
-
   if (loading) {
     return <Loading />;
   }
   return (
+
     <Container>
       <ScrollView>
         <Header>Help</Header>
@@ -280,4 +264,13 @@ const styles = StyleSheet.create({
     height: 38,
   },
 });
+
+    <ScrollView>
+      <Meal routeName={routeName}/>
+    </ScrollView>
+  );
+};
+
+
+
 export default DonateMeal;

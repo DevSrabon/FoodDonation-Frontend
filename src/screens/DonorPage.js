@@ -1,28 +1,16 @@
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Image, Pressable, Text, View, Dimensions } from "react-native";
+import { Image, Text, View } from "react-native";
 import icons from "../../assets/icons";
 import CustomButton from "../components/CustomButton";
 import Container from "../components/container";
 import Measure from "../components/measure";
-import { TouchableOpacity } from "react-native-web";
-import CreateChat from "../components/CreateChat";
-import Chat, { handleCreateUser } from "./Chat";
-
-const DonorPage = ({ users: initialUsers }) => {
+import { userContext } from "../context/Provider";
+const DonorPage = () => {
   const route = useRoute();
   const { user } = route.params;
-  const userEmail = user.email;
-  const userRole = user.role;
-  const userName = user.name;
-  
-  const [users, setUsers] = useState(initialUsers);
-  const [newName, setNewName] = useState('');
-  const [newProfileImage, setNewProfileImage] = useState(''); 
-
-  console.log(userEmail + " " + userRole + " " + userName);
-  console.log("🚀 ~ file: DonorPage.js:12 ~ DonorPage ~ user:", user);
+  const navigation = useNavigation();
   const [address, setAddress] = useState();
   const latitude = user.location.latitude;
   const longitude = user.location.longitude;
@@ -37,10 +25,10 @@ const DonorPage = ({ users: initialUsers }) => {
         const formattedAddress = results[0].formatted_address;
         setAddress(formattedAddress);
       } else {
-        setAddress("No results found");
+        setAddress("No Location found");
       }
     } catch (error) {
-      console.log("Error:", error);
+      console.warn("Error:", error);
     }
   };
 
@@ -49,17 +37,14 @@ const DonorPage = ({ users: initialUsers }) => {
   }, [latitude, longitude]);
 
   const onAccept = () => {
-    
-    console.warn("Accept");
-   //create a chat for needy 
-//Sender should listen for reciver accpt if true then sender should have a chat open using a room id
-  }
+    navigation.navigate("map", { routesMapData: user });
+  };
   const onDecline = () => {
     console.warn("AccDeclineept");
   };
 
   return (
-    <Container>
+    <Container key={user?._id}>
       <View
         style={{
           flex: 1,
@@ -75,14 +60,14 @@ const DonorPage = ({ users: initialUsers }) => {
             fontSize: 18,
           }}
         >
-          {/* {user?.categoryName} */}
-          Cafe Bilhares
+          {user?.categoryName || user?.postCategoryName}
+          {/* Cafe Bilhares */}
         </Text>
         <View style={{ flexDirection: "row" }}>
           <Image source={icons.location} />
           <Text style={{ fontFamily: "SemiBold", fontSize: 10 }}>
-            {/* {address} */}
-            Rewa boda bag mp
+            {address}
+            {/* Rewa boda bag mp */}
           </Text>
         </View>
         <View
@@ -93,8 +78,8 @@ const DonorPage = ({ users: initialUsers }) => {
           }}
         >
           <Image
-            // source={{ uri: user?.image?.[0] }}
-            source={require("../../assets/icons/fixedHeight.png")}
+            source={{ uri: user?.image?.[0] || user?.imageUrls?.[0] }}
+            // source={require("../../assets/icons/fixedHeight.png")}
             style={{ width: "100%", height: 180, resizeMode: "stretch" }}
           />
         </View>
@@ -107,8 +92,8 @@ const DonorPage = ({ users: initialUsers }) => {
             }}
           >
             <Text style={{ fontFamily: "Medium", fontSize: 10 }}>
-              {/* {user?.subRole} */}
-              donar
+              {user?.subRole || user?.role}
+              {/* donar */}
             </Text>
           </View>
           <View
@@ -157,11 +142,11 @@ const DonorPage = ({ users: initialUsers }) => {
           </View>
         </View>
         <View>
-          <Measure email={"anantkuswaha@gmail.com"} />
+          <Measure email={user?.email} />
           {/* user.email */}
         </View>
 
-        <View
+        {/* <View
           style={{
             width: "100%",
             height: 128,
@@ -177,7 +162,7 @@ const DonorPage = ({ users: initialUsers }) => {
           <Text style={{ fontSize: 16, fontFamily: "SemiBold" }}>
             Food Availability
           </Text>
-        </View>
+        </View> */}
         <View
           style={{
             flexDirection: "row",
@@ -189,30 +174,31 @@ const DonorPage = ({ users: initialUsers }) => {
           }}
         >
           <Image
-            // source={{ uri: user?.photo }}
-            source={require("../../assets/icons/profile.png")}
+            source={
+              {
+                uri: user?.photo,
+              } || icons.profile
+            }
+            // source={require("../../assets/icons/profile.png")}
             style={{ width: 50, height: 50, borderRadius: 50 }}
           />
           <View>
             <Text style={{ fontFamily: "SemiBold", fontSize: 16 }}>
-              {/* {user?.name} */}
-              Sourav Paul
+              {user?.userName || user?.name}
+              {/* Sourav Paul */}
             </Text>
             <Text style={{ fontFamily: "Medium", fontSize: 12 }}>
-              {/* {user?.role} */}
-              Restaurent owner
+              {user?.role}
+              {/* Restaurent owner */}
             </Text>
           </View>
         </View>
         {/* user?.role === "donor" */}
-        {1 && (
-          <View
-            style={{ flex: 1, alignItems: "center", gap: 10, marginTop: 10 }}
-          >
-            <CustomButton onPress={onAccept} text="Accept" type="primary" />
-            <CustomButton onPress={onDecline} text="Decline" type="primary" />
-          </View>
-        )}
+
+        <View style={{ flex: 1, alignItems: "center", gap: 10, marginTop: 10 }}>
+          <CustomButton onPress={onAccept} text="Accept" type="primary" />
+          <CustomButton onPress={onDecline} text="Decline" type="primary" />
+        </View>
       </View>
     </Container>
   );
