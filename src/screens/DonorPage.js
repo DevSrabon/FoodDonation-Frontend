@@ -9,6 +9,7 @@ import Measure from "../components/measure";
 import { TouchableOpacity } from "react-native-web";
 import CreateChat from "../components/CreateChat";
 import Chat, { handleCreateUser } from "./Chat";
+import ListenForChatAdd from "../components/ListenForChatAdd";
 
 const DonorPage = ({ users: initialUsers }) => {
   const route = useRoute();
@@ -51,6 +52,7 @@ const DonorPage = ({ users: initialUsers }) => {
   const onAccept = () => {
     
     console.warn("Accept");
+    <ListenForChatAdd/>
    //create a chat for needy 
 //Sender should listen for reciver accpt if true then sender should have a chat open using a room id
   }

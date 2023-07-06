@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, Button } from 'react-native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useNavigation } from '@react-navigation/native';
 import Chat1 from './Chat1';
@@ -12,12 +12,13 @@ export function RandomNumber() {
   sum += randomNumber;
   return sum;
 }
-
-export function handleCreateUser(users, setUsers) {
+const a = RandomNumber();
+export function handleCreateUser(users, setUsers, name, message,a) {
+  
   const newUser = {
-    chatid: RandomNumber(),
-    name: 'New User',
-    message: 'Hey! I am a new user',
+    chatid: a,
+    name: name,
+    message: message,
     profileImage: require('../../assets/icons/profile.png'),
   };
 
@@ -68,7 +69,7 @@ const Users = () => {
           </TouchableOpacity>
         ))}
       </ScrollView>
-      <TouchableOpacity onPress={() => handleCreateUser(users, setUsers)}>
+      <TouchableOpacity onPress={() => handleCreateUser(users, setUsers, "User", "Hey there",a)}>
         <Text>Add New User</Text>
       </TouchableOpacity>
     </View>
@@ -81,7 +82,22 @@ const Chat = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Users" component={Users} options={{ headerShown: false }} />
-      <Stack.Screen name="Chat1" component={Chat1} />
+      <Stack.Screen
+        name="Chat1"
+        component={Chat1}
+        options={({ navigation }) => ({
+          headerRight: () => (
+            <Button
+              onPress={() => {
+                // Action to perform when the button is pressed
+                // For example, you can navigate to another screen
+                navigation.navigate('Users');
+              }}
+              title="Button"
+            />
+          ),
+        })}
+      />
     </Stack.Navigator>
   );
 };
