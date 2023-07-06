@@ -80,33 +80,30 @@ const Donate = () => {
   }
 
   return (
-    <ScrollView style={{ flex: 1 }}>
-      <Container>
-        <Header>Donate</Header>
+    <Container>
+      <Header>Donate</Header>
+      <ScrollView style={{ flex: 1 }}>
         <View
           style={{
-            flex: 1,
-            alignSelf: "flex-start",
-            justifyContent: "flex-start",
-            gap: 10,
-            bottom: 100,
+            // flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+            // bottom: 50,
           }}
         >
+          <Label>Organization Name</Label>
           <Label>{categoryName}</Label>
-          <View style={{ flexDirection: "row", marginLeft: 15 }}>
-            <Image source={icons.location} style={{ marginRight: 0 }} />
-            <Label>{address}</Label>
-          </View>
+          <Label>Location</Label>
+          <Label>{address}</Label>
         </View>
-        <View style={styles.inputCon}>
+        <View style={{ width: "100%", alignItems: "center", marginTop: 20 }}>
           <Label>Caption</Label>
           <CustomInput
             placeholder="Caption"
             value={caption}
             setValue={setCaption}
           />
-        </View>
-        <View style={styles.inputCon}>
+
           <Label>No of Items</Label>
           <CustomInput
             placeholder="No of Items"
@@ -125,11 +122,17 @@ const Donate = () => {
         value={noOfItem}
         onChangeText={handleNumberChange}
       /> */}
-        <View style={{ flex: 1, width: "90%" }}>
+        <View
+          style={{
+            flex: 1,
+            alignSelf: "center",
+            width: "90%",
+          }}
+        >
           <CustomButton text="Continue" onPress={onDonate} type="primary" />
         </View>
-      </Container>
-    </ScrollView>
+      </ScrollView>
+    </Container>
   );
 };
 

@@ -10,7 +10,6 @@ import Loading from "../components/Loading";
 import Container from "../components/container";
 import Label from "../components/label";
 import { userContext } from "../context/Provider";
-
 const Login = () => {
   const {
     signIn,
@@ -21,13 +20,11 @@ const Login = () => {
     loading,
     setLoading,
   } = userContext();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isChecked, setChecked] = useState(false);
 
   const navigation = useNavigation();
-
   useEffect(() => {
     if (user?.email) {
       navigation.navigate("user");
@@ -37,9 +34,28 @@ const Login = () => {
     try {
       const res = await signIn(email, password);
       console.log("res", res);
-    } catch (err) {
-      console.log(err);
-      alert(err);
+    } catch (error) {
+      let errorMessage = "An error occurred during sign-in.";
+
+      if (
+        error.code === "auth/user-not-found" ||
+        error.code === "auth/wrong-password"
+      ) {
+        errorMessage = "Invalid email or password. Please try again.";
+      } else if (error.code === "auth/invalid-email") {
+        errorMessage =
+          "Invalid email format. Please enter a valid email address.";
+      } else if (error.code === "auth/too-many-requests") {
+        errorMessage = "Too many sign-in attempts. Please try again later.";
+      } else if (error.code === "auth/network-request-failed") {
+        errorMessage = "Network error. Please check your internet connection.";
+      } else {
+        errorMessage = "An unknown error occurred. Please try again later.";
+      }
+
+      console.log(error);
+      alert(errorMessage);
+      console.log(error);
     } finally {
       setLoading(false);
     }

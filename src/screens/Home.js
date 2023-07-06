@@ -28,7 +28,7 @@ const Home = () => {
   return (
     <Container>
       <SearchHeader />
-      <ScrollView style={{ flex: 1, bottom: 250 }}>
+      <ScrollView style={{ flex: 1, width: "100%" }}>
         {data?.map((item) => (
           <View key={item._id} style={styles.cardContainer}>
             <Pressable

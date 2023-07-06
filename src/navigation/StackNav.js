@@ -12,7 +12,6 @@ import Login from "../screens/Login";
 import Otp from "../screens/Otp";
 import RoleSelection from "../screens/RoleSelection";
 
-import MapModal from "../components/MapModal";
 import AddRestaurant from "../screens/AddRestaurant";
 import Donate from "../screens/Donate";
 import DonateMeal from "../screens/DonateMeal";
@@ -20,11 +19,15 @@ import DonorPage from "../screens/DonorPage";
 import Help from "../screens/Help";
 import HelpMeal from "../screens/HelpMeal";
 import Profile from "../screens/Profile";
+
+import CustomModal from "../components/CustomModal";
+import CustomTouch from "../components/CustomTouch";
 import Signup from "../screens/Signup";
 import Transporter from "../screens/Transporter";
 import BottomNav from "./BottomNav";
 import User from "../screens/User";
 import UserMap from "../components/UserMap";
+import Notify from "../screens/Notify";
 
 const Stack = createNativeStackNavigator();
 
@@ -35,7 +38,9 @@ const StackNav = () => {
         initialRouteName="initial"
         screenOptions={{ headerShown: false }}
       >
-        {/* <Stack.Screen name="initial" component={User} /> */}
+        <Stack.Screen name="touch" component={CustomTouch} />
+        <Stack.Screen name="modal" component={CustomModal} />
+
         <Stack.Screen name="initial" component={InitialPage} />
         <Stack.Screen name="profile" component={Profile} />
         <Stack.Screen name="intro" component={Intro} />
@@ -52,10 +57,11 @@ const StackNav = () => {
         <Stack.Screen name="donate" component={Donate} />
         <Stack.Screen name="help" component={Help} />
         <Stack.Screen name="helpMeal" component={HelpMeal} />
-        <Stack.Screen name="mapModal" component={MapModal} />
+
         {/* <Stack.Screen name="profile" component={Profile} /> */}
         <Stack.Screen name="chat" component={Chat} />
         <Stack.Screen name="home" component={Home} />
+        {/* <Stack.Screen name="Notify" component={Notify} /> */}
         <Stack.Screen name="user">
           {() => (
             <Stack.Navigator
