@@ -27,6 +27,7 @@ const UserMap = () => {
   const { data: mapUsers, loading: isLoading } = useFetchData(
     `users/map?latitude=${data?.location?.latitude}&longitude=${data?.location?.longitude}&role=${data?.role}`
   );
+
   useEffect(() => {
     if (data && mapUsers) {
       setAllData((prev) => ({
@@ -72,6 +73,7 @@ const UserMap = () => {
           </Callout>
         </Marker>
 
+
         {routeMap?.location ? (
           <Marker
             pinColor="yellow"
@@ -85,6 +87,7 @@ const UserMap = () => {
           </Marker>
         ) : mapUsers?.length ? (
           mapUsers?.map((user, i) => (
+
             <Marker
               key={i}
               pinColor="yellow"
@@ -100,6 +103,7 @@ const UserMap = () => {
             </Marker>
           ))
         ) : null}
+
       </MapView>
     </View>
   );
