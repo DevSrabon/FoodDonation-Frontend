@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+/*import React, { useEffect, useState } from 'react';
 import { RandomNumber, handleCreateUser } from '../screens/Chat';
 
 import { getDatabase, ref, onValue, push } from 'firebase/database';
@@ -6,14 +6,13 @@ import { View } from 'react-native-web';
 import { async } from '@firebase/util';
 
 const db = getDatabase();
-
-export const ListenForChatAdd =()=>{
+export const Listen = ({ user }) => {
   console.log("dddddddddddddddddddddddddddddddd")
-  const user={role:"donor"};
+  console.log(user)
   
   console.log("ListenForChatAdd");  
-  const a = RandomNumber();
-  const [message, setMessage] = useState('');
+  //const a = RandomNumber();
+  //const [message, setMessage] = useState('');
     //if user.role is donor then listen for (connect)accept from needy
     //if user.role is needy then listen for help accept from donor
     //if user.role is transporter then listen for help accept from needy
@@ -104,8 +103,12 @@ export const ListenForChatAdd =()=>{
   
     }
     
-  */
-
-  return (<View></View>);
+  
+  return (null);
 };
 
+*/
+export const Listen = ({ user }) => {
+  console.log("🚀 ~ file: Listen.js:2 ~ Listen ~ user:", user);
+  return null;
+};
