@@ -22,8 +22,8 @@ const Signup = () => {
   const onSignup = async () => {
     const userName = { displayName: firstName + " " + lastName };
     try {
-      await createUser(email, password);
-      await updateUser(userName);
+      // await createUser(email, password);
+      // await updateUser(userName);
       const res = await axios.post(
         "https://food-donation-backend.vercel.app/api/v1/users/create",
         {
@@ -39,7 +39,7 @@ const Signup = () => {
         alert("Email is already in use");
       } else {
         console.log(error.response);
-        alert("Error:", error.response);
+        alert("Error:", error.message);
       }
     } finally {
       setLoading(false);

@@ -241,6 +241,28 @@ const HelpMeal = () => {
             bottom: 15,
           }}
         >
+          {routeName === "Donate" && (
+            <View>
+              <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
+                Order
+              </Text>
+              <View style={styles.inputText}>
+                <Picker
+                  selectedValue={orderType}
+                  onValueChange={(value) => setOrderType(value)}
+                  mode="dropdown"
+                >
+                  {orderOptions.map((option) => (
+                    <Picker.Item
+                      key={option.id}
+                      label={option.label}
+                      value={option.label}
+                    />
+                  ))}
+                </Picker>
+              </View>
+            </View>
+          )}
           <CustomButton text="Continue" onPress={onDonateMeal} type="primary" />
         </View>
       </ScrollView>

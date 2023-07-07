@@ -6,10 +6,12 @@ import Loading from "./Loading";
 
 const SearchHeader = () => {
   const [search, setSearch] = useState(0);
-  const { allData, loading, signOutUser } = userContext();
+  const { allData, user, loading, signOutUser } = userContext();
   const navigation = useNavigation();
   const handleSignOut = async () => {
-    await signOutUser();
+    if (user?.email) {
+      await signOutUser();
+    }
     navigation.navigate("login");
   };
   if (loading) return <Loading />;

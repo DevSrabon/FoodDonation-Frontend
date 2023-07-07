@@ -13,9 +13,9 @@ import { userContext } from "../context/Provider";
 const Login = () => {
   const {
     signIn,
-    promptAsync,
+    // promptAsync,
     user,
-    request,
+    // request,
     setAllData,
     loading,
     setLoading,

@@ -43,7 +43,7 @@ const Profile = () => {
       subRole,
       ...body,
     };
-    console.log("🚀 ~ file: Profile.js:45 ~ onBioSetup ~ bodyData:", bodyData);
+
     try {
       const result = await axios.patch(
         `https://food-donation-backend.vercel.app/api/v1/users/update-role?email=${user?.email}`,
