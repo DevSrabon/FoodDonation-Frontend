@@ -115,7 +115,6 @@ const DonateMeal = () => {
                   <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
                     Meal Type
                   </Text>
-                  {/* <Label style={{ marginLeft: 10 }}>Meal Type {item.id}</Label> */}
 
                   <View style={styles.inputText}>
                     <Picker
@@ -137,48 +136,7 @@ const DonateMeal = () => {
                   </View>
                 </View>
               </View>
-              <View style={{ flexDirection: "row", gap: 20 }}>
-                <View style={{ width: 150 }}>
-                  {/* <Label> Item {item.id}</Label>
-                  <CustomInput
-                    placeholder={`Item ${item.id}`}
-                    value={item.value}
-                    setValue={(text) => handleValueChange(text, index, "value")}
-                  /> */}
-                  {/* <TextInput
-                    style={styles.inputText}
-                    value={item.value}
-                    onChangeText={(text) =>
-                      handleValueChange(text, index, "value")
-                    }
-                    placeholder={`Item ${item.id}`}
-                  /> */}
-                </View>
-                {/* Meal options */}
-                {/* <View style={{ width: 150 }}>
-                  <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-                    Meal Type {item.id}
-                  </Text>
-                  <View style={styles.inputText}>
-                    <Picker
-                      selectedValue={item.value}
-                      onValueChange={(text) =>
-                        handleValueChange(text, index, "qType")
-                      }
-                      mode="dropdown"
-                      multiple={true}
-                    >
-                      {mealOptions.map((option) => (
-                        <Picker.Item
-                          key={option.id}
-                          label={option.label}
-                          value={option.label}
-                        />
-                      ))}
-                    </Picker>
-                  </View>
-                </View> */}
-              </View>
+              <View style={{ flexDirection: "row", gap: 20 }}></View>
               <View style={{ flexDirection: "row" }}>
                 <View style={{ width: "48%" }}>
                   <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
@@ -192,20 +150,7 @@ const DonateMeal = () => {
                     }
                     keyboardType="numeric"
                   />
-                  {/* <View style={{}}>
-                    <TextInput
-                      style={styles.inputText}
-                      keyboardType="numeric"
-                      placeholder="0"
-                      value={item.quantity}
-                      onChangeText={(text) =>
-                        handleValueChange(text, index, "quantity")
-                      }
-                    />
-                  </View> */}
                 </View>
-
-                {/* Item Quantity */}
 
                 <View style={{ width: "48%" }}>
                   <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
