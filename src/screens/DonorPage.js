@@ -6,14 +6,29 @@ import icons from "../../assets/icons";
 import CustomButton from "../components/CustomButton";
 import Container from "../components/container";
 import Measure from "../components/measure";
+import { TouchableOpacity } from "react-native-web";
+import CreateChat from "../components/CreateChat";
+import Chat, { handleCreateUser } from "./Chat";
+import ListenForChatAdd  from "../components/ListenForChatAdd";
+import {auth} from "../context/Provider";
+import { getDatabase, ref,set, onValue, push } from 'firebase/database';
 import { userContext } from "../context/Provider";
+import { list } from "@firebase/storage";
+import { async } from "@firebase/util";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+let i = 1;
 const DonorPage = () => {
   const route = useRoute();
   const { user } = route.params;
+  
+
+  console.log("user", user);
   const navigation = useNavigation();
   const [address, setAddress] = useState();
   const latitude = user.location.latitude;
   const longitude = user.location.longitude;
+  const [state, setState] = useState(false);
   const getAddressFromCoordinates = async () => {
     try {
       const response = await axios.get(
@@ -36,11 +51,35 @@ const DonorPage = () => {
     getAddressFromCoordinates();
   }, [latitude, longitude]);
 
-  const onAccept = () => {
-    navigation.navigate("map", { routesMapData: user });
+
+const onAccept = () => {
+ 
+  const newMessage = {
+
+    mail: auth.currentUser.email,
+     name: auth.currentUser.displayName,
+     chatid: auth.currentUser.email+user.email,
+   };
+   push(ref(getDatabase(), user.email.replace(/[@.]/g, "")), newMessage);
+ 
+  const newMessage1 = {
+
+   mail: user.email,
+    name: user.userName,
+    chatid: auth.currentUser.email+user.email,
+  };
+  push(ref(getDatabase(), auth.currentUser.email.replace(/[@.]/g, "")), newMessage1);
+
+  
+
+  
+    
+   //ListenForChatAdd();
+    navigation.navigate("Chat");
+    console.warn("Accepgs");
   };
   const onDecline = () => {
-    console.warn("AccDeclineept");
+    console.warn("Decline");
   };
 
   return (
@@ -196,12 +235,14 @@ const DonorPage = () => {
         {/* user?.role === "donor" */}
 
         <View style={{ flex: 1, alignItems: "center", gap: 10, marginTop: 10 }}>
-          <CustomButton onPress={onAccept} text="Accept" type="primary" />
+          <CustomButton onPress={()=>{onAccept()}} text="Accept" type="primary" />
           <CustomButton onPress={onDecline} text="Decline" type="primary" />
         </View>
       </View>
+      
+      
     </Container>
   );
-};
-
+          };
+         
 export default DonorPage;

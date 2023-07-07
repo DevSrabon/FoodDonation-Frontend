@@ -149,22 +149,7 @@ const DonateMeal = () => {
                 </View>
               </View>
               <View style={{ flexDirection: "row", gap: 20 }}>
-                <View style={{ width: 150 }}>
-                  {/* <Label> Item {item.id}</Label>
-                  <CustomInput
-                    placeholder={`Item ${item.id}`}
-                    value={item.value}
-                    setValue={(text) => handleValueChange(text, index, "value")}
-                  /> */}
-                  {/* <TextInput
-                    style={styles.inputText}
-                    value={item.value}
-                    onChangeText={(text) =>
-                      handleValueChange(text, index, "value")
-                    }
-                    placeholder={`Item ${item.id}`}
-                  /> */}
-                </View>
+                <View style={{ width: 150 }}></View>
               </View>
               <View style={{ flexDirection: "row" }}>
                 <View style={{ width: "48%" }}>
@@ -180,8 +165,6 @@ const DonateMeal = () => {
                     keyboardType="numeric"
                   />
                 </View>
-
-                {/* Item Quantity */}
 
                 <View style={{ width: "48%" }}>
                   <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
@@ -218,23 +201,23 @@ const DonateMeal = () => {
           }}
         >
           {/* expired */}
-          {/* {resData?.role === "donor" && ( */}
-          <>
-            <View style={{ flexDirection: "row" }}>
-              <View style={{ width: "110%" }}>
-                <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-                  Expired Time In Minute
-                </Text>
-                <CustomInput
-                  placeholder={expiredTime || "20"}
-                  value={expiredTime}
-                  setValue={(number) => setExpiredTime(number)}
-                  keyboardType="numeric"
-                />
+          {resData?.role === "donor" && (
+            <>
+              <View style={{ flexDirection: "row" }}>
+                <View style={{ width: "110%" }}>
+                  <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
+                    Expired Time In Minute
+                  </Text>
+                  <CustomInput
+                    placeholder={expiredTime || "20"}
+                    value={expiredTime}
+                    setValue={(number) => setExpiredTime(number)}
+                    keyboardType="numeric"
+                  />
+                </View>
               </View>
-            </View>
-          </>
-          {/* )} */}
+            </>
+          )}
           {/* Order */}
 
           <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>Order</Text>
