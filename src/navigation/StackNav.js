@@ -25,6 +25,7 @@ import CustomTouch from "../components/CustomTouch";
 import Signup from "../screens/Signup";
 import Transporter from "../screens/Transporter";
 import BottomNav from "./BottomNav";
+import DropDown from "../components/DropDown";
 
 const Stack = createNativeStackNavigator();
 
@@ -37,6 +38,7 @@ const StackNav = () => {
       >
         <Stack.Screen name="touch" component={CustomTouch} />
         <Stack.Screen name="modal" component={CustomModal} />
+        <Stack.Screen name="DropDown" component={DropDown} />
 
         <Stack.Screen name="initial" component={InitialPage} />
         <Stack.Screen name="profile" component={Profile} />
