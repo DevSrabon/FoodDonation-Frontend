@@ -1,52 +1,66 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, Button } from 'react-native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useNavigation } from '@react-navigation/native';
 import Chat1 from './Chat1';
 import { useRoute } from "@react-navigation/core";
 
-let sum = 0;
+import { auth } from "../context/Provider";
+import { getDatabase, ref, onValue, off } from 'firebase/database';
 
 export function RandomNumber() {
   const randomNumber = Math.floor(Math.random() * 1000);
-  sum += randomNumber;
-  return sum;
-}
-const a = RandomNumber();
-export function handleCreateUser(users, setUsers, name, message,a) {
-  
-  const newUser = {
-    chatid: a,
-    name: name,
-    message: message,
-    profileImage: require('../../assets/icons/profile.png'),
-  };
-
-  setUsers([...users, newUser]);
+  return randomNumber;
 }
 
 const Users = () => {
+  const [data, setData] = useState(null);
   const [users, setUsers] = useState([
     {
       chatid: 1,
-      name: 'Dinesh Lal',
-      message: 'Hey! I have some food for you',
+      name: 'Global',
+      message: 'Welcome to global Chat',
       profileImage: require('../../assets/icons/profile.png'),
-    },
-    {
-      chatid: 2,
-      name: 'M Vinod',
-      message: 'Hey! I have some food for you',
-      profileImage: require('../../assets/icons/profile.png'),
-    },
-    {
-      chatid: 3,
-      name: 'Ananth Raj',
-      message: 'Hey! I have some food for you',
-      profileImage: require('../../assets/icons/profile.png'),
-    },
+      },
     // Add more user objects here
   ]);
+ /*
+  useEffect(() => {
+    const database = getDatabase();
+    const userRef = ref(database, auth.currentUser.uid);
+    const onValueChange = onValue(userRef, (snapshot) => {
+      const userData = snapshot.val();
+      setData(userData);
+    });
+
+    return () => {
+      off(userRef, "value", onValueChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    let i=4;
+    if (data) {
+      setUsers(prevUsers => [
+       
+        {
+          chatid: [i],
+          name: data.name2,
+
+          message: 'Hey! I have some food for you',
+          profileImage: require('../../assets/icons/profile.png'),
+        }, ...prevUsers
+      ]);
+    }
+  }, [data]);*/
+  useEffect(() => {
+    onValue(ref(getDatabase(), auth.currentUser.email.replace(/[@.]/g, "")), (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        setUsers(Object.values(data));
+      }
+    });
+  }, []);
 
   const navigation = useNavigation();
 
@@ -58,9 +72,9 @@ const Users = () => {
     <View style={{ marginTop: 50 }}>
       <ScrollView>
         {users.map((user) => (
-          <TouchableOpacity key={user.chatid} onPress={() => handleUserPress(user.chatid)}>
+          <TouchableOpacity key={user.chatid} onPress={() => handleUserPress(user.chatid.replace(/[@.]/g, ""))}>
             <View style={{ flexDirection: 'row', padding: 20, alignItems: 'center' }}>
-              <Image source={user.profileImage} style={{ width: 60, height: 60, borderRadius: 30 }} />
+              <Image source={require('../../assets/icons/profile.png')} style={{ width: 60, height: 60, borderRadius: 30 }} />
               <View>
                 <Text style={{ fontSize: 17, fontWeight: 'bold', paddingLeft: 20 }}>{user.name}</Text>
                 <Text style={{ fontSize: 15, paddingLeft: 20 }}>{user.message}</Text>
@@ -69,9 +83,6 @@ const Users = () => {
           </TouchableOpacity>
         ))}
       </ScrollView>
-      <TouchableOpacity onPress={() => handleCreateUser(users, setUsers, "User", "Hey there",a)}>
-        <Text>Add New User</Text>
-      </TouchableOpacity>
     </View>
   );
 };
@@ -79,7 +90,6 @@ const Users = () => {
 const Stack = createNativeStackNavigator();
 
 const Chat = () => {
-  
   return (
     <Stack.Navigator>
       <Stack.Screen name="Users" component={Users} options={{ headerShown: false }} />
@@ -90,8 +100,6 @@ const Chat = () => {
           headerRight: () => (
             <Button
               onPress={() => {
-                // Action to perform when the button is pressed
-                // For example, you can navigate to another screen
                 navigation.navigate("map");
               }}
               title="Map"

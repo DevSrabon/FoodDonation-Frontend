@@ -1,10 +1,10 @@
-/*import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RandomNumber, handleCreateUser } from '../screens/Chat';
 
 import { getDatabase, ref, onValue, push } from 'firebase/database';
 import { View } from 'react-native-web';
 import { async } from '@firebase/util';
-
+/*
 const db = getDatabase();
 export const Listen = ({ user }) => {
   console.log("dddddddddddddddddddddddddddddddd")
@@ -109,6 +109,10 @@ export const Listen = ({ user }) => {
 
 */
 export const Listen = ({ user }) => {
-  console.log("🚀 ~ file: Listen.js:2 ~ Listen ~ user:", user);
+  console.log("yugyhvhjvhjvvhvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv~ Listen ~ user:", user);
+  console.log(user.role);
+  if(user.role ==="needy"){
+    handleCreateUser(user,setUser,"Needy","needy",a);
+  }
   return null;
 };

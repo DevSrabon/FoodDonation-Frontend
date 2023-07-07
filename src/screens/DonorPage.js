@@ -10,11 +10,14 @@ import { TouchableOpacity } from "react-native-web";
 import CreateChat from "../components/CreateChat";
 import Chat, { handleCreateUser } from "./Chat";
 import ListenForChatAdd  from "../components/ListenForChatAdd";
-
+import {auth} from "../context/Provider";
+import { getDatabase, ref,set, onValue, push } from 'firebase/database';
 import { userContext } from "../context/Provider";
 import { list } from "@firebase/storage";
 import { async } from "@firebase/util";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
+let i = 1;
 const DonorPage = () => {
   const route = useRoute();
   const { user } = route.params;
@@ -48,11 +51,31 @@ const DonorPage = () => {
     getAddressFromCoordinates();
   }, [latitude, longitude]);
 
-   const onAccept = () => {
-   
+
+const onAccept = () => {
+ 
+  const newMessage = {
+
+    mail: auth.currentUser.email,
+     name: auth.currentUser.displayName,
+     chatid: auth.currentUser.email+user.email,
+   };
+   push(ref(getDatabase(), user.email.replace(/[@.]/g, "")), newMessage);
+ 
+  const newMessage1 = {
+
+   mail: user.email,
+    name: user.userName,
+    chatid: auth.currentUser.email+user.email,
+  };
+  push(ref(getDatabase(), auth.currentUser.email.replace(/[@.]/g, "")), newMessage1);
+
+
+
+  
     
    //ListenForChatAdd();
-    navigation.navigate("map", { routesMapData: user });
+    navigation.navigate("Chat");
     console.warn("Accepgs");
   };
   const onDecline = () => {
