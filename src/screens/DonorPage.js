@@ -70,7 +70,7 @@ const onAccept = () => {
   };
   push(ref(getDatabase(), auth.currentUser.email.replace(/[@.]/g, "")), newMessage1);
 
-
+  
 
   
     

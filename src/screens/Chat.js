@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, Button } from 'react-native';
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useNavigation } from '@react-navigation/native';
-import Chat1 from './Chat1';
+import SecuredChat from './SecuredChat';
 import { useRoute } from "@react-navigation/core";
 
 import { auth } from "../context/Provider";
@@ -65,7 +65,7 @@ const Users = () => {
   const navigation = useNavigation();
 
   const handleUserPress = (userchatId) => {
-    navigation.navigate('Chat1', { userchatId });
+    navigation.navigate('SecuredChat', { userchatId });
   };
 
   return (
@@ -90,12 +90,13 @@ const Users = () => {
 const Stack = createNativeStackNavigator();
 
 const Chat = () => {
+  
   return (
     <Stack.Navigator>
       <Stack.Screen name="Users" component={Users} options={{ headerShown: false }} />
       <Stack.Screen
-        name="Chat1"
-        component={Chat1}
+        name="SecuredChat"
+        component={SecuredChat}
         options={({ navigation }) => ({
           headerRight: () => (
             <Button
