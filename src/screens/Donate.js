@@ -1,8 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { Alert, Image, ScrollView, StyleSheet, View } from "react-native";
-import icons from "../../assets/icons";
+import { Alert, ScrollView, View } from "react-native";
 import AddImages from "../components/AddImages";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
@@ -33,9 +32,9 @@ const Donate = () => {
   };
 
   const onDonate = () => {
-    if (imageUrls > 4 || caption === "")
+    if (!imageUrls.length || !caption)
       return Alert.alert(
-        "Please Select at Least 4 image and fill up all input field"
+        "Please Select at Least 1 image and fill up all input field"
       );
     const body = {
       userName: name,
@@ -106,13 +105,6 @@ const Donate = () => {
           />
 
           <Label>No of Items</Label>
-          {/* <TextInput
-            style={styles.inputText}
-            keyboardType="numeric"
-            placeholder="No of Items"
-            value={noOfItem}
-            onChangeText={handleNumberChange}
-          /> */}
           <CustomInput
             placeholder="No of Items"
             keyboardType="numeric"
@@ -136,66 +128,5 @@ const Donate = () => {
     </Container>
   );
 };
-
-const styles = StyleSheet.create({
-  inputCon: {
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-    bottom: 130,
-  },
-  disabledText: {
-    marginVertical: 10,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    height: 40,
-    backgroundColor: "#f2f2f2",
-  },
-  inputText: {
-    marginVertical: 10,
-    paddingHorizontal: 10,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    height: 40,
-  },
-  imageHeader: {
-    height: 40,
-    flexDirection: "row",
-    marginRight: 20,
-    justifyContent: "space-between",
-  },
-  imageHeaderText: {
-    fontFamily: "SemiBold",
-    fontSize: 20,
-    top: 6,
-  },
-  addButton: {
-    backgroundColor: "white",
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    borderRadius: 8,
-  },
-  addButtonLabel: {
-    color: "gray",
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  imageContainer: {
-    height: 80,
-    flexDirection: "row",
-    gap: 5,
-    marginRight: 20,
-  },
-  image: {
-    width: 60,
-    height: 60,
-    resizeMode: "stretch",
-    backgroundColor: "black",
-    borderRadius: 8,
-  },
-});
 
 export default Donate;

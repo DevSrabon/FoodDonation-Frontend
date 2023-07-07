@@ -1,15 +1,14 @@
-import React, { useContext, useState } from "react";
-import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
-import Loading from "../components/Loading";
-import { AuthContext } from "../context/Provider";
-import CustomInput from "../components/CustomInput";
-import Container from "../components/container";
-import Label from "../components/label";
 import { Picker } from "@react-native-picker/picker";
-import Header from "../components/Header";
 import { useRoute } from "@react-navigation/native";
-import CustomButton from "../components/CustomButton";
 import axios from "axios";
+import React, { useContext, useState } from "react";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
+import CustomButton from "../components/CustomButton";
+import CustomInput from "../components/CustomInput";
+import Header from "../components/Header";
+import Loading from "../components/Loading";
+import Container from "../components/container";
+import { AuthContext } from "../context/Provider";
 
 const DonateMeal = () => {
   const route = useRoute();
@@ -20,7 +19,7 @@ const DonateMeal = () => {
   const [listItems, setListItems] = useState([]);
 
   const mealOptions = [
-    { id: 1, label: "Non-Veg or Veg" },
+    // { id: 1, label: "Non-Veg or Veg" },
     { id: 2, label: "Veg" },
     { id: 3, label: "Non-Veg" },
   ];
@@ -49,6 +48,8 @@ const DonateMeal = () => {
   };
 
   const [orderType, setOrderType] = useState("");
+  // const [expired, setExpired] = useState({});
+  const [expiredTime, setExpiredTime] = useState(null);
 
   const quantityTypes = [
     { quantityId: 1, label: "Gram " },
@@ -59,9 +60,13 @@ const DonateMeal = () => {
   ];
 
   const orderOptions = [
-    { id: 1, label: "Drop or Pickup" },
+    // { id: 1, label: "Drop or Pickup" },
     { id: 2, label: "Drop" },
     { id: 3, label: "Pickup" },
+  ];
+  const expiredOptions = [
+    { id: 1, label: "min" },
+    // { id: 2, label: "hrs" },
   ];
 
   const { loading, setLoading } = useContext(AuthContext);
@@ -70,7 +75,11 @@ const DonateMeal = () => {
   }
 
   const onDonateMeal = async () => {
-    const body = { listItems, orderType, ...resData };
+    if (expiredTime < 20) {
+      return alert("Expired Time should be more than 20 min");
+    }
+    setLoading(true);
+    const body = { listItems, expiredTime, orderType, ...resData };
     try {
       const res = await axios.post(
         `https://food-donation-backend.vercel.app/api/v1/posts/createPost`,
@@ -81,7 +90,10 @@ const DonateMeal = () => {
       }
     } catch (error) {
       alert(error.message);
+    } finally {
+      setLoading(false);
     }
+    console.log("🚀 ~ file: DonateMeal.js:96 ~ onDonateMeal ~ body:", body);
   };
 
   return (
@@ -115,11 +127,10 @@ const DonateMeal = () => {
                   <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
                     Meal Type
                   </Text>
-                  {/* <Label style={{ marginLeft: 10 }}>Meal Type {item.id}</Label> */}
 
                   <View style={styles.inputText}>
                     <Picker
-                      selectedValue={item.value}
+                      selectedValue={item.qType}
                       onValueChange={(text) =>
                         handleValueChange(text, index, "qType")
                       }
@@ -138,46 +149,7 @@ const DonateMeal = () => {
                 </View>
               </View>
               <View style={{ flexDirection: "row", gap: 20 }}>
-                <View style={{ width: 150 }}>
-                  {/* <Label> Item {item.id}</Label>
-                  <CustomInput
-                    placeholder={`Item ${item.id}`}
-                    value={item.value}
-                    setValue={(text) => handleValueChange(text, index, "value")}
-                  /> */}
-                  {/* <TextInput
-                    style={styles.inputText}
-                    value={item.value}
-                    onChangeText={(text) =>
-                      handleValueChange(text, index, "value")
-                    }
-                    placeholder={`Item ${item.id}`}
-                  /> */}
-                </View>
-                {/* Meal options */}
-                {/* <View style={{ width: 150 }}>
-                  <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-                    Meal Type {item.id}
-                  </Text>
-                  <View style={styles.inputText}>
-                    <Picker
-                      selectedValue={item.value}
-                      onValueChange={(text) =>
-                        handleValueChange(text, index, "qType")
-                      }
-                      mode="dropdown"
-                      multiple={true}
-                    >
-                      {mealOptions.map((option) => (
-                        <Picker.Item
-                          key={option.id}
-                          label={option.label}
-                          value={option.label}
-                        />
-                      ))}
-                    </Picker>
-                  </View>
-                </View> */}
+                <View style={{ width: 150 }}></View>
               </View>
               <View style={{ flexDirection: "row" }}>
                 <View style={{ width: "48%" }}>
@@ -192,20 +164,7 @@ const DonateMeal = () => {
                     }
                     keyboardType="numeric"
                   />
-                  {/* <View style={{}}>
-                    <TextInput
-                      style={styles.inputText}
-                      keyboardType="numeric"
-                      placeholder="0"
-                      value={item.quantity}
-                      onChangeText={(text) =>
-                        handleValueChange(text, index, "quantity")
-                      }
-                    />
-                  </View> */}
                 </View>
-
-                {/* Item Quantity */}
 
                 <View style={{ width: "48%" }}>
                   <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
@@ -241,6 +200,42 @@ const DonateMeal = () => {
             bottom: 15,
           }}
         >
+          {/* expired */}
+          {resData?.role === "donor" && (
+            <>
+              <View style={{ flexDirection: "row" }}>
+                <View style={{ width: "110%" }}>
+                  <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
+                    Expired Time In Minute
+                  </Text>
+                  <CustomInput
+                    placeholder={expiredTime || "20"}
+                    value={expiredTime}
+                    setValue={(number) => setExpiredTime(number)}
+                    keyboardType="numeric"
+                  />
+                </View>
+              </View>
+            </>
+          )}
+          {/* Order */}
+
+          <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>Order</Text>
+          <View style={styles.inputText}>
+            <Picker
+              selectedValue={orderType}
+              onValueChange={(value) => setOrderType(value)}
+              mode="dropdown"
+            >
+              {orderOptions.map((option) => (
+                <Picker.Item
+                  key={option.id}
+                  label={option.label}
+                  value={option.label}
+                />
+              ))}
+            </Picker>
+          </View>
           <CustomButton text="Continue" onPress={onDonateMeal} type="primary" />
         </View>
       </ScrollView>
@@ -261,8 +256,5 @@ const styles = StyleSheet.create({
     height: 38,
   },
 });
-
-
-
 
 export default DonateMeal;

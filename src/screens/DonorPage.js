@@ -1,25 +1,33 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
+import { getDatabase, push, ref } from "firebase/database";
 import React, { useEffect, useState } from "react";
 import { Image, Text, View } from "react-native";
 import icons from "../../assets/icons";
 import CustomButton from "../components/CustomButton";
 import Container from "../components/container";
 import Measure from "../components/measure";
+import { TouchableOpacity } from "react-native-web";
+import CreateChat from "../components/CreateChat";
+import Chat, { handleCreateUser } from "./Chat";
+import ListenForChatAdd  from "../components/ListenForChatAdd";
 import {auth} from "../context/Provider";
-import { getDatabase, ref,set, onValue, push, get, child } from 'firebase/database';
+import { getDatabase, ref,set, onValue, push } from 'firebase/database';
+import { userContext } from "../context/Provider";
+import { list } from "@firebase/storage";
+import { async } from "@firebase/util";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 let i = 1;
 const DonorPage = () => {
   const route = useRoute();
   const { user } = route.params;
-  
-
-  console.log("user", user);
+  const { allData } = userContext();
   const navigation = useNavigation();
   const [address, setAddress] = useState();
   const latitude = user.location.latitude;
   const longitude = user.location.longitude;
-  const [state, setState] = useState(false);
+
   const getAddressFromCoordinates = async () => {
     try {
       const response = await axios.get(
@@ -88,7 +96,8 @@ const onAccept = () => {
     console.warn("Accepgs");
   };
   const onDecline = () => {
-    console.warn("Decline");
+    console.warn("User");
+    navigation.navigate("User");
   };
 
   return (
@@ -242,16 +251,31 @@ const onAccept = () => {
           </View>
         </View>
         {/* user?.role === "donor" */}
-
         <View style={{ flex: 1, alignItems: "center", gap: 10, marginTop: 10 }}>
-          <CustomButton onPress={()=>{onAccept()}} text="Accept" type="primary" />
-          <CustomButton onPress={onDecline} text="Decline" type="primary" />
+          {allData?.guestData !== "guest" ? (
+            <>
+              <CustomButton
+                onPress={() => {
+                  onAccept();
+                }}
+                text="Accept"
+                type="primary"
+              />
+              <CustomButton onPress={onDecline} text="Decline" type="primary" />
+            </>
+          ) : (
+            <>
+              <CustomButton
+                onPress={() => navigation.navigate("home")}
+                text="Back to home"
+                type="primary"
+              />
+            </>
+          )}
         </View>
       </View>
-      
-      
     </Container>
   );
-          };
-         
+};
+
 export default DonorPage;

@@ -17,7 +17,7 @@ const Measure = ({ email }) => {
   const { error, loading, data } = useFetchData(
     `posts/getPostByEmail?email=${email}`
   );
-  console.log("🚀 ~ file: measure.js:18 ~ Measure ~ data:", data);
+
   if (loading) return <Loading />;
   if (!data?.listItems?.length) return alert("No Post Found");
   return (
