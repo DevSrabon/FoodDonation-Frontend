@@ -1,6 +1,6 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import MapView, { Callout, Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
 import { userContext } from "../context/Provider";
@@ -8,12 +8,14 @@ import useFetchData from "../hook/useFetchData";
 import Loading from "./Loading";
 import MapCallout from "./MapCallout";
 import SearchHeader from "./SearchHeader";
+import { Listen } from "./ListenForChatAdd";
 
 // const origin = { latitude: 11.70484, longitude: 92.715733 };
 const GOOGLE_MAPS_APIKEY = "AIzaSyD7TKiBE0n8EsPH_snI7QjhGFagY0Vq3FQ";
 
 const UserMap = () => {
   const route = useRoute();
+  console.log("🚀 ~ file: UserMap.js:18 ~ UserMap ~ route:", route);
   const routesMapData = route.params;
   const routeMap = routesMapData?.routesMapData;
 
@@ -73,7 +75,6 @@ const UserMap = () => {
           </Callout>
         </Marker>
 
-
         {routeMap?.location ? (
           <Marker
             pinColor="yellow"
@@ -87,7 +88,6 @@ const UserMap = () => {
           </Marker>
         ) : mapUsers?.length ? (
           mapUsers?.map((user, i) => (
-
             <Marker
               key={i}
               pinColor="yellow"
@@ -103,8 +103,12 @@ const UserMap = () => {
             </Marker>
           ))
         ) : null}
-
       </MapView>
+      {route?.params && (
+        <Text>
+          <Listen user={routeMap} />;
+        </Text>
+      )}
     </View>
   );
 };
