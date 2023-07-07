@@ -55,7 +55,7 @@ const Home = () => {
                 </Text>
                 <Text style={styles.profileText}>{item.postCategoryName}</Text>
                 <Text style={styles.roleText}>
-                  {item.role.replace(/^./, item.role[0].toUpperCase())}
+                  {item?.role?.replace(/^./, item?.role[0].toUpperCase())}
                 </Text>
               </View>
             </View>

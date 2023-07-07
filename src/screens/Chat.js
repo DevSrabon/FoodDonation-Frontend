@@ -12,7 +12,6 @@ export function RandomNumber() {
   const randomNumber = Math.floor(Math.random() * 1000);
   return randomNumber;
 }
-
 const Users = () => {
   const [data, setData] = useState(null);
   const [users, setUsers] = useState([
@@ -21,38 +20,10 @@ const Users = () => {
       name: 'Global',
       message: 'Welcome to global Chat',
       profileImage: require('../../assets/icons/profile.png'),
-      },
+    },
     // Add more user objects here
   ]);
- /*
-  useEffect(() => {
-    const database = getDatabase();
-    const userRef = ref(database, auth.currentUser.uid);
-    const onValueChange = onValue(userRef, (snapshot) => {
-      const userData = snapshot.val();
-      setData(userData);
-    });
 
-    return () => {
-      off(userRef, "value", onValueChange);
-    };
-  }, []);
-
-  useEffect(() => {
-    let i=4;
-    if (data) {
-      setUsers(prevUsers => [
-       
-        {
-          chatid: [i],
-          name: data.name2,
-
-          message: 'Hey! I have some food for you',
-          profileImage: require('../../assets/icons/profile.png'),
-        }, ...prevUsers
-      ]);
-    }
-  }, [data]);*/
   useEffect(() => {
     onValue(ref(getDatabase(), auth.currentUser.email.replace(/[@.]/g, "")), (snapshot) => {
       const data = snapshot.val();
@@ -69,9 +40,9 @@ const Users = () => {
   };
 
   return (
-    <View style={{ marginTop: 50 }}>
+    <View style={{ marginTop: 30 ,marginBottom:50}}>
       <ScrollView>
-        {users.map((user) => (
+        {users.reverse().map((user) => (
           <TouchableOpacity key={user.chatid} onPress={() => handleUserPress(user.chatid.replace(/[@.]/g, ""))}>
             <View style={{ flexDirection: 'row', padding: 20, alignItems: 'center' }}>
               <Image source={require('../../assets/icons/profile.png')} style={{ width: 60, height: 60, borderRadius: 30 }} />
@@ -87,13 +58,14 @@ const Users = () => {
   );
 };
 
+
 const Stack = createNativeStackNavigator();
 
 const Chat = () => {
   
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Users" component={Users} options={{ headerShown: false }} />
+      <Stack.Screen name="Users" component={Users}  />
       <Stack.Screen
         name="SecuredChat"
         component={SecuredChat}

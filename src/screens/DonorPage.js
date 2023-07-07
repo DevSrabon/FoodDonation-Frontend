@@ -6,17 +6,8 @@ import icons from "../../assets/icons";
 import CustomButton from "../components/CustomButton";
 import Container from "../components/container";
 import Measure from "../components/measure";
-import { TouchableOpacity } from "react-native-web";
-import CreateChat from "../components/CreateChat";
-import Chat, { handleCreateUser } from "./Chat";
-import ListenForChatAdd  from "../components/ListenForChatAdd";
 import {auth} from "../context/Provider";
-import { getDatabase, ref,set, onValue, push } from 'firebase/database';
-import { userContext } from "../context/Provider";
-import { list } from "@firebase/storage";
-import { async } from "@firebase/util";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-
+import { getDatabase, ref,set, onValue, push, get, child } from 'firebase/database';
 let i = 1;
 const DonorPage = () => {
   const route = useRoute();
@@ -53,23 +44,41 @@ const DonorPage = () => {
 
 
 const onAccept = () => {
- 
-  const newMessage = {
-
-    mail: auth.currentUser.email,
-     name: auth.currentUser.displayName,
-     chatid: auth.currentUser.email+user.email,
-   };
-   push(ref(getDatabase(), user.email.replace(/[@.]/g, "")), newMessage);
- 
-  const newMessage1 = {
-
-   mail: user.email,
-    name: user.userName,
-    chatid: auth.currentUser.email+user.email,
+  const createChatId = (email1, email2) => {
+    return [email1, email2].sort().join();
   };
-  push(ref(getDatabase(), auth.currentUser.email.replace(/[@.]/g, "")), newMessage1);
-
+  
+  const chatRef = ref(getDatabase(), user.email.replace(/[@.]/g, ""));
+  const newMessage = {
+    mail: auth.currentUser.email,
+    name: auth.currentUser.displayName,
+    chatid: createChatId(auth.currentUser.email, user.email),
+  };
+  
+  // Check if the email already exists in the database
+  get(chatRef).then((snapshot) => {
+    const emails = Object.values(snapshot.val() || {}).map((message) => message.mail);
+    if (!emails.includes(auth.currentUser.email)) {
+      // Email doesn't exist, push the new message
+      push(chatRef, newMessage);
+    }
+  });
+  
+  const chatRef1 = ref(getDatabase(), auth.currentUser.email.replace(/[@.]/g, ""));
+  const newMessage1 = {
+    mail: user.email,
+    name: user.userName,
+    chatid: createChatId(auth.currentUser.email, user.email),
+  };
+  
+  // Check if the email already exists in the database
+  get(chatRef1).then((snapshot) => {
+    const emails = Object.values(snapshot.val() || {}).map((message) => message.mail);
+    if (!emails.includes(user.email)) {
+      // Email doesn't exist, push the new message
+      push(chatRef1, newMessage1);
+    }
+  });
   
 
   
