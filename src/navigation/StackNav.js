@@ -26,6 +26,8 @@ import Signup from "../screens/Signup";
 import Transporter from "../screens/Transporter";
 import BottomNav from "./BottomNav";
 import DropDown from "../components/DropDown";
+import LoginScreen from "../screens/LoginScreen";
+import SignUpScreen from "../screens/SignUpScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -33,10 +35,12 @@ const StackNav = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="initial"
+        initialRouteName="mySignUp"
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="touch" component={CustomTouch} />
+        <Stack.Screen name="myLogin" component={LoginScreen} />
+        <Stack.Screen name="mySignUp" component={SignUpScreen} />
         <Stack.Screen name="modal" component={CustomModal} />
         <Stack.Screen name="DropDown" component={DropDown} />
 
