@@ -41,7 +41,7 @@ const Home = () => {
                 resizeMode="cover"
               />
             </Pressable>
-            <Text style={styles.cardDescription}>{item.caption}</Text>
+            <Text style={styles.cardDescription}>{item?.caption}</Text>
             <View style={styles.profileContainer}>
               <View style={styles.imageContainerProfile}>
                 <Image
@@ -54,9 +54,9 @@ const Home = () => {
                 <Text style={{ fontFamily: "SemiBold", fontSize: 20, top: 6 }}>
                   {item?.userName}
                 </Text>
-                <Text style={styles.profileText}>{item.postCategoryName}</Text>
+                <Text style={styles.profileText}>{item?.postCategoryName}</Text>
                 <Text style={styles.roleText}>
-                  {item?.role?.replace(/^./, item.role[0].toUpperCase())}
+                  {item?.role?.replace(/^./, item?.role[0].toUpperCase())}
                 </Text>
               </View>
             </View>
@@ -64,8 +64,8 @@ const Home = () => {
               <View style={styles.cardItemsContainer}>
                 <Text style={styles.textItem1}>
                   <TimeLimitComponent
-                    key={item._id}
-                    previousTime={item.updatedAt}
+                    key={item?._id}
+                    previousTime={item?.updatedAt}
                   ></TimeLimitComponent>
                 </Text>
                 <Text style={styles.textItem2}>Dinner</Text>

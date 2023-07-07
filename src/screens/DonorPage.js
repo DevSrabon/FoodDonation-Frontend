@@ -14,12 +14,11 @@ const DonorPage = () => {
   const route = useRoute();
   const { user } = route.params;
   const { allData } = userContext();
-  console.log("===============", allData.guestData);
   const navigation = useNavigation();
   const [address, setAddress] = useState();
   const latitude = user.location.latitude;
   const longitude = user.location.longitude;
-  const [state, setState] = useState(false);
+
   const getAddressFromCoordinates = async () => {
     try {
       const response = await axios.get(
@@ -48,13 +47,16 @@ const DonorPage = () => {
       name: auth.currentUser.displayName,
       chatid: auth.currentUser.email + user.email,
     };
+    console.log(newMessage);
     push(ref(getDatabase(), user.email.replace(/[@.]/g, "")), newMessage);
 
     const newMessage1 = {
       mail: user.email,
-      name: user.userName,
+      name: user?.userName || user?.name,
       chatid: auth.currentUser.email + user.email,
     };
+    console.log(newMessage1);
+
     push(
       ref(getDatabase(), auth.currentUser.email.replace(/[@.]/g, "")),
       newMessage1
@@ -65,7 +67,8 @@ const DonorPage = () => {
     console.warn("Accepgs");
   };
   const onDecline = () => {
-    console.warn("Decline");
+    console.warn("User");
+    navigation.navigate("User");
   };
 
   return (
