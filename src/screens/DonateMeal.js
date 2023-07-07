@@ -14,7 +14,7 @@ const DonateMeal = () => {
   const route = useRoute();
   const numbers = route.params.number;
 
-  const resData = null;
+  const resData = route.params.resData;
 
   const [listItems, setListItems] = useState([]);
 

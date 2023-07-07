@@ -44,7 +44,7 @@ const Home = () => {
             <View style={styles.profileContainer}>
               <View style={styles.imageContainerProfile}>
                 <Image
-                  source={icons.profile}
+                  source={item?.photo || icons.profile}
                   style={styles.profileImage}
                   resizeMode="cover"
                 />
