@@ -22,6 +22,7 @@ const Home = () => {
   const { loading, error, data } = useFetchData(
     `posts/getPost?role=${allData?.userData?.role || allData?.guestData}`
   );
+  console.log(data);
   const navigation = useNavigation();
   if (loading) return <Loading />;
   if (error) return alert(error.message);
@@ -44,18 +45,18 @@ const Home = () => {
             <View style={styles.profileContainer}>
               <View style={styles.imageContainerProfile}>
                 <Image
-                  source={item?.photo || icons.profile}
+                  source={{ uri: item?.photo } || icons.profile}
                   style={styles.profileImage}
                   resizeMode="cover"
                 />
               </View>
               <View style={styles.profileTextContainer}>
                 <Text style={{ fontFamily: "SemiBold", fontSize: 20, top: 6 }}>
-                  {item.userName}
+                  {item?.userName}
                 </Text>
                 <Text style={styles.profileText}>{item.postCategoryName}</Text>
                 <Text style={styles.roleText}>
-                  {item.role.replace(/^./, item.role[0].toUpperCase())}
+                  {item?.role?.replace(/^./, item.role[0].toUpperCase())}
                 </Text>
               </View>
             </View>

@@ -3,7 +3,6 @@
 // import * as WebBrowser from "expo-web-browser";
 
 import {
-  GoogleAuthProvider,
   createUserWithEmailAndPassword,
   getAuth,
   onAuthStateChanged,
@@ -23,6 +22,7 @@ const AuthProvider = ({ children }) => {
 
   const [allData, setAllData] = useState({
     userData: null,
+    guestData: "",
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
