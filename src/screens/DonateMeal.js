@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
-import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import Loading from "../components/Loading";
 import { AuthContext } from "../context/Provider";
 import CustomInput from "../components/CustomInput";
 import Container from "../components/container";
-import Label from "../components/label";
+
 import { Picker } from "@react-native-picker/picker";
 import Header from "../components/Header";
 import { useRoute } from "@react-navigation/native";
