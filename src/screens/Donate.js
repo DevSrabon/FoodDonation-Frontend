@@ -1,8 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { Alert, Image, ScrollView, StyleSheet, View } from "react-native";
-import icons from "../../assets/icons";
+import { Alert, ScrollView, View } from "react-native";
 import AddImages from "../components/AddImages";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
@@ -33,9 +32,9 @@ const Donate = () => {
   };
 
   const onDonate = () => {
-    if (imageUrls > 4 || caption === "")
+    if (!imageUrls.length || !caption)
       return Alert.alert(
-        "Please Select at Least 4 image and fill up all input field"
+        "Please Select at Least 1 image and fill up all input field"
       );
     const body = {
       userName: name,
@@ -129,7 +128,5 @@ const Donate = () => {
     </Container>
   );
 };
-
-const styles = StyleSheet.create({});
 
 export default Donate;

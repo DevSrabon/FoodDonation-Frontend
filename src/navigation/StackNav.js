@@ -22,10 +22,11 @@ import Profile from "../screens/Profile";
 
 import CustomModal from "../components/CustomModal";
 import CustomTouch from "../components/CustomTouch";
+import DropDown from "../components/DropDown";
 import Signup from "../screens/Signup";
 import Transporter from "../screens/Transporter";
 import BottomNav from "./BottomNav";
-import DropDown from "../components/DropDown";
+
 import LoginScreen from "../screens/LoginScreen";
 import SignUpScreen from "../screens/SignUpScreen";
 
