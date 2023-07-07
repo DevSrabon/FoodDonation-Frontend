@@ -262,11 +262,6 @@ const styles = StyleSheet.create({
   },
 });
 
-    <ScrollView>
-      <Meal routeName={routeName}/>
-    </ScrollView>
-  );
-};
 
 
 

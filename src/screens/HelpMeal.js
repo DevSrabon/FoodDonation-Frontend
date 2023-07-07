@@ -261,6 +261,6 @@ const styles = StyleSheet.create({
     height: 38,
   },
 });
-}
+
 
 export default HelpMeal;
