@@ -1,4 +1,3 @@
-
 import React, { useContext, useState } from "react";
 import { ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 import Loading from "../components/Loading";
@@ -6,7 +5,11 @@ import { AuthContext } from "../context/Provider";
 import CustomInput from "../components/CustomInput";
 import Container from "../components/container";
 import Label from "../components/label";
+import { Picker } from "@react-native-picker/picker";
 import Header from "../components/Header";
+import { useRoute } from "@react-navigation/native";
+import CustomButton from "../components/CustomButton";
+import axios from "axios";
 
 const DonateMeal = () => {
   const route = useRoute();
@@ -61,16 +64,30 @@ const DonateMeal = () => {
     { id: 3, label: "Pickup" },
   ];
 
-
   const { loading, setLoading } = useContext(AuthContext);
   if (loading) {
     return <Loading />;
   }
-  return (
 
+  const onDonateMeal = async () => {
+    const body = { listItems, orderType, ...resData };
+    try {
+      const res = await axios.post(
+        `https://food-donation-backend.vercel.app/api/v1/posts/createPost`,
+        body
+      );
+      if (res.data.status === "success") {
+        alert("Submitted");
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+
+  return (
     <Container>
       <ScrollView>
-        <Header>Help</Header>
+        <Header>Donate</Header>
 
         <View
           style={{
@@ -220,7 +237,7 @@ const DonateMeal = () => {
         <View
           style={{
             alignSelf: "center",
-            width: "90%",
+            width: "96%",
             bottom: 15,
           }}
         >
@@ -232,20 +249,6 @@ const DonateMeal = () => {
 };
 
 const styles = StyleSheet.create({
-  // container: {
-  //   flex: 1,
-  //   paddingLeft: 20,
-  //   paddingTop: 50,
-  //   justifyContent: "center",
-  //   backgroundColor: "white",
-  // },
-  button: {
-    backgroundColor: "white",
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    borderRadius: 8,
-    marginLeft: 150,
-  },
   inputText: {
     borderColor: "#A2A2A6",
     borderWidth: 1,
@@ -255,22 +258,8 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     marginBottom: 20,
     justifyContent: "center",
-    // alignSelf: "flex-start",
-    // marginVertical: 5,
-    // paddingHorizontal: 5,
-    // borderWidth: 1,
-    // borderColor: "#ccc",
-    // borderRadius: 5,
     height: 38,
   },
 });
-
-    <ScrollView>
-      <Meal routeName={routeName}/>
-    </ScrollView>
-  );
-};
-
-
 
 export default DonateMeal;
