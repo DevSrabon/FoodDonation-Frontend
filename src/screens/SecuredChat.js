@@ -30,7 +30,7 @@ function Message({ item }) {
   );
 }
 
- const Chat1=()=> {
+ const SecuredChat=()=> {
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
 
@@ -168,4 +168,4 @@ const styles = StyleSheet.create({
       alignSelf: 'flex-start',
     }
   })
-  export default Chat1;
+  export default SecuredChat;
