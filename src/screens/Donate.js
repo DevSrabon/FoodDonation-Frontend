@@ -106,6 +106,13 @@ const Donate = () => {
           />
 
           <Label>No of Items</Label>
+          {/* <TextInput
+            style={styles.inputText}
+            keyboardType="numeric"
+            placeholder="No of Items"
+            value={noOfItem}
+            onChangeText={handleNumberChange}
+          /> */}
           <CustomInput
             placeholder="No of Items"
             keyboardType="numeric"
@@ -116,13 +123,6 @@ const Donate = () => {
 
         <AddImages imageUrls={imageUrls} takePhoto={takePhoto} />
 
-        {/* <TextInput
-        style={styles.inputText}
-        keyboardType="numeric"
-        placeholder="No of Items"
-        value={noOfItem}
-        onChangeText={handleNumberChange}
-      /> */}
         <View
           style={{
             flex: 1,
