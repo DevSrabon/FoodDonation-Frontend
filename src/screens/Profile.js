@@ -16,20 +16,22 @@ import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import Header from "../components/Header";
 import Loading from "../components/Loading";
+import Container from "../components/container";
 import Label from "../components/label";
 import { userContext } from "../context/Provider";
 import useImagePicker from "../hook/useImagePicker";
-import Container from "../components/container";
 
 const Profile = () => {
   const route = useRoute();
-  const role = route.params.role;
-  const body = route.params.body;
-  const subRole = route.params.subRole;
+  const role = route.params?.role;
+  const body = route.params?.body;
+  const subRole = route.params?.subRole;
 
   const { loading: imageLoading, imageUrls, takePhoto } = useImagePicker();
 
   const [bio, setBio] = useState("");
+  const [designation, setDesignation] = useState("");
+
   const navigation = useNavigation();
   const { user, loading, setLoading } = userContext();
 
@@ -41,6 +43,7 @@ const Profile = () => {
       email: user?.email,
       role,
       subRole,
+      designation,
       ...body,
     };
 
@@ -54,7 +57,7 @@ const Profile = () => {
       if (error.code === "This-restaurant-already-in-use") {
         alert("The Restaurant is already in use");
       } else {
-        console.log("Error:", error);
+        alert("Error:", error.message);
       }
     } finally {
       setLoading(false);
@@ -66,11 +69,9 @@ const Profile = () => {
   return (
     <Container>
       <ScrollView>
-        <View style={{ flex: 1, marginBottom: 30 }}>
+        <View style={{ flex: 1, marginBottom: 60 }}>
           <View>
-            <View
-              style={{ marginLeft: 20, alignItems: "center", marginBottom: 50 }}
-            >
+            <View style={{ alignItems: "center", marginBottom: 30 }}>
               <Header> Your Profile</Header>
             </View>
             <View style={{ justifyContent: "center", alignItems: "center" }}>
@@ -113,7 +114,7 @@ const Profile = () => {
                 <View style={{ height: 80 }}>
                   {imageUrls?.length && (
                     <Image
-                      style={{ height: 40, width: 40, borderRadius: 50 }}
+                      style={{ height: 60, width: 60, borderRadius: 50 }}
                       source={{ uri: imageUrls?.[imageUrls.length - 1] }}
                     />
                   )}
@@ -130,11 +131,30 @@ const Profile = () => {
               height: 150,
             }}
           >
-            <Label>Bio</Label>
+            <Label>Description</Label>
             <CustomInput
               placeholder="About Yourself"
               value={bio}
               setValue={setBio}
+              multiline={true}
+              numberOfLines={10}
+            />
+          </View>
+          <View
+            style={{
+              flex: 1,
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+              height: 65,
+              marginTop: 10,
+            }}
+          >
+            <Label>Designation</Label>
+            <CustomInput
+              placeholder="Your Designation"
+              value={designation}
+              setValue={setDesignation}
               multiline={true}
               numberOfLines={10}
             />

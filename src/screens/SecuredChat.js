@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet,Linking } from 'react-native';
 import { auth, userContext } from '../context/Provider';
 import { getDatabase, ref, onValue, push } from 'firebase/database';
-const db = getDatabase();
+
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { encryptMessage, decryptMessage } from './Encrypt';
 import displayName from '../context/Provider';
 import { useRoute } from '@react-navigation/core';
+const db = getDatabase();
 function Message({ item }) {
  
   const decryptedText = decryptMessage(item.text);
@@ -22,8 +23,6 @@ function Message({ item }) {
         </Text>
       <Text style={[styles.date, isCurrentUser ? styles.currentUserDate : null]}>
         {new Date(item.createdAt).toLocaleTimeString()}
-       
-      
       </Text>
       
     </View>
@@ -47,10 +46,10 @@ function Message({ item }) {
 
   function sendMessage() {
     if (message.trim()) {
-      const encryptedMessag = encryptMessage(message.trim());
+      const encryptedMessage = encryptMessage(message.trim());
       const newMessage = {
         id: Date.now().toString(),
-        text: encryptedMessag,
+        text: encryptedMessage,
         user:auth.currentUser.displayName,
         createdAt: new Date().toISOString(),
       };

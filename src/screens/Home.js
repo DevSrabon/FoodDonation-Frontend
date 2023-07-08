@@ -4,8 +4,6 @@ import React from "react";
 import {
   Image,
   Pressable,
-  Button,
-  Share,
   ScrollView,
   StyleSheet,
   Text,
@@ -96,9 +94,10 @@ const Home = () => {
                   <TimeLimitComponent
                     key={item?._id}
                     previousTime={item?.updatedAt}
+                    countTime={item?.expiredTime}
                   ></TimeLimitComponent>
                 </Text>
-                <Text style={styles.textItem2}>Dinner</Text>
+                {/* <Text style={styles.textItem2}>Dinner</Text> */}
               </View>
             </View>
 

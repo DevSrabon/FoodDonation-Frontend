@@ -27,32 +27,32 @@ const SignUpScreen = ({ navigation }) => {
         Keyboard.dismiss();
         let isValid = true;
         if (!inputs.email) {
-            handleError('Please input email', 'email');
+            handleError('Please Enter your email', 'email');
             isValid = false;
         } else if (!inputs.email.match(/\S+@\S+\.\S+/)) {
-            handleError('Please input a valid email', 'email');
+            handleError('Please Enter a valid email', 'email');
             isValid = false;
         }
 
         if (!inputs.firstName) {
-            handleError('Please input firstName', 'firstName');
+            handleError('Please Enter your firstName', 'firstName');
             isValid = false;
         }
 
         if (!inputs.lastName) {
-            handleError('Please input lastName', 'lastName');
+            handleError('Please Enter your lastName', 'lastName');
             isValid = false;
         }
         if (!inputs.phone) {
-            handleError('Please input phone number', 'phone');
+            handleError('Please Enter a phone number', 'phone');
             isValid = false;
         }
 
         if (!inputs.password) {
-            handleError('Please input password', 'password');
+            handleError('Please Enter a password', 'password');
             isValid = false;
         } else if (inputs.password.length < 5) {
-            handleError('Min password length of 5', 'password');
+            handleError('Min password length must be 5', 'password');
             isValid = false;
         }
 
@@ -114,7 +114,7 @@ const SignUpScreen = ({ navigation }) => {
                         error={errors.password}
                         password
                     />
-                    <Text style={styles.message}>By signing up you agree to our <Text style={styles.blueText}>Terms & Condition</Text>  and <Text style={styles.blueText}>Privacy Policy</Text>.<Text style={styles.starText}>*</Text></Text>
+                    <Text style={styles.message}>By signing up, you agree to our <Text style={styles.blueText}>Terms & Conditions</Text>  and <Text style={styles.blueText}>Privacy Policy</Text>.<Text style={styles.starText}>*</Text></Text>
                     <Button title="Continue" onPress={validate} />
 
                 </View>
