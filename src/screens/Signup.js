@@ -111,7 +111,7 @@ const Signup = () => {
             }}
           >
             By signing up you agree to our{" "}
-            <Text style={{ fontSize: 16 }}>Terms & Condition</Text> and{" "}
+            <Text style={{ fontSize: 16 }}>Terms & Conditions</Text> and{" "}
             <Text style={{ fontSize: 16 }}>Privacy Policy.*</Text>
           </Text>
         </View>
