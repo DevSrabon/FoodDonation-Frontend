@@ -11,11 +11,21 @@ import data from "../data/introData";
 import icons from "../../assets/icons";
 import { useNavigation } from "@react-navigation/native";
 import InitContainer from "../components/initContainer";
+import LottieView from "lottie-react-native";
 
 const Intro = () => {
   const navigation = useNavigation();
   return (
     <InitContainer>
+      <LottieView
+        style={{ width: 350, top: 30 }}
+        key="animation"
+        autoPlay
+        loop
+        resizeMode="center"
+        source={require("../../assets/girl.json")}
+      />
+
       <View style={styles.topContainer}></View>
       <View style={styles.subContainer}>
         <FlatList
@@ -65,7 +75,7 @@ const Intro = () => {
 const styles = StyleSheet.create({
   topContainer: {
     flex: 1,
-    backgroundColor: "#B4AAF2",
+    // backgroundColor: "#B4AAF2",
   },
   subContainer: {
     flex: 1,

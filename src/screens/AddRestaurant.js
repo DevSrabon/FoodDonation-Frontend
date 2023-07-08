@@ -67,14 +67,18 @@ const AddRestaurant = () => {
       style={{ flex: 1 }}
       keyboardShouldPersistTaps="handled"
     >
-      <Container>
+      <Container style={{ justifyContent: "center" }}>
         <Header>Add {subRole}</Header>
-        <Label>{subRole} Name</Label>
-        <CustomInput
-          placeholder={`${subRole} Name`}
-          value={categoryName}
-          setValue={setCategoryName}
-        />
+
+        <View style={{ width: "100%", alignItems: "center" }}>
+          <Label>{subRole} Name</Label>
+          <CustomInput
+            placeholder={`${subRole} Name`}
+            value={categoryName}
+            setValue={setCategoryName}
+          />
+        </View>
+
         {/* Image add part */}
 
         <AddImages imageUrls={imageUrls} takePhoto={takePhoto} />
@@ -97,23 +101,24 @@ const AddRestaurant = () => {
           />
         </View>
 
-        {/* FSSAI License */}
-        <Label>FSSAI License / Other License</Label>
-        <CustomInput
-          placeholder="FSSAI License"
-          value={fssaiLicense}
-          setValue={setFSSAILicense}
-        />
+        <View style={{ width: "100%", alignItems: "center" }}>
+          <Label>FSSAI License / Other License</Label>
+          <CustomInput
+            placeholder="FSSAI License"
+            value={fssaiLicense}
+            setValue={setFSSAILicense}
+          />
 
-        {/* PAN number */}
-        <Label>PAN number</Label>
-        <CustomInput
-          placeholder="PAN Number"
-          value={panNumber}
-          setValue={setPanNumber}
-          secureTextEntry={true}
-        />
-        <View style={{ flex: 1, width: "90%" }}>
+          <Label>PAN number</Label>
+          <CustomInput
+            placeholder="PAN Number"
+            value={panNumber}
+            setValue={setPanNumber}
+            secureTextEntry={true}
+          />
+        </View>
+
+        <View style={{ flex: 1, alignSelf: "center", width: "90%" }}>
           <CustomButton
             text="Continue"
             onPress={onAddRestaurant}

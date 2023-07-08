@@ -11,9 +11,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.mahbubmorshed.FoodDonation"
@@ -32,22 +30,11 @@
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png",
-      "config": {
-        "firebase": {
-          "apiKey": "AIzaSyD5azHRt8vDkrYclsFD8HQuBzoCN_Ov9MU",
-          "authDomain": "food-donation-new-9fa4a.firebaseapp.com",
-          "projectId": "food-donation-new-9fa4a",
-          "storageBucket": "food-donation-new-9fa4a.appspot.com",
-          "messagingSenderId": "23464134108",
-          "appId": "1:23464134108:web:01fbc81112453346333b19",
-          "measurementId": "G-1HY7TNGKRN"
-        }
-      }
+      "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "90e53ab0-1ef4-4bfb-8253-38dcaaef624c"
+        "projectId": "da86565a-f3c8-4d26-bc1b-24fa753f59c4"
       }
     }
   },

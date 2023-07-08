@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import MapView, { Callout, Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { userContext } from "../context/Provider";
 import useFetchData from "../hook/useFetchData";
@@ -15,15 +15,11 @@ const UserMap = () => {
   const navigation = useNavigation();
   const [serach, setSearch] = useState(0);
   const { user, setAllData } = userContext();
-  // const { loading, error, data } = useFetchData(
-  //   `users?email=srabon3@gmail.com`
-  // );
+  // const { loading, error, data } = useFetchData(`users?email=srabon3@gmail.com`);
   const { loading, error, data } = useFetchData(`users?email=${user?.email}`);
-  console.log("🚀 ~ file: UserMap.js:23 ~ UserMap ~ data:", data);
   const { data: mapUsers, loading: isLoading } = useFetchData(
     `users/map?latitude=${data?.location?.latitude}&longitude=${data?.location?.longitude}&role=${data?.role}`
   );
-
   useEffect(() => {
     if (data && mapUsers) {
       setAllData((prev) => ({
@@ -40,6 +36,7 @@ const UserMap = () => {
   return (
     <View style={styles.mapContainer}>
       <SearchHeader />
+
       <MapView
         provider={PROVIDER_GOOGLE}
         style={styles.map}
@@ -64,20 +61,20 @@ const UserMap = () => {
 
         {mapUsers?.length
           ? mapUsers?.map((user, i) => (
-            <Marker
-              key={i}
-              pinColor="yellow"
-              coordinate={{
-                ...user?.location,
-              }}
-            >
-              <Callout
-                onPress={() => navigation.navigate("donorPage", { user })}
+              <Marker
+                key={i}
+                pinColor="yellow"
+                coordinate={{
+                  ...user?.location,
+                }}
               >
-                <MapCallout user={user} key={i}></MapCallout>
-              </Callout>
-            </Marker>
-          ))
+                <Callout
+                  onPress={() => navigation.navigate("donorPage", { user })}
+                >
+                  <MapCallout user={user} key={i}></MapCallout>
+                </Callout>
+              </Marker>
+            ))
           : null}
       </MapView>
     </View>

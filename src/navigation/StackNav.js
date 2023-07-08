@@ -22,11 +22,13 @@ import Profile from "../screens/Profile";
 
 import CustomModal from "../components/CustomModal";
 import CustomTouch from "../components/CustomTouch";
+import DropDown from "../components/DropDown";
 import Signup from "../screens/Signup";
 import Transporter from "../screens/Transporter";
 import BottomNav from "./BottomNav";
-//import InputAnim from "../components/InputAnim";
 
+import LoginScreen from "../screens/LoginScreen";
+import SignUpScreen from "../screens/SignUpScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -34,11 +36,14 @@ const StackNav = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="roleSelection"
+        initialRouteName="initial"
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="touch" component={CustomTouch} />
+        <Stack.Screen name="myLogin" component={LoginScreen} />
+        <Stack.Screen name="mySignUp" component={SignUpScreen} />
         <Stack.Screen name="modal" component={CustomModal} />
+        <Stack.Screen name="DropDown" component={DropDown} />
 
         <Stack.Screen name="initial" component={InitialPage} />
         <Stack.Screen name="profile" component={Profile} />
@@ -56,8 +61,6 @@ const StackNav = () => {
         <Stack.Screen name="donate" component={Donate} />
         <Stack.Screen name="help" component={Help} />
         <Stack.Screen name="helpMeal" component={HelpMeal} />
-       
-        
 
         {/* <Stack.Screen name="profile" component={Profile} /> */}
         <Stack.Screen name="Chat" component={Chat} />

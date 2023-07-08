@@ -19,6 +19,7 @@ import Loading from "../components/Loading";
 import Label from "../components/label";
 import { userContext } from "../context/Provider";
 import useImagePicker from "../hook/useImagePicker";
+import Container from "../components/container";
 
 const Profile = () => {
   const route = useRoute();
@@ -42,7 +43,7 @@ const Profile = () => {
       subRole,
       ...body,
     };
-    console.log("🚀 ~ file: Profile.js:45 ~ onBioSetup ~ bodyData:", bodyData);
+
     try {
       const result = await axios.patch(
         `https://food-donation-backend.vercel.app/api/v1/users/update-role?email=${user?.email}`,
@@ -63,84 +64,94 @@ const Profile = () => {
   if (loading || imageLoading) return <Loading />;
 
   return (
-    <ScrollView>
-      <View style={{ flex: 1, marginBottom: 30 }}>
-        <View>
-          <View
-            style={{ marginLeft: 20, alignItems: "center", marginBottom: 50 }}
-          >
-            <Header> Your Profile</Header>
-          </View>
-          <View style={{ justifyContent: "center", alignItems: "center" }}>
-            {!imageUrls.length ? (
-              <>
-                <TouchableOpacity
-                  onPress={takePhoto}
-                  style={{ width: "100%", height: "30%", borderColor: "red" }}
-                >
-                  {loading ? (
-                    <>
-                      <View style={{}}>
-                        <ActivityIndicator style={{ color: "yellow" }} />
-                      </View>
-                    </>
-                  ) : (
-                    <View
-                      style={{
-                        height: "auto",
-                        justifyContent: "center",
-                        alignItems: "center",
-                      }}
-                    >
-                      <Text
+    <Container>
+      <ScrollView>
+        <View style={{ flex: 1, marginBottom: 30 }}>
+          <View>
+            <View
+              style={{ marginLeft: 20, alignItems: "center", marginBottom: 50 }}
+            >
+              <Header> Your Profile</Header>
+            </View>
+            <View style={{ justifyContent: "center", alignItems: "center" }}>
+              {!imageUrls.length ? (
+                <>
+                  <TouchableOpacity
+                    onPress={takePhoto}
+                    style={{ width: "100%", height: "30%", borderColor: "red" }}
+                  >
+                    {loading ? (
+                      <>
+                        <View style={{}}>
+                          <ActivityIndicator style={{ color: "yellow" }} />
+                        </View>
+                      </>
+                    ) : (
+                      <View
                         style={{
-                          fontFamily: "Bold",
-                          fontSize: 10,
-                          color: "red",
-                          height: 80,
+                          height: "auto",
+                          justifyContent: "center",
+                          alignItems: "center",
                         }}
                       >
-                        <Image source={icons.profile} />
-                      </Text>
-                      <Text>Add Image</Text>
-                    </View>
+                        <Text
+                          style={{
+                            fontFamily: "Bold",
+                            fontSize: 10,
+                            color: "red",
+                            height: 80,
+                          }}
+                        >
+                          <Image source={icons.profile} />
+                        </Text>
+                        <Text>Add Image</Text>
+                      </View>
+                    )}
+                  </TouchableOpacity>
+                </>
+              ) : (
+                <View style={{ height: 80 }}>
+                  {imageUrls?.length && (
+                    <Image
+                      style={{ height: 40, width: 40, borderRadius: 50 }}
+                      source={{ uri: imageUrls?.[imageUrls.length - 1] }}
+                    />
                   )}
-                </TouchableOpacity>
-              </>
-            ) : (
-              <View style={{ height: 80 }}>
-                {imageUrls?.length && (
-                  <Image
-                    style={{ height: 40, width: 40, borderRadius: 50 }}
-                    source={{ uri: imageUrls?.[imageUrls.length - 1] }}
-                  />
-                )}
-              </View>
-            )}
+                </View>
+              )}
+            </View>
+          </View>
+          <View
+            style={{
+              flex: 1,
+              alignItems: "center",
+              justifyContent: "center",
+              width: "100%",
+              height: 150,
+            }}
+          >
+            <Label>Bio</Label>
+            <CustomInput
+              placeholder="About Yourself"
+              value={bio}
+              setValue={setBio}
+              multiline={true}
+              numberOfLines={10}
+            />
+          </View>
+          <View
+            style={{
+              flex: 1,
+              alignSelf: "center",
+              width: "90%",
+              marginTop: 20,
+            }}
+          >
+            <CustomButton text="Done" onPress={onBioSetup} type="primary" />
           </View>
         </View>
-        <View
-          style={{
-            flex: 1,
-            alignItems: "center",
-            justifyContent: "center",
-            width: "100%",
-            height: 150,
-          }}
-        >
-          <Label>Bio</Label>
-          <CustomInput
-            placeholder="About Yourself"
-            value={bio}
-            setValue={setBio}
-            multiline={true}
-            numberOfLines={10}
-          />
-        </View>
-
-        <CustomButton text="Done" onPress={onBioSetup} type="primary" />
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </Container>
   );
 };
 
