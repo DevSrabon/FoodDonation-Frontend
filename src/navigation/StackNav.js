@@ -27,11 +27,11 @@ import Signup from "../screens/Signup";
 import Transporter from "../screens/Transporter";
 import BottomNav from "./BottomNav";
 
+import Community from "../screens/Community";
+import CommunityItem from "../screens/CommunityItem";
+import CommunityPost from "../screens/CommunityPost";
 import LoginScreen from "../screens/LoginScreen";
 import SignUpScreen from "../screens/SignUpScreen";
-import Community from "../screens/Community";
-import CommunityPost from "../screens/CommunityPost";
-import CommunityItem from "../screens/CommunityItem";
 
 const Stack = createNativeStackNavigator();
 

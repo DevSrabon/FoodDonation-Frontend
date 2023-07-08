@@ -1,5 +1,5 @@
 import { Picker } from "@react-native-picker/picker";
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
 import React, { useContext, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
@@ -12,10 +12,13 @@ import { AuthContext } from "../context/Provider";
 
 const DonateMeal = () => {
   const route = useRoute();
+  // const numbers = 2;
+
+  // const resData = null;
   const numbers = route.params.number;
 
   const resData = route.params.resData;
-
+  const navigation = useNavigation();
   const [listItems, setListItems] = useState([]);
 
   const mealOptions = [
@@ -30,8 +33,8 @@ const DonateMeal = () => {
       items.push({
         id: i,
         value: "",
-        qType: "",
-        quantityType: "",
+        qType: mealOptions[0].label,
+        quantityType: quantityTypes[0].label,
         quantity: "",
       });
     }
@@ -47,9 +50,21 @@ const DonateMeal = () => {
     setListItems(updatedItems);
   };
 
-  const [orderType, setOrderType] = useState("");
   // const [expired, setExpired] = useState({});
-  const [expiredTime, setExpiredTime] = useState(null);
+  const [expired, setExpired] = useState({
+    time: null,
+    type: "min",
+  });
+  let expiredTime = 0;
+
+  if (expired.type === "hrs" && expired.time) {
+    expiredTime += expired.time * 60;
+  } else if (expired.type === "days" && expired.time) {
+    expiredTime += expired.time * 24 * 60;
+  } else if (expired.time) {
+    expiredTime = expired.time;
+  }
+  console.log(expiredTime);
 
   const quantityTypes = [
     { quantityId: 1, label: "Gram " },
@@ -64,9 +79,11 @@ const DonateMeal = () => {
     { id: 2, label: "Drop" },
     { id: 3, label: "Pickup" },
   ];
+  const [orderType, setOrderType] = useState(orderOptions[0]?.label);
   const expiredOptions = [
     { id: 1, label: "min" },
-    // { id: 2, label: "hrs" },
+    { id: 2, label: "hrs" },
+    { id: 3, label: "days" },
   ];
 
   const { loading, setLoading } = useContext(AuthContext);
@@ -75,8 +92,23 @@ const DonateMeal = () => {
   }
 
   const onDonateMeal = async () => {
-    if (expiredTime < 20) {
-      return alert("Expired Time should be more than 20 min");
+    if (expiredTime <= 0 || isNaN(expiredTime)) {
+      return alert(
+        "Expired Time should be more than 0 minutes and must be in Number"
+      );
+    }
+    for (const item of listItems) {
+      if (
+        !item.value ||
+        !item.qType ||
+        !item.quantity ||
+        !item.quantityType ||
+        isNaN(item.quantity)
+      ) {
+        return alert(
+          "Please fill in all the item details and Item Quantity must be in Number"
+        );
+      }
     }
     setLoading(true);
     const body = { listItems, expiredTime, orderType, ...resData };
@@ -87,6 +119,7 @@ const DonateMeal = () => {
       );
       if (res.data.status === "success") {
         alert("Submitted");
+        navigation.navigate("map");
       }
     } catch (error) {
       alert(error.message);
@@ -201,41 +234,68 @@ const DonateMeal = () => {
           }}
         >
           {/* expired */}
-          {resData?.role === "donor" && (
+          {/* {resData?.role === "donor" && ( */}
+          {1 && (
             <>
-              <View style={{ flexDirection: "row" }}>
-                <View style={{ width: "110%" }}>
+              <View style={{ flexDirection: "row", marginTop: 10 }}>
+                <View style={{ width: "50%" }}>
                   <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-                    Expired Time In Minute
+                    Expired Time
                   </Text>
                   <CustomInput
-                    placeholder={expiredTime || "20"}
-                    value={expiredTime}
-                    setValue={(number) => setExpiredTime(number)}
+                    placeholder={expired.time || "0"}
+                    value={expired.time}
+                    setValue={(number) =>
+                      setExpired((prev) => ({ ...prev, time: number }))
+                    }
                     keyboardType="numeric"
                   />
                 </View>
+                <View style={{ width: "50%" }}>
+                  <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
+                    Expired Type
+                  </Text>
+                  <View style={styles.inputText}>
+                    <Picker
+                      selectedValue={expired.type}
+                      onValueChange={(text) =>
+                        setExpired((prev) => ({ ...prev, type: text }))
+                      }
+                      mode="dropdown"
+                    >
+                      {expiredOptions.map((option) => (
+                        <Picker.Item
+                          key={option.id}
+                          label={option.label}
+                          value={option.label}
+                        />
+                      ))}
+                    </Picker>
+                  </View>
+                </View>
+              </View>
+              <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
+                Order
+              </Text>
+              <View style={styles.inputText}>
+                <Picker
+                  selectedValue={orderType}
+                  onValueChange={(value) => setOrderType(value)}
+                  mode="dropdown"
+                >
+                  {orderOptions.map((option) => (
+                    <Picker.Item
+                      key={option.id}
+                      label={option.label}
+                      value={option.label}
+                    />
+                  ))}
+                </Picker>
               </View>
             </>
           )}
           {/* Order */}
 
-          <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>Order</Text>
-          <View style={styles.inputText}>
-            <Picker
-              selectedValue={orderType}
-              onValueChange={(value) => setOrderType(value)}
-              mode="dropdown"
-            >
-              {orderOptions.map((option) => (
-                <Picker.Item
-                  key={option.id}
-                  label={option.label}
-                  value={option.label}
-                />
-              ))}
-            </Picker>
-          </View>
           <CustomButton text="Continue" onPress={onDonateMeal} type="primary" />
         </View>
       </ScrollView>

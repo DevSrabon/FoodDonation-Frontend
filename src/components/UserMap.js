@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import MapView, { Callout, Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { userContext } from "../context/Provider";
 import useFetchData from "../hook/useFetchData";
@@ -20,6 +20,7 @@ const UserMap = () => {
   const { data: mapUsers, loading: isLoading } = useFetchData(
     `users/map?latitude=${data?.location?.latitude}&longitude=${data?.location?.longitude}&role=${data?.role}`
   );
+  console.log("🚀 ~ file: UserMap.js:21 ~ UserMap ~ data:", data);
   useEffect(() => {
     if (data && mapUsers) {
       setAllData((prev) => ({

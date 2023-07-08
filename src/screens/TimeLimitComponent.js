@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
+import React, { useEffect, useState } from "react";
+import { Text, View } from "react-native";
 
-const TimeLimitComponent = ({ previousTime }) => {
+const TimeLimitComponent = ({ previousTime, countTime }) => {
   const [timeRemaining, setTimeRemaining] = useState(0);
 
   useEffect(() => {
-    const timeLimit = 50 * 60 * 1000; // 50 minutes in milliseconds
+    const timeLimit = countTime * 60 * 1000; // 50 minutes in milliseconds
     const startTime = new Date(previousTime).getTime();
     const endTime = startTime + timeLimit;
 
@@ -29,14 +29,15 @@ const TimeLimitComponent = ({ previousTime }) => {
 
   const formatTime = (timeInMilliseconds) => {
     const minutes = Math.floor(timeInMilliseconds / (1000 * 60));
-    return `${minutes.toString().padStart(2, '0')}`;
+    return `${minutes.toString().padStart(2, "0")}`;
   };
   return (
     <View>
-      <Text>{timeRemaining?(`Exp${formatTime(timeRemaining)}min`):("Expired")} </Text>
+      <Text>
+        {timeRemaining ? `Exp${formatTime(timeRemaining)}min` : "Expired"}{" "}
+      </Text>
     </View>
   );
 };
-
 
 export default TimeLimitComponent;
