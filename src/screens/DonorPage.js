@@ -64,11 +64,11 @@ const DonorPage = () => {
 
     //ListenForChatAdd();
     navigation.navigate("Chat");
-    console.warn("Accepgs");
+    console.warn("Accept");
   };
   const onDecline = () => {
-    console.warn("User");
-    navigation.navigate("User");
+    console.warn("Decline");
+    navigation.navigate("user");
   };
 
   return (
@@ -83,7 +83,6 @@ const DonorPage = () => {
       >
         <Text
           style={{
-            //
             fontFamily: "SemiBold",
             fontSize: 18,
           }}
