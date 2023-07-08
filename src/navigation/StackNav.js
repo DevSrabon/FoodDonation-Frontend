@@ -28,6 +28,9 @@ import BottomNav from "./BottomNav";
 import DropDown from "../components/DropDown";
 import LoginScreen from "../screens/LoginScreen";
 import SignUpScreen from "../screens/SignUpScreen";
+import Community from "../screens/Community";
+import CommunityPost from "../screens/CommunityPost";
+import CommunityItem from "../screens/CommunityItem";
 
 const Stack = createNativeStackNavigator();
 
@@ -44,13 +47,18 @@ const StackNav = () => {
         <Stack.Screen name="modal" component={CustomModal} />
         <Stack.Screen name="DropDown" component={DropDown} />
 
+        <Stack.Screen name="community" component={Community} />
+        <Stack.Screen name="communityPost" component={CommunityPost} />
+        <Stack.Screen name="communityItem" component={CommunityItem} />
+
         <Stack.Screen name="initial" component={InitialPage} />
-        <Stack.Screen name="profile" component={Profile} />
         <Stack.Screen name="intro" component={Intro} />
         <Stack.Screen name="login" component={Login} />
         <Stack.Screen name="signup" component={Signup} />
-        <Stack.Screen name="otp" component={Otp} />
         <Stack.Screen name="roleSelection" component={RoleSelection} />
+        <Stack.Screen name="profile" component={Profile} />
+        <Stack.Screen name="otp" component={Otp} />
+
         <Stack.Screen name="needy" component={FoodNeedier} />
         <Stack.Screen name="transporter" component={Transporter} />
         <Stack.Screen name="donor" component={Donor} />
