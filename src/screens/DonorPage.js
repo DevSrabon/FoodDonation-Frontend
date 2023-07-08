@@ -1,22 +1,14 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
-import { getDatabase, push, ref } from "firebase/database";
+import { get, getDatabase, push, ref, set } from "firebase/database";
 import React, { useEffect, useState } from "react";
 import { Image, Text, View } from "react-native";
 import icons from "../../assets/icons";
 import CustomButton from "../components/CustomButton";
 import Container from "../components/container";
 import Measure from "../components/measure";
-import { TouchableOpacity } from "react-native-web";
-import CreateChat from "../components/CreateChat";
-import Chat, { handleCreateUser } from "./Chat";
-import ListenForChatAdd  from "../components/ListenForChatAdd";
 import {auth} from "../context/Provider";
-import { getDatabase, ref,set, onValue, push } from 'firebase/database';
 import { userContext } from "../context/Provider";
-import { list } from "@firebase/storage";
-import { async } from "@firebase/util";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 let i = 1;
 const DonorPage = () => {
@@ -27,6 +19,7 @@ const DonorPage = () => {
   const [address, setAddress] = useState();
   const latitude = user.location.latitude;
   const longitude = user.location.longitude;
+
 
   const getAddressFromCoordinates = async () => {
     try {
@@ -87,8 +80,34 @@ const onAccept = () => {
       push(chatRef1, newMessage1);
     }
   });
-  
+  //here location is set
+  set(ref(getDatabase(), "location/" +user.email.replace(/[@.]/g, "")),
+   {lat: allData.userData.location.latitude,
+     lng: allData.userData.location.longitude, });
 
+
+     set(ref(getDatabase(), "location/" +  auth.currentUser.email.replace(/[@.]/g, "")),
+     {lat: user.location.latitude,
+       lng: user.location.longitude,
+       });
+
+       //here is the location
+  get(ref(getDatabase(), "location/" + user.email.replace(/[@.]/g, ""))).then((snapshot) => {
+    console.log(snapshot.val());
+  });
+  get(ref(getDatabase(), "location/" + auth.currentUser.email.replace(/[@.]/g, ""))).then((snapshot) => {
+    console.log(snapshot.val());
+  });
+/*
+  set(ref(getDatabase(), "notification/" + user.email.replace(/[@.]/g, ""))), {
+    title: "New Chat",
+    body: "You have a new chat from " + auth.currentUser.displayName,
+    data: {
+      type: "chat",
+      chatid: createChatId(auth.currentUser.email, user.email),
+    },
+  };*/
+  //scedulepushnotification("title", "body", "data ");
   
     
    //ListenForChatAdd();

@@ -23,7 +23,7 @@ const Users = () => {
     },
     // Add more user objects here
   ]);
-
+  //scedulepushnotification("title", "body", "data ");
   useEffect(() => {
     onValue(ref(getDatabase(), auth.currentUser.email.replace(/[@.]/g, "")), (snapshot) => {
       const data = snapshot.val();
