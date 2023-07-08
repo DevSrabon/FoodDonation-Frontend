@@ -33,6 +33,8 @@ import CommunityPost from "../screens/CommunityPost";
 import LoginScreen from "../screens/LoginScreen";
 import SignUpScreen from "../screens/SignUpScreen";
 
+import Settings from "../screens/Settings";
+
 const Stack = createNativeStackNavigator();
 
 const StackNav = () => {
@@ -59,6 +61,7 @@ const StackNav = () => {
         <Stack.Screen name="roleSelection" component={RoleSelection} />
         <Stack.Screen name="profile" component={Profile} />
         <Stack.Screen name="otp" component={Otp} />
+        <Stack.Screen name="settings" component={Settings} />
 
         <Stack.Screen name="needy" component={FoodNeedier} />
         <Stack.Screen name="transporter" component={Transporter} />
