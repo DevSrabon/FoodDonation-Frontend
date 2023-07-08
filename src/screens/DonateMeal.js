@@ -126,7 +126,6 @@ const DonateMeal = () => {
     } finally {
       setLoading(false);
     }
-    console.log("🚀 ~ file: DonateMeal.js:96 ~ onDonateMeal ~ body:", body);
   };
 
   return (
