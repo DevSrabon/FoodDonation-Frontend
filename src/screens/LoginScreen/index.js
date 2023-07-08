@@ -4,9 +4,6 @@ import {
   Text,
   SafeAreaView,
   Keyboard,
-  ScrollView,
-  Alert,
-  Image,
 } from "react-native";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
@@ -18,20 +15,20 @@ const LoginScreen = ({ navigation }) => {
     password: "",
   });
   const [errors, setErrors] = React.useState({});
-  const [loading, setLoading] = React.useState(false);
+  
   const validate = () => {
     Keyboard.dismiss();
     let isValid = true;
     if (!inputs.email) {
-      handleError("Please input email", "email");
+      handleError("Please Enter email", "email");
       isValid = false;
     } else if (!inputs.email.match(/\S+@\S+\.\S+/)) {
-      handleError("Please input a valid email", "email");
+      handleError("Please Enter a valid email", "email");
       isValid = false;
     }
 
     if (!inputs.password) {
-      handleError("Please input password", "password");
+      handleError("Please Enter the password", "password");
       isValid = false;
     }
 

@@ -168,7 +168,7 @@ const Login = () => {
           }}
         >
           <Text style={{ fontFamily: "SemiBold", fontSize: 12 }}>
-            Don,t have an account?
+            Don't have an account?
             <CustomButton text="Signup" onPress={onSignup} type="tertiary" />
           </Text>
         </View>

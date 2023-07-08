@@ -4,8 +4,6 @@ import React from "react";
 import {
   Image,
   Pressable,
-  Button,
-  Share,
   ScrollView,
   StyleSheet,
   Text,
