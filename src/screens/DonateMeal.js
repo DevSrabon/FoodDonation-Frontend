@@ -1,15 +1,14 @@
+import { Picker } from "@react-native-picker/picker";
+import { useRoute } from "@react-navigation/native";
+import axios from "axios";
 import React, { useContext, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import Loading from "../components/Loading";
-import { AuthContext } from "../context/Provider";
-import CustomInput from "../components/CustomInput";
-import Container from "../components/container";
-
-import { Picker } from "@react-native-picker/picker";
-import Header from "../components/Header";
-import { useRoute } from "@react-navigation/native";
 import CustomButton from "../components/CustomButton";
-import axios from "axios";
+import CustomInput from "../components/CustomInput";
+import Header from "../components/Header";
+import Loading from "../components/Loading";
+import Container from "../components/container";
+import { AuthContext } from "../context/Provider";
 
 const DonateMeal = () => {
   const route = useRoute();
@@ -20,7 +19,7 @@ const DonateMeal = () => {
   const [listItems, setListItems] = useState([]);
 
   const mealOptions = [
-    { id: 1, label: "Non-Veg or Veg" },
+    // { id: 1, label: "Non-Veg or Veg" },
     { id: 2, label: "Veg" },
     { id: 3, label: "Non-Veg" },
   ];
@@ -49,6 +48,8 @@ const DonateMeal = () => {
   };
 
   const [orderType, setOrderType] = useState("");
+  // const [expired, setExpired] = useState({});
+  const [expiredTime, setExpiredTime] = useState(null);
 
   const quantityTypes = [
     { quantityId: 1, label: "Gram " },
@@ -59,9 +60,13 @@ const DonateMeal = () => {
   ];
 
   const orderOptions = [
-    { id: 1, label: "Drop or Pickup" },
+    // { id: 1, label: "Drop or Pickup" },
     { id: 2, label: "Drop" },
     { id: 3, label: "Pickup" },
+  ];
+  const expiredOptions = [
+    { id: 1, label: "min" },
+    // { id: 2, label: "hrs" },
   ];
 
   const { loading, setLoading } = useContext(AuthContext);
@@ -70,7 +75,11 @@ const DonateMeal = () => {
   }
 
   const onDonateMeal = async () => {
-    const body = { listItems, orderType, ...resData };
+    if (expiredTime < 20) {
+      return alert("Expired Time should be more than 20 min");
+    }
+    setLoading(true);
+    const body = { listItems, expiredTime, orderType, ...resData };
     try {
       const res = await axios.post(
         `https://food-donation-backend.vercel.app/api/v1/posts/createPost`,
@@ -81,7 +90,10 @@ const DonateMeal = () => {
       }
     } catch (error) {
       alert(error.message);
+    } finally {
+      setLoading(false);
     }
+    console.log("🚀 ~ file: DonateMeal.js:96 ~ onDonateMeal ~ body:", body);
   };
 
   return (
@@ -118,7 +130,7 @@ const DonateMeal = () => {
 
                   <View style={styles.inputText}>
                     <Picker
-                      selectedValue={item.value}
+                      selectedValue={item.qType}
                       onValueChange={(text) =>
                         handleValueChange(text, index, "qType")
                       }
@@ -136,7 +148,9 @@ const DonateMeal = () => {
                   </View>
                 </View>
               </View>
-              <View style={{ flexDirection: "row", gap: 20 }}></View>
+              <View style={{ flexDirection: "row", gap: 20 }}>
+                <View style={{ width: 150 }}></View>
+              </View>
               <View style={{ flexDirection: "row" }}>
                 <View style={{ width: "48%" }}>
                   <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
@@ -186,6 +200,42 @@ const DonateMeal = () => {
             bottom: 15,
           }}
         >
+          {/* expired */}
+          {resData?.role === "donor" && (
+            <>
+              <View style={{ flexDirection: "row" }}>
+                <View style={{ width: "110%" }}>
+                  <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
+                    Expired Time In Minute
+                  </Text>
+                  <CustomInput
+                    placeholder={expiredTime || "20"}
+                    value={expiredTime}
+                    setValue={(number) => setExpiredTime(number)}
+                    keyboardType="numeric"
+                  />
+                </View>
+              </View>
+            </>
+          )}
+          {/* Order */}
+
+          <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>Order</Text>
+          <View style={styles.inputText}>
+            <Picker
+              selectedValue={orderType}
+              onValueChange={(value) => setOrderType(value)}
+              mode="dropdown"
+            >
+              {orderOptions.map((option) => (
+                <Picker.Item
+                  key={option.id}
+                  label={option.label}
+                  value={option.label}
+                />
+              ))}
+            </Picker>
+          </View>
           <CustomButton text="Continue" onPress={onDonateMeal} type="primary" />
         </View>
       </ScrollView>
@@ -206,8 +256,5 @@ const styles = StyleSheet.create({
     height: 38,
   },
 });
-
-
-
 
 export default DonateMeal;

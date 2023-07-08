@@ -13,9 +13,9 @@ import { userContext } from "../context/Provider";
 const Login = () => {
   const {
     signIn,
-    promptAsync,
+    // promptAsync,
     user,
-    request,
+    // request,
     setAllData,
     loading,
     setLoading,
@@ -69,7 +69,6 @@ const Login = () => {
     const res = await axios.get(
       "https://food-donation-backend.vercel.app/api/v1/users?email=guest@gmail.com"
     );
-    console.log(res.data.data.role);
     if (res.status === 200) {
       setAllData((prev) => ({ ...prev, guestData: res.data.data.role }));
       navigation.navigate("home");
