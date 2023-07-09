@@ -28,7 +28,7 @@ const Login = () => {
   const isFocus = useIsFocused();
   useEffect(() => {
     if (user?.email && isFocus) {
-      navigation.navigate("user");
+      navigation.navigate("background");
     }
   }, [user?.email, isFocus]);
   const onSignInPressed = async () => {

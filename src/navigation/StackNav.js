@@ -34,6 +34,7 @@ import LoginScreen from "../screens/LoginScreen";
 import SignUpScreen from "../screens/SignUpScreen";
 
 import Settings from "../screens/Settings";
+import BackgroundFetchScreen from "../screens/BackgroundFetchScreen";
 
 const Stack = createNativeStackNavigator();
 
@@ -62,6 +63,7 @@ const StackNav = () => {
         <Stack.Screen name="profile" component={Profile} />
         <Stack.Screen name="otp" component={Otp} />
         <Stack.Screen name="settings" component={Settings} />
+        <Stack.Screen name="background" component={BackgroundFetchScreen}/>
 
         <Stack.Screen name="needy" component={FoodNeedier} />
         <Stack.Screen name="transporter" component={Transporter} />

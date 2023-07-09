@@ -44,40 +44,18 @@ const DonorPage = () => {
     getAddressFromCoordinates();
   }, [latitude, longitude]);
 
-
-  useEffect(()=>{
-    BackgroundFetchScreen();
-  })
-
 const onAccept = async() => {
-
-  if(user.role=="needy")
-  {
-  const body = { needyNotififcation: true };
+  const email=user?.email;
+  const body = { donorNotification: true };
   try {
     const response = await axios.patch(
-      `https://food-donation-backend.vercel.app/api/v1/users/update-role?email=${user?.email}`,
+      `https://food-donation-backend.vercel.app/api/v1/users/update-role?email=${email}`,
       body
     );
-    console.log(response)
+    console.log(response.data)
   } catch (error) {
     console.log("Error updating user:", error);
   }
-  }
-  else if(user.role=="donor")
-  {
-  const body = { donorNotififcation: true };
-  try {
-    const response = await axios.patch(
-      `https://food-donation-backend.vercel.app/api/v1/users/update-role?email=${user?.email}`,
-      body
-    );
-    console.log(response)
-  } catch (error) {
-    console.log("Error updating user:", error);
-  }
-  } 
-
     
   const createChatId = (email1, email2) => {
     return [email1, email2].sort().join();
