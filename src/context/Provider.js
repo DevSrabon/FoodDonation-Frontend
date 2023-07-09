@@ -19,6 +19,7 @@ const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [refetch, setRefetch] = useState(false);
 
   const [allData, setAllData] = useState({
     userData: null,
@@ -122,6 +123,8 @@ const AuthProvider = ({ children }) => {
     setAllData,
     error,
     setError,
+    refetch,
+    setRefetch,
     // request,
     // promptAsync,
     loading,

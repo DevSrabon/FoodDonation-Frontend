@@ -5,6 +5,7 @@ import Home from "../screens/Home";
 // import Donate from "../screens/Donate";
 import { userContext } from "../context/Provider";
 import Chat from "../screens/Chat";
+import Community from "../screens/Community";
 import Donate from "../screens/Donate";
 import Help from "../screens/Help";
 import User from "../screens/User";
@@ -115,6 +116,19 @@ const BottomNav = () => {
           tabBarIcon: ({ focused, color }) => (
             <Ionicons
               name="md-chatbox-ellipses-outline"
+              size={32}
+              color={focused ? "#B4AAF2" : "gray"}
+            />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="community"
+        component={Community}
+        options={{
+          tabBarIcon: ({ focused, color }) => (
+            <Ionicons
+              name="people-outline"
               size={32}
               color={focused ? "#B4AAF2" : "gray"}
             />
