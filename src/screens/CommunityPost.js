@@ -70,6 +70,7 @@ const CommunityPost = () => {
       noOfItem,
       date: selectedDate,
       organization,
+      imageUrls,
       // role,
       // subRole,
       // email
