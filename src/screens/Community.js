@@ -35,13 +35,14 @@ const Community = () => {
   const onChampaign = () => {
     if (allData?.guestData === "guest")
       return alert("Please Sign up as a Donor");
-    navigation.navigate("communityPost");
+    else navigation.navigate("communityPost");
   };
   if (loading) return <Loading />;
   return (
     <Container>
       <SearchHeader />
-      {(allData?.userData?.role === "donor" || "guest") && (
+      {(allData?.userData?.role === "donor" ||
+        allData?.guestData === "guest") && (
         <Text
           style={{
             textAlign: "right",
@@ -57,7 +58,7 @@ const Community = () => {
       )}
       <View style={{ flex: 1, width: "100%", marginBottom: 100 }}>
         <FlatList
-          data={data}
+          data={data.reverse()}
           renderItem={({ item }) => (
             <CommunityItem item={item} key={item?._id} />
           )}

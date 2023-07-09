@@ -27,8 +27,6 @@ import Signup from "../screens/Signup";
 import Transporter from "../screens/Transporter";
 import BottomNav from "./BottomNav";
 
-import Community from "../screens/Community";
-import CommunityItem from "../screens/CommunityItem";
 import CommunityPost from "../screens/CommunityPost";
 import LoginScreen from "../screens/LoginScreen";
 import SignUpScreen from "../screens/SignUpScreen";
@@ -48,9 +46,9 @@ const StackNav = () => {
         <Stack.Screen name="modal" component={CustomModal} />
         <Stack.Screen name="DropDown" component={DropDown} />
 
-        <Stack.Screen name="community" component={Community} />
+        {/* <Stack.Screen name="community" component={Community} /> */}
         <Stack.Screen name="communityPost" component={CommunityPost} />
-        <Stack.Screen name="communityItem" component={CommunityItem} />
+        {/* <Stack.Screen name="communityItem" component={CommunityItem} /> */}
 
         <Stack.Screen name="initial" component={InitialPage} />
         <Stack.Screen name="intro" component={Intro} />
