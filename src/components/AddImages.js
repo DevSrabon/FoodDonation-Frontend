@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   },
   imageHeaderText: {
     fontFamily: "SemiBold",
-    fontSize: 20,
+    fontSize: 16,
   },
   addButton: {
     paddingHorizontal: 16,
@@ -37,9 +37,9 @@ const styles = StyleSheet.create({
     textAlign: "right",
   },
   addButtonLabel: {
-    color: "gray",
-    fontSize: 18,
-    fontWeight: "bold",
+    color: "#B4AAF2",
+    fontSize: 16,
+    fontWeight: "500",
   },
   imageContainer: {
     height: 80,

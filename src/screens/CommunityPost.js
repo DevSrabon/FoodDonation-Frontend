@@ -1,8 +1,14 @@
+import DateTimePicker from "@react-native-community/datetimepicker";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
-import { Alert, Image, ScrollView, StyleSheet, View } from "react-native";
-import icons from "../../assets/icons";
+import React, { useState } from "react";
+import {
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  View,
+} from "react-native";
 import AddImages from "../components/AddImages";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
@@ -10,14 +16,12 @@ import Header from "../components/Header";
 import Loading from "../components/Loading";
 import Container from "../components/container";
 import Label from "../components/label";
-import { AuthContext } from "../context/Provider";
 import useImagePicker from "../hook/useImagePicker";
-
 const CommunityPost = () => {
-  // const { loading: imageLoading, imageUrls, takePhoto } = useImagePicker();
+  const { loading: imageLoading, imageUrls, takePhoto } = useImagePicker();
 
   // const { loading, setLoading, allData } = useContext(AuthContext);
-  // const { name, role, subRole, email, location, categoryName, phone, photo } =
+  // const { name, role, subRole, email, photo } =
   //   allData.userData;
   const navigation = useNavigation();
   const [yourName, setYourName] = useState("");
@@ -25,64 +29,66 @@ const CommunityPost = () => {
   const [address, setAddress] = useState("");
   const [description, setDescription] = useState("");
   const [noOfItem, setNoOfItem] = useState("");
-  const [dateTime, setDateTime] = useState("");
-  // const longitude = location?.longitude;
-  // const latitude = location?.latitude;
-  // const handleNumberChange = (value) => {
-  //   // Remove non-numeric characters
-  //   const formattedValue = value.replace(/[^0-9]/g, "");
-  //   setNoOfItem(formattedValue);
-  // };
+  const [selectedDate, setSelectedDate] = useState("");
 
-  const onDonate = () => {
-    // if (imageUrls > 4 || caption === "")
-    //   return Alert.alert(
-    //     "Please Select at Least 4 image and fill up all input field"
-    //   );
-    // const body = {
-    //   userName: name,
-    //   postCategoryName: categoryName,
-    //   email,
-    //   location,
-    //   role,
-    //   subRole,
-    //   photo,
-    //   caption,
-    //   phone,
-    //   noOfItem,
-    //   imageUrls,
-    // };
-    // navigation.navigate("communityItem", {
-    //   number: noOfItem,
-    //   resData: body,
-    // });
+  const [date, setDate] = useState(new Date());
+  const [showPicker, setShowPicker] = useState(false);
+  const toggleDatePicker = () => {
+    setShowPicker(!showPicker);
+  };
+  const onChange = ({ type }, selectedDate) => {
+    if (type == "set") {
+      const currentDate = selectedDate;
+      setDate(currentDate);
+      if (Platform.OS === "android") {
+        toggleDatePicker();
+        setSelectedDate(currentDate.toDateString());
+      }
+    } else {
+      toggleDatePicker();
+    }
   };
 
-  // const getAddressFromCoordinates = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyD7TKiBE0n8EsPH_snI7QjhGFagY0Vq3FQ`
-  //     );
-
-  //     const results = response.data.results;
-  //     if (results.length) {
-  //       const formattedAddress = results[0].formatted_address;
-  //       setAddress(formattedAddress);
-  //     } else {
-  //       setAddress("No results found");
-  //     }
-  //   } catch (error) {
-  //     console.log("Error:", error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getAddressFromCoordinates();
-  // }, [latitude, longitude]);
-
-  // if (loading || imageLoading) {
-  //   return <Loading />;
-  // }
+  const onClicked = async () => {
+    if (
+      imageUrls.length === 0 ||
+      !yourName ||
+      !organization ||
+      !address ||
+      !description ||
+      !noOfItem ||
+      !selectedDate
+    ) {
+      return Alert.alert(
+        "Please fill in all the fields and select at least 1 image."
+      );
+    }
+    const body = {
+      name: yourName,
+      location: address,
+      description,
+      noOfItem,
+      date: selectedDate,
+      organization,
+      // role,
+      // subRole,
+      // email
+    };
+    try {
+      const res = await axios.post(
+        `https://food-donation-backend.vercel.app/api/v1/community/create`,
+        body
+      );
+      if (res.data.status === "success") {
+        alert("Submitted");
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  };
+  if (imageLoading) {
+    return <Loading />;
+  }
 
   return (
     <Container>
@@ -127,16 +133,37 @@ const CommunityPost = () => {
             placeholder="No of Items"
             keyboardType="numeric"
             value={noOfItem}
-            // setValue={handleNumberChange}
+            setValue={setNoOfItem}
           />
-          <Label>Date and Time</Label>
+          {/* <Label>Date and Time</Label>
           <CustomInput
             placeholder="Date and Time"
             value={dateTime}
             setValue={setDateTime}
-          />
-          {/* imageUrls={imageUrls}takePhoto={takePhoto} */}
-          {/* <AddImages /> */}
+          /> */}
+
+          <Label>Date of Donation</Label>
+          {showPicker && (
+            <DateTimePicker
+              mode="date"
+              display="spinner"
+              value={date}
+              onChange={onChange}
+            />
+          )}
+          {!showPicker && (
+            <Pressable
+              style={{ width: "100%", marginLeft: 35 }}
+              onPress={toggleDatePicker}
+            >
+              <CustomInput
+                placeholder={date.toDateString()}
+                value={selectedDate}
+                editable={false}
+              />
+            </Pressable>
+          )}
+          <AddImages imageUrls={imageUrls} takePhoto={takePhoto} />
         </View>
 
         <View
@@ -146,7 +173,7 @@ const CommunityPost = () => {
             width: "90%",
           }}
         >
-          <CustomButton text="Continue" onPress={onDonate} type="primary" />
+          <CustomButton text="Continue" onPress={onClicked} type="primary" />
         </View>
       </ScrollView>
     </Container>

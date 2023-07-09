@@ -1,5 +1,5 @@
-import { View, Text, TextInput, StyleSheet } from "react-native";
 import React from "react";
+import { StyleSheet, TextInput, View } from "react-native";
 
 const CustomInput = ({
   value,
@@ -9,6 +9,7 @@ const CustomInput = ({
   multiline,
   numberOfLines,
   keyboardType,
+  editable,
 }) => {
   return (
     <View style={styles.container}>
@@ -19,6 +20,7 @@ const CustomInput = ({
         style={styles.input}
         secureTextEntry={secureTextEntry}
         multiline={multiline}
+        editable={editable}
         numberOfLines={numberOfLines}
         keyboardType={keyboardType}
       />
