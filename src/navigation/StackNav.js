@@ -34,6 +34,7 @@ import LoginScreen from "../screens/LoginScreen";
 import SignUpScreen from "../screens/SignUpScreen";
 
 import Settings from "../screens/Settings";
+import AniInput from "../components/AniInput";
 
 const Stack = createNativeStackNavigator();
 
@@ -41,7 +42,7 @@ const StackNav = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="initial"
+        initialRouteName="aniInput"
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="touch" component={CustomTouch} />
@@ -49,6 +50,7 @@ const StackNav = () => {
         <Stack.Screen name="mySignUp" component={SignUpScreen} />
         <Stack.Screen name="modal" component={CustomModal} />
         <Stack.Screen name="DropDown" component={DropDown} />
+        <Stack.Screen name="aniInput" component={AniInput} />
 
         <Stack.Screen name="community" component={Community} />
         <Stack.Screen name="communityPost" component={CommunityPost} />
