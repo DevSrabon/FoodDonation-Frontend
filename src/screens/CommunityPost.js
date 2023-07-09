@@ -3,6 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import React, { useState } from "react";
 import {
+  Alert,
   Platform,
   Pressable,
   ScrollView,
@@ -16,13 +17,13 @@ import Header from "../components/Header";
 import Loading from "../components/Loading";
 import Container from "../components/container";
 import Label from "../components/label";
+import { userContext } from "../context/Provider";
 import useImagePicker from "../hook/useImagePicker";
 const CommunityPost = () => {
   const { loading: imageLoading, imageUrls, takePhoto } = useImagePicker();
 
-  // const { loading, setLoading, allData } = useContext(AuthContext);
-  // const { name, role, subRole, email, photo } =
-  //   allData.userData;
+  const { allData, setRefetch } = userContext();
+  const { role, subRole, email, photo } = allData.userData;
   const navigation = useNavigation();
   const [yourName, setYourName] = useState("");
   const [organization, setOrganization] = useState("");
@@ -33,6 +34,7 @@ const CommunityPost = () => {
 
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
+  const [loading, setLoading] = useState(false);
   const toggleDatePicker = () => {
     setShowPicker(!showPicker);
   };
@@ -63,6 +65,7 @@ const CommunityPost = () => {
         "Please fill in all the fields and select at least 1 image."
       );
     }
+    setLoading(true);
     const body = {
       name: yourName,
       location: address,
@@ -71,9 +74,10 @@ const CommunityPost = () => {
       date: selectedDate,
       organization,
       imageUrls,
-      // role,
-      // subRole,
-      // email
+      role,
+      subRole,
+      email,
+      photo,
     };
     try {
       const res = await axios.post(
@@ -81,13 +85,16 @@ const CommunityPost = () => {
         body
       );
       if (res.data.status === "success") {
-        alert("Submitted");
+        setRefetch((prev) => !prev);
+        navigation.navigate("community");
       }
     } catch (error) {
       alert(error.message);
+    } finally {
+      setLoading(false);
     }
   };
-  if (imageLoading) {
+  if (imageLoading || loading) {
     return <Loading />;
   }
 
