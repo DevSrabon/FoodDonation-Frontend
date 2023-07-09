@@ -9,7 +9,9 @@ import {
 } from 'react-native'
 import React from 'react'
 import TimeLimitComponent from "./TimeLimitComponent";
+import { useNavigation } from '@react-navigation/core';
 const HomeCard = ({ item }) => {
+    const navigation = useNavigation()
     return (
         <View key={item._id} style={styles.cardContainer}>
             <Pressable

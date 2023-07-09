@@ -16,11 +16,11 @@ const DonateMeal = () => {
   const route = useRoute();
   // const numbers = 2;
 
-  const { user } = route.params;
   // const resData = null;
   const numbers = route.params.number;
 
   const resData = route.params.resData;
+  console.log(resData);
   const navigation = useNavigation();
   const [listItems, setListItems] = useState([]);
 
@@ -125,38 +125,6 @@ const DonateMeal = () => {
         const createChatId = (email1, email2) => {
           return [email1, email2].sort().join();
         };
-        
-        const chatRef = ref(getDatabase(), user.email.replace(/[@.]/g, ""));
-        const newMessage = {
-          mail: auth.currentUser.email,
-          name: auth.currentUser.displayName,
-          chatid: createChatId(auth.currentUser.email, user.email),
-        };
-        
-        // Check if the email already exists in the database
-        get(chatRef).then((snapshot) => {
-          const emails = Object.values(snapshot.val() || {}).map((message) => message.mail);
-          if (!emails.includes(auth.currentUser.email)) {
-            // Email doesn't exist, push the new message
-            push(chatRef, newMessage);
-          }
-        });
-        
-        const chatRef1 = ref(getDatabase(), auth.currentUser.email.replace(/[@.]/g, ""));
-        const newMessage1 = {
-          mail: user.email,
-          name: user.userName,
-          chatid: createChatId(auth.currentUser.email, user.email),
-        };
-        
-        // Check if the email already exists in the database
-        get(chatRef1).then((snapshot) => {
-          const emails = Object.values(snapshot.val() || {}).map((message) => message.mail);
-          if (!emails.includes(user.email)) {
-            // Email doesn't exist, push the new message
-            push(chatRef1, newMessage1);
-          }
-        });
         navigation.navigate("map");
       }
     } catch (error) {
