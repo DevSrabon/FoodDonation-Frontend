@@ -1,13 +1,14 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
-import { getDatabase, push, ref } from "firebase/database";
+import { get, getDatabase, push, ref, set } from "firebase/database";
 import React, { useEffect, useState } from "react";
 import { Image, Text, View } from "react-native";
 import icons from "../../assets/icons";
 import CustomButton from "../components/CustomButton";
 import Container from "../components/container";
 import Measure from "../components/measure";
-import { auth, userContext } from "../context/Provider";
+import {auth} from "../context/Provider";
+import { userContext } from "../context/Provider";
 
 let i = 1;
 const DonorPage = () => {
@@ -18,6 +19,7 @@ const DonorPage = () => {
   const [address, setAddress] = useState();
   const latitude = user.location.latitude;
   const longitude = user.location.longitude;
+
 
   const getAddressFromCoordinates = async () => {
     try {
@@ -41,28 +43,74 @@ const DonorPage = () => {
     getAddressFromCoordinates();
   }, [latitude, longitude]);
 
-  const onAccept = () => {
-    const newMessage = {
-      mail: auth.currentUser.email,
-      name: auth.currentUser.displayName,
-      chatid: auth.currentUser.email + user.email,
-    };
-    console.log(newMessage);
-    push(ref(getDatabase(), user.email.replace(/[@.]/g, "")), newMessage);
 
-    const newMessage1 = {
-      mail: user.email,
-      name: user?.userName || user?.name,
-      chatid: auth.currentUser.email + user.email,
-    };
-    console.log(newMessage1);
+const onAccept = () => {
+  const createChatId = (email1, email2) => {
+    return [email1, email2].sort().join();
+  };
+  
+  const chatRef = ref(getDatabase(), user.email.replace(/[@.]/g, ""));
+  const newMessage = {
+    mail: auth.currentUser.email,
+    name: auth.currentUser.displayName,
+    chatid: createChatId(auth.currentUser.email, user.email),
+  };
+  
+  // Check if the email already exists in the database
+  get(chatRef).then((snapshot) => {
+    const emails = Object.values(snapshot.val() || {}).map((message) => message.mail);
+    if (!emails.includes(auth.currentUser.email)) {
+      // Email doesn't exist, push the new message
+      push(chatRef, newMessage);
+    }
+  });
+  
+  const chatRef1 = ref(getDatabase(), auth.currentUser.email.replace(/[@.]/g, ""));
+  const newMessage1 = {
+    mail: user.email,
+    name: user.userName,
+    chatid: createChatId(auth.currentUser.email, user.email),
+  };
+  
+  // Check if the email already exists in the database
+  get(chatRef1).then((snapshot) => {
+    const emails = Object.values(snapshot.val() || {}).map((message) => message.mail);
+    if (!emails.includes(user.email)) {
+      // Email doesn't exist, push the new message
+      push(chatRef1, newMessage1);
+    }
+  });
+  //here location is set
+  set(ref(getDatabase(), "location/" +user.email.replace(/[@.]/g, "")),
+   {lat: allData.userData.location.latitude,
+     lng: allData.userData.location.longitude, });
 
-    push(
-      ref(getDatabase(), auth.currentUser.email.replace(/[@.]/g, "")),
-      newMessage1
-    );
 
-    //ListenForChatAdd();
+     set(ref(getDatabase(), "location/" +  auth.currentUser.email.replace(/[@.]/g, "")),
+     {lat: user.location.latitude,
+       lng: user.location.longitude,
+       });
+
+       //here is the location
+  get(ref(getDatabase(), "location/" + user.email.replace(/[@.]/g, ""))).then((snapshot) => {
+    console.log(snapshot.val());
+  });
+  get(ref(getDatabase(), "location/" + auth.currentUser.email.replace(/[@.]/g, ""))).then((snapshot) => {
+    console.log(snapshot.val());
+  });
+/*
+  set(ref(getDatabase(), "notification/" + user.email.replace(/[@.]/g, ""))), {
+    title: "New Chat",
+    body: "You have a new chat from " + auth.currentUser.displayName,
+    data: {
+      type: "chat",
+      chatid: createChatId(auth.currentUser.email, user.email),
+    },
+  };*/
+  //scedulepushnotification("title", "body", "data ");
+  
+    
+   //ListenForChatAdd();
     navigation.navigate("Chat");
     console.warn("Accept");
   };
@@ -247,5 +295,6 @@ const DonorPage = () => {
     </Container>
   );
 };
+
 
 export default DonorPage;

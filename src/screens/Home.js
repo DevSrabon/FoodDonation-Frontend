@@ -54,6 +54,7 @@ const Home = () => {
 
   //     }
   // }
+
   return (
     <Container>
       <SearchHeader />
