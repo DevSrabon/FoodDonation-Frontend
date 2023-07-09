@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as BackgroundFetch from 'expo-background-fetch';
 import * as TaskManager from 'expo-task-manager';
 import { StyleSheet, View, Button, Platform, Text } from 'react-native';
@@ -68,13 +68,14 @@ async function unregisterBackgroundFetchAsync() {
 
 
 
-export default function BackgroundFetchScreen() {
+ const BackgroundFetchScreen=()=> {
     
     const { user, setAllData } = userContext();
     const [expoPushToken, setExpoPushToken] = React.useState('');
     const notificationListener = React.useRef();
     const responseListener = React.useRef();
     const [notification, setNotification] = React.useState(false);
+    const [state,setState] = useState(false);
     React.useEffect(() => {
         registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
         notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
@@ -88,6 +89,7 @@ export default function BackgroundFetchScreen() {
         return () => {
             Notifications.removeNotificationSubscription(notificationListener.current);
             Notifications.removeNotificationSubscription(responseListener.current);
+            setState(true);
         };
     }, []);
     const checkForOrderStatus= async()=>{ try {
@@ -130,7 +132,7 @@ export default function BackgroundFetchScreen() {
           }, 10000);
        
           return () => clearInterval(interval);
-    }, []);
+    }, [state]);
 
     async function registerForPushNotificationsAsync() {
         let token;
@@ -228,3 +230,4 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
 });
+export default BackgroundFetchScreen;

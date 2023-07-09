@@ -9,6 +9,7 @@ import Container from "../components/container";
 import Measure from "../components/measure";
 import {auth} from "../context/Provider";
 import { userContext } from "../context/Provider";
+import BackgroundFetchScreen from "./BackgroundFetchScreen";
 
 let i = 1;
 const DonorPage = () => {
@@ -44,7 +45,40 @@ const DonorPage = () => {
   }, [latitude, longitude]);
 
 
-const onAccept = () => {
+  useEffect(()=>{
+    BackgroundFetchScreen();
+  })
+
+const onAccept = async() => {
+
+  if(user.role=="needy")
+  {
+  const body = { needyNotififcation: true };
+  try {
+    const response = await axios.patch(
+      `https://food-donation-backend.vercel.app/api/v1/users/update-role?email=${user?.email}`,
+      body
+    );
+    console.log(response)
+  } catch (error) {
+    console.log("Error updating user:", error);
+  }
+  }
+  else if(user.role=="donor")
+  {
+  const body = { donorNotififcation: true };
+  try {
+    const response = await axios.patch(
+      `https://food-donation-backend.vercel.app/api/v1/users/update-role?email=${user?.email}`,
+      body
+    );
+    console.log(response)
+  } catch (error) {
+    console.log("Error updating user:", error);
+  }
+  } 
+
+    
   const createChatId = (email1, email2) => {
     return [email1, email2].sort().join();
   };
