@@ -4,41 +4,59 @@ import * as TaskManager from 'expo-task-manager';
 import { StyleSheet, View, Button, Platform, Text } from 'react-native';
 import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
+import { userContext } from '../context/Provider';
+import axios from 'axios';
 const BACKGROUND_FETCH_TASK = 'background-fetch';
 
-
 TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
+
     const now = Date.now();
     console.log(`Got background fetch call at date: ${new Date(now).toISOString()}`);
-    
-    async function schedulePushNotification() {
-        await Notifications.scheduleNotificationAsync({
-            content: {
-                title: "You've got notification! 📬",
-                body: 'Here is the notification body',
-                data: { data: 'goes here' },
-            },
-            trigger: { seconds: 1 },
-        });
-    }
-    (async () => {
-        try {
-            await schedulePushNotification();
-        } catch (error) {
-            console.error('Error ====', error);
-        }
-    })();
+   
+    await schedulePushNotification('Notification Title', 'Notification Body', { data: 'The data we want' });
+
     return BackgroundFetch.BackgroundFetchResult.NewData;
 });
 
 
+async function schedulePushNotification(title, body, data) {
+  
+        const isNotificationScheduled = await Notifications.getAllScheduledNotificationsAsync();
+
+        if (isNotificationScheduled.length === 0) {
+        
+            await Notifications.scheduleNotificationAsync({
+                content: {
+                    title: title,
+                    body: body,
+                    data: data,
+                    // title: "You've got notification! 📬",
+                    // body: 'Here is the notification body',
+                    // data: { data: 'goes here' },
+                },
+                trigger: null, // Remove the trigger to schedule the notification immediately
+            });
+        }
+        console.log('Notification scheduled successfully!');
+    }
+
 async function registerBackgroundFetchAsync() {
     return BackgroundFetch.registerTaskAsync(BACKGROUND_FETCH_TASK, {
-        minimumInterval: 1 * 15, // 15 second
+        minimumInterval: 60 * 24, // 15 second
         stopOnTerminate: false, // android only,
         startOnBoot: true, // android only
     });
 }
+
+
+(async () => {
+    try {
+        await schedulePushNotification();
+    } catch (error) {
+        console.error('Error ====', error);
+    }
+})();
+
 
 
 async function unregisterBackgroundFetchAsync() {
@@ -51,14 +69,13 @@ async function unregisterBackgroundFetchAsync() {
 
 
 export default function BackgroundFetchScreen() {
-
+    
+    const { user, setAllData } = userContext();
     const [expoPushToken, setExpoPushToken] = React.useState('');
     const notificationListener = React.useRef();
     const responseListener = React.useRef();
     const [notification, setNotification] = React.useState(false);
     React.useEffect(() => {
-        
-
         registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
         notificationListener.current = Notifications.addNotificationReceivedListener(notification => {
             setNotification(notification);
@@ -73,8 +90,47 @@ export default function BackgroundFetchScreen() {
             Notifications.removeNotificationSubscription(responseListener.current);
         };
     }, []);
+    const checkForOrderStatus= async()=>{ try {
+        const response = await axios.get(
+          `https://food-donation-backend.vercel.app/api/v1/users?email=${user?.email}`
+        );
+       if(response.data.data.role == 'donor'&& response.data.data.donorNotification==true){
 
-    
+        await schedulePushNotification(
+            'Order Accepted',
+            'Your order has been accepted by a volunteer',
+            { data: 'goes here' },
+        );
+       }
+       if(response.data.data.role == 'needy'&&response.data.data.needyNotification==true){
+        await schedulePushNotification(
+            'Order Accepted',
+            'Your order has been accepted by a volunteer',
+            { data: 'goes here' },
+        );
+       }
+       if(response.data.data.role == 'transporter'&&response.data.data.transporterNotification==true){
+        await schedulePushNotification(
+            'Order Accepted',
+            'Your order has been accepted by a volunteer',
+            { data: 'goes here' },
+        );
+       }
+      } catch (error) {
+        console.log("notification not triggred",error);
+      }
+    };
+
+    React.useEffect(() => {
+        const interval = setInterval(() => {
+            
+                checkForOrderStatus();
+            
+            console.log('Logs every minute');
+          }, 10000);
+       
+          return () => clearInterval(interval);
+    }, []);
 
     async function registerForPushNotificationsAsync() {
         let token;
@@ -108,16 +164,6 @@ export default function BackgroundFetchScreen() {
         }
         return token;
     }
-
-
-
-
-
-
-
-
-
-
 
 
 
