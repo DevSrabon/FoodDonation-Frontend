@@ -7,6 +7,7 @@ import { useRoute } from "@react-navigation/core";
 
 import { auth } from "../context/Provider";
 import { getDatabase, ref, onValue, off } from 'firebase/database';
+import RoutesMap from './RoutesMap';
 
 export function RandomNumber() {
   const randomNumber = Math.floor(Math.random() * 1000);
@@ -40,7 +41,7 @@ const Users = () => {
   };
 
   return (
-    <View style={{ marginTop: 30 ,marginBottom:50}}>
+    <View style={{ marginTop: 30, marginBottom: 50 }}>
       <ScrollView>
         {users.reverse().map((user) => (
           <TouchableOpacity key={user.chatid} onPress={() => handleUserPress(user.chatid.replace(/[@.]/g, ""))}>
@@ -58,28 +59,28 @@ const Users = () => {
   );
 };
 
+export const exportUserChatId = (props) => {
+  const route = useRoute();
+  return route.params?.userchatId ;
+};
 
 const Stack = createNativeStackNavigator();
 
 const Chat = () => {
+  const userchatId = exportUserChatId();
   
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Users" component={Users}  />
+      <Stack.Screen name="Users" component={Users} />
       <Stack.Screen
         name="SecuredChat"
         component={SecuredChat}
-        options={({ navigation }) => ({
-          headerRight: () => (
-            <Button
-              onPress={() => {
-                navigation.navigate("map");
-              }}
-              title="Map"
-            />
-          ),
-        })}
+        initialParams={{ userchatId }}
+      
+        
+      
       />
+      <Stack.Screen name="Routes" component={RoutesMap} initialParams={{userchatId}} />
     </Stack.Navigator>
   );
 };

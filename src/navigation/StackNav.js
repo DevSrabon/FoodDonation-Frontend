@@ -34,6 +34,7 @@ import LoginScreen from "../screens/LoginScreen";
 import SignUpScreen from "../screens/SignUpScreen";
 
 import Settings from "../screens/Settings";
+import RoutesMap from "../screens/RoutesMap";
 
 const Stack = createNativeStackNavigator();
 
@@ -62,7 +63,6 @@ const StackNav = () => {
         <Stack.Screen name="profile" component={Profile} />
         <Stack.Screen name="otp" component={Otp} />
         <Stack.Screen name="settings" component={Settings} />
-
         <Stack.Screen name="needy" component={FoodNeedier} />
         <Stack.Screen name="transporter" component={Transporter} />
         <Stack.Screen name="donor" component={Donor} />
