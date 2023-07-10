@@ -56,9 +56,9 @@ const Community = () => {
           Run a Champaign
         </Text>
       )}
-      <View style={{ flex: 1, width: "100%", marginBottom: 100 }}>
+      <View style={{ flex: 1, width: "100%", marginBottom: 80 }}>
         <FlatList
-          data={data.reverse()}
+          data={data.slice(0).reverse()}
           renderItem={({ item }) => (
             <CommunityItem item={item} key={item?._id} />
           )}

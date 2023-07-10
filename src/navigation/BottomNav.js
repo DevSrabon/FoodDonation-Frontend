@@ -3,16 +3,17 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
 import Home from "../screens/Home";
 // import Donate from "../screens/Donate";
+import Loading from "../components/Loading";
 import { userContext } from "../context/Provider";
 import Chat from "../screens/Chat";
 import Community from "../screens/Community";
 import Donate from "../screens/Donate";
-import Help from "../screens/Help";
 import User from "../screens/User";
 
 const Tab = createBottomTabNavigator();
 const BottomNav = () => {
-  const { allData } = userContext();
+  const { allData, loading } = userContext();
+  if (loading) return <Loading />;
   return (
     <Tab.Navigator
       backBehavior="Main"
@@ -96,7 +97,7 @@ const BottomNav = () => {
       ) : (
         <Tab.Screen
           name="help"
-          component={Help}
+          component={Donate}
           options={{
             title: "Help",
             tabBarIcon: ({ focused, color }) => (
