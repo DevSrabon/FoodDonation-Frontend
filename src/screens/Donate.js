@@ -11,8 +11,10 @@ import Container from "../components/container";
 import Label from "../components/label";
 import { AuthContext } from "../context/Provider";
 import useImagePicker from "../hook/useImagePicker";
+import CustomAlert from "../components/CustomAlert";
 
 const Donate = () => {
+
   const { loading: imageLoading, imageUrls, takePhoto } = useImagePicker();
 
   const { loading, setLoading, allData } = useContext(AuthContext);
@@ -22,6 +24,9 @@ const Donate = () => {
   const [address, setAddress] = useState("");
   const [caption, setCaption] = useState("");
   const [noOfItem, setNoOfItem] = useState("");
+
+  const [error, setError] = useState("");
+
   const longitude = location?.longitude;
   const latitude = location?.latitude;
 
@@ -33,9 +38,10 @@ const Donate = () => {
 
   const onDonate = () => {
     if (!imageUrls.length || !caption || !noOfItem)
-      return Alert.alert(
+      return setError(
         "Please Select at Least 1 image and fill up all input field"
       );
+
     const body = {
       userName: name,
       postCategoryName: categoryName,
@@ -126,6 +132,7 @@ const Donate = () => {
             width: "90%",
           }}
         >
+          {(error) && <CustomAlert type="error" value={error} />}
           <CustomButton text="Continue" onPress={onDonate} type="primary" />
         </View>
       </ScrollView>

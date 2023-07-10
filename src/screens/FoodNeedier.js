@@ -12,11 +12,14 @@ const FoodNeedier = () => {
   const { user } = userContext();
   const { loading, error, updateUserRole } = useUpdateUser();
 
+  const [errorMessage, setError] = useState("");
+
+
   const onRoleSelect = async () => {
     updateUserRole(update, user?.email, "addRestaurant");
   };
 
-  if (error) return alert(error);
+  if (error) return setError(error);
 
   if (loading) return <Loading />;
 
@@ -145,6 +148,8 @@ const FoodNeedier = () => {
           bottom: 80,
         }}
       >
+        {(errorMessage) && <CustomAlert type="error" value={errorMessage} />}
+
         <CustomButton text="Continue" onPress={onRoleSelect} type="primary" />
       </View>
     </Container>

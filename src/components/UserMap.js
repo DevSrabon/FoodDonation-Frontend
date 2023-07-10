@@ -8,12 +8,18 @@ import useFetchData from "../hook/useFetchData";
 import Loading from "./Loading";
 import MapCallout from "./MapCallout";
 import SearchHeader from "./SearchHeader";
+import CustomAlert from "./CustomAlert";
+
 const origin = { latitude: 11.70484, longitude: 92.715733 };
 const GOOGLE_MAPS_APIKEY = "AIzaSyD7TKiBE0n8EsPH_snI7QjhGFagY0Vq3FQ";
 
 const UserMap = () => {
   const navigation = useNavigation();
   const [serach, setSearch] = useState(0);
+
+  const [errorMessage, setError] = useState("");
+
+
   const { user, setAllData } = userContext();
   // const { loading, error, data } = useFetchData(`users?email=srabon3@gmail.com`);
   const { loading, error, data } = useFetchData(`users?email=${user?.email}`);
@@ -32,8 +38,7 @@ const UserMap = () => {
   }, [data, mapUsers, setAllData]);
   if (loading || isLoading) return <Loading />;
 
-  // if (error) alert(error.message);
-
+  if (error) return setError(error.message);
   return (
     <View style={styles.mapContainer}>
       <SearchHeader />
@@ -79,22 +84,24 @@ const UserMap = () => {
           </Callout>
         </Marker>
 
-        {mapUsers.length
-          ? mapUsers?.map((user) => (
-              <Marker
-                key={user?._id}
-                pinColor="yellow"
-                coordinate={{
-                  ...user?.location,
-                }}
+        {mapUsers?.length
+          ? mapUsers?.map((user, i) => (
+            <Marker
+              key={i}
+              pinColor="yellow"
+              coordinate={{
+                ...user?.location,
+              }}
+            >
+              <Callout
+                onPress={() => navigation.navigate("donorPage", { user })}
               >
-                <Callout
-                  onPress={() => navigation.navigate("donorPage", { user })}
-                >
-                  <MapCallout user={user} key={user?._id}></MapCallout>
-                </Callout>
-              </Marker>
-            ))
+                {(errorMessage) && <CustomAlert type="error" value={errorMessage} />}
+
+                <MapCallout user={user} key={i}></MapCallout>
+              </Callout>
+            </Marker>
+          ))
           : null}
       </MapView>
     </View>
