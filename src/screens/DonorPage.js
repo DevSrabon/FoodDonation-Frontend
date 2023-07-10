@@ -2,24 +2,23 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
 import { get, getDatabase, push, ref, set } from "firebase/database";
 import React, { useEffect, useState } from "react";
-import { Image, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import icons from "../../assets/icons";
 import CustomButton from "../components/CustomButton";
 import Container from "../components/container";
 import Measure from "../components/measure";
-import {auth} from "../context/Provider";
-import { userContext } from "../context/Provider";
+import { auth, userContext } from "../context/Provider";
 
 let i = 1;
 const DonorPage = () => {
   const route = useRoute();
   const { user } = route.params;
+  console.log("🚀 ~ file: DonorPage.js:17 ~ DonorPage ~ user:", user);
   const { allData } = userContext();
   const navigation = useNavigation();
   const [address, setAddress] = useState();
   const latitude = user.location.latitude;
   const longitude = user.location.longitude;
-
 
   const getAddressFromCoordinates = async () => {
     try {
@@ -43,62 +42,78 @@ const DonorPage = () => {
     getAddressFromCoordinates();
   }, [latitude, longitude]);
 
+  const onAccept = () => {
+    const createChatId = (email1, email2) => {
+      return [email1, email2].sort().join();
+    };
 
-const onAccept = () => {
-  const createChatId = (email1, email2) => {
-    return [email1, email2].sort().join();
-  };
-  
-  const chatRef = ref(getDatabase(), user.email.replace(/[@.]/g, ""));
-  const newMessage = {
-    mail: auth.currentUser.email,
-    name: auth.currentUser.displayName,
-    chatid: createChatId(auth.currentUser.email, user.email),
-  };
-  
-  // Check if the email already exists in the database
-  get(chatRef).then((snapshot) => {
-    const emails = Object.values(snapshot.val() || {}).map((message) => message.mail);
-    if (!emails.includes(auth.currentUser.email)) {
-      // Email doesn't exist, push the new message
-      push(chatRef, newMessage);
-    }
-  });
-  
-  const chatRef1 = ref(getDatabase(), auth.currentUser.email.replace(/[@.]/g, ""));
-  const newMessage1 = {
-    mail: user.email,
-    name: user.userName,
-    chatid: createChatId(auth.currentUser.email, user.email),
-  };
-  
-  // Check if the email already exists in the database
-  get(chatRef1).then((snapshot) => {
-    const emails = Object.values(snapshot.val() || {}).map((message) => message.mail);
-    if (!emails.includes(user.email)) {
-      // Email doesn't exist, push the new message
-      push(chatRef1, newMessage1);
-    }
-  });
-  //here location is set
-  set(ref(getDatabase(), "location/" +user.email.replace(/[@.]/g, "")),
-   {lat: allData.userData.location.latitude,
-     lng: allData.userData.location.longitude, });
+    const chatRef = ref(getDatabase(), user.email.replace(/[@.]/g, ""));
+    const newMessage = {
+      mail: auth.currentUser.email,
+      name: auth.currentUser.displayName,
+      chatid: createChatId(auth.currentUser.email, user.email),
+    };
 
+    // Check if the email already exists in the database
+    get(chatRef).then((snapshot) => {
+      const emails = Object.values(snapshot.val() || {}).map(
+        (message) => message.mail
+      );
+      if (!emails.includes(auth.currentUser.email)) {
+        // Email doesn't exist, push the new message
+        push(chatRef, newMessage);
+      }
+    });
 
-     set(ref(getDatabase(), "location/" +  auth.currentUser.email.replace(/[@.]/g, "")),
-     {lat: user.location.latitude,
-       lng: user.location.longitude,
-       });
+    const chatRef1 = ref(
+      getDatabase(),
+      auth.currentUser.email.replace(/[@.]/g, "")
+    );
+    const newMessage1 = {
+      mail: user.email,
+      name: user.userName,
+      chatid: createChatId(auth.currentUser.email, user.email),
+    };
 
-       //here is the location
-  get(ref(getDatabase(), "location/" + user.email.replace(/[@.]/g, ""))).then((snapshot) => {
-    console.log(snapshot.val());
-  });
-  get(ref(getDatabase(), "location/" + auth.currentUser.email.replace(/[@.]/g, ""))).then((snapshot) => {
-    console.log(snapshot.val());
-  });
-/*
+    // Check if the email already exists in the database
+    get(chatRef1).then((snapshot) => {
+      const emails = Object.values(snapshot.val() || {}).map(
+        (message) => message.mail
+      );
+      if (!emails.includes(user.email)) {
+        // Email doesn't exist, push the new message
+        push(chatRef1, newMessage1);
+      }
+    });
+    //here location is set
+    set(ref(getDatabase(), "location/" + user.email.replace(/[@.]/g, "")), {
+      lat: allData.userData.location.latitude,
+      lng: allData.userData.location.longitude,
+    });
+
+    set(
+      ref(
+        getDatabase(),
+        "location/" + auth.currentUser.email.replace(/[@.]/g, "")
+      ),
+      { lat: user.location.latitude, lng: user.location.longitude }
+    );
+
+    //here is the location
+    get(ref(getDatabase(), "location/" + user.email.replace(/[@.]/g, ""))).then(
+      (snapshot) => {
+        console.log(snapshot.val());
+      }
+    );
+    get(
+      ref(
+        getDatabase(),
+        "location/" + auth.currentUser.email.replace(/[@.]/g, "")
+      )
+    ).then((snapshot) => {
+      console.log(snapshot.val());
+    });
+    /*
   set(ref(getDatabase(), "notification/" + user.email.replace(/[@.]/g, ""))), {
     title: "New Chat",
     body: "You have a new chat from " + auth.currentUser.displayName,
@@ -107,10 +122,9 @@ const onAccept = () => {
       chatid: createChatId(auth.currentUser.email, user.email),
     },
   };*/
-  //scedulepushnotification("title", "body", "data ");
-  
-    
-   //ListenForChatAdd();
+    //scedulepushnotification("title", "body", "data ");
+
+    //ListenForChatAdd();
     navigation.navigate("Chat");
     console.warn("Accept");
   };
@@ -217,27 +231,46 @@ const onAccept = () => {
           </View>
         </View>
         <View>
-          <Measure email={user?.email} />
+          {user?.name ? (
+            <Measure email={user?.email} />
+          ) : (
+            <View
+              style={{
+                backgroundColor: "#EFEDF8",
+                borderColor: "#B4AAF2",
+                borderRadius: 5,
+                padding: 10,
+                gap: 5,
+                marginTop: 10,
+              }}
+            >
+              <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
+                {user?.role === "needy" ? "Food Needed" : "Food Availability"}
+              </Text>
+              {user?.listItems?.map((item) => (
+                <View
+                  key={item.id}
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <Text style={{ fontFamily: "Medium", fontSize: 13 }}>
+                    {item.value}
+                  </Text>
+                  <View style={styles.footer}>
+                    <Text style={styles.quantity}>
+                      {item.quantity}/{item.quantityType}
+                    </Text>
+                  </View>
+                </View>
+              ))}
+            </View>
+          )}
           {/* user.email */}
         </View>
 
-        {/* <View
-          style={{
-            width: "100%",
-            height: 128,
-            backgroundColor: "#efedf8",
-            borderRadius: 5,
-            borderColor: "#b4aaf2",
-            borderWidth: 1,
-            marginVertical: 10,
-            paddingHorizontal: 10,
-            paddingVertical: 5,
-          }}
-        >
-          <Text style={{ fontSize: 16, fontFamily: "SemiBold" }}>
-            Food Availability
-          </Text>
-        </View> */}
         <View
           style={{
             flexDirection: "row",
@@ -296,5 +329,21 @@ const onAccept = () => {
   );
 };
 
-
 export default DonorPage;
+const styles = StyleSheet.create({
+  footer: {
+    borderColor: "#B4AAF2",
+    borderRadius: 7,
+    borderWidth: 1,
+    padding: 2,
+    paddingHorizontal: 10,
+    marginTop: "auto",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  quantity: {
+    marginHorizontal: 10,
+    fontWeight: "bold",
+    color: "gray",
+  },
+});
