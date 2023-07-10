@@ -17,6 +17,7 @@ import Loading from "../components/Loading";
 import Container from "../components/container";
 import Label from "../components/label";
 import useImagePicker from "../hook/useImagePicker";
+import CustomAlert from "../components/CustomAlert";
 const CommunityPost = () => {
   const { loading: imageLoading, imageUrls, takePhoto } = useImagePicker();
 
@@ -33,6 +34,10 @@ const CommunityPost = () => {
 
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
+
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
   const toggleDatePicker = () => {
     setShowPicker(!showPicker);
   };
@@ -59,7 +64,7 @@ const CommunityPost = () => {
       !noOfItem ||
       !selectedDate
     ) {
-      return Alert.alert(
+      return setError(
         "Please fill in all the fields and select at least 1 image."
       );
     }
@@ -81,10 +86,12 @@ const CommunityPost = () => {
         body
       );
       if (res.data.status === "success") {
-        alert("Submitted");
+        // alert("Submitted");
+        setSuccess("Submitted");
       }
     } catch (error) {
-      alert(error.message);
+      setError(error.message);
+      // alert(error.message);
     }
   };
   if (imageLoading) {
@@ -174,6 +181,9 @@ const CommunityPost = () => {
             width: "90%",
           }}
         >
+          {(error) && <CustomAlert type="error" value={error} />}
+          {(success) && <CustomAlert type="success" value={success} />}
+          
           <CustomButton text="Continue" onPress={onClicked} type="primary" />
         </View>
       </ScrollView>

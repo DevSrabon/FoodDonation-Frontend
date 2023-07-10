@@ -6,9 +6,11 @@ import Loading from "../components/Loading";
 import Container from "../components/container";
 import { userContext } from "../context/Provider";
 import useUpdateUser from "../hook/useUpdateSubRoleUser";
+import CustomAlert from "../components/CustomAlert";
 
 const Donor = () => {
   const [update, setUpdate] = useState("");
+  const [errorMessage, setError] = useState("");
 
   const { user } = userContext();
   const { loading, error, updateUserRole } = useUpdateUser();
@@ -17,7 +19,7 @@ const Donor = () => {
     updateUserRole(update, user?.email, "addRestaurant");
   };
 
-  if (error) return alert(error);
+  if (error) return setError(error);
 
   if (loading) return <Loading />;
   return (
@@ -147,6 +149,7 @@ const Donor = () => {
           bottom: 80,
         }}
       >
+        {(errorMessage) && <CustomAlert type="error" value={errorMessage} />}
         <CustomButton text="Continue" onPress={onRoleSelect} type="primary" />
       </View>
     </Container>

@@ -9,6 +9,7 @@ import Header from "../components/Header";
 import Loading from "../components/Loading";
 import Container from "../components/container";
 import { AuthContext } from "../context/Provider";
+import CustomAlert from "../components/CustomAlert";
 
 const DonateMeal = () => {
   const route = useRoute();
@@ -20,6 +21,9 @@ const DonateMeal = () => {
   const resData = route.params.resData;
   const navigation = useNavigation();
   const [listItems, setListItems] = useState([]);
+
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const mealOptions = [
     // { id: 1, label: "Non-Veg or Veg" },
@@ -93,7 +97,7 @@ const DonateMeal = () => {
 
   const onDonateMeal = async () => {
     if (expiredTime <= 0 || isNaN(expiredTime)) {
-      return alert(
+      return setError(
         "Expired Time should be more than 0 minutes and must be in Number"
       );
     }
@@ -105,7 +109,7 @@ const DonateMeal = () => {
         !item.quantityType ||
         isNaN(item.quantity)
       ) {
-        return alert(
+        return setError(
           "Please fill in all the item details and Item Quantity must be in Number"
         );
       }
@@ -118,11 +122,11 @@ const DonateMeal = () => {
         body
       );
       if (res.data.status === "success") {
-        alert("Submitted");
+        setSuccess("Submitted");
         navigation.navigate("map");
       }
     } catch (error) {
-      alert(error.message);
+      setError(error.message);
     } finally {
       setLoading(false);
     }
@@ -293,6 +297,10 @@ const DonateMeal = () => {
               </View>
             </>
           )}
+
+          {(error) && <CustomAlert type="error" value={error} />}
+          {(success) && <CustomAlert type="success" value={success} />}
+
           {/* Order */}
 
           <CustomButton text="Continue" onPress={onDonateMeal} type="primary" />

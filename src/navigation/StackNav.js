@@ -32,6 +32,8 @@ import CommunityItem from "../screens/CommunityItem";
 import CommunityPost from "../screens/CommunityPost";
 import LoginScreen from "../screens/LoginScreen";
 import SignUpScreen from "../screens/SignUpScreen";
+import UserMap from "../components/UserMap";
+import AlertComponent from "../screens/AlertComponent";
 
 const Stack = createNativeStackNavigator();
 
@@ -39,9 +41,13 @@ const StackNav = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="community"
+        initialRouteName="initial"
         screenOptions={{ headerShown: false }}
       >
+
+        {/* <Stack.Screen name="initial" component={Donate} /> */}
+        <Stack.Screen name="initial" component={InitialPage} />
+
         <Stack.Screen name="touch" component={CustomTouch} />
         <Stack.Screen name="myLogin" component={LoginScreen} />
         <Stack.Screen name="mySignUp" component={SignUpScreen} />
@@ -52,7 +58,6 @@ const StackNav = () => {
         <Stack.Screen name="communityPost" component={CommunityPost} />
         <Stack.Screen name="communityItem" component={CommunityItem} />
 
-        <Stack.Screen name="initial" component={InitialPage} />
         <Stack.Screen name="intro" component={Intro} />
         <Stack.Screen name="login" component={Login} />
         <Stack.Screen name="signup" component={Signup} />

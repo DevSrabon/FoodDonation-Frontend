@@ -12,10 +12,14 @@ import Container from "../components/container";
 import Label from "../components/label";
 import { AuthContext } from "../context/Provider";
 import { listFiles, uploadToFirebase } from "../firebase/firebase.config";
+import CustomAlert from "../components/CustomAlert";
 
 const Donate = () => {
   const [files, setFiles] = useState([]);
   const [imageUrls, setImageUrls] = useState([]);
+
+  const [error, setError] = useState("");
+
   useEffect(() => {
     listFiles().then((listResp) => {
       const files = listResp.map((value) => {
@@ -56,7 +60,7 @@ const Donate = () => {
         });
       }
     } catch (e) {
-      Alert.alert("Error Uploading Image " + e.message);
+      setError("Error Uploading Image " + e.message);
     } finally {
       setLoading(false);
     }
@@ -80,7 +84,7 @@ const Donate = () => {
 
   const onDonate = () => {
     if (imageUrls > 1 || caption === "")
-      return Alert.alert(
+      return setError(
         "Please Select at Least 1 image and fill up all input field"
       );
     const body = {
@@ -170,6 +174,8 @@ const Donate = () => {
             width: "90%",
           }}
         >
+          {(error) && <CustomAlert type="error" value={error} />}
+
           <CustomButton text="Continue" onPress={onDonate} type="primary" />
         </View>
       </ScrollView>

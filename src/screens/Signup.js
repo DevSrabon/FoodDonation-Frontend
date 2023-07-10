@@ -9,6 +9,7 @@ import Loading from "../components/Loading";
 import Container from "../components/container";
 import Label from "../components/label";
 import { userContext } from "../context/Provider";
+import CustomAlert from "../components/CustomAlert";
 const Signup = () => {
   const { createUser, updateUser, user, promptAsync, loading, setLoading } =
     userContext();
@@ -18,6 +19,9 @@ const Signup = () => {
   const [lastName, setLastName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
+
+  const [error, setError] = useState("");
+
 
   const onSignup = async () => {
     const userName = { displayName: firstName + " " + lastName };
@@ -36,7 +40,7 @@ const Signup = () => {
       if (res.status === 201) return navigation.navigate("roleSelection");
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
-        alert("Email is already in use");
+        setError("Email is already in use");
       } else if (
         error.response &&
         error.response.data &&
@@ -45,10 +49,10 @@ const Signup = () => {
         const errorMessage = error.response.data.error;
         const emailTakenMessage = "Email is already taken";
         if (errorMessage.includes(emailTakenMessage)) {
-          alert(emailTakenMessage);
+          setError(emailTakenMessage);
         }
       } else {
-        alert("An error occurred");
+        setError("An error occurred");
       }
     } finally {
       setLoading(false);
@@ -122,6 +126,9 @@ const Signup = () => {
         <View
           style={{ flex: 1, alignSelf: "center", justifyContent: "center" }}
         >
+
+          {(error) && <CustomAlert type="error" value={error} />}
+
           <Text
             style={{
               fontFamily: "SemiBold",

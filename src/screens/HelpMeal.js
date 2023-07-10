@@ -10,6 +10,7 @@ import Header from "../components/Header";
 import { useRoute } from "@react-navigation/native";
 import CustomButton from "../components/CustomButton";
 import axios from "axios";
+import CustomAlert from "../components/CustomAlert";
 
 const HelpMeal = () => {
   const route = useRoute();
@@ -18,6 +19,10 @@ const HelpMeal = () => {
   const resData = route.params.resData;
 
   const [listItems, setListItems] = useState([]);
+
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
 
   const mealOptions = [
     { id: 1, label: "Non-Veg or Veg" },
@@ -77,10 +82,10 @@ const HelpMeal = () => {
         body
       );
       if (res.data.status === "success") {
-        alert("Submitted");
+        setSuccess("Submitted");
       }
     } catch (error) {
-      alert(error.message);
+      setError(error.message);
     }
   };
 
@@ -263,6 +268,10 @@ const HelpMeal = () => {
               </View>
             </View>
           )}
+          
+          {(error) && <CustomAlert type="error" value={error} />}
+          {(success) && <CustomAlert type="success" value={success} />}
+          
           <CustomButton text="Continue" onPress={onDonateMeal} type="primary" />
         </View>
       </ScrollView>

@@ -20,6 +20,7 @@ import Container from "../components/container";
 import Label from "../components/label";
 import { userContext } from "../context/Provider";
 import useImagePicker from "../hook/useImagePicker";
+import CustomAlert from "../components/CustomAlert";
 
 const Profile = () => {
   const route = useRoute();
@@ -32,11 +33,14 @@ const Profile = () => {
   const [bio, setBio] = useState("");
   const [designation, setDesignation] = useState("");
 
+  const [error, setError] = useState("");
+
+
   const navigation = useNavigation();
   const { user, loading, setLoading } = userContext();
 
   const onBioSetup = async () => {
-    if (!imageUrls.length || !bio) return alert("Please fill up your bio");
+    if (!imageUrls.length || !bio) return setError("Please fill up your bio");
     const bodyData = {
       bio,
       photo: imageUrls[0],
@@ -55,9 +59,9 @@ const Profile = () => {
       if (result.data.status === "success") return navigation.navigate("user");
     } catch (error) {
       if (error.code === "This-restaurant-already-in-use") {
-        alert("The Restaurant is already in use");
+        setError("The Restaurant is already in use");
       } else {
-        alert("Error:", error.message);
+        setError("Error:", error.message);
       }
     } finally {
       setLoading(false);
@@ -167,6 +171,8 @@ const Profile = () => {
               marginTop: 20,
             }}
           >
+                      {(error) && <CustomAlert type="error" value={error} />}
+
             <CustomButton text="Done" onPress={onBioSetup} type="primary" />
           </View>
         </View>

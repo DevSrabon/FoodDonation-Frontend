@@ -19,6 +19,7 @@ import { userContext } from "../context/Provider";
 import useFetchData from "../hook/useFetchData";
 import TimeLimitComponent from "./TimeLimitComponent";
 import HomeCard from "./HomeCard";
+import CustomAlert from "../components/CustomAlert";
 // import ShareScreen from "../components/Share";
 
 const Home = () => {
@@ -29,7 +30,10 @@ const Home = () => {
   console.log(data);
   const navigation = useNavigation();
   if (loading) return <Loading />;
-  if (error) return alert(error.message);
+  if (error) return setError(error.message);
+
+  const [errorMessage, setError] = useState("");
+
 
   //   const onShare = async (post) => {
   //     console.log("inside",post?.imageUrls?.[0]);
@@ -63,6 +67,8 @@ const Home = () => {
           renderItem={({ item }) => <HomeCard item={item} />}
           keyExtractor={item => item._id}
         />
+                  {(errorMessage) && <CustomAlert type="error" value={errorMessage} />}
+
       </View>
     </Container>
   );
