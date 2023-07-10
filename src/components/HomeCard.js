@@ -58,8 +58,6 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 8,
     borderTopRightRadius: 8,
   },
-
-  // Card
   cardContainer: {
     backgroundColor: "#ffffff",
     borderRadius: 8,
@@ -74,8 +72,9 @@ const styles = StyleSheet.create({
   cardImage: {
     width: "100%",
     height: 200,
-    borderTopLeftRadius: 8,
-    borderTopRightRadius: 8,
+    borderRadius: 8,
+    // borderTopLeftRadius: 8,
+    // borderTopRightRadius: 8,
     marginTop: 5,
   },
   contentCard: {
@@ -90,7 +89,6 @@ const styles = StyleSheet.create({
   cardItemsContainer: {
     flexDirection: "row",
   },
-
   textItem1: {
     fontSize: 14,
     marginRight: 16,
@@ -102,7 +100,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginRight: 16,
   },
-  // profile
   profileContainer: {
     flexDirection: "row",
     alignItems: "center",
