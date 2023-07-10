@@ -1,8 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Image } from "react-native";
 import { userContext } from "../context/Provider";
 import Loading from "./Loading";
+import icons from "../../assets/icons";
+import { TouchableOpacity } from "react-native";
 
 const SearchHeader = () => {
   const [search, setSearch] = useState(0);
@@ -43,8 +45,11 @@ const SearchHeader = () => {
             {allData?.userData?.name || "Guest"}
           </Text>
         </View>
-        {/* <Image source={icons.notification} /> */}
-        <View style={styles.searchView}>
+        <TouchableOpacity onPress={() => navigation.navigate("settings")}>
+          <Image source={icons.settings} />
+        </TouchableOpacity>
+
+        {/* <View style={styles.searchView}>
           <Text
             onPress={handleSignOut}
             style={{
@@ -56,7 +61,7 @@ const SearchHeader = () => {
           >
             Log out
           </Text>
-        </View>
+        </View> */}
       </View>
     </View>
   );

@@ -1,11 +1,9 @@
-import { useNavigation } from "@react-navigation/core";
-import React from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
-import { userContext } from "../context/Provider";
-import TimeLimitComponent from "./TimeLimitComponent";
+import React from "react";
+import TimeLimitComponent from "../screens/TimeLimitComponent";
+import { useNavigation } from "@react-navigation/core";
 const HomeCard = ({ item }) => {
   const navigation = useNavigation();
-  const { allData } = userContext();
   return (
     <View key={item._id} style={styles.cardContainer}>
       <Pressable
@@ -36,22 +34,17 @@ const HomeCard = ({ item }) => {
           </Text>
         </View>
       </View>
-      {item?.role === "donor" && (
-        <View style={styles.contentCard}>
-          <View style={styles.cardItemsContainer}>
-            <Text style={styles.textItem1}>
-              <TimeLimitComponent
-                key={item?._id}
-                previousTime={item?.updatedAt}
-                countTime={item?.expiredTime}
-              ></TimeLimitComponent>
-            </Text>
-            {/* <Text style={styles.textItem2}>Dinner</Text> */}
-          </View>
+      <View style={styles.contentCard}>
+        <View style={styles.cardItemsContainer}>
+          <Text style={styles.textItem1}>
+            <TimeLimitComponent
+              key={item?._id}
+              previousTime={item?.updatedAt}
+              countTime={item?.expiredTime}
+            ></TimeLimitComponent>
+          </Text>
         </View>
-      )}
-
-      {/* <Button title='share' onPress={()=>onShare(item)}/> */}
+      </View>
     </View>
   );
 };
