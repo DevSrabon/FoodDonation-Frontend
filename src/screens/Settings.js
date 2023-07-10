@@ -29,13 +29,20 @@ const Settings = () => {
       <View style={{ paddingHorizontal: 10, marginTop: 15 }}>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <View style={{ flexDirection: "row" }}>
-            <Image
-              style={{ height: 40, width: 40, borderRadius: 50 }}
-              source={{ uri: allData?.userData?.photo }}
-            />
+            {allData?.guestData ? (
+              <Image
+                style={{ height: 40, width: 40, borderRadius: 50 }}
+                source={icons.profile}
+              />
+            ) : (
+              <Image
+                style={{ height: 40, width: 40, borderRadius: 50 }}
+                source={{ uri: allData?.userData?.photo }}
+              />
+            )}
             <View style={{ marginLeft: 10 }}>
               <Text style={{ fontFamily: "SemiBold", fontSize: 18 }}>
-                {allData?.userData?.name}
+                {allData?.userData?.name || allData?.guestData}
               </Text>
               <Text style={{ fontFamily: "Medium", fontSize: 14 }}>
                 {allData?.userData?.subRole}

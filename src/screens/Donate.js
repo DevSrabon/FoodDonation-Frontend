@@ -37,8 +37,7 @@ const Donate = () => {
   };
 
   const onDonate = () => {
-
-    if (!imageUrls.length || !caption)
+    if (!imageUrls.length || !caption || !noOfItem)
       return setError(
         "Please Select at Least 1 image and fill up all input field"
       );
@@ -101,7 +100,11 @@ const Donate = () => {
           <Label>Organization Name</Label>
           <Label>{categoryName}</Label>
           <Label>Location</Label>
-          <Label>{address}</Label>
+          <Label>
+            {address?.includes(",")
+              ? address?.substring(address?.indexOf(",") + 1).trim()
+              : address}
+          </Label>
         </View>
         <View style={{ width: "100%", alignItems: "center", marginTop: 20 }}>
           <Label>Caption</Label>

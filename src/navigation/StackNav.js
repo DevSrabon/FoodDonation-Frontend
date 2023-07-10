@@ -30,8 +30,8 @@ import LoginScreen from "../screens/LoginScreen";
 import SignUpScreen from "../screens/SignUpScreen";
 import UswerMap from "../components/UserMap";
 
-import Settings from "../screens/Settings";
 import AniInput from "../components/AniInput";
+import Settings from "../screens/Settings";
 
 const Stack = createNativeStackNavigator();
 
