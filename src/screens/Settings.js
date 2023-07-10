@@ -1,12 +1,28 @@
-import { View, Text, Pressable, StyleSheet, Image } from "react-native";
+import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
-import { MaterialIcons } from "@expo/vector-icons";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import icons from "../../assets/icons";
-import Container from "../components/container";
 import Header from "../components/Header";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import Loading from "../components/Loading";
+import Container from "../components/container";
+import { userContext } from "../context/Provider";
 
 const Settings = () => {
+  const { allData, user, loading, signOutUser } = userContext();
+  const navigation = useNavigation();
+
+  const handleSignOut = async () => {
+    if (user?.email) {
+      await signOutUser();
+      navigation.navigate("initial");
+    } else {
+      navigation.navigate("login");
+    }
+  };
+
+  if (loading) return <Loading />;
+
   return (
     <Container>
       <Header>Settings</Header>
@@ -27,17 +43,20 @@ const Settings = () => {
             </View>
           </View>
 
-          <Pressable style={{ alignItems: "center" }} onPress={() => {}}>
+          <TouchableOpacity
+            style={{ alignItems: "center" }}
+            onPress={handleSignOut}
+          >
             <MaterialCommunityIcons name="logout" size={24} color="black" />
             <Text>Logout</Text>
-          </Pressable>
+          </TouchableOpacity>
         </View>
         <Text
           style={{ fontFamily: "SemiBold", color: "#7A797C", marginTop: 10 }}
         >
           General
         </Text>
-        <Pressable style={styles.optionRow}>
+        <TouchableOpacity style={styles.optionRow}>
           <Image source={icons.user} />
           <Text style={styles.optionText}>Personal Profile</Text>
           <MaterialIcons
@@ -46,9 +65,9 @@ const Settings = () => {
             color="gray"
             style={{ marginLeft: "auto" }}
           />
-        </Pressable>
+        </TouchableOpacity>
 
-        <Pressable style={styles.optionRow}>
+        <TouchableOpacity style={styles.optionRow}>
           <Image source={icons.appearence} />
           <Text style={styles.optionText}>Appearance</Text>
           <MaterialIcons
@@ -57,9 +76,9 @@ const Settings = () => {
             color="gray"
             style={{ marginLeft: "auto" }}
           />
-        </Pressable>
+        </TouchableOpacity>
 
-        <Pressable style={styles.optionRow}>
+        <TouchableOpacity style={styles.optionRow}>
           <Image source={icons.ResProfile} />
           <Text style={styles.optionText}>Restaurant Profile</Text>
           <MaterialIcons
@@ -68,9 +87,9 @@ const Settings = () => {
             color="gray"
             style={{ marginLeft: "auto" }}
           />
-        </Pressable>
+        </TouchableOpacity>
 
-        <Pressable style={styles.optionRow}>
+        <TouchableOpacity style={styles.optionRow}>
           <Image source={icons.notifications} />
           <Text style={styles.optionText}>Notifications</Text>
           <MaterialIcons
@@ -79,9 +98,9 @@ const Settings = () => {
             color="gray"
             style={{ marginLeft: "auto" }}
           />
-        </Pressable>
+        </TouchableOpacity>
 
-        <Pressable style={styles.optionRow}>
+        <TouchableOpacity style={styles.optionRow}>
           <Image source={icons.previous} />
           <Text style={styles.optionText}>Previous Donates</Text>
           <MaterialIcons
@@ -90,7 +109,7 @@ const Settings = () => {
             color="gray"
             style={{ marginLeft: "auto" }}
           />
-        </Pressable>
+        </TouchableOpacity>
 
         <Text
           style={{ fontFamily: "SemiBold", fontSize: 14, color: "#7A797C" }}
@@ -98,7 +117,7 @@ const Settings = () => {
           Stay in Touch
         </Text>
 
-        <Pressable style={styles.optionRow}>
+        <TouchableOpacity style={styles.optionRow}>
           <Image source={icons.contact} />
           <Text style={styles.optionText}>Contact Us</Text>
           <MaterialIcons
@@ -107,9 +126,9 @@ const Settings = () => {
             color="gray"
             style={{ marginLeft: "auto" }}
           />
-        </Pressable>
+        </TouchableOpacity>
 
-        <Pressable style={styles.optionRow}>
+        <TouchableOpacity style={styles.optionRow}>
           <Image source={icons.share} />
           <Text style={styles.optionText}>Share With Peers</Text>
           <MaterialIcons
@@ -118,7 +137,7 @@ const Settings = () => {
             color="gray"
             style={{ marginLeft: "auto" }}
           />
-        </Pressable>
+        </TouchableOpacity>
       </View>
     </Container>
   );

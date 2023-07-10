@@ -18,7 +18,8 @@ const DonateMeal = () => {
   // const resData = null;
   const numbers = route.params.number;
 
-  const resData = route.params.resData;
+  const restData = route.params.resData;
+  console.log(restData);
   const navigation = useNavigation();
   const [listItems, setListItems] = useState([]);
 
@@ -115,7 +116,7 @@ const DonateMeal = () => {
       }
     }
     setLoading(true);
-    const body = { listItems, expiredTime, orderType, ...resData };
+    const body = { listItems, expiredTime, orderType, ...restData };
     try {
       const res = await axios.post(
         `https://food-donation-backend.vercel.app/api/v1/posts/createPost`,
@@ -135,7 +136,7 @@ const DonateMeal = () => {
   return (
     <Container>
       <ScrollView>
-        <Header>Donate</Header>
+        <Header>{restData?.role === "donate" ? "Donate" : "Help"}</Header>
 
         <View
           style={{
@@ -237,8 +238,8 @@ const DonateMeal = () => {
           }}
         >
           {/* expired */}
-          {/* {resData?.role === "donor" && ( */}
-          {1 && (
+          {restData?.role === "donor" && (
+            // {1 && (
             <>
               <View style={{ flexDirection: "row", marginTop: 10 }}>
                 <View style={{ width: "50%" }}>

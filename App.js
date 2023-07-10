@@ -18,7 +18,6 @@ export default function App() {
   }
 
   return (
-    
     <AuthProvider>
       <StackNav />
       <ExpoStatusBar style="auto" />

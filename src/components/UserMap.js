@@ -20,12 +20,12 @@ const UserMap = () => {
 
 
   const { user, setAllData } = userContext();
-  const { loading, error, data } = useFetchData(`users?email=srabon3@gmail.com`);
-  // const { loading, error, data } = useFetchData(`users?email=${user?.email}`);
+  // const { loading, error, data } = useFetchData(`users?email=srabon3@gmail.com`);
+  const { loading, error, data } = useFetchData(`users?email=${user?.email}`);
   const { data: mapUsers, loading: isLoading } = useFetchData(
     `users/map?latitude=${data?.location?.latitude}&longitude=${data?.location?.longitude}&role=${data?.role}`
   );
-  console.log("🚀 ~ file: UserMap.js:21 ~ UserMap ~ data:", data);
+
   useEffect(() => {
     if (data && mapUsers) {
       setAllData((prev) => ({

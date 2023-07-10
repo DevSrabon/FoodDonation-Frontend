@@ -33,7 +33,7 @@ const Intro = () => {
           renderItem={({ item }) => (
             <View
               style={{
-                maxWidth: 400,
+                // maxWidth: 350,
                 alignItems: "center",
                 justifyContent: "center",
               }}
@@ -43,7 +43,7 @@ const Intro = () => {
                   fontFamily: "Bold",
                   fontSize: 24,
                   textAlign: "center",
-                  //   paddingVertical: 10,
+                  // paddingVertical: 10,
                   top: -20,
                 }}
               >

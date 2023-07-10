@@ -16,12 +16,12 @@ import previous from "./li_previous.png";
 import ResProfile from "./li_ResProfile.png";
 import share from "./li_share.png";
 import user from "./li_user.png";
+import close from "./close.png";
 import fixedHeight from "./fixedHeight.png";
 import location from "./location.png";
 
 import error from "./error.png";
 import success from "./success.png";
-import close from "./close.png";
 import x from "./x.png";
 
 export default {

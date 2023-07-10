@@ -1,21 +1,21 @@
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
-
-const CommunityItem = ({ item }) => {
-  const date = new Date(item?.date);
+import TimeLimitComponent from "../screens/TimeLimitComponent";
+import { useNavigation } from "@react-navigation/core";
+const HomeCard = ({ item }) => {
+  const navigation = useNavigation();
   return (
-    <View style={styles.cardContainer}>
-      {/* <Pressable
+    <View key={item._id} style={styles.cardContainer}>
+      <Pressable
         onPress={() => navigation.navigate("donorPage", { user: item })}
-      > */}
-      <Image
-        source={{ uri: item?.imageUrls?.[0] } || icons.fixedHeight}
-        style={styles.cardImage}
-        resizeMode="cover"
-      />
-      {/* </Pressable> */}
-      <Text style={styles.cardDescription}>{item?.description}</Text>
-      <Text style={styles.cardDescription}>{date.toDateString()}</Text>
+      >
+        <Image
+          source={{ uri: item?.imageUrls?.[0] } || icons.fixedHeight}
+          style={styles.cardImage}
+          resizeMode="cover"
+        />
+      </Pressable>
+      <Text style={styles.cardDescription}>{item?.caption}</Text>
       <View style={styles.profileContainer}>
         <View style={styles.imageContainerProfile}>
           <Image
@@ -26,19 +26,30 @@ const CommunityItem = ({ item }) => {
         </View>
         <View style={styles.profileTextContainer}>
           <Text style={{ fontFamily: "SemiBold", fontSize: 20, top: 6 }}>
-            {item?.name}
+            {item?.userName}
           </Text>
-          <Text style={styles.profileText}>{item?.organization}</Text>
+          <Text style={styles.profileText}>{item?.postCategoryName}</Text>
           <Text style={styles.roleText}>
             {item?.role?.replace(/^./, item?.role[0].toUpperCase())}
           </Text>
         </View>
       </View>
-
-      {/* <Button title='share' onPress={()=>onShare(item)}/> */}
+      <View style={styles.contentCard}>
+        <View style={styles.cardItemsContainer}>
+          <Text style={styles.textItem1}>
+            <TimeLimitComponent
+              key={item?._id}
+              previousTime={item?.updatedAt}
+              countTime={item?.expiredTime}
+            ></TimeLimitComponent>
+          </Text>
+        </View>
+      </View>
     </View>
   );
 };
+
+export default HomeCard;
 
 const styles = StyleSheet.create({
   image: {
@@ -121,5 +132,3 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
 });
-
-export default CommunityItem;

@@ -16,8 +16,6 @@ import AddRestaurant from "../screens/AddRestaurant";
 import Donate from "../screens/Donate";
 import DonateMeal from "../screens/DonateMeal";
 import DonorPage from "../screens/DonorPage";
-import Help from "../screens/Help";
-import HelpMeal from "../screens/HelpMeal";
 import Profile from "../screens/Profile";
 
 import CustomModal from "../components/CustomModal";
@@ -27,13 +25,13 @@ import Signup from "../screens/Signup";
 import Transporter from "../screens/Transporter";
 import BottomNav from "./BottomNav";
 
-import Community from "../screens/Community";
-import CommunityItem from "../screens/CommunityItem";
 import CommunityPost from "../screens/CommunityPost";
 import LoginScreen from "../screens/LoginScreen";
 import SignUpScreen from "../screens/SignUpScreen";
-import UserMap from "../components/UserMap";
-import AlertComponent from "../screens/AlertComponent";
+import UswerMap from "../components/UserMap";
+
+import Settings from "../screens/Settings";
+import AniInput from "../components/AniInput";
 
 const Stack = createNativeStackNavigator();
 
@@ -41,7 +39,7 @@ const StackNav = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="initial"
+        initialRouteName={"initial"}
         screenOptions={{ headerShown: false }}
       >
 
@@ -53,10 +51,11 @@ const StackNav = () => {
         <Stack.Screen name="mySignUp" component={SignUpScreen} />
         <Stack.Screen name="modal" component={CustomModal} />
         <Stack.Screen name="DropDown" component={DropDown} />
+        <Stack.Screen name="aniInput" component={AniInput} />
 
-        <Stack.Screen name="community" component={Community} />
+        {/* <Stack.Screen name="community" component={Community} /> */}
         <Stack.Screen name="communityPost" component={CommunityPost} />
-        <Stack.Screen name="communityItem" component={CommunityItem} />
+        {/* <Stack.Screen name="communityItem" component={CommunityItem} /> */}
 
         <Stack.Screen name="intro" component={Intro} />
         <Stack.Screen name="login" component={Login} />
@@ -64,6 +63,7 @@ const StackNav = () => {
         <Stack.Screen name="roleSelection" component={RoleSelection} />
         <Stack.Screen name="profile" component={Profile} />
         <Stack.Screen name="otp" component={Otp} />
+        <Stack.Screen name="settings" component={Settings} />
 
         <Stack.Screen name="needy" component={FoodNeedier} />
         <Stack.Screen name="transporter" component={Transporter} />
@@ -72,8 +72,6 @@ const StackNav = () => {
         <Stack.Screen name="addRestaurant" component={AddRestaurant} />
         <Stack.Screen name="DonateMeal" component={DonateMeal} />
         <Stack.Screen name="donate" component={Donate} />
-        <Stack.Screen name="help" component={Help} />
-        <Stack.Screen name="helpMeal" component={HelpMeal} />
 
         {/* <Stack.Screen name="profile" component={Profile} /> */}
         <Stack.Screen name="Chat" component={Chat} />

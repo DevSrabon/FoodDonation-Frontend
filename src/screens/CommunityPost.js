@@ -3,6 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import React, { useState } from "react";
 import {
+  Alert,
   Platform,
   Pressable,
   ScrollView,
@@ -16,14 +17,14 @@ import Header from "../components/Header";
 import Loading from "../components/Loading";
 import Container from "../components/container";
 import Label from "../components/label";
+import { userContext } from "../context/Provider";
 import useImagePicker from "../hook/useImagePicker";
 import CustomAlert from "../components/CustomAlert";
 const CommunityPost = () => {
   const { loading: imageLoading, imageUrls, takePhoto } = useImagePicker();
 
-  // const { loading, setLoading, allData } = useContext(AuthContext);
-  // const { name, role, subRole, email, photo } =
-  //   allData.userData;
+  const { allData, setRefetch } = userContext();
+  const { role, subRole, email, photo } = allData.userData;
   const navigation = useNavigation();
   const [yourName, setYourName] = useState("");
   const [organization, setOrganization] = useState("");
@@ -68,6 +69,7 @@ const CommunityPost = () => {
         "Please fill in all the fields and select at least 1 image."
       );
     }
+    setLoading(true);
     const body = {
       name: yourName,
       location: address,
@@ -76,9 +78,10 @@ const CommunityPost = () => {
       date: selectedDate,
       organization,
       imageUrls,
-      // role,
-      // subRole,
-      // email
+      role,
+      subRole,
+      email,
+      photo,
     };
     try {
       const res = await axios.post(
@@ -94,7 +97,7 @@ const CommunityPost = () => {
       // alert(error.message);
     }
   };
-  if (imageLoading) {
+  if (imageLoading || loading) {
     return <Loading />;
   }
 

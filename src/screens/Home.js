@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useState } from "react";
 // import * as Sharing from 'expo-sharing';
 import {
   FlatList,
@@ -18,8 +18,9 @@ import Container from "../components/container";
 import { userContext } from "../context/Provider";
 import useFetchData from "../hook/useFetchData";
 import TimeLimitComponent from "./TimeLimitComponent";
-import HomeCard from "./HomeCard";
+
 import CustomAlert from "../components/CustomAlert";
+import HomeCard from "../components/HomeCard";
 // import ShareScreen from "../components/Share";
 
 const Home = () => {
@@ -27,8 +28,7 @@ const Home = () => {
   const { loading, error, data } = useFetchData(
     `posts/getPost?role=${allData?.userData?.role || allData?.guestData}`
   );
-  console.log(data);
-  const navigation = useNavigation();
+
   if (loading) return <Loading />;
   if (error) return setError(error.message);
 
@@ -65,7 +65,7 @@ const Home = () => {
         <FlatList
           data={data}
           renderItem={({ item }) => <HomeCard item={item} />}
-          keyExtractor={item => item._id}
+          keyExtractor={(item) => item._id}
         />
                   {(errorMessage) && <CustomAlert type="error" value={errorMessage} />}
 
@@ -73,7 +73,5 @@ const Home = () => {
     </Container>
   );
 };
-
-
 
 export default Home;
