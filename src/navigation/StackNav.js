@@ -35,7 +35,7 @@ const StackNav = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="initial"
+        initialRouteName={"initial"}
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="touch" component={CustomTouch} />

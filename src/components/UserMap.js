@@ -31,7 +31,7 @@ const UserMap = () => {
   }, [data, mapUsers, setAllData]);
   if (loading || isLoading) return <Loading />;
 
-  if (error) return alert(error.message);
+  // if (error) alert(error.message);
 
   return (
     <View style={styles.mapContainer}>
