@@ -3,13 +3,13 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
 import React, { useContext, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
+import CustomAlert from "../components/CustomAlert";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import Header from "../components/Header";
 import Loading from "../components/Loading";
 import Container from "../components/container";
 import { AuthContext } from "../context/Provider";
-import CustomAlert from "../components/CustomAlert";
 
 const DonateMeal = () => {
   const route = useRoute();
@@ -19,7 +19,7 @@ const DonateMeal = () => {
   const numbers = route.params.number;
 
   const restData = route.params.resData;
-  console.log(restData);
+
   const navigation = useNavigation();
   const [listItems, setListItems] = useState([]);
 
@@ -69,7 +69,6 @@ const DonateMeal = () => {
   } else if (expired.time) {
     expiredTime = expired.time;
   }
-  console.log(expiredTime);
 
   const quantityTypes = [
     { quantityId: 1, label: "Gram " },
@@ -97,10 +96,12 @@ const DonateMeal = () => {
   }
 
   const onDonateMeal = async () => {
-    if (expiredTime <= 0 || isNaN(expiredTime)) {
-      return setError(
-        "Expired Time should be more than 0 minutes and must be in Number"
-      );
+    if (restData?.role === "donor") {
+      if (expiredTime <= 0 || isNaN(expiredTime)) {
+        return setError(
+          "Expired Time should be more than 0 minutes and must be in Number"
+        );
+      }
     }
     for (const item of listItems) {
       if (
@@ -124,7 +125,7 @@ const DonateMeal = () => {
       );
       if (res.data.status === "success") {
         setSuccess("Submitted");
-        navigation.navigate("map");
+        navigation.navigate("user");
       }
     } catch (error) {
       setError(error.message);
@@ -299,8 +300,8 @@ const DonateMeal = () => {
             </>
           )}
 
-          {(error) && <CustomAlert type="error" value={error} />}
-          {(success) && <CustomAlert type="success" value={success} />}
+          {error && <CustomAlert type="error" value={error} />}
+          {success && <CustomAlert type="success" value={success} />}
 
           {/* Order */}
 
