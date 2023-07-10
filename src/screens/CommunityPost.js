@@ -3,7 +3,6 @@ import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import React, { useState } from "react";
 import {
-  Alert,
   Platform,
   Pressable,
   ScrollView,
@@ -11,6 +10,7 @@ import {
   View,
 } from "react-native";
 import AddImages from "../components/AddImages";
+import CustomAlert from "../components/CustomAlert";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import Header from "../components/Header";
@@ -19,7 +19,7 @@ import Container from "../components/container";
 import Label from "../components/label";
 import { userContext } from "../context/Provider";
 import useImagePicker from "../hook/useImagePicker";
-import CustomAlert from "../components/CustomAlert";
+
 const CommunityPost = () => {
   const { loading: imageLoading, imageUrls, takePhoto } = useImagePicker();
 
@@ -35,6 +35,7 @@ const CommunityPost = () => {
 
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -146,12 +147,6 @@ const CommunityPost = () => {
             value={noOfItem}
             setValue={setNoOfItem}
           />
-          {/* <Label>Date and Time</Label>
-          <CustomInput
-            placeholder="Date and Time"
-            value={dateTime}
-            setValue={setDateTime}
-          /> */}
 
           <Label>Date of Donation</Label>
           {showPicker && (
@@ -184,9 +179,9 @@ const CommunityPost = () => {
             width: "90%",
           }}
         >
-          {(error) && <CustomAlert type="error" value={error} />}
-          {(success) && <CustomAlert type="success" value={success} />}
-          
+          {error && <CustomAlert type="error" value={error} />}
+          {success && <CustomAlert type="success" value={success} />}
+
           <CustomButton text="Continue" onPress={onClicked} type="primary" />
         </View>
       </ScrollView>
@@ -195,4 +190,5 @@ const CommunityPost = () => {
 };
 
 const styles = StyleSheet.create({});
+
 export default CommunityPost;

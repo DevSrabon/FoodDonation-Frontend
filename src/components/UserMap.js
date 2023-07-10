@@ -1,5 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import MapView, { Callout, Marker, PROVIDER_GOOGLE } from "react-native-maps";
@@ -9,8 +11,6 @@ import CustomAlert from "./CustomAlert";
 import Loading from "./Loading";
 import MapCallout from "./MapCallout";
 import SearchHeader from "./SearchHeader";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from "axios";  
 const origin = { latitude: 11.70484, longitude: 92.715733 };
 const GOOGLE_MAPS_APIKEY = "AIzaSyD7TKiBE0n8EsPH_snI7QjhGFagY0Vq3FQ";
 
@@ -24,12 +24,12 @@ const UserMap = () => {
   // const { loading, error, data } = useFetchData(`users?email=srabon3@gmail.com`);
   const { loading, error, data } = useFetchData(`users?email=${user?.email}`);
   //const { data: data2, loading: isLoading } = useFetchData(
-    //`users/map?latitude=${data?.location?.latitude}&longitude=${data?.location?.longitude}&role=${data?.role}`
+  //`users/map?latitude=${data?.location?.latitude}&longitude=${data?.location?.longitude}&role=${data?.role}`
   //);
   const [data2, setData] = useState(null);
   const [loading2, setLoading] = useState(true);
   const [error2, setError2] = useState(null);
- const url =`users/map?latitude=${data?.location?.latitude}&longitude=${data?.location?.longitude}&role=${data?.role}`;
+  // const url = `users/map?latitude=${data?.location?.latitude}&longitude=${data?.location?.longitude}&role=${data?.role}`;
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -43,17 +43,18 @@ const UserMap = () => {
         setLoading(false);
       }
     };
-
-    fetchData();
-  }, [data?.location?.latitude,data?.location?.longitude,data?.role]);
-  console.log(data2)
+    if (data?.role) {
+      fetchData();
+    }
+  }, [data?.location?.latitude, data?.location?.longitude, data?.role]);
+  console.log(data2);
   const setLoadingState = async (value) => {
     try {
-      await AsyncStorage.setItem('loadingState', JSON.stringify(value));
+      await AsyncStorage.setItem("loadingState", JSON.stringify(value));
     } catch (error) {
       console.log(error);
     }
-  }
+  };
   useEffect(() => {
     if (data && data2) {
       setAllData((prev) => ({
@@ -63,10 +64,10 @@ const UserMap = () => {
       }));
     }
   }, [data, data2, setAllData]);
-  if (loading || loading2)
-  {setLoadingState(1);
-   return <Loading />
-  };
+  if (loading || loading2) {
+    setLoadingState(1);
+    return <Loading />;
+  }
   setLoadingState(0);
   console.log(data2);
   if (error) return setError(error.message);
@@ -115,27 +116,23 @@ const UserMap = () => {
           </Callout>
         </Marker>
 
-        {
-           data2?.map((user, i) => (
-              <Marker
-                key={i}
-                pinColor="yellow"
-                coordinate={{
-                  ...user?.location,
-                }}
-              >
-                <Callout
-                  onPress={() => navigation.navigate("donorPage", { user })}
-                >
-                  {errorMessage && (
-                    <CustomAlert type="error" value={errorMessage} />
-                  )}
+        {data2?.map((user, i) => (
+          <Marker
+            key={i}
+            pinColor="yellow"
+            coordinate={{
+              ...user?.location,
+            }}
+          >
+            <Callout onPress={() => navigation.navigate("donorPage", { user })}>
+              {errorMessage && (
+                <CustomAlert type="error" value={errorMessage} />
+              )}
 
-                  <MapCallout user={user} key={i}></MapCallout>
-                </Callout>
-              </Marker>
-            ))
-          }
+              <MapCallout user={user} key={i}></MapCallout>
+            </Callout>
+          </Marker>
+        ))}
       </MapView>
     </View>
   );
