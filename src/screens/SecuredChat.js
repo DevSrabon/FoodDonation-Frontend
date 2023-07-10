@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
-import { getDatabase, ref, onValue, push } from 'firebase/database';
+import { View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet, Image, Alert } from 'react-native';
+import { getDatabase, ref, onValue, push, set } from 'firebase/database';
 import { Marker, MapView } from 'react-native-maps';
 import * as Location from 'expo-location';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -8,6 +8,8 @@ import { encryptMessage, decryptMessage } from './Encrypt';
 import { useRoute } from '@react-navigation/core';
 import { useNavigation } from '@react-navigation/native';
 import {auth} from '../context/Provider';
+import leftArrow from '../../assets/icons/backbutton.png';
+import useFetchData from '../hook/useFetchData';
 const db = getDatabase();
 
 
@@ -31,6 +33,7 @@ function Message({ item }) {
 }
 
 const SecuredChat = () => {
+ 
   const navigation = useNavigation();
 
   const [message, setMessage] = useState('');
@@ -38,6 +41,8 @@ const SecuredChat = () => {
 
   const route = useRoute();
   const { userchatId } = route.params;
+  const {user} = route.params;
+  const {emaill} = route.params;
 
   useEffect(() => {
     onValue(ref(db, `rooms/${userchatId}/messages`), (snapshot) => {
@@ -47,7 +52,21 @@ const SecuredChat = () => {
       }
     });
   }, []);
-
+  const emailll = auth?.currentUser?.email;
+  function handleYes() {
+    set(ref(getDatabase(), 'FoodDelivery'), {
+      email: emailll,
+      Delivered: "Yes",
+    })
+    Alert.alert("Thank You \n ")
+  }
+  function handleNo() {
+    set(ref(getDatabase(), 'FoodDelivery'), {
+      email: emailll,
+      Delivered: "No",
+    })
+    Alert.alert("Food Not delivered ? \n  We will look into this matter")
+  }
   function sendMessage() {
     if (message.trim()) {
       const encryptedMessage = encryptMessage(message.trim());
@@ -69,9 +88,31 @@ const SecuredChat = () => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => navigation.navigate('Routes', { userchatId })}>
-        <Text style={{ position: 'absolute',padding:10,borderWidth:1, top: 10, right: 10, zIndex: 1, borderRadius: 100, backgroundColor: "lightblue" }}>Map</Text>
+      <View style={{paddingTop:50, }}>
+      <TouchableOpacity onPress={() => navigation.goBack() }>
+        <Image 
+        style={{position: 'absolute',padding:10,resizeMode:'contain', height:30, width:30,
+        borderWidth:1, top: 20, left: 10,borderRadius:100,backgroundColor: "lightblue" }}
+          source={leftArrow} ></Image>
       </TouchableOpacity>
+      <TouchableOpacity >
+        <Text style={{ position: 'absolute',padding:10, top: 10, left: 100, zIndex: 1,fontSize:25 }}>{user}</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('Routes', { userchatId,emaill })} >
+        <Text style={{ position: 'absolute',padding:10,borderWidth:1, top: 20, right: 10, zIndex: 1, borderRadius: 100, backgroundColor: "lightblue" }}>Map</Text>
+      </TouchableOpacity>
+      </View>
+      <View style={{paddingTop:20,paddingLeft:10}} >
+      <TouchableOpacity>
+        <Text style={{ position: 'absolute',padding:10, top: 50, left: 10, zIndex: 1,fontSize:18 }}>Is food delivered?</Text>
+        <TouchableOpacity onPress={handleYes }>
+          <Text style={{color:"green", position: 'absolute',padding:10, top: 50, left: 180, zIndex: 1,fontSize:18 }}>Yes</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleNo}>
+          <Text style={{color:"red", position: 'absolute',padding:10, top: 50, left: 220, zIndex: 1,fontSize:18 }}>No</Text>
+        </TouchableOpacity>
+      </TouchableOpacity>
+      </View>
       <FlatList
         style={styles.messagesContainer}
         data={messages}

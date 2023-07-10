@@ -32,7 +32,7 @@ const Community = () => {
   }, [refetch]);
 
   const navigation = useNavigation();
-  const onChampaign = () => {
+  const onCampaign = () => {
     if (allData?.guestData === "guest")
       return alert("Please Sign up as a Donor");
     else navigation.navigate("communityPost");
@@ -51,9 +51,9 @@ const Community = () => {
             color: "#B4AAF2",
             marginRight: 10,
           }}
-          onPress={onChampaign}
+          onPress={onCampaign}
         >
-          Run a Champaign
+          Run a Campaign
         </Text>
       )}
       <View style={{ flex: 1, width: "100%", marginBottom: 80 }}>

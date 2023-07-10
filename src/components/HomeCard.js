@@ -1,9 +1,8 @@
-import { Image, Pressable, StyleSheet, Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/core";
 import React from "react";
-import TimeLimitComponent from "../screens/TimeLimitComponent";
-import { useNavigation } from "@react-navigation/native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import icons from "../../assets/icons";
-
+import TimeLimitComponent from "../screens/TimeLimitComponent";
 const HomeCard = ({ item }) => {
   const navigation = useNavigation();
   return (
@@ -36,20 +35,20 @@ const HomeCard = ({ item }) => {
           </Text> */}
         </View>
       </View>
-      <View style={styles.contentCard}>
-        <View style={styles.cardItemsContainer}>
-          <View style={styles.textItem1}>
-            <Image source={icons.time} />
-            <Text>
+      {item?.role === "donor" && (
+        <View style={styles.contentCard}>
+          <View style={styles.cardItemsContainer}>
+            <Text style={styles.textItem1}>
               <TimeLimitComponent
                 key={item?._id}
                 previousTime={item?.updatedAt}
                 countTime={item?.expiredTime}
               ></TimeLimitComponent>
             </Text>
+            {/* <Text style={styles.textItem2}>Dinner</Text> */}
           </View>
         </View>
-      </View>
+      )}
     </View>
   );
 };

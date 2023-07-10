@@ -155,7 +155,9 @@ const DonorPage = () => {
         <View style={{ flexDirection: "row" }}>
           <Image source={icons.location} />
           <Text style={{ fontFamily: "SemiBold", fontSize: 10 }}>
-            {address}
+            {address?.includes(",")
+              ? address?.substring(address?.indexOf(",") + 1).trim()
+              : address}
             {/* Rewa boda bag mp */}
           </Text>
         </View>
