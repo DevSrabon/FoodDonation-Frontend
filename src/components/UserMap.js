@@ -20,6 +20,7 @@ const UserMap = () => {
   const { data: mapUsers, loading: isLoading } = useFetchData(
     `users/map?latitude=${data?.location?.latitude}&longitude=${data?.location?.longitude}&role=${data?.role}`
   );
+
   useEffect(() => {
     if (data && mapUsers) {
       setAllData((prev) => ({
@@ -59,7 +60,7 @@ const UserMap = () => {
           </Callout>
         </Marker>
 
-        {mapUsers
+        {mapUsers.length
           ? mapUsers?.map((user) => (
               <Marker
                 key={user?._id}

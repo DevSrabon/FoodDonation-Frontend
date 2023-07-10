@@ -1,20 +1,12 @@
-import {
-  View,
-  Text,
-  Pressable,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-} from "react-native";
-import React from "react";
-import { MaterialIcons } from "@expo/vector-icons";
-import icons from "../../assets/icons";
-import Container from "../components/container";
-import Header from "../components/Header";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { userContext } from "../context/Provider";
-import Loading from "../components/Loading";
+import { MaterialCommunityIcons, MaterialIcons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import React from "react";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import icons from "../../assets/icons";
+import Header from "../components/Header";
+import Loading from "../components/Loading";
+import Container from "../components/container";
+import { userContext } from "../context/Provider";
 
 const Settings = () => {
   const { allData, user, loading, signOutUser } = userContext();
@@ -23,8 +15,10 @@ const Settings = () => {
   const handleSignOut = async () => {
     if (user?.email) {
       await signOutUser();
+      navigation.navigate("initial");
+    } else {
+      navigation.navigate("login");
     }
-    navigation.navigate("login");
   };
 
   if (loading) return <Loading />;
