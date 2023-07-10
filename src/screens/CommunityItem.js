@@ -15,7 +15,7 @@ const CommunityItem = ({ item }) => {
       />
       {/* </Pressable> */}
       <Text style={styles.cardDescription}>{item?.description}</Text>
-      <Text style={styles.cardDescription}>{date.toDateString()}</Text>
+      {/* <Text style={styles.cardDescription}>{date.toDateString()}</Text> */}
       <View style={styles.profileContainer}>
         <View style={styles.imageContainerProfile}>
           <Image
@@ -23,15 +23,20 @@ const CommunityItem = ({ item }) => {
             style={styles.profileImage}
             resizeMode="cover"
           />
+
+          <View style={styles.profileTextContainer}>
+            <Text style={{ fontFamily: "Medium", fontSize: 16, top: 6 }}>
+              {item?.name}
+            </Text>
+            <Text style={styles.profileText}>{item?.organization}</Text>
+            <Text style={styles.roleText}>
+              {item?.role?.replace(/^./, item?.role[0].toUpperCase())}
+            </Text>
+          </View>
         </View>
-        <View style={styles.profileTextContainer}>
-          <Text style={{ fontFamily: "SemiBold", fontSize: 20, top: 6 }}>
-            {item?.name}
-          </Text>
-          <Text style={styles.profileText}>{item?.organization}</Text>
-          <Text style={styles.roleText}>
-            {item?.role?.replace(/^./, item?.role[0].toUpperCase())}
-          </Text>
+        <View>
+          <Text style={styles.date}>{date.toDateString()}</Text>
+          <Text style={styles.date}>Location</Text>
         </View>
       </View>
 
@@ -41,6 +46,11 @@ const CommunityItem = ({ item }) => {
 };
 
 const styles = StyleSheet.create({
+  date: {
+    color: "orange",
+    fontFamily: "SemiBold",
+    fontSize: 16,
+  },
   image: {
     width: "100%",
     height: 200,
@@ -58,7 +68,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 2,
     margin: 10,
-    paddingHorizontal: 5,
+    padding: 8,
   },
   cardImage: {
     width: "100%",
@@ -88,36 +98,36 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   textItem2: {
-    fontSize: 16,
+    fontSize: 14,
     marginRight: 16,
   },
   // profile
   profileContainer: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between",
     marginTop: 10,
   },
   imageContainerProfile: {
-    width: 60,
-    height: 60,
-    borderRadius: 50,
-    overflow: "hidden",
-    marginRight: 16,
+    flexDirection: "row",
+    alignItems: "center",
   },
   profileImage: {
-    flex: 1,
-    width: null,
-    height: null,
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+    overflow: "hidden",
+    marginRight: 10,
   },
   profileTextContainer: {
-    flexDirection: "column",
+    // flexDirection: "column",
   },
   profileText: {
     fontSize: 16,
     marginTop: 8,
   },
   roleText: {
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: "500",
   },
 });

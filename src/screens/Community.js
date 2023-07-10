@@ -32,12 +32,14 @@ const Community = () => {
   }, [refetch]);
 
   const navigation = useNavigation();
+
   const onCampaign = () => {
     if (allData?.guestData === "guest")
       return alert("Please Sign up as a Donor");
     else navigation.navigate("communityPost");
   };
   if (loading) return <Loading />;
+
   return (
     <Container>
       <SearchHeader />
@@ -46,8 +48,8 @@ const Community = () => {
         <Text
           style={{
             textAlign: "right",
-            fontWeight: 500,
-            fontSize: 14,
+            fontFamily: "Bold",
+            fontSize: 18,
             color: "#B4AAF2",
             marginRight: 10,
           }}
