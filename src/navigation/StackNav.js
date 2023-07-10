@@ -40,7 +40,7 @@ const StackNav = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="roleSelection"
+        initialRouteName="initial"
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="touch" component={CustomTouch} />
