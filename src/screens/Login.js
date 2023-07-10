@@ -10,6 +10,7 @@ import Loading from "../components/Loading";
 import Container from "../components/container";
 import Label from "../components/label";
 import { userContext } from "../context/Provider";
+import CustomAlert from "../components/CustomAlert";
 const Login = () => {
   const {
     signIn,
@@ -23,6 +24,8 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isChecked, setChecked] = useState(false);
+  
+  const [error, setError] = useState("");
 
   const navigation = useNavigation();
   const isFocus = useIsFocused();
@@ -54,7 +57,7 @@ const Login = () => {
       }
 
       console.log(error);
-      alert(errorMessage);
+      setError(errorMessage);
       console.log(error);
     } finally {
       setLoading(false);
@@ -128,6 +131,8 @@ const Login = () => {
               Remember me
             </Text>
           </View>
+          
+          {(error) && <CustomAlert type="error" value={error} />}
 
           <CustomButton
             text="Forgot Password"
@@ -167,6 +172,7 @@ const Login = () => {
             flexDirection: "row",
           }}
         >
+          
           <Text style={{ fontFamily: "SemiBold", fontSize: 12 }}>
             Don't have an account?
             <CustomButton text="Signup" onPress={onSignup} type="tertiary" />
