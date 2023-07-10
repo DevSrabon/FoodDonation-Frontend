@@ -1,23 +1,12 @@
-import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 // import * as Sharing from 'expo-sharing';
-import {
-  FlatList,
-  Image,
-  Pressable,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from "react-native";
+import { FlatList, View } from "react-native";
 // import * as FileSystem from "expo-file-system";
-import icons from "../../assets/icons";
 import Loading from "../components/Loading";
 import SearchHeader from "../components/SearchHeader";
 import Container from "../components/container";
 import { userContext } from "../context/Provider";
 import useFetchData from "../hook/useFetchData";
-import TimeLimitComponent from "./TimeLimitComponent";
 
 import CustomAlert from "../components/CustomAlert";
 import HomeCard from "../components/HomeCard";
@@ -25,15 +14,13 @@ import HomeCard from "../components/HomeCard";
 
 const Home = () => {
   const { allData } = userContext();
+  const [errorMessage, setError] = useState("");
   const { loading, error, data } = useFetchData(
     `posts/getPost?role=${allData?.userData?.role || allData?.guestData}`
   );
 
   if (loading) return <Loading />;
   if (error) return setError(error.message);
-
-  const [errorMessage, setError] = useState("");
-
 
   //   const onShare = async (post) => {
   //     console.log("inside",post?.imageUrls?.[0]);
@@ -67,8 +54,7 @@ const Home = () => {
           renderItem={({ item }) => <HomeCard item={item} />}
           keyExtractor={(item) => item._id}
         />
-                  {(errorMessage) && <CustomAlert type="error" value={errorMessage} />}
-
+        {errorMessage && <CustomAlert type="error" value={errorMessage} />}
       </View>
     </Container>
   );
