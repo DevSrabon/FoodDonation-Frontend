@@ -31,14 +31,14 @@ const Settings = () => {
           <View style={{ flexDirection: "row" }}>
             <Image
               style={{ height: 40, width: 40, borderRadius: 50 }}
-              source={icons.profile}
+              source={{ uri: allData?.userData?.photo }}
             />
             <View style={{ marginLeft: 10 }}>
               <Text style={{ fontFamily: "SemiBold", fontSize: 18 }}>
-                Sourav Paul
+                {allData?.userData?.name}
               </Text>
               <Text style={{ fontFamily: "Medium", fontSize: 14 }}>
-                Restaurant Owner
+                {allData?.userData?.subRole}
               </Text>
             </View>
           </View>
@@ -80,7 +80,9 @@ const Settings = () => {
 
         <TouchableOpacity style={styles.optionRow}>
           <Image source={icons.ResProfile} />
-          <Text style={styles.optionText}>Restaurant Profile</Text>
+          <Text style={styles.optionText}>
+            {allData?.userData?.subRole} Profile
+          </Text>
           <MaterialIcons
             name="keyboard-arrow-right"
             size={24}
