@@ -83,7 +83,7 @@ const Donate = () => {
 
   return (
     <Container>
-      <Header>Donate</Header>
+      <Header>{role === "donate" ? "Donate" : "Help"}</Header>
       <ScrollView style={{ flex: 1 }}>
         <View
           style={{

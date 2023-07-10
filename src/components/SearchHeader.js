@@ -14,8 +14,23 @@ const SearchHeader = () => {
   const handleSignOut = async () => {
     if (user?.email) {
       await signOutUser();
+      navigation.navigate("initial");
+    } else {
+      navigation.navigate("login");
     }
-    navigation.navigate("login");
+
+    // const handleAppStateChange = async (nextAppState) => {
+    //   if (nextAppState === "inactive" || nextAppState === "background") {
+    //     await AsyncStorage.removeItem("@mahbubmorshed");
+    //   }
+    // };
+
+    // AppState.addEventListener("change", handleAppStateChange);
+
+    // Cleanup function to remove the event listener
+    // return () => {
+    //   AppState.removeEventListener("change", handleAppStateChange);
+    // };
   };
 
   if (loading) return <Loading />;

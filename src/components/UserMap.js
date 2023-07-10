@@ -20,7 +20,7 @@ const UserMap = () => {
   const { data: mapUsers, loading: isLoading } = useFetchData(
     `users/map?latitude=${data?.location?.latitude}&longitude=${data?.location?.longitude}&role=${data?.role}`
   );
-  console.log("🚀 ~ file: UserMap.js:21 ~ UserMap ~ data:", mapUsers);
+
   useEffect(() => {
     if (data && mapUsers) {
       setAllData((prev) => ({
@@ -32,7 +32,7 @@ const UserMap = () => {
   }, [data, mapUsers, setAllData]);
   if (loading || isLoading) return <Loading />;
 
-  if (error) return alert(error.message);
+  // if (error) alert(error.message);
 
   return (
     <View style={styles.mapContainer}>
@@ -60,7 +60,7 @@ const UserMap = () => {
           </Callout>
         </Marker>
 
-        {mapUsers
+        {mapUsers.length
           ? mapUsers?.map((user) => (
               <Marker
                 key={user?._id}

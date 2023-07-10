@@ -16,8 +16,6 @@ import AddRestaurant from "../screens/AddRestaurant";
 import Donate from "../screens/Donate";
 import DonateMeal from "../screens/DonateMeal";
 import DonorPage from "../screens/DonorPage";
-import Help from "../screens/Help";
-import HelpMeal from "../screens/HelpMeal";
 import Profile from "../screens/Profile";
 
 import CustomModal from "../components/CustomModal";
@@ -40,7 +38,7 @@ const StackNav = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="initial"
+        initialRouteName={"initial"}
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="touch" component={CustomTouch} />
@@ -70,8 +68,6 @@ const StackNav = () => {
         <Stack.Screen name="addRestaurant" component={AddRestaurant} />
         <Stack.Screen name="DonateMeal" component={DonateMeal} />
         <Stack.Screen name="donate" component={Donate} />
-        <Stack.Screen name="help" component={Help} />
-        <Stack.Screen name="helpMeal" component={HelpMeal} />
 
         {/* <Stack.Screen name="profile" component={Profile} /> */}
         <Stack.Screen name="Chat" component={Chat} />
