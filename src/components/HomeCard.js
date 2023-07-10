@@ -3,6 +3,7 @@ import React from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import icons from "../../assets/icons";
 import TimeLimitComponent from "../screens/TimeLimitComponent";
+
 const HomeCard = ({ item }) => {
   const navigation = useNavigation();
   return (
@@ -26,7 +27,7 @@ const HomeCard = ({ item }) => {
           />
         </View>
         <View style={styles.profileTextContainer}>
-          <Text style={{ fontFamily: "SemiBold", fontSize: 20 }}>
+          <Text style={{ fontFamily: "SemiBold", fontSize: 16 }}>
             {item?.userName}
           </Text>
           <Text style={styles.profileText}>{item?.postCategoryName}</Text>
@@ -38,22 +39,22 @@ const HomeCard = ({ item }) => {
       {item?.role === "donor" && (
         <View style={styles.contentCard}>
           <View style={styles.cardItemsContainer}>
-            <Text style={styles.textItem1}>
-              <TimeLimitComponent
-                key={item?._id}
-                previousTime={item?.updatedAt}
-                countTime={item?.expiredTime}
-              ></TimeLimitComponent>
-            </Text>
-            {/* <Text style={styles.textItem2}>Dinner</Text> */}
+            <View style={styles.textItem1}>
+              <Image source={icons.time} />
+              <Text>
+                <TimeLimitComponent
+                  key={item?._id}
+                  previousTime={item?.updatedAt}
+                  countTime={item?.expiredTime}
+                ></TimeLimitComponent>
+              </Text>
+            </View>
           </View>
         </View>
       )}
     </View>
   );
 };
-
-export default HomeCard;
 
 const styles = StyleSheet.create({
   image: {
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 5,
     alignItems: "center",
-    fontSize: 14,
+    fontSize: 12,
     marginRight: 16,
     backgroundColor: "#F4A099",
     paddingHorizontal: 20,
@@ -104,7 +105,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
   },
   textItem2: {
-    fontSize: 16,
+    fontSize: 14,
     marginRight: 16,
   },
   profileContainer: {
@@ -121,17 +122,12 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     marginRight: 16,
   },
-  profileImage: {
-    flex: 1,
-    width: null,
-    height: null,
-  },
   profileTextContainer: {
     // alignSelf: "center",
     // flexDirection: "column",
   },
   profileText: {
-    fontSize: 16,
+    fontSize: 14,
     // marginTop: 8,
   },
   roleText: {
@@ -139,3 +135,5 @@ const styles = StyleSheet.create({
     fontWeight: "500",
   },
 });
+
+export default HomeCard;

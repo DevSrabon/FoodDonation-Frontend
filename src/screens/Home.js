@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-// import * as Sharing from 'expo-sharing';
 import { FlatList, View } from "react-native";
-// import * as FileSystem from "expo-file-system";
 import Loading from "../components/Loading";
 import SearchHeader from "../components/SearchHeader";
 import Container from "../components/container";
@@ -20,29 +18,6 @@ const Home = () => {
   if (loading) return <Loading />;
   if (error) return setError(error.message);
 
-  //   const onShare = async (post) => {
-  //     console.log("inside",post?.imageUrls?.[0]);
-  //     try {
-  //       const { uri: localUri } = await FileSystem.downloadAsync(post?.imageUrls?.[0], FileSystem.documentDirectory + 'image.jpg');
-  //       const result =  await Sharing.shareAsync(localUri, { dialogTitle: post.title });
-
-  //         if (result.action === Share.sharedAction) {
-  //             if (result.activityType) {
-  //                 console.log('shared with activity type of : ', result.activityType)
-
-  //             } else {
-  //                 console.log('shared')
-  //             }
-
-  //         }
-  //         else if(result.action===Share.dismissedAction){
-  //             console.log('dismissed')
-  //         }
-  //     }catch(error){
-  //         console.log(error.message)
-
-  //     }
-  // }
   return (
     <Container>
       <SearchHeader />

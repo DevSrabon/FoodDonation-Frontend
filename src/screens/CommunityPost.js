@@ -3,7 +3,6 @@ import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import React, { useState } from "react";
 import {
-  Alert,
   Platform,
   Pressable,
   ScrollView,
@@ -20,6 +19,7 @@ import Label from "../components/label";
 import { userContext } from "../context/Provider";
 import useImagePicker from "../hook/useImagePicker";
 import CustomAlert from "../components/CustomAlert";
+
 const CommunityPost = () => {
   const { loading: imageLoading, imageUrls, takePhoto } = useImagePicker();
 
@@ -146,12 +146,6 @@ const CommunityPost = () => {
             value={noOfItem}
             setValue={setNoOfItem}
           />
-          {/* <Label>Date and Time</Label>
-          <CustomInput
-            placeholder="Date and Time"
-            value={dateTime}
-            setValue={setDateTime}
-          /> */}
 
           <Label>Date of Donation</Label>
           {showPicker && (
@@ -184,9 +178,9 @@ const CommunityPost = () => {
             width: "90%",
           }}
         >
-          {(error) && <CustomAlert type="error" value={error} />}
-          {(success) && <CustomAlert type="success" value={success} />}
-          
+          {error && <CustomAlert type="error" value={error} />}
+          {success && <CustomAlert type="success" value={success} />}
+
           <CustomButton text="Continue" onPress={onClicked} type="primary" />
         </View>
       </ScrollView>
@@ -195,4 +189,5 @@ const CommunityPost = () => {
 };
 
 const styles = StyleSheet.create({});
+
 export default CommunityPost;
