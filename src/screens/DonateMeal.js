@@ -10,6 +10,8 @@ import Loading from "../components/Loading";
 import Container from "../components/container";
 import { AuthContext } from "../context/Provider";
 
+import {auth} from "../context/Provider";
+import { get, getDatabase, push, ref, set } from "firebase/database";
 const DonateMeal = () => {
   const route = useRoute();
   // const numbers = 2;
@@ -18,6 +20,7 @@ const DonateMeal = () => {
   const numbers = route.params.number;
 
   const resData = route.params.resData;
+  console.log(resData);
   const navigation = useNavigation();
   const [listItems, setListItems] = useState([]);
 
@@ -119,6 +122,9 @@ const DonateMeal = () => {
       );
       if (res.data.status === "success") {
         alert("Submitted");
+        const createChatId = (email1, email2) => {
+          return [email1, email2].sort().join();
+        };
         navigation.navigate("map");
       }
     } catch (error) {

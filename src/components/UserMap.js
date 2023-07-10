@@ -20,7 +20,7 @@ const UserMap = () => {
   const { data: mapUsers, loading: isLoading } = useFetchData(
     `users/map?latitude=${data?.location?.latitude}&longitude=${data?.location?.longitude}&role=${data?.role}`
   );
-  console.log("🚀 ~ file: UserMap.js:21 ~ UserMap ~ data:", data);
+  console.log("🚀 ~ file: UserMap.js:21 ~ UserMap ~ data:", mapUsers);
   useEffect(() => {
     if (data && mapUsers) {
       setAllData((prev) => ({
@@ -60,10 +60,10 @@ const UserMap = () => {
           </Callout>
         </Marker>
 
-        {mapUsers?.length
-          ? mapUsers?.map((user, i) => (
+        {mapUsers
+          ? mapUsers?.map((user) => (
               <Marker
-                key={i}
+                key={user?._id}
                 pinColor="yellow"
                 coordinate={{
                   ...user?.location,
@@ -72,7 +72,7 @@ const UserMap = () => {
                 <Callout
                   onPress={() => navigation.navigate("donorPage", { user })}
                 >
-                  <MapCallout user={user} key={i}></MapCallout>
+                  <MapCallout user={user} key={user?._id}></MapCallout>
                 </Callout>
               </Marker>
             ))

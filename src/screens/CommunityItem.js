@@ -1,202 +1,124 @@
-import React, { useContext, useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
-import Loading from "../components/Loading";
-import { AuthContext } from "../context/Provider";
-import CustomInput from "../components/CustomInput";
-import Container from "../components/container";
-import { Picker } from "@react-native-picker/picker";
-import Header from "../components/Header";
-import { useRoute } from "@react-navigation/native";
-import CustomButton from "../components/CustomButton";
-import axios from "axios";
+import React from "react";
+import { Image, StyleSheet, Text, View } from "react-native";
 
-const onDonateMeal = () => {
-  // const route = useRoute();
-  // const numbers = route.params.number;
-  // const resData = route.params.resData;
-  // const [listItems, setListItems] = useState([]);
-  // const mealOptions = [
-  //   { id: 1, label: "Non-Veg or Veg" },
-  //   { id: 2, label: "Veg" },
-  //   { id: 3, label: "Non-Veg" },
-  // ];
-  // React.useEffect(() => {
-  //   const items = [];
-  //   for (let i = 1; i <= numbers; i++) {
-  //     items.push({
-  //       id: i,
-  //       value: "",
-  //       qType: "",
-  //       quantityType: "",
-  //       quantity: "",
-  //     });
-  //   }
-  //   setListItems(items);
-  // }, [numbers]);
-  // const handleValueChange = (text, index, property) => {
-  //   const updatedItems = [...listItems];
-  //   updatedItems[index] = {
-  //     ...updatedItems[index],
-  //     [property]: text,
-  //   };
-  //   setListItems(updatedItems);
-};
-
-// const [orderType, setOrderType] = useState("");
-
-// const quantityTypes = [
-//   { quantityId: 1, label: "Gram " },
-//   { quantityId: 2, label: "Kg" },
-//   { quantityId: 3, label: "ml " },
-//   { quantityId: 3, label: "L" },
-//   { quantityId: 4, label: "Pcs " },
-// ];
-
-// const orderOptions = [
-//   { id: 1, label: "Drop or Pickup" },
-//   { id: 2, label: "Drop" },
-//   { id: 3, label: "Pickup" },
-// ];
-
-// const { loading, setLoading } = useContext(AuthContext);
-// if (loading) {
-//   return <Loading />;
-// }
-// async
-const CommunityItem = () => {
-  //   const body = { listItems, orderType, ...resData };
-  //   try {
-  //     const res = await axios.post(
-  //       `https://food-donation-backend.vercel.app/api/v1/posts/createPost`,
-  //       body
-  //     );
-  //     if (res.data.status === "success") {
-  //       alert("Submitted");
-  //     }
-  //   } catch (error) {
-  //     alert(error.message);
-  //   }
-  // };
-
+const CommunityItem = ({ item }) => {
+  const date = new Date(item?.date);
   return (
-    <Container>
-      <ScrollView>
-        <Header>Donate</Header>
-
-        <View
-          style={{
-            flex: 1,
-            alignItems: "center",
-          }}
-        >
-          {/* {listItems.map((item, index) => ( */}
-          {/* key={index} style={{ alignItems: "center", marginBottom: 10 }} */}
-          <View>
-            <View style={{ flexDirection: "row" }}>
-              <View style={{ width: "48%" }}>
-                <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-                  Item
-                  {/* {item.id} */}
-                </Text>
-                <CustomInput
-                // placeholder={`Item ${item.id}`}
-                // value={item.value}
-                // setValue={(text) => handleValueChange(text, index, "value")}
-                />
-              </View>
-              <View style={{ width: "48%" }}>
-                <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-                  Meal Type
-                </Text>
-
-                <View style={styles.inputText}>
-                  {/* <Picker
-                      selectedValue={item.value}
-                      onValueChange={(text) =>
-                        handleValueChange(text, index, "qType")
-                      }
-                      mode="dropdown"
-                      multiple={true}
-                    >
-                      {mealOptions.map((option) => (
-                        <Picker.Item
-                          key={option.id}
-                          label={option.label}
-                          value={option.label}
-                        />
-                      ))}
-                    </Picker> */}
-                </View>
-              </View>
-            </View>
-            <View style={{ flexDirection: "row", gap: 20 }}></View>
-            <View style={{ flexDirection: "row" }}>
-              <View style={{ width: "48%" }}>
-                <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-                  Item Quantity
-                </Text>
-                {/* <CustomInput
-                    placeholder="0"
-                    value={item.quantity}
-                    setValue={(text) =>
-                      handleValueChange(text, index, "quantity")
-                    }
-                    keyboardType="numeric"
-                  /> */}
-              </View>
-
-              <View style={{ width: "48%" }}>
-                <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-                  Quantity Type
-                </Text>
-                <View style={styles.inputText}>
-                  {/* <Picker
-                      selectedValue={item.quantityType}
-                      onValueChange={(text) =>
-                        handleValueChange(text, index, "quantityType")
-                      }
-                      mode="dropdown"
-                    >
-                      {quantityTypes.map((option) => (
-                        <Picker.Item
-                          key={option.quantityId}
-                          label={option.label}
-                          value={option.label}
-                        />
-                      ))}
-                    </Picker> */}
-                </View>
-              </View>
-            </View>
-          </View>
-          {/* ))} */}
+    <View style={styles.cardContainer}>
+      {/* <Pressable
+        onPress={() => navigation.navigate("donorPage", { user: item })}
+      > */}
+      <Image
+        source={{ uri: item?.imageUrls?.[0] } || icons.fixedHeight}
+        style={styles.cardImage}
+        resizeMode="cover"
+      />
+      {/* </Pressable> */}
+      <Text style={styles.cardDescription}>{item?.description}</Text>
+      <Text style={styles.cardDescription}>{date.toDateString()}</Text>
+      <View style={styles.profileContainer}>
+        <View style={styles.imageContainerProfile}>
+          <Image
+            source={{ uri: item?.photo } || icons.profile}
+            style={styles.profileImage}
+            resizeMode="cover"
+          />
         </View>
-
-        <View
-          style={{
-            alignSelf: "center",
-            width: "96%",
-            bottom: 15,
-          }}
-        >
-          <CustomButton text="Continue" onPress={onDonateMeal} type="primary" />
+        <View style={styles.profileTextContainer}>
+          <Text style={{ fontFamily: "SemiBold", fontSize: 20, top: 6 }}>
+            {item?.name}
+          </Text>
+          <Text style={styles.profileText}>{item?.organization}</Text>
+          <Text style={styles.roleText}>
+            {item?.role?.replace(/^./, item?.role[0].toUpperCase())}
+          </Text>
         </View>
-      </ScrollView>
-    </Container>
+      </View>
+
+      {/* <Button title='share' onPress={()=>onShare(item)}/> */}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  inputText: {
-    borderColor: "#A2A2A6",
-    borderWidth: 1,
-    borderRadius: 7,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    marginVertical: 5,
-    marginBottom: 20,
-    justifyContent: "center",
-    height: 38,
+  image: {
+    width: "100%",
+    height: 200,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+  },
+
+  // Card
+  cardContainer: {
+    backgroundColor: "#ffffff",
+    borderRadius: 8,
+    shadowColor: "#000000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+    margin: 10,
+    paddingHorizontal: 5,
+  },
+  cardImage: {
+    width: "100%",
+    height: 200,
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
+    marginTop: 5,
+  },
+  contentCard: {
+    padding: 16,
+  },
+
+  cardDescription: {
+    fontSize: 16,
+    color: "#888888",
+    marginTop: 16,
+  },
+  cardItemsContainer: {
+    flexDirection: "row",
+  },
+
+  textItem1: {
+    fontSize: 14,
+    marginRight: 16,
+    backgroundColor: "#F4A099",
+    paddingHorizontal: 15,
+    borderRadius: 10,
+  },
+  textItem2: {
+    fontSize: 16,
+    marginRight: 16,
+  },
+  // profile
+  profileContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 10,
+  },
+  imageContainerProfile: {
+    width: 60,
+    height: 60,
+    borderRadius: 50,
+    overflow: "hidden",
+    marginRight: 16,
+  },
+  profileImage: {
+    flex: 1,
+    width: null,
+    height: null,
+  },
+  profileTextContainer: {
+    flexDirection: "column",
+  },
+  profileText: {
+    fontSize: 16,
+    marginTop: 8,
+  },
+  roleText: {
+    fontSize: 16,
+    fontWeight: "500",
   },
 });
 

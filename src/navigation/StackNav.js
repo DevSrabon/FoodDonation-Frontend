@@ -42,7 +42,7 @@ const StackNav = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="aniInput"
+        initialRouteName="roleSelection"
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="touch" component={CustomTouch} />
@@ -63,7 +63,6 @@ const StackNav = () => {
         <Stack.Screen name="roleSelection" component={RoleSelection} />
         <Stack.Screen name="profile" component={Profile} />
         <Stack.Screen name="otp" component={Otp} />
-        <Stack.Screen name="settings" component={Settings} />
 
         <Stack.Screen name="needy" component={FoodNeedier} />
         <Stack.Screen name="transporter" component={Transporter} />

@@ -96,7 +96,7 @@ const Donate = () => {
       noOfItem,
       imageUrls,
     };
-    navigation.navigate("helpMeal", {
+    navigation.navigate("DonateMeal", {
       number: noOfItem,
       resData: body,
     });
