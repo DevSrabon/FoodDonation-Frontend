@@ -1,27 +1,19 @@
-import { useRoute } from "@react-navigation/core";
-import { useNavigation } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { useEffect, useState } from "react";
-import {
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getDatabase, onValue, off, ref } from "firebase/database";
+import { userContext } from "../context/Provider";
 import SecuredChat from "./SecuredChat";
-
-import { getDatabase, onValue, ref } from "firebase/database";
-import { auth } from "../context/Provider";
 import RoutesMap from "./RoutesMap";
 
 export function RandomNumber() {
   const randomNumber = Math.floor(Math.random() * 1000);
   return randomNumber;
 }
+
 const Users = () => {
-  const [data, setData] = useState(null);
   const [users, setUsers] = useState([
     {
       chatid: 1,
@@ -31,18 +23,64 @@ const Users = () => {
     },
     // Add more user objects here
   ]);
-  //scedulepushnotification("title", "body", "data ");
+
+  const { user } = userContext();
+
   useEffect(() => {
-    onValue(
-      ref(getDatabase(), auth?.currentUser?.email.replace(/[@.]/g, "")),
-      (snapshot) => {
-        const data = snapshot.val();
-        if (data) {
-          setUsers(Object.values(data));
-        }
+    const databaseRef = ref(getDatabase(), user?.email.replace(/[@.]/g, ""));
+  
+    const handleSnapshot = (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        const fetchedUsers = Object.values(data);
+        
+        // Check for duplicate chatids
+        const uniqueUsers = fetchedUsers.reduce((acc, curr) => {
+          const existingUser = acc.find(user => user.chatid === curr.chatid);
+          if (!existingUser) {
+            return [...acc, curr];
+          }
+          return acc;
+        }, []);
+  
+        setUsers(uniqueUsers);
+  
+        // Store the chat data in AsyncStorage
+        AsyncStorage.setItem('chatData', JSON.stringify(uniqueUsers))
+          .catch(error => {
+            console.log('Error storing chat data:', error);
+          });
       }
-    );
+    };
+  
+    onValue(databaseRef, handleSnapshot);
+  
+    return () => {
+      off(databaseRef, handleSnapshot);
+    };
+  }, [user]);
+  
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await AsyncStorage.getItem('chatData');
+        if (data) {
+          const parsedData = JSON.parse(data);
+          setUsers(parsedData);
+        }
+      } catch (error) {
+        console.log('Error retrieving chat data:', error);
+      }
+    };
+  
+    const intervalId = setInterval(fetchData, 5000);
+  
+    return () => {
+      clearInterval(intervalId);
+    };
   }, []);
+  
 
   const navigation = useNavigation();
 
@@ -53,7 +91,7 @@ const Users = () => {
   return (
     <View style={{ marginTop: 30, marginBottom: 50 }}>
       <ScrollView>
-        {users.reverse().map((user) => (
+        {users.map((user) => (
           <TouchableOpacity
             key={user.chatid}
             onPress={() =>
@@ -93,7 +131,7 @@ const Users = () => {
   );
 };
 
-export const exportUserChatId = (props) => {
+const exportUserChatId = () => {
   const route = useRoute();
   return route.params?.userchatId;
 };

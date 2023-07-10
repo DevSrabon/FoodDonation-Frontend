@@ -9,7 +9,8 @@ import CustomAlert from "./CustomAlert";
 import Loading from "./Loading";
 import MapCallout from "./MapCallout";
 import SearchHeader from "./SearchHeader";
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from "axios";  
 const origin = { latitude: 11.70484, longitude: 92.715733 };
 const GOOGLE_MAPS_APIKEY = "AIzaSyD7TKiBE0n8EsPH_snI7QjhGFagY0Vq3FQ";
 
@@ -22,21 +23,52 @@ const UserMap = () => {
   const { user, setAllData } = userContext();
   // const { loading, error, data } = useFetchData(`users?email=srabon3@gmail.com`);
   const { loading, error, data } = useFetchData(`users?email=${user?.email}`);
-  const { data: mapUsers, loading: isLoading } = useFetchData(
-    `users/map?latitude=${data?.location?.latitude}&longitude=${data?.location?.longitude}&role=${data?.role}`
-  );
-
+  //const { data: data2, loading: isLoading } = useFetchData(
+    //`users/map?latitude=${data?.location?.latitude}&longitude=${data?.location?.longitude}&role=${data?.role}`
+  //);
+  const [data2, setData] = useState(null);
+  const [loading2, setLoading] = useState(true);
+  const [error2, setError2] = useState(null);
+ const url =`users/map?latitude=${data?.location?.latitude}&longitude=${data?.location?.longitude}&role=${data?.role}`;
   useEffect(() => {
-    if (data && mapUsers) {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `https://food-donation-backend.vercel.app/api/v1/users/map?latitude=${data?.location?.latitude}&longitude=${data?.location?.longitude}&role=${data?.role}`
+        );
+        setData(response?.data?.data);
+        setLoading(false);
+      } catch (error) {
+        setError2(error);
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [data?.location?.latitude,data?.location?.longitude,data?.role]);
+  console.log(data2)
+  const setLoadingState = async (value) => {
+    try {
+      await AsyncStorage.setItem('loadingState', JSON.stringify(value));
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  useEffect(() => {
+    if (data && data2) {
       setAllData((prev) => ({
         ...prev,
         userData: data,
-        mapUsers: [...mapUsers],
+        data2: [...data2],
       }));
     }
-  }, [data, mapUsers, setAllData]);
-  if (loading || isLoading) return <Loading />;
-
+  }, [data, data2, setAllData]);
+  if (loading || loading2)
+  {setLoadingState(1);
+   return <Loading />
+  };
+  setLoadingState(0);
+  console.log(data2);
   if (error) return setError(error.message);
   return (
     <View style={styles.mapContainer}>
@@ -83,8 +115,8 @@ const UserMap = () => {
           </Callout>
         </Marker>
 
-        {mapUsers.length
-          ? mapUsers?.map((user, i) => (
+        {
+           data2?.map((user, i) => (
               <Marker
                 key={i}
                 pinColor="yellow"
@@ -103,7 +135,7 @@ const UserMap = () => {
                 </Callout>
               </Marker>
             ))
-          : null}
+          }
       </MapView>
     </View>
   );
