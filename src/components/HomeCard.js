@@ -5,6 +5,7 @@ import icons from "../../assets/icons";
 import TimeLimitComponent from "../screens/TimeLimitComponent";
 
 const HomeCard = ({ item }) => {
+  console.log("🚀 ~ file: HomeCard.js:8 ~ HomeCard ~ item:", item);
   const navigation = useNavigation();
   return (
     <View key={item._id} style={styles.cardContainer}>
@@ -129,6 +130,11 @@ const styles = StyleSheet.create({
   profileText: {
     fontSize: 14,
     // marginTop: 8,
+  },
+  profileImage: {
+    flex: 1,
+    width: null,
+    height: null,
   },
   roleText: {
     fontSize: 16,

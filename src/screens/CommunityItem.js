@@ -36,7 +36,7 @@ const CommunityItem = ({ item }) => {
         </View>
         <View>
           <Text style={styles.date}>{date.toDateString()}</Text>
-          <Text style={styles.date}>Location</Text>
+          <Text style={styles.date}>{item?.location}</Text>
         </View>
       </View>
 

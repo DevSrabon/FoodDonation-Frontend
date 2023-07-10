@@ -10,6 +10,7 @@ import {
   View,
 } from "react-native";
 import AddImages from "../components/AddImages";
+import CustomAlert from "../components/CustomAlert";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import Header from "../components/Header";
@@ -18,7 +19,6 @@ import Container from "../components/container";
 import Label from "../components/label";
 import { userContext } from "../context/Provider";
 import useImagePicker from "../hook/useImagePicker";
-import CustomAlert from "../components/CustomAlert";
 
 const CommunityPost = () => {
   const { loading: imageLoading, imageUrls, takePhoto } = useImagePicker();
@@ -35,6 +35,7 @@ const CommunityPost = () => {
 
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
