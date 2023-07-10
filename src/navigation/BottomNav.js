@@ -7,7 +7,6 @@ import { userContext } from "../context/Provider";
 import Chat from "../screens/Chat";
 import Community from "../screens/Community";
 import Donate from "../screens/Donate";
-import Help from "../screens/Help";
 import User from "../screens/User";
 
 const Tab = createBottomTabNavigator();
@@ -96,7 +95,7 @@ const BottomNav = () => {
       ) : (
         <Tab.Screen
           name="help"
-          component={Help}
+          component={Donate}
           options={{
             title: "Help",
             tabBarIcon: ({ focused, color }) => (
