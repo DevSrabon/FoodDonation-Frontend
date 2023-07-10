@@ -115,8 +115,8 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   imageContainerProfile: {
-    width: 40,
-    height: 40,
+    width: 50,
+    height: 50,
     borderRadius: 50,
     overflow: "hidden",
     marginRight: 16,
