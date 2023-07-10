@@ -14,9 +14,7 @@ import axios from "axios";
 const HelpMeal = () => {
   const route = useRoute();
   const numbers = route.params.number;
-
   const resData = route.params.resData;
-
   const [listItems, setListItems] = useState([]);
 
   const mealOptions = [
@@ -283,6 +281,5 @@ const styles = StyleSheet.create({
     height: 38,
   },
 });
-
 
 export default HelpMeal;
