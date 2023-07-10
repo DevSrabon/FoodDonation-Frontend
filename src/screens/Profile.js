@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useState } from "react";
 import {
   ActivityIndicator,
@@ -37,6 +36,15 @@ const Profile = () => {
 
   const onBioSetup = async () => {
     if (!imageUrls.length || !bio) return alert("Please fill up your bio");
+    let notifications = {};
+
+    if (role === "needy") {
+      notifications.needyNotification = false;
+    } else if (role === "donor") {
+      notifications.donorNotification = false;
+    } else if (role === "transporter") {
+      notifications.transporterNotification = false;
+    }
     const bodyData = {
       bio,
       photo: imageUrls[0],
@@ -45,6 +53,7 @@ const Profile = () => {
       subRole,
       designation,
       ...body,
+      ...notifications,
     };
 
     try {

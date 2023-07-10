@@ -1,10 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Image } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import icons from "../../assets/icons";
 import { userContext } from "../context/Provider";
 import Loading from "./Loading";
-import icons from "../../assets/icons";
-import { TouchableOpacity } from "react-native";
 
 const SearchHeader = () => {
   const [search, setSearch] = useState(0);
@@ -18,19 +17,6 @@ const SearchHeader = () => {
     } else {
       navigation.navigate("login");
     }
-
-    // const handleAppStateChange = async (nextAppState) => {
-    //   if (nextAppState === "inactive" || nextAppState === "background") {
-    //     await AsyncStorage.removeItem("@mahbubmorshed");
-    //   }
-    // };
-
-    // AppState.addEventListener("change", handleAppStateChange);
-
-    // Cleanup function to remove the event listener
-    // return () => {
-    //   AppState.removeEventListener("change", handleAppStateChange);
-    // };
   };
 
   if (loading) return <Loading />;
@@ -70,7 +56,7 @@ const SearchHeader = () => {
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    paddingVertical: 12,
+    paddingVertical: 8,
   },
   headerView: {
     flexDirection: "row",

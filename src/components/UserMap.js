@@ -1,13 +1,13 @@
+import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import MapView, { Callout, Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { userContext } from "../context/Provider";
 import useFetchData from "../hook/useFetchData";
 import Loading from "./Loading";
 import MapCallout from "./MapCallout";
 import SearchHeader from "./SearchHeader";
-
 const origin = { latitude: 11.70484, longitude: 92.715733 };
 const GOOGLE_MAPS_APIKEY = "AIzaSyD7TKiBE0n8EsPH_snI7QjhGFagY0Vq3FQ";
 
@@ -37,7 +37,26 @@ const UserMap = () => {
   return (
     <View style={styles.mapContainer}>
       <SearchHeader />
-
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "flex-end",
+          marginRight: 30,
+          columnGap: 10,
+        }}
+      >
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Ionicons name="location" size={20} color="red" />
+          <Text>
+            {data?.role?.charAt(0)?.toUpperCase() + data?.role?.slice(1)}
+          </Text>
+        </View>
+        <View style={{ flexDirection: "row", alignItems: "center" }}>
+          <Ionicons name="location" size={20} color="yellow" />
+          <Text>{data?.role === "needy" ? "Donor" : "Needy"}</Text>
+        </View>
+      </View>
       <MapView
         provider={PROVIDER_GOOGLE}
         style={styles.map}
@@ -54,7 +73,7 @@ const UserMap = () => {
           }}
         >
           <Callout
-            onPress={() => navigation.navigate("donorPage", { user: data })}
+          // onPress={() => navigation.navigate("donorPage", { user: data })}
           >
             <MapCallout user={data} />
           </Callout>

@@ -29,8 +29,8 @@ import CommunityPost from "../screens/CommunityPost";
 import LoginScreen from "../screens/LoginScreen";
 import SignUpScreen from "../screens/SignUpScreen";
 
-import Settings from "../screens/Settings";
 import AniInput from "../components/AniInput";
+import Settings from "../screens/Settings";
 
 const Stack = createNativeStackNavigator();
 
