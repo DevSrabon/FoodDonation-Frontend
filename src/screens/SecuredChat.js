@@ -7,19 +7,21 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { encryptMessage, decryptMessage } from './Encrypt';
 import { useRoute } from '@react-navigation/core';
 import { useNavigation } from '@react-navigation/native';
-import {auth} from '../context/Provider';
+import {auth, userContext} from '../context/Provider';
 import leftArrow from '../../assets/icons/backbutton.png';
 import useFetchData from '../hook/useFetchData';
 const db = getDatabase();
 
 
 function Message({ item }) {
+  const {user}=userContext();
   const decryptedText = decryptMessage(item.text);
-  const isCurrentUser = item.user === auth.currentUser.displayName;
+  //console.log(user)
+  const isCurrentUser = item.user === user.displayName;
 
   return (
     <View style={[styles.message, isCurrentUser ? styles.currentUserMessage : null]}>
-      <Text style={[styles.user]}>
+      <Text style={[styles.user1]}>
         {item.user}
       </Text>
       <Text style={[styles.text, isCurrentUser ? styles.currentUserText : null]}>
@@ -38,10 +40,10 @@ const SecuredChat = () => {
 
   const [message, setMessage] = useState('');
   const [messages, setMessages] = useState([]);
-
+  const {user}=userContext();
   const route = useRoute();
   const { userchatId } = route.params;
-  const {user} = route.params;
+  const {user:ouser} = route.params;
   const {emaill} = route.params;
 
   useEffect(() => {
@@ -49,10 +51,11 @@ const SecuredChat = () => {
       const data = snapshot.val();
       if (data) {
         setMessages(Object.values(data));
+        
       }
     });
   }, []);
-  const emailll = auth?.currentUser?.email;
+  const emailll = user?.email;
   function handleYes() {
     set(ref(getDatabase(), 'FoodDelivery'), {
       email: emailll,
@@ -73,7 +76,7 @@ const SecuredChat = () => {
       const newMessage = {
         id: Date.now().toString(),
         text: encryptedMessage,
-        user: auth.currentUser.displayName,
+        user: user.displayName,
         createdAt: new Date().toISOString(),
       };
 
@@ -96,7 +99,7 @@ const SecuredChat = () => {
           source={leftArrow} ></Image>
       </TouchableOpacity>
       <TouchableOpacity >
-        <Text style={{ position: 'absolute',padding:10, top: 10, left: 100, zIndex: 1,fontSize:25 }}>{user}</Text>
+        <Text style={{ position: 'absolute',padding:10, top: 10, left: 100, zIndex: 1,fontSize:25 }}>{ouser}</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('Routes', { userchatId,emaill })} >
         <Text style={{ position: 'absolute',padding:10,borderWidth:1, top: 20, right: 10, zIndex: 1, borderRadius: 100, backgroundColor: "lightblue" }}>Map</Text>
@@ -113,7 +116,9 @@ const SecuredChat = () => {
         </TouchableOpacity>
       </TouchableOpacity>
       </View>
-      <FlatList
+      <FlatList 
+      inverted 
+      contentContainerStyle={{ flexDirection: 'column-reverse'}}
         style={styles.messagesContainer}
         data={messages}
         renderItem={renderItem}
@@ -199,7 +204,7 @@ const styles = StyleSheet.create({
   sendButton: {
     color: 'blue',
   },
-  user: {
+  user1: {
     fontSize: 12,
     color: 'green'
   }

@@ -12,13 +12,13 @@ import { auth, userContext } from "../context/Provider";
 let i = 1;
 const DonorPage = () => {
   const route = useRoute();
-  const { user } = route.params;
+  const { user:paramUser } = route.params;
   console.log("🚀 ~ file: DonorPage.js:17 ~ DonorPage ~ user:", user);
-  const { allData } = userContext();
+  const { allData,user } = userContext();
   const navigation = useNavigation();
   const [address, setAddress] = useState();
-  const latitude = user.location.latitude;
-  const longitude = user.location.longitude;
+  const latitude = paramUser.location.latitude;
+  const longitude = paramUser.location.longitude;
 
   const getAddressFromCoordinates = async () => {
     try {
@@ -47,11 +47,11 @@ const DonorPage = () => {
       return [email1, email2].sort().join();
     };
 
-    const chatRef = ref(getDatabase(), user?.email?.replace(/[@.]/g, ""));
+    const chatRef = ref(getDatabase(), paramUser?.email?.replace(/[@.]/g, ""));
     const newMessage = {
-      mail: auth?.currentUser?.email,
-      name: auth?.currentUser?.displayName,
-      chatid: createChatId(auth?.currentUser?.email, user?.email),
+      mail: user?.email,
+      name: user?.displayName,
+      chatid: createChatId(paramUser?.email, user?.email),
     };
 
     // Check if the email already exists in the database
@@ -59,7 +59,7 @@ const DonorPage = () => {
       const emails = Object.values(snapshot.val() || {}).map(
         (message) => message.mail
       );
-      if (!emails.includes(auth?.currentUser?.email)) {
+      if (!emails.includes(user?.email)) {
         // Email doesn't exist, push the new message
         push(chatRef, newMessage);
       }
@@ -67,12 +67,12 @@ const DonorPage = () => {
 
     const chatRef1 = ref(
       getDatabase(),
-      auth?.currentUser?.email.replace(/[@.]/g, "")
+      user?.email.replace(/[@.]/g, "")
     );
     const newMessage1 = {
-      mail: user?.email,
-      name: user?.userName,
-      chatid: createChatId(auth?.currentUser?.email, user?.email),
+      mail: paramUser?.email,
+      name: paramUser?.userName,
+      chatid: createChatId(paramUser?.email, user?.email),
     };
 
     // Check if the email already exists in the database
@@ -84,7 +84,7 @@ const DonorPage = () => {
         // Email doesn't exist, push the new message
         push(chatRef1, newMessage1);
       }
-    });
+    });/*
     //here location is set
     set(ref(getDatabase(), "location/" + user?.email?.replace(/[@.]/g, "")), {
       lat: allData?.userData?.location?.latitude,
@@ -94,26 +94,26 @@ const DonorPage = () => {
     set(
       ref(
         getDatabase(),
-        "location/" + auth?.currentUser?.email?.replace(/[@.]/g, "")
+        "location/" + user?.email?.replace(/[@.]/g, "")
       ),
-      { lat: user?.location?.latitude, lng: user?.location?.longitude }
+      { lat: paramUser?.location?.latitude, lng: paramUser?.location?.longitude }
     );
 
     //here is the location
     get(
-      ref(getDatabase(), "location/" + user?.email?.replace(/[@.]/g, ""))
+      ref(getDatabase(), "location/" + paramUser?.email?.replace(/[@.]/g, ""))
     ).then((snapshot) => {
       console.log(snapshot.val());
     });
     get(
       ref(
         getDatabase(),
-        "location/" + auth?.currentUser?.email?.replace(/[@.]/g, "")
+        "location/" + user?.email?.replace(/[@.]/g, "")
       )
     ).then((snapshot) => {
       console.log(snapshot.val());
     });
-    /*
+    
   set(ref(getDatabase(), "notification/" + user.email.replace(/[@.]/g, ""))), {
     title: "New Chat",
     body: "You have a new chat from " + auth.currentUser.displayName,
@@ -134,7 +134,7 @@ const DonorPage = () => {
   };
 
   return (
-    <Container key={user?._id}>
+    <Container key={paramUser?._id}>
       <View
         style={{
           flex: 1,
@@ -149,7 +149,7 @@ const DonorPage = () => {
             fontSize: 18,
           }}
         >
-          {user?.categoryName || user?.postCategoryName}
+          {paramUser?.categoryName || paramUser?.postCategoryName}
           {/* Cafe Bilhares */}
         </Text>
         <View style={{ flexDirection: "row" }}>
@@ -169,7 +169,7 @@ const DonorPage = () => {
           }}
         >
           <Image
-            source={{ uri: user?.image?.[0] || user?.imageUrls?.[0] }}
+            source={{ uri: paramUser?.image?.[0] || paramUser?.imageUrls?.[0] }}
             // source={require("../../assets/icons/fixedHeight.png")}
             style={{ width: "100%", height: 180, resizeMode: "stretch" }}
           />
@@ -183,7 +183,7 @@ const DonorPage = () => {
             }}
           >
             <Text style={{ fontFamily: "Medium", fontSize: 10 }}>
-              {user?.subRole || user?.role}
+              {paramUser?.subRole || paramUser?.role}
               {/* donar */}
             </Text>
           </View>
@@ -233,8 +233,8 @@ const DonorPage = () => {
           </View>
         </View>
         <View>
-          {user?.name ? (
-            <Measure email={user?.email} />
+          {paramUser?.name ? (
+            <Measure email={paramUser?.email} />
           ) : (
             <View
               style={{
@@ -247,9 +247,9 @@ const DonorPage = () => {
               }}
             >
               <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-                {user?.role === "needy" ? "Food Needed" : "Food Availability"}
+                {paramUser?.role === "needy" ? "Food Needed" : "Food Availability"}
               </Text>
-              {user?.listItems?.map((item) => (
+              {paramUser?.listItems?.map((item) => (
                 <View
                   key={item.id}
                   style={{
@@ -286,7 +286,7 @@ const DonorPage = () => {
           <Image
             source={
               {
-                uri: user?.photo,
+                uri: paramUser?.photo,
               } || icons.profile
             }
             // source={require("../../assets/icons/profile.png")}
@@ -294,16 +294,16 @@ const DonorPage = () => {
           />
           <View>
             <Text style={{ fontFamily: "SemiBold", fontSize: 16 }}>
-              {user?.userName || user?.name}
+              {paramUser?.userName || paramUser?.name}
               {/* Sourav Paul */}
             </Text>
             <Text style={{ fontFamily: "Medium", fontSize: 12 }}>
-              {user?.role}
+              {paramUser?.role}
               {/* Restaurent owner */}
             </Text>
           </View>
         </View>
-        {/* user?.role === "donor" */}
+        {/* paramUser?.role === "donor" */}
         <View style={{ flex: 1, alignItems: "center", gap: 10, marginTop: 10 }}>
           {allData?.guestData !== "guest" ? (
             <>
