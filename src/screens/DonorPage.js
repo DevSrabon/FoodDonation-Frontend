@@ -47,11 +47,11 @@ const DonorPage = () => {
       return [email1, email2].sort().join();
     };
 
-    const chatRef = ref(getDatabase(), user.email.replace(/[@.]/g, ""));
+    const chatRef = ref(getDatabase(), user?.email?.replace(/[@.]/g, ""));
     const newMessage = {
-      mail: auth.currentUser.email,
-      name: auth.currentUser.displayName,
-      chatid: createChatId(auth.currentUser.email, user.email),
+      mail: auth?.currentUser?.email,
+      name: auth?.currentUser?.displayName,
+      chatid: createChatId(auth?.currentUser?.email, user?.email),
     };
 
     // Check if the email already exists in the database
@@ -59,7 +59,7 @@ const DonorPage = () => {
       const emails = Object.values(snapshot.val() || {}).map(
         (message) => message.mail
       );
-      if (!emails.includes(auth.currentUser.email)) {
+      if (!emails.includes(auth?.currentUser?.email)) {
         // Email doesn't exist, push the new message
         push(chatRef, newMessage);
       }
@@ -67,12 +67,12 @@ const DonorPage = () => {
 
     const chatRef1 = ref(
       getDatabase(),
-      auth.currentUser.email.replace(/[@.]/g, "")
+      auth?.currentUser?.email.replace(/[@.]/g, "")
     );
     const newMessage1 = {
-      mail: user.email,
-      name: user.userName,
-      chatid: createChatId(auth.currentUser.email, user.email),
+      mail: user?.email,
+      name: user?.userName,
+      chatid: createChatId(auth?.currentUser?.email, user?.email),
     };
 
     // Check if the email already exists in the database
@@ -80,35 +80,35 @@ const DonorPage = () => {
       const emails = Object.values(snapshot.val() || {}).map(
         (message) => message.mail
       );
-      if (!emails.includes(user.email)) {
+      if (!emails?.includes(user?.email)) {
         // Email doesn't exist, push the new message
         push(chatRef1, newMessage1);
       }
     });
     //here location is set
-    set(ref(getDatabase(), "location/" + user.email.replace(/[@.]/g, "")), {
-      lat: allData.userData.location.latitude,
-      lng: allData.userData.location.longitude,
+    set(ref(getDatabase(), "location/" + user?.email?.replace(/[@.]/g, "")), {
+      lat: allData?.userData?.location?.latitude,
+      lng: allData?.userData?.location?.longitude,
     });
 
     set(
       ref(
         getDatabase(),
-        "location/" + auth.currentUser.email.replace(/[@.]/g, "")
+        "location/" + auth?.currentUser?.email?.replace(/[@.]/g, "")
       ),
-      { lat: user.location.latitude, lng: user.location.longitude }
+      { lat: user?.location?.latitude, lng: user?.location?.longitude }
     );
 
     //here is the location
-    get(ref(getDatabase(), "location/" + user.email.replace(/[@.]/g, ""))).then(
-      (snapshot) => {
-        console.log(snapshot.val());
-      }
-    );
+    get(
+      ref(getDatabase(), "location/" + user?.email?.replace(/[@.]/g, ""))
+    ).then((snapshot) => {
+      console.log(snapshot.val());
+    });
     get(
       ref(
         getDatabase(),
-        "location/" + auth.currentUser.email.replace(/[@.]/g, "")
+        "location/" + auth?.currentUser?.email?.replace(/[@.]/g, "")
       )
     ).then((snapshot) => {
       console.log(snapshot.val());
