@@ -1,4 +1,4 @@
-import { useRoute } from "@react-navigation/native";
+/*import { useRoute } from "@react-navigation/native";
 import * as Location from "expo-location";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
@@ -6,57 +6,29 @@ import { auth } from "../context/Provider";
 import { getDatabase, ref, set, onValue, off } from "firebase/database";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
+import useFetchData from "../hook/useFetchData";
+import {auth} from '../context/Provider';
+//const GOOGLE_MAPS_APIKEY =  "AIzaSyD7TKiBE0n8EsPH_snI7QjhGFagY0Vq3FQ";  Replace with your Google Maps API key
 
-const GOOGLE_MAPS_APIKEY =  "AIzaSyD7TKiBE0n8EsPH_snI7QjhGFagY0Vq3FQ"; // Replace with your Google Maps API key
-
-async function askLocationPermission() {
-  let { status } = await Location.requestForegroundPermissionsAsync();
-  if (status !== "granted") {
-    setErrorMsg("Permission to access location was denied");
-    return;
-  }
-
-  let { status: status2 } = await Location.requestBackgroundPermissionsAsync();
-
-  let location = await Location.getCurrentPositionAsync({});
-  return location;
-}
 
 const RoutesMap = () => {
   const route = useRoute();
   const { userchatId } = route.params;
-
-  const [status, setStatus] = useState(null);
-  const [otherUsers, setOtherUsers] = useState({});
-  
-  const [initialRegion, setInitialRegion] = useState(null);
-  
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const result = await askLocationPermission();
-      setStatus(result);
-
-      if (result) {
-        const { coords } = result;
+const currentUser =useFetchData(`users?email=${user?.auth.currentUser.email}`)
+  const opponentUser = useFetchData(`users?email=${user?.auth.currentUser.email}`);
+  const transporter = useFetchData(`users?email=${user?.auth.currentUser.email}`);
+  /*useEffect(() => {
+   
         set(
           ref(
             getDatabase(),
             `location/${userchatId}/` + auth.currentUser.email.replace(/[@.]/g, "")
           ),
-          {
-            lat: coords.latitude,
-            lng: coords.longitude,
-          }
-        );
-        setInitialRegion({
-          latitude: coords.latitude,
-          longitude: coords.longitude,
-          latitudeDelta: 0.5,
-          longitudeDelta: 0.5,
-        });
-      }
-    };
+        )
+
+     
+      },[]);
+ 
 
     const fetchOtherUsers = () => {
       const dbRef = ref(getDatabase(), `location/${userchatId}`);
@@ -106,6 +78,7 @@ const RoutesMap = () => {
     }
 
     return markers;
+    
   };
 
   const renderDirections = () => {
@@ -137,12 +110,37 @@ const RoutesMap = () => {
 
   return (
     <View style={styles.container}>
-      {status && (
+      
         <MapView provider={PROVIDER_GOOGLE} style={styles.map} initialRegion={initialRegion}>
-          {renderMarkers()}
-          {renderDirections()}
+          <Marker
+            coordinate={{
+              latitude: currentUser?.lat,
+              longitude: currentUser?.lng,
+            }}
+            title={currentUser?.email}
+          />
+          <Marker
+            coordinate={{
+              latitude: opponentUser?.lat,
+              longitude: opponentUser?.lng,
+            }}
+            title={opponentUser?.email}
+          />
+          <MapViewDirections
+            origin={{
+              latitude: currentUser?.lat,
+              longitude: currentUser?.lng,
+            }}
+            destination={{
+              latitude: opponentUser?.lat,
+              longitude: opponentUser?.lng,
+            }}
+            apikey={GOOGLE_MAPS_APIKEY}
+            strokeWidth={3}
+            strokeColor="#4287f5"
+          />
         </MapView>
-      )}
+    
     </View>
   );
 };
@@ -160,3 +158,18 @@ const styles = StyleSheet.create({
 });
 
 export default RoutesMap;
+*/
+import { StyleSheet, Text, View } from 'react-native'
+import React from 'react'
+
+const RoutesMap = () => {
+  return (
+    <View>
+      <Text>RoutesMap</Text>
+    </View>
+  )
+}
+
+export default RoutesMap
+
+const styles = StyleSheet.create({})

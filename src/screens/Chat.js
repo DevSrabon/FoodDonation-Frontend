@@ -36,15 +36,16 @@ const Users = () => {
 
   const navigation = useNavigation();
 
-  const handleUserPress = (userchatId) => {
-    navigation.navigate('SecuredChat', { userchatId });
+  const handleUserPress = (userchatId,user,emaill) => {
+    navigation.navigate('SecuredChat', { userchatId ,user,emaill});
+    
   };
 
   return (
     <View style={{ marginTop: 30, marginBottom: 50 }}>
       <ScrollView>
         {users.reverse().map((user) => (
-          <TouchableOpacity key={user.chatid} onPress={() => handleUserPress(user.chatid.replace(/[@.]/g, ""))}>
+          <TouchableOpacity key={user.chatid} onPress={() => handleUserPress(user.chatid.replace(/[@.]/g, ""),user.name,user.mail)}>
             <View style={{ flexDirection: 'row', padding: 20, alignItems: 'center' }}>
               <Image source={require('../../assets/icons/profile.png')} style={{ width: 60, height: 60, borderRadius: 30 }} />
               <View>
@@ -76,7 +77,7 @@ const Chat = () => {
         name="SecuredChat"
         component={SecuredChat}
         initialParams={{ userchatId }}
-      
+        options={{headerShown:false}}
         
       
       />
