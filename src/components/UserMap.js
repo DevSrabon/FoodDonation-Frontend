@@ -5,10 +5,10 @@ import { StyleSheet, Text, View } from "react-native";
 import MapView, { Callout, Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import { userContext } from "../context/Provider";
 import useFetchData from "../hook/useFetchData";
+import CustomAlert from "./CustomAlert";
 import Loading from "./Loading";
 import MapCallout from "./MapCallout";
 import SearchHeader from "./SearchHeader";
-import CustomAlert from "./CustomAlert";
 
 const origin = { latitude: 11.70484, longitude: 92.715733 };
 const GOOGLE_MAPS_APIKEY = "AIzaSyD7TKiBE0n8EsPH_snI7QjhGFagY0Vq3FQ";
@@ -18,7 +18,6 @@ const UserMap = () => {
   const [serach, setSearch] = useState(0);
 
   const [errorMessage, setError] = useState("");
-
 
   const { user, setAllData } = userContext();
   // const { loading, error, data } = useFetchData(`users?email=srabon3@gmail.com`);
@@ -84,24 +83,26 @@ const UserMap = () => {
           </Callout>
         </Marker>
 
-        {mapUsers?.length
+        {mapUsers.length
           ? mapUsers?.map((user, i) => (
-            <Marker
-              key={i}
-              pinColor="yellow"
-              coordinate={{
-                ...user?.location,
-              }}
-            >
-              <Callout
-                onPress={() => navigation.navigate("donorPage", { user })}
+              <Marker
+                key={i}
+                pinColor="yellow"
+                coordinate={{
+                  ...user?.location,
+                }}
               >
-                {(errorMessage) && <CustomAlert type="error" value={errorMessage} />}
+                <Callout
+                  onPress={() => navigation.navigate("donorPage", { user })}
+                >
+                  {errorMessage && (
+                    <CustomAlert type="error" value={errorMessage} />
+                  )}
 
-                <MapCallout user={user} key={i}></MapCallout>
-              </Callout>
-            </Marker>
-          ))
+                  <MapCallout user={user} key={i}></MapCallout>
+                </Callout>
+              </Marker>
+            ))
           : null}
       </MapView>
     </View>
