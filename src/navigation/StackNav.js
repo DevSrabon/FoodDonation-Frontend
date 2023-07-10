@@ -61,6 +61,7 @@ const StackNav = () => {
         <Stack.Screen name="roleSelection" component={RoleSelection} />
         <Stack.Screen name="profile" component={Profile} />
         <Stack.Screen name="otp" component={Otp} />
+        <Stack.Screen name="settings" component={Settings} />
 
         <Stack.Screen name="needy" component={FoodNeedier} />
         <Stack.Screen name="transporter" component={Transporter} />
