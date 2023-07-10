@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet, Image } from 'react-native';
-import { getDatabase, ref, onValue, push } from 'firebase/database';
+import { View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet, Image, Alert } from 'react-native';
+import { getDatabase, ref, onValue, push, set } from 'firebase/database';
 import { Marker, MapView } from 'react-native-maps';
 import * as Location from 'expo-location';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -9,6 +9,7 @@ import { useRoute } from '@react-navigation/core';
 import { useNavigation } from '@react-navigation/native';
 import {auth} from '../context/Provider';
 import leftArrow from '../../assets/icons/backbutton.png';
+import useFetchData from '../hook/useFetchData';
 const db = getDatabase();
 
 
@@ -42,7 +43,7 @@ const SecuredChat = () => {
   const { userchatId } = route.params;
   const {user} = route.params;
   const {emaill} = route.params;
-console.log(emaill);
+
   useEffect(() => {
     onValue(ref(db, `rooms/${userchatId}/messages`), (snapshot) => {
       const data = snapshot.val();
@@ -51,6 +52,21 @@ console.log(emaill);
       }
     });
   }, []);
+  const emailll = auth?.currentUser?.email;
+  function handleYes() {
+    set(ref(getDatabase(), 'FoodDelivery'), {
+      email: emailll,
+      Delivered: "Yes",
+    })
+    Alert.alert("Thank You \n ")
+  }
+  function handleNo() {
+    set(ref(getDatabase(), 'FoodDelivery'), {
+      email: emailll,
+      Delivered: "No",
+    })
+    Alert.alert("Food Not delivered ? \n  We will look into this matter")
+  }
   function sendMessage() {
     if (message.trim()) {
       const encryptedMessage = encryptMessage(message.trim());
@@ -89,10 +105,10 @@ console.log(emaill);
       <View style={{paddingTop:20,paddingLeft:10}} >
       <TouchableOpacity>
         <Text style={{ position: 'absolute',padding:10, top: 50, left: 10, zIndex: 1,fontSize:18 }}>Is food delivered?</Text>
-        <TouchableOpacity >
+        <TouchableOpacity onPress={handleYes }>
           <Text style={{color:"green", position: 'absolute',padding:10, top: 50, left: 180, zIndex: 1,fontSize:18 }}>Yes</Text>
         </TouchableOpacity>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handleNo}>
           <Text style={{color:"red", position: 'absolute',padding:10, top: 50, left: 220, zIndex: 1,fontSize:18 }}>No</Text>
         </TouchableOpacity>
       </TouchableOpacity>

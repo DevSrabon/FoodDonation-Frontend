@@ -26,7 +26,8 @@ const Users = () => {
   ]);
   //scedulepushnotification("title", "body", "data ");
   useEffect(() => {
-    onValue(ref(getDatabase(), auth.currentUser.email.replace(/[@.]/g, "")), (snapshot) => {
+
+    onValue(ref(getDatabase(), auth.currentUser?.email.replace(/[@.]/g, "")), (snapshot) => {
       const data = snapshot.val();
       if (data) {
         setUsers(Object.values(data));
@@ -38,7 +39,7 @@ const Users = () => {
 
   const handleUserPress = (userchatId,user,emaill) => {
     navigation.navigate('SecuredChat', { userchatId ,user,emaill});
-    
+ 
   };
 
   return (
@@ -54,6 +55,7 @@ const Users = () => {
               </View>
             </View>
           </TouchableOpacity>
+
         ))}
       </ScrollView>
     </View>
@@ -64,6 +66,7 @@ export const exportUserChatId = (props) => {
   const route = useRoute();
   return route.params?.userchatId ;
 };
+
 
 const Stack = createNativeStackNavigator();
 

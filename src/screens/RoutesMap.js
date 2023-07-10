@@ -1,175 +1,99 @@
-/*import { useRoute } from "@react-navigation/native";
-import * as Location from "expo-location";
-import React, { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
-import { auth } from "../context/Provider";
-import { getDatabase, ref, set, onValue, off } from "firebase/database";
-import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
-import MapViewDirections from "react-native-maps-directions";
-import useFetchData from "../hook/useFetchData";
-import {auth} from '../context/Provider';
-//const GOOGLE_MAPS_APIKEY =  "AIzaSyD7TKiBE0n8EsPH_snI7QjhGFagY0Vq3FQ";  Replace with your Google Maps API key
+import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect,useState } from 'react';
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import { userContext } from '../context/Provider';
+import { all } from 'axios';
+import { useRoute } from '@react-navigation/native';
+import useFetchData from '../hook/useFetchData';
+import MapViewDirections from 'react-native-maps-directions';
 
-
+const GOOGLE_MAPS_APIKEY = "AIzaSyD7TKiBE0n8EsPH_snI7QjhGFagY0Vq3FQ";
 const RoutesMap = () => {
   const route = useRoute();
-  const { userchatId } = route.params;
-const currentUser =useFetchData(`users?email=${user?.auth.currentUser.email}`)
-  const opponentUser = useFetchData(`users?email=${user?.auth.currentUser.email}`);
-  const transporter = useFetchData(`users?email=${user?.auth.currentUser.email}`);
-  /*useEffect(() => {
-   
-        set(
-          ref(
-            getDatabase(),
-            `location/${userchatId}/` + auth.currentUser.email.replace(/[@.]/g, "")
-          ),
-        )
-
-     
-      },[]);
- 
-
-    const fetchOtherUsers = () => {
-      const dbRef = ref(getDatabase(), `location/${userchatId}`);
-      onValue(dbRef, (snapshot) => {
-        const data = snapshot.val();
-        if (data) {
-          setOtherUsers(data);
-        }
-      });
-    };
-
-    const intervalId = setInterval(fetchOtherUsers, 5000); // Fetch opponent user's location every 5 seconds
-
-    fetchData();
-    fetchOtherUsers();
-    return () => {
-      clearInterval(intervalId);
-      off(ref(getDatabase(), `location/${userchatId}`));
-    };
-  }, [userchatId]);
-
-  const renderMarkers = () => {
-    const markers = Object.entries(otherUsers).map(([userEmail, userLocation]) => (
-      <Marker
-        key={userEmail}
-        pinColor="yellow"
-        coordinate={{
-          latitude: userLocation.lat,
-          longitude: userLocation.lng,
-        }}
-        title={userEmail}
-      />
-    ));
-
-    if (status && status.coords) {
-      markers.push(
-        <Marker
-          key={"userLocation"}
-          
-          coordinate={{
-            latitude: status.coords.latitude,
-            longitude: status.coords.longitude,
-          }}
-          title={auth.currentUser.email.replace(/[@.]/g, "")}
-        />
-      );
-    }
-
-    return markers;
-    
+  const initialRegion = {
+    latitude: 24.8486,
+    longitude: 89.3711,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
   };
 
-  const renderDirections = () => {
-    if (status && status.coords && Object.keys(otherUsers).length > 0) {
+  const { userchatId } = route.params;
+  const { allData } = userContext();
+  const { emaill } = route.params;
+  const { loading, error, data } = useFetchData(`users?email=${emaill}`);
+  const [directions, setDirections] = useState([]);
+
+  useEffect(() => {
+    console.log(allData);
+    console.log(data);
+
+    if (allData.userData?.location && data?.location) {
+      // Calculate the shortest route between the two locations
       const origin = {
-        latitude: status.coords.latitude,
-        longitude: status.coords.longitude,
+        latitude: allData.userData.location.latitude,
+        longitude: allData.userData.location.longitude,
       };
 
-      const destinations = Object.values(otherUsers).map((userLocation) => ({
-        latitude: userLocation.lat,
-        longitude: userLocation.lng,
-      }));
+      const destination = {
+        latitude: data.location.latitude,
+        longitude: data.location.longitude,
+      };
 
-      return destinations.map((destination, index) => (
-        <MapViewDirections
-          key={index}
-          origin={origin}
-          destination={destination}
-          apikey={GOOGLE_MAPS_APIKEY}
-          strokeWidth={3}
-          strokeColor="#4287f5"
-        />
-      ));
+      setDirections([{ origin, destination }]);
     }
-
-    return null;
-  };
+  }, [allData, data]);
 
   return (
     <View style={styles.container}>
-      
-        <MapView provider={PROVIDER_GOOGLE} style={styles.map} initialRegion={initialRegion}>
+      <MapView
+        style={styles.map}
+        provider={PROVIDER_GOOGLE}
+        initialRegion={initialRegion}
+      >
+        {allData.userData?.location && (
           <Marker
             coordinate={{
-              latitude: currentUser?.lat,
-              longitude: currentUser?.lng,
+              latitude: allData.userData.location.latitude,
+              longitude: allData.userData.location.longitude,
             }}
-            title={currentUser?.email}
           />
+        )}
+        {data?.location && (
           <Marker
             coordinate={{
-              latitude: opponentUser?.lat,
-              longitude: opponentUser?.lng,
+              latitude: data.location.latitude,
+              longitude: data.location.longitude,
             }}
-            title={opponentUser?.email}
+            pinColor="yellow" // Set marker color to yellow
           />
+        )}
+        {directions.map((direction, index) => (
           <MapViewDirections
-            origin={{
-              latitude: currentUser?.lat,
-              longitude: currentUser?.lng,
-            }}
-            destination={{
-              latitude: opponentUser?.lat,
-              longitude: opponentUser?.lng,
-            }}
+            key={index}
+            origin={direction.origin}
+            destination={direction.destination}
             apikey={GOOGLE_MAPS_APIKEY}
             strokeWidth={3}
-            strokeColor="#4287f5"
+            strokeColor="blue"
           />
-        </MapView>
-    
+        ))}
+      </MapView>
     </View>
   );
 };
 
+
+
+export default RoutesMap;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   map: {
-    width: "100%",
-    height: "100%",
+    width: '100%',
+    height: '100%',
   },
 });
-
-export default RoutesMap;
-*/
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-
-const RoutesMap = () => {
-  return (
-    <View>
-      <Text>RoutesMap</Text>
-    </View>
-  )
-}
-
-export default RoutesMap
-
-const styles = StyleSheet.create({})
