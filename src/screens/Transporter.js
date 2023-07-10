@@ -7,9 +7,14 @@ import Container from "../components/container";
 import { userContext } from "../context/Provider";
 
 import useUpdateUser from "../hook/useUpdateSubRoleUser";
+import CustomAlert from "../components/CustomAlert";
 
 const Transporter = () => {
   const [update, setUpdate] = useState("");
+
+  const [errorMessage, setError] = useState("");
+
+
   const { user } = userContext();
   const { loading, error, updateUserRole } = useUpdateUser();
 
@@ -17,7 +22,7 @@ const Transporter = () => {
     updateUserRole(update, user?.email, "addRestaurant");
   };
 
-  if (error) return alert(error);
+  if (error) return setError(error);
 
   if (loading) return <Loading />;
 
@@ -105,6 +110,8 @@ const Transporter = () => {
           bottom: 200,
         }}
       >
+        {(errorMessage) && <CustomAlert type="error" value={errorMessage} />}
+
         <CustomButton text="Continue" onPress={onRoleSelect} type="primary" />
       </View>
     </Container>
