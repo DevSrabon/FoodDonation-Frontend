@@ -1,8 +1,9 @@
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import TimeLimitComponent from "../screens/TimeLimitComponent";
-import { useNavigation } from "@react-navigation/core";
+import { useNavigation } from "@react-navigation/native";
 import icons from "../../assets/icons";
+
 const HomeCard = ({ item }) => {
   const navigation = useNavigation();
   return (
