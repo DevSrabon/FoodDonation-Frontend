@@ -91,7 +91,9 @@ const CommunityPost = () => {
       );
       if (res.data.status === "success") {
         // alert("Submitted");
-        setSuccess("Submitted");
+        setRefetch(true);
+        // setSuccess("Submitted");
+        navigation.navigate("community");
       }
     } catch (error) {
       setError(error.message);
@@ -138,6 +140,7 @@ const CommunityPost = () => {
             placeholder="Description of event"
             value={description}
             setValue={setDescription}
+            numberOfLines={10}
           />
 
           <Label>No of Items</Label>
