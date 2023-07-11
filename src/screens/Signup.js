@@ -2,6 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import React, { useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
+import CustomAlert from "../components/CustomAlert";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import Header from "../components/Header";
@@ -9,7 +10,6 @@ import Loading from "../components/Loading";
 import Container from "../components/container";
 import Label from "../components/label";
 import { userContext } from "../context/Provider";
-import CustomAlert from "../components/CustomAlert";
 const Signup = () => {
   const { createUser, updateUser, user, promptAsync, loading, setLoading } =
     userContext();
@@ -21,7 +21,6 @@ const Signup = () => {
   const [password, setPassword] = useState("");
 
   const [error, setError] = useState("");
-
 
   const onSignup = async () => {
     const userName = { displayName: firstName + " " + lastName };
@@ -88,6 +87,7 @@ const Signup = () => {
           placeholder="Your Phone Number"
           value={phoneNumber}
           setValue={setPhoneNumber}
+          keyboardType={"phone-pad"}
         />
 
         <Label>E-mail</Label>
@@ -95,6 +95,7 @@ const Signup = () => {
           placeholder="Your Email"
           value={email}
           setValue={setEmail}
+          keyboardType="email-address"
         />
 
         <Label>Password</Label>
@@ -126,8 +127,7 @@ const Signup = () => {
         <View
           style={{ flex: 1, alignSelf: "center", justifyContent: "center" }}
         >
-
-          {(error) && <CustomAlert type="error" value={error} />}
+          {error && <CustomAlert type="error" value={error} />}
 
           <Text
             style={{

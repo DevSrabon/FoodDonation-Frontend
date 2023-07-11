@@ -16,7 +16,6 @@ const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  console.log("🚀 ~ file: Provider.js:19 ~ AuthProvider ~ user:", user);
   const [refetch, setRefetch] = useState(false);
   const [allData, setAllData] = useState({
     userData: null,

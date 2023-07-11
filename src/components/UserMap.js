@@ -47,7 +47,7 @@ const UserMap = () => {
       fetchData();
     }
   }, [data?.location?.latitude, data?.location?.longitude, data?.role]);
-  console.log(data2);
+
   const setLoadingState = async (value) => {
     try {
       await AsyncStorage.setItem("loadingState", JSON.stringify(value));
