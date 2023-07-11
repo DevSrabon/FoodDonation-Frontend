@@ -73,7 +73,10 @@ const UserMap = () => {
   if (error) return setError(error.message);
   return (
     <View style={styles.mapContainer}>
-      <SearchHeader />
+      <View style={{ marginHorizontal: 10 }}>
+        <SearchHeader />
+      </View>
+
       <View
         style={{
           flexDirection: "row",
@@ -142,7 +145,6 @@ const styles = StyleSheet.create({
   mapContainer: {
     ...StyleSheet.absoluteFillObject,
     flex: 1,
-    marginTop: 20,
     backgroundColor: "#fff",
   },
   map: {

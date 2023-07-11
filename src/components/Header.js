@@ -8,9 +8,7 @@ const Header = (props) => {
         alignSelf: "flex-start",
         marginTop: 10,
         marginLeft: 15,
-
         marginBottom: 10,
-        // backgroundColor:'lightblue'
       }}
     >
       <Text style={{ ...styles.typography, ...props.style }}>
