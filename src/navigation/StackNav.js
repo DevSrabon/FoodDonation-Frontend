@@ -28,7 +28,6 @@ import BottomNav from "./BottomNav";
 import CommunityPost from "../screens/CommunityPost";
 import LoginScreen from "../screens/LoginScreen";
 import SignUpScreen from "../screens/SignUpScreen";
-import UswerMap from "../components/UserMap";
 
 import AniInput from "../components/AniInput";
 import Settings from "../screens/Settings";
@@ -42,7 +41,6 @@ const StackNav = () => {
         initialRouteName={"initial"}
         screenOptions={{ headerShown: false }}
       >
-
         {/* <Stack.Screen name="initial" component={Donate} /> */}
         <Stack.Screen name="initial" component={InitialPage} />
 

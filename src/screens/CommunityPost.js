@@ -64,7 +64,7 @@ const CommunityPost = () => {
       !address ||
       !description ||
       !noOfItem ||
-      !selectedDate
+      !date
     ) {
       return setError(
         "Please fill in all the fields and select at least 1 image."
@@ -76,7 +76,7 @@ const CommunityPost = () => {
       location: address,
       description,
       noOfItem,
-      date: selectedDate,
+      date,
       organization,
       imageUrls,
       role,
@@ -90,9 +90,7 @@ const CommunityPost = () => {
         body
       );
       if (res.data.status === "success") {
-        // alert("Submitted");
-        setRefetch(true);
-        // setSuccess("Submitted");
+        setRefetch((prev) => !prev);
         navigation.navigate("community");
       }
     } catch (error) {
