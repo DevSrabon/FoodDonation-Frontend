@@ -91,7 +91,9 @@ const CommunityPost = () => {
       );
       if (res.data.status === "success") {
         // alert("Submitted");
-        setSuccess("Submitted");
+        setRefetch(true);
+        // setSuccess("Submitted");
+        navigation.navigate("community");
       }
     } catch (error) {
       setError(error.message);
