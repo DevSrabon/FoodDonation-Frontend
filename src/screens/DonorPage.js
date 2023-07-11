@@ -13,7 +13,7 @@ let i = 1;
 const DonorPage = () => {
   const route = useRoute();
   const { user:paramUser } = route.params;
-  console.log("🚀 ~ file: DonorPage.js:17 ~ DonorPage ~ user:", user);
+
   const { allData,user } = userContext();
   const navigation = useNavigation();
   const [address, setAddress] = useState();

@@ -1,11 +1,11 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React, { useEffect,useState } from 'react';
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
-import { userContext } from '../context/Provider';
-import { all } from 'axios';
-import { useRoute } from '@react-navigation/native';
-import useFetchData from '../hook/useFetchData';
-import MapViewDirections from 'react-native-maps-directions';
+import { StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
+import { userContext } from "../context/Provider";
+import { all } from "axios";
+import { useRoute } from "@react-navigation/native";
+import useFetchData from "../hook/useFetchData";
+import MapViewDirections from "react-native-maps-directions";
 
 const GOOGLE_MAPS_APIKEY = "AIzaSyD7TKiBE0n8EsPH_snI7QjhGFagY0Vq3FQ";
 const RoutesMap = () => {
@@ -24,9 +24,6 @@ const RoutesMap = () => {
   const [directions, setDirections] = useState([]);
 
   useEffect(() => {
-    console.log(allData);
-    console.log(data);
-
     if (allData.userData?.location && data?.location) {
       // Calculate the shortest route between the two locations
       const origin = {
@@ -82,18 +79,16 @@ const RoutesMap = () => {
   );
 };
 
-
-
 export default RoutesMap;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   map: {
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
   },
 });

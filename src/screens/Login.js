@@ -3,6 +3,7 @@ import axios from "axios";
 import Checkbox from "expo-checkbox";
 import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
+import CustomAlert from "../components/CustomAlert";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import Header from "../components/Header";
@@ -10,7 +11,6 @@ import Loading from "../components/Loading";
 import Container from "../components/container";
 import Label from "../components/label";
 import { userContext } from "../context/Provider";
-import CustomAlert from "../components/CustomAlert";
 const Login = () => {
   const {
     signIn,
@@ -24,7 +24,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isChecked, setChecked] = useState(false);
-  
+
   const [error, setError] = useState("");
 
   const navigation = useNavigation();
@@ -94,6 +94,7 @@ const Login = () => {
           placeholder="Your Email"
           value={email}
           setValue={setEmail}
+          keyboardType="email-address"
         />
 
         <Label>Password</Label>
@@ -131,8 +132,8 @@ const Login = () => {
               Remember me
             </Text>
           </View>
-          
-          {(error) && <CustomAlert type="error" value={error} />}
+
+          {error && <CustomAlert type="error" value={error} />}
 
           <CustomButton
             text="Forgot Password"
@@ -172,7 +173,6 @@ const Login = () => {
             flexDirection: "row",
           }}
         >
-          
           <Text style={{ fontFamily: "SemiBold", fontSize: 12 }}>
             Don't have an account?
             <CustomButton text="Signup" onPress={onSignup} type="tertiary" />

@@ -47,7 +47,7 @@ const UserMap = () => {
       fetchData();
     }
   }, [data?.location?.latitude, data?.location?.longitude, data?.role]);
-  console.log(data2);
+
   const setLoadingState = async (value) => {
     try {
       await AsyncStorage.setItem("loadingState", JSON.stringify(value));
@@ -73,7 +73,10 @@ const UserMap = () => {
   if (error) return setError(error.message);
   return (
     <View style={styles.mapContainer}>
-      <SearchHeader />
+      <View style={{ marginHorizontal: 10 }}>
+        <SearchHeader />
+      </View>
+
       <View
         style={{
           flexDirection: "row",
@@ -142,7 +145,6 @@ const styles = StyleSheet.create({
   mapContainer: {
     ...StyleSheet.absoluteFillObject,
     flex: 1,
-    marginTop: 20,
     backgroundColor: "#fff",
   },
   map: {
