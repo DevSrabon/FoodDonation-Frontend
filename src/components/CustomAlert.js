@@ -56,7 +56,9 @@ const CustomAlert = ({ type, value }) => {
 
   if (type === 'success') {
     imageSource = <Image source={icons.success} style={{ height: 100, width: 100 }} />
-    message = 'Congratulations! Registration was successful.';
+    { (value) ? (message = value) : (message = 'Congratulations! Registration was successful.') }
+
+    // message = 'Congratulations! Registration was successful.';
   } else if (type === 'error') {
     imageSource = <Image source={icons.error} style={{ height: 100, width: 100 }} />
     { (value) ? (message = value) : (message = 'Please check all requirements.') }
