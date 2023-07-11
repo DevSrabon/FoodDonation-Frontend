@@ -138,6 +138,7 @@ const CommunityPost = () => {
             placeholder="Description of event"
             value={description}
             setValue={setDescription}
+            numberOfLines={10}
           />
 
           <Label>No of Items</Label>

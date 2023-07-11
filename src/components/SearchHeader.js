@@ -34,20 +34,6 @@ const SearchHeader = () => {
         <TouchableOpacity onPress={() => navigation.navigate("settings")}>
           <Image source={icons.settings} />
         </TouchableOpacity>
-
-        {/* <View style={styles.searchView}>
-          <Text
-            onPress={handleSignOut}
-            style={{
-              backgroundColor: "#B4AAF2",
-              padding: 8,
-              borderRadius: 10,
-              color: "white",
-            }}
-          >
-            Log out
-          </Text>
-        </View> */}
       </View>
     </View>
   );
