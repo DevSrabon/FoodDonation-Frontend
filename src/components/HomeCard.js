@@ -82,7 +82,8 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   contentCard: {
-    padding: 10,
+    paddingHorizontal: 10,
+    paddingBottom: 10,
   },
 
   cardDescription: {
@@ -114,6 +115,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     paddingHorizontal: 15,
+    marginBottom: 5,
     marginTop: 10,
   },
   imageContainerProfile: {
