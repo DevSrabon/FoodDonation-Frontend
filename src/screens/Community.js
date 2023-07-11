@@ -65,6 +65,7 @@ const Community = () => {
             <CommunityItem item={item} key={item?._id} />
           )}
           keyExtractor={(item) => item._id}
+          showsVerticalScrollIndicator={false}
         />
       </View>
     </Container>
