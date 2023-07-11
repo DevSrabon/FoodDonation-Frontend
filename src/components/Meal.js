@@ -46,6 +46,10 @@ const Meal = ({ routeName }) => {
 
     const [orderType, setOrderType] = useState("");
 
+    const [error, setError] = useState("");
+    const [success, setSuccess] = useState("");
+
+
     const quantityTypes = [
         { quantityId: 1, label: "Gram " },
         { quantityId: 2, label: "Kg" },
@@ -69,10 +73,12 @@ const Meal = ({ routeName }) => {
                 body
             );
             if (res.data.status === "success") {
-                alert("Submitted");
+                setSuccess("Submitted");
+                // alert("Submitted");
             }
         } catch (error) {
-            alert(error.message);
+            setError(error.message);
+            // alert(error.message);
         }
     };
 
@@ -233,6 +239,9 @@ const Meal = ({ routeName }) => {
                         </Picker>
                     </View>
                 </View> */}
+                {error && <CustomAlert type="error" value={error} />}
+                {success && <CustomAlert type="success" value={success} />}
+
                 <CustomButton text="Continue" onPress={onDonateMeal} type="primary" />
             </View>
         </View>
@@ -249,7 +258,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: 'center',
         backgroundColor: "white",
-        paddingBottom:200
+        paddingBottom: 200
     },
 
     inputText: {
