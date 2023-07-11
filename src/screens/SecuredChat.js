@@ -10,6 +10,7 @@ import { useNavigation } from '@react-navigation/native';
 import {auth, userContext} from '../context/Provider';
 import leftArrow from '../../assets/icons/backbutton.png';
 import useFetchData from '../hook/useFetchData';
+import send from '../../assets/icons/send.png';
 const db = getDatabase();
 
 
@@ -57,14 +58,14 @@ const SecuredChat = () => {
   }, []);
   const emailll = user?.email;
   function handleYes() {
-    set(ref(getDatabase(), 'FoodDelivery'), {
+    push(ref(getDatabase(), 'FoodDelivery'), {
       email: emailll,
       Delivered: "Yes",
     })
     Alert.alert("Thank You \n ")
   }
   function handleNo() {
-    set(ref(getDatabase(), 'FoodDelivery'), {
+    push(ref(getDatabase(), 'FoodDelivery'), {
       email: emailll,
       Delivered: "No",
     })
@@ -92,17 +93,12 @@ const SecuredChat = () => {
   return (
     <View style={styles.container}>
       <View style={{paddingTop:50, }}>
-      <TouchableOpacity onPress={() => navigation.goBack() }>
-        <Image 
-        style={{position: 'absolute',padding:10,resizeMode:'contain', height:30, width:30,
-        borderWidth:1, top: 20, left: 10,borderRadius:100,backgroundColor: "lightblue" }}
-          source={leftArrow} ></Image>
-      </TouchableOpacity>
+      
       <TouchableOpacity >
         <Text style={{ position: 'absolute',padding:10, top: 10, left: 100, zIndex: 1,fontSize:25 }}>{ouser}</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('Routes', { userchatId,emaill })} >
-        <Text style={{ position: 'absolute',padding:10,borderWidth:1, top: 20, right: 10, zIndex: 1, borderRadius: 100, backgroundColor: "lightblue" }}>Map</Text>
+        <Text style={{ position: 'absolute',color:"white",padding:10, top: 20, right: 10, zIndex: 1, borderRadius: 100,  backgroundColor: '#B4AAF2', }}>Map</Text>
       </TouchableOpacity>
       </View>
       <View style={{paddingTop:20,paddingLeft:10}} >
@@ -135,7 +131,8 @@ const SecuredChat = () => {
           style={styles.input}
         />
         <TouchableOpacity onPress={sendMessage}>
-          <Text style={styles.sendButton}>Send</Text>
+          <Image style={{ width: 30, height: 30, marginHorizontal: 5}}
+          source={send}></Image>
         </TouchableOpacity>
       </View>
     </View>
@@ -175,6 +172,7 @@ const styles = StyleSheet.create({
   currentUserMessage: {
     backgroundColor: '#B4AAF2',
     alignSelf: 'flex-end',
+    
   },
   currentUserText: {
     color: '#000',
@@ -187,7 +185,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#eee',
     padding: 10,
-    marginBottom: 100,
+    marginBottom: 80,
   },
   cameraIcon: {
     marginRight: 10,

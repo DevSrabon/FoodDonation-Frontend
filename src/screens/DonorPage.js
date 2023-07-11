@@ -51,9 +51,10 @@ const DonorPage = () => {
     const newMessage = {
       mail: user?.email,
       name: user?.displayName,
+      profileImage: allData?.userData?.photo,
       chatid: createChatId(paramUser?.email, user?.email),
     };
-
+    
     // Check if the email already exists in the database
     get(chatRef).then((snapshot) => {
       const emails = Object.values(snapshot.val() || {}).map(
@@ -72,6 +73,7 @@ const DonorPage = () => {
     const newMessage1 = {
       mail: paramUser?.email,
       name: paramUser?.userName,
+      profileImage: paramUser?.photo,
       chatid: createChatId(paramUser?.email, user?.email),
     };
 

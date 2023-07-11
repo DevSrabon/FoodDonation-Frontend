@@ -110,9 +110,10 @@ const Users = () => {
               }}
             >
               <Image
-                source={require("../../assets/icons/profile.png")}
-                style={{ width: 60, height: 60, borderRadius: 30 }}
-              />
+  source={user.profileImage ? { uri: user.profileImage } : require("../../assets/icons/profile.png")}
+  style={{ width: 60, height: 60, borderRadius: 30 }}
+/>
+
               <View>
                 <Text
                   style={{ fontSize: 17, fontWeight: "bold", paddingLeft: 20 }}
