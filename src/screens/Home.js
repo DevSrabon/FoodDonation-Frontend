@@ -26,6 +26,7 @@ const Home = () => {
           data={data}
           renderItem={({ item }) => <HomeCard item={item} />}
           keyExtractor={(item) => item._id}
+          showsVerticalScrollIndicator={false}
         />
         {errorMessage && <CustomAlert type="error" value={errorMessage} />}
       </View>
