@@ -92,7 +92,11 @@ const DonateMeal = () => {
     { id: 2, label: "hrs" },
     { id: 3, label: "days" },
   ];
-
+  if (orderType === "Drop") {
+    console.log("Drop");
+  } else if (orderType === "Pickup") {
+    console.log("Pickup");
+  }
   const { loading, setLoading } = useContext(AuthContext);
   if (loading) {
     return <Loading />;

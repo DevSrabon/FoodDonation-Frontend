@@ -7,6 +7,18 @@ import { useRoute } from "@react-navigation/native";
 import useFetchData from "../hook/useFetchData";
 import MapViewDirections from "react-native-maps-directions";
 
+async function askLocationPermission() {
+  let { status } = await Location.requestForegroundPermissionsAsync();
+  if (status !== "granted") {
+    setErrorMsg("Permission to access location was denied");
+    return;
+  }
+
+  let { status: status2 } = await Location.requestBackgroundPermissionsAsync();
+
+  let location = await Location.getCurrentPositionAsync({});
+  return location;
+}
 const GOOGLE_MAPS_APIKEY = "AIzaSyD7TKiBE0n8EsPH_snI7QjhGFagY0Vq3FQ";
 const RoutesMap = () => {
   const route = useRoute();
@@ -15,6 +27,26 @@ const RoutesMap = () => {
     longitude: 89.3711,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
+  };
+  const realTime= async () => {
+    const result = await askLocationPermission();
+    setStatus(result);
+    if (result) {
+      const { coords } = result;
+      set(
+        ref(
+          getDatabase(),
+          `location/${userchatId}/` + auth.currentUser.email.replace(/[@.]/g, "")
+        ),
+        {
+          latitude: coords.latitude,
+          longitude: coords.longitude,
+        }
+      );
+    }
+  };
+  const updateRealTime = () => {
+    setInterval(realTime, 5000); 
   };
 
   const { userchatId } = route.params;
