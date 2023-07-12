@@ -86,7 +86,7 @@ const CommunityPost = () => {
     };
     try {
       const res = await axios.post(
-        `https://food-donation-backend-production.vercel.app/api/v1/community/create`,
+        `https://food-donation-backend.vercel.app/api/v1/community/create`,
         body
       );
       if (res.data.status === "success") {

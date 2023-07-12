@@ -1,17 +1,17 @@
+import { useNavigation } from "@react-navigation/native";
+import LottieView from "lottie-react-native";
+import React from "react";
 import {
-  View,
-  Text,
-  Pressable,
-  StyleSheet,
   FlatList,
   Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
-import React from "react";
-import data from "../data/introData";
 import icons from "../../assets/icons";
-import { useNavigation } from "@react-navigation/native";
 import InitContainer from "../components/initContainer";
-import LottieView from "lottie-react-native";
+import data from "../data/introData";
 
 import Onboarding from "../components/Carousel/Onboarding";
 

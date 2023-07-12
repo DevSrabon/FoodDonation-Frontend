@@ -11,7 +11,7 @@
 //         setLoading(true);
 //         try {
 //           const response = await axios.get(
-//             `https://food-donation-backend-production.vercel.app/api/v1/users/jwt?email=${email}`
+//             `https://food-donation-backend.vercel.app/api/v1/users/jwt?email=${email}`
 //           );
 
 //           if (response.data.jwtToken) {

@@ -1,13 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import {
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  TouchableOpacity,
-} from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import AddImages from "../components/AddImages";
 import CustomAlert from "../components/CustomAlert";
 import CustomButton from "../components/CustomButton";
@@ -25,6 +19,7 @@ const Donate = () => {
   const { loading, setLoading, allData } = useContext(AuthContext);
   const { name, role, subRole, email, location, categoryName, phone, photo } =
     allData.userData;
+  console.log("🚀 ~ file: Donate.js:27 ~ Donate ~ location:", location);
   const navigation = useNavigation();
   const [address, setAddress] = useState("");
   const [caption, setCaption] = useState("");

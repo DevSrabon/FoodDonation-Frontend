@@ -45,7 +45,7 @@ const Otp = () => {
   //     await firebase.auth().signInWithCredential(credential);
   //     await createUser(email, password);
   //     const res = await axios.post(
-  //       "https://food-donation-backend-production.vercel.app/api/v1/users/create",
+  //       "https://food-donation-backend.vercel.app/api/v1/users/create",
   //       {
   //         name,
   //         email,
