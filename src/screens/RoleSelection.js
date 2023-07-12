@@ -2,18 +2,18 @@ import { useNavigation } from "@react-navigation/native";
 import React, { useRef, useState } from "react";
 import {
   Animated,
+  Easing,
   Image,
   Pressable,
   StyleSheet,
   Text,
   View,
 } from "react-native";
+import icons from "../../assets/icons";
 import CustomButton from "../components/CustomButton";
 import Header from "../components/Header";
 import Loading from "../components/Loading";
 import Container from "../components/container";
-import icons from "../../assets/icons";
-import { userContext } from "../context/Provider";
 
 const RoleSelection = () => {
   const navigation = useNavigation();
@@ -26,44 +26,47 @@ const RoleSelection = () => {
   const [donaropen, setDonaropen] = useState(false);
   const [transporteropen, setTransporteropen] = useState(false);
   const [foodneederopen, setFoodneederopen] = useState(false);
-
+  console.log("=========", donaropen, transporteropen, foodneederopen);
   const AniDonar = useRef(new Animated.Value(1500)).current;
   const Anitransporter = useRef(new Animated.Value(1500)).current;
   const Anifoodneeder = useRef(new Animated.Value(1500)).current;
 
   function DonarAni() {
     Animated.timing(AniDonar, {
-      toValue: donaropen ? 300 : 1500,
-      duration: 700,
+      toValue: !donaropen ? -20 : 1500,
+      duration: 300,
       useNativeDriver: true,
+      easing: Easing.linear,
     }).start();
   }
 
   function transporterAni() {
     Animated.timing(Anitransporter, {
-      toValue: transporteropen ? 300 : 1500,
-      duration: 700,
+      toValue: !transporteropen ? -20 : 1500,
+      duration: 300,
       useNativeDriver: true,
+      easing: Easing.linear,
     }).start();
   }
 
   function foodneederAni() {
     Animated.timing(Anifoodneeder, {
-      toValue: foodneederopen ? 300 : 1500,
-      duration: 700,
+      toValue: !foodneederopen ? -20 : 1500,
+      duration: 300,
       useNativeDriver: true,
+      easing: Easing.linear,
     }).start();
   }
 
-  const toggle = () => {
-    if (n == 1) {
-      setDonaropen(!donaropen);
+  const toggle = (n) => {
+    if (!foodneederopen && !transporteropen && n === 1) {
+      setDonaropen((prev) => !prev);
       DonarAni();
-    } else if (n == 2) {
-      setTransporteropen(!transporteropen);
+    } else if (!donaropen && !foodneederopen && n === 2) {
+      setTransporteropen((prev) => !prev);
       transporterAni();
-    } else if (n == 3) {
-      setFoodneederopen(!foodneederopen);
+    } else if (!donaropen && !transporteropen && n === 3) {
+      setFoodneederopen((prev) => !prev);
       foodneederAni();
     }
   };
@@ -82,7 +85,7 @@ const RoleSelection = () => {
         <Pressable
           style={[styles.box, update === "donor" && styles.selectedBox]}
           onPress={() => {
-            setUpdate("donor"), setn(1);
+            setUpdate("donor"), toggle(1);
           }}
         >
           <Text style={styles.title}>Donor</Text>
@@ -94,7 +97,7 @@ const RoleSelection = () => {
         <Pressable
           style={[styles.box, update === "transporter" && styles.selectedBox]}
           onPress={() => {
-            setUpdate("transporter"), setn(2);
+            setUpdate("transporter"), toggle(2);
           }}
         >
           <Text style={styles.title}>Transporter</Text>
@@ -106,7 +109,7 @@ const RoleSelection = () => {
         <Pressable
           style={[styles.box, update === "needy" && styles.selectedBox]}
           onPress={() => {
-            setUpdate("needy"), setn(3);
+            setUpdate("needy"), toggle(3);
           }}
         >
           <Text style={styles.title}>Food Needier</Text>
@@ -115,7 +118,7 @@ const RoleSelection = () => {
           </Text>
         </Pressable>
       </View>
-      <View style={styles.btnContainer}>
+      {/* <View style={styles.btnContainer}>
         <CustomButton
           text="Continue"
           onPress={() => {
@@ -123,7 +126,7 @@ const RoleSelection = () => {
           }}
           type="primary"
         />
-      </View>
+      </View> */}
       {/* //////////////////////////////////1111 */}
       <Animated.View
         style={{
@@ -139,7 +142,12 @@ const RoleSelection = () => {
       >
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Header style={{ color: "#B4AAF2" }}> Donar,</Header>
-          <Pressable style={{ padding: 10 }} onPress={() => toggle()}>
+          <Pressable
+            style={{ padding: 10 }}
+            onPress={() => {
+              toggle(1);
+            }}
+          >
             <Image style={{ width: 20, height: 20 }} source={icons.close} />
           </Pressable>
         </View>
@@ -148,11 +156,11 @@ const RoleSelection = () => {
           <Pressable
             style={[
               styles.box,
-              updatecategory === "RestaurantOwner" && styles.selectedBox,
+              updatecategory === "Restaurant" && styles.selectedBox,
             ]}
-            onPress={() => setUpdatecategory("RestaurantOwner")}
+            onPress={() => setUpdatecategory("Restaurant")}
           >
-            <Text style={styles.title}>Restaurant Owner</Text>
+            <Text style={styles.title}>Restaurant</Text>
             <Text style={styles.subTitle}>
               Person or an Organization who donates the food
             </Text>
@@ -199,7 +207,7 @@ const RoleSelection = () => {
             </Text>
           </Pressable>
         </View>
-        <View style={{ flex: 1, alignSelf: "center", width: "90%" }}>
+        <View style={{ flex: 1, alignSelf: "center", width: "95%" }}>
           <CustomButton
             text="Continue"
             onPress={() =>
@@ -228,7 +236,12 @@ const RoleSelection = () => {
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Header style={{ color: "#B4AAF2" }}> Transporter,</Header>
 
-          <Pressable style={{ padding: 10 }} onPress={() => toggle()}>
+          <Pressable
+            style={{ padding: 10 }}
+            onPress={() => {
+              toggle(2);
+            }}
+          >
             <Image style={{ width: 20, height: 20 }} source={icons.close} />
           </Pressable>
         </View>
@@ -290,7 +303,12 @@ const RoleSelection = () => {
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Header style={{ color: "#B4AAF2" }}>Food Needier,</Header>
 
-          <Pressable style={{ padding: 10 }} onPress={() => toggle()}>
+          <Pressable
+            style={{ padding: 10 }}
+            onPress={() => {
+              toggle(3);
+            }}
+          >
             <Image style={{ width: 20, height: 20 }} source={icons.close} />
           </Pressable>
         </View>
