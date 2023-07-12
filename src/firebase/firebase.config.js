@@ -16,22 +16,30 @@ import {
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
+// const firebaseConfig = {
+//   apiKey: "AIzaSyD5azHRt8vDkrYclsFD8HQuBzoCN_Ov9MU",
+//   authDomain: "food-donation-new-9fa4a.firebaseapp.com",
+//   databaseURL:
+//     "https://food-donation-new-9fa4a-default-rtdb.asia-southeast1.firebasedatabase.app",
+//   projectId: "food-donation-new-9fa4a",
+//   storageBucket: "food-donation-new-9fa4a.appspot.com",
+//   messagingSenderId: "23464134108",
+//   appId: "1:23464134108:web:01fbc81112453346333b19",
+//   measurementId: "G-1HY7TNGKRN",
+// };
+
+// ------------production----------
 const firebaseConfig = {
-  apiKey: "AIzaSyD5azHRt8vDkrYclsFD8HQuBzoCN_Ov9MU",
-  authDomain: "food-donation-new-9fa4a.firebaseapp.com",
+  apiKey: "AIzaSyAOgX0xAO7Gz8bdxnSYJwEiJ62owS6tuj8",
+  authDomain: "food-donation-production.firebaseapp.com",
   databaseURL:
-    "https://food-donation-new-9fa4a-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "food-donation-new-9fa4a",
-  storageBucket: "food-donation-new-9fa4a.appspot.com",
-  messagingSenderId: "23464134108",
-  appId: "1:23464134108:web:01fbc81112453346333b19",
-  measurementId: "G-1HY7TNGKRN",
+    "https://food-donation-production-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "food-donation-production",
+  storageBucket: "food-donation-production.appspot.com",
+  messagingSenderId: "931140566193",
+  appId: "1:931140566193:web:84f5ebb357af719cc2f690",
+  measurementId: "G-TBY7PQ73GT",
 };
-
-// Initialize Firebase
-// const app = initializeApp(firebaseConfig);
-
-// export default app;
 
 if (getApps().length === 0) {
   initializeApp(firebaseConfig);

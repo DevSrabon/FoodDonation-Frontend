@@ -18,7 +18,7 @@ const Community = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://food-donation-backend.vercel.app/api/v1/community/get`
+          `https://food-donation-backend-production.vercel.app/api/v1/community/get`
         );
         setData(response.data.data);
         setLoading(false);

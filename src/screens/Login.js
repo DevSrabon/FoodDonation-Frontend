@@ -70,7 +70,7 @@ const Login = () => {
 
   const onGuestPressed = async () => {
     const res = await axios.get(
-      "https://food-donation-backend.vercel.app/api/v1/users?email=guest@gmail.com"
+      "https://food-donation-backend-production.vercel.app/api/v1/users?email=guest@gmail.com"
     );
     if (res.status === 200) {
       setAllData((prev) => ({ ...prev, guestData: res.data.data.role }));

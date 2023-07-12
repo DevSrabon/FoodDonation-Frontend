@@ -34,7 +34,7 @@ const UserMap = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://food-donation-backend.vercel.app/api/v1/users/map?latitude=${data?.location?.latitude}&longitude=${data?.location?.longitude}&role=${data?.role}`
+          `https://food-donation-backend-production.vercel.app/api/v1/users/map?latitude=${data?.location?.latitude}&longitude=${data?.location?.longitude}&role=${data?.role}`
         );
         setData(response?.data?.data);
         setLoading(false);

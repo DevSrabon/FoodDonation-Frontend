@@ -10,7 +10,7 @@ const useFetchData = (url) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://food-donation-backend.vercel.app/api/v1/${url}`
+          `https://food-donation-backend-production.vercel.app/api/v1/${url}`
         );
         setData(response.data.data);
         setLoading(false);

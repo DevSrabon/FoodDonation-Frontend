@@ -120,7 +120,7 @@ const DonateMeal = () => {
     const body = { listItems, expiredTime, orderType, ...restData };
     try {
       const res = await axios.post(
-        `https://food-donation-backend.vercel.app/api/v1/posts/createPost`,
+        `https://food-donation-backend-production.vercel.app/api/v1/posts/createPost`,
         body
       );
       if (res.data.status === "success") {

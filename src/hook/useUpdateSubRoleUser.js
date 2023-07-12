@@ -13,7 +13,7 @@ const useUpdateUser = () => {
 
     try {
       const response = await axios.patch(
-        `https://food-donation-backend.vercel.app/api/v1/users/update-role?email=${email}`,
+        `https://food-donation-backend-production.vercel.app/api/v1/users/update-role?email=${email}`,
         body
       );
 

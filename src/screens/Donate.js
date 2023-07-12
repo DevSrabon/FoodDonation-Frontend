@@ -1,8 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { Alert, ScrollView, View } from "react-native";
+import { ScrollView, View } from "react-native";
 import AddImages from "../components/AddImages";
+import CustomAlert from "../components/CustomAlert";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import Header from "../components/Header";
@@ -11,10 +12,8 @@ import Container from "../components/container";
 import Label from "../components/label";
 import { AuthContext } from "../context/Provider";
 import useImagePicker from "../hook/useImagePicker";
-import CustomAlert from "../components/CustomAlert";
 
 const Donate = () => {
-
   const { loading: imageLoading, imageUrls, takePhoto } = useImagePicker();
 
   const { loading, setLoading, allData } = useContext(AuthContext);
@@ -132,7 +131,7 @@ const Donate = () => {
             width: "90%",
           }}
         >
-          {(error) && <CustomAlert type="error" value={error} />}
+          {error && <CustomAlert type="error" value={error} />}
           <CustomButton text="Continue" onPress={onDonate} type="primary" />
         </View>
       </ScrollView>
