@@ -1,19 +1,19 @@
 export default [
-    {
-        id: "1",
-        title: "Quick and Easy Connect",
-        description: "Grow your connectivity by accepting your attendance"
-    },
-    {
-        id: "2",
-        title: "Smart point of sale",
-        description: "Second: Grow your connectivity by accepting your attendance"
-    },
-    {
-        id: "3",
-        title: "Instant notifications",
-        description: "Third :: Grow your connectivity by accepting your attendance"
-    },
-    
-
-]
+  {
+    id: "1",
+    title: "Donate Food",
+    description:
+      "Food Donation is a Noble act so don’t let a person suffer from hunger",
+  },
+  {
+    id: "2",
+    title: "Publish Post",
+    description:
+      "Through a post a donor can publish about the availability of the food",
+  },
+  {
+    id: "3",
+    title: "Get Food Faster",
+    description: "Giving the access to the people who can deliver the food",
+  },
+];
