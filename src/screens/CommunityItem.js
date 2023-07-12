@@ -1,47 +1,50 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
+import FadeView from "../components/fadeView";
 
 const CommunityItem = ({ item }) => {
   const date = new Date(item?.date);
   return (
-    <View style={styles.cardContainer}>
-      {/* <Pressable
+    <FadeView>
+      <View style={styles.cardContainer}>
+        {/* <Pressable
         onPress={() => navigation.navigate("donorPage", { user: item })}
       > */}
-      <Image
-        source={{ uri: item?.imageUrls?.[0] } || icons.fixedHeight}
-        style={styles.cardImage}
-        resizeMode="cover"
-      />
-      {/* </Pressable> */}
-      <Text style={styles.cardDescription}>{item?.description}</Text>
-      {/* <Text style={styles.cardDescription}>{date.toDateString()}</Text> */}
-      <View style={styles.profileContainer}>
-        <View style={styles.imageContainerProfile}>
-          <Image
-            source={{ uri: item?.photo } || icons.profile}
-            style={styles.profileImage}
-            resizeMode="cover"
-          />
+        <Image
+          source={{ uri: item?.imageUrls?.[0] } || icons.fixedHeight}
+          style={styles.cardImage}
+          resizeMode="cover"
+        />
+        {/* </Pressable> */}
+        <Text style={styles.cardDescription}>{item?.description}</Text>
+        {/* <Text style={styles.cardDescription}>{date.toDateString()}</Text> */}
+        <View style={styles.profileContainer}>
+          <View style={styles.imageContainerProfile}>
+            <Image
+              source={{ uri: item?.photo } || icons.profile}
+              style={styles.profileImage}
+              resizeMode="cover"
+            />
 
-          <View style={styles.profileTextContainer}>
-            <Text style={{ fontFamily: "Medium", fontSize: 16, top: 6 }}>
-              {item?.name}
-            </Text>
-            <Text style={styles.profileText}>{item?.organization}</Text>
-            <Text style={styles.roleText}>
-              {item?.role?.replace(/^./, item?.role[0].toUpperCase())}
-            </Text>
+            <View style={styles.profileTextContainer}>
+              <Text style={{ fontFamily: "Medium", fontSize: 16, top: 6 }}>
+                {item?.name}
+              </Text>
+              <Text style={styles.profileText}>{item?.organization}</Text>
+              <Text style={styles.roleText}>
+                {item?.role?.replace(/^./, item?.role[0].toUpperCase())}
+              </Text>
+            </View>
+          </View>
+          <View>
+            <Text style={styles.date}>{date.toDateString()}</Text>
+            <Text style={styles.date}>{item?.location}</Text>
           </View>
         </View>
-        <View>
-          <Text style={styles.date}>{date.toDateString()}</Text>
-          <Text style={styles.date}>{item?.location}</Text>
-        </View>
-      </View>
 
-      {/* <Button title='share' onPress={()=>onShare(item)}/> */}
-    </View>
+        {/* <Button title='share' onPress={()=>onShare(item)}/> */}
+      </View>
+    </FadeView>
   );
 };
 

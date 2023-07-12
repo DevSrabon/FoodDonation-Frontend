@@ -1,12 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import icons from "../../assets/icons";
+import React from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { userContext } from "../context/Provider";
 import Loading from "./Loading";
+import { Ionicons } from "@expo/vector-icons";
 
 const SearchHeader = () => {
-  const [search, setSearch] = useState(0);
   const { allData, user, loading, signOutUser } = userContext();
   const navigation = useNavigation();
 
@@ -32,7 +31,8 @@ const SearchHeader = () => {
           </Text>
         </View>
         <TouchableOpacity onPress={() => navigation.navigate("settings")}>
-          <Image source={icons.settings} />
+          <Ionicons name="ios-settings-outline" size={30} color="#B4AAF2" />
+          {/* <Ionicons name="settings" size={30} color="#B4AAF2" /> */}
         </TouchableOpacity>
       </View>
     </View>
