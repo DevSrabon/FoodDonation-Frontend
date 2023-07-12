@@ -3,6 +3,8 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
 import React, { useContext, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
+import ConfettiCannon from "react-native-confetti-cannon";
+import ConfettiModal from "../components/ConfettiModal";
 import CustomAlert from "../components/CustomAlert";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
@@ -10,18 +12,19 @@ import Header from "../components/Header";
 import Loading from "../components/Loading";
 import Container from "../components/container";
 import { AuthContext } from "../context/Provider";
-
 const DonateMeal = () => {
   const route = useRoute();
   // const numbers = 2;
 
-  // const resData = null;
+  // const restData = null;
   const numbers = route.params.number;
 
   const restData = route.params.resData;
 
   const navigation = useNavigation();
   const [listItems, setListItems] = useState([]);
+
+  const [closeModal, setCloseModal] = useState(false);
 
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -94,6 +97,9 @@ const DonateMeal = () => {
   if (loading) {
     return <Loading />;
   }
+  // setTimeout(() => {
+  //   setCloseModal(true);
+  // }, 5000);
 
   const onDonateMeal = async () => {
     if (restData?.role === "donor") {
@@ -124,8 +130,8 @@ const DonateMeal = () => {
         body
       );
       if (res.data.status === "success") {
-        setSuccess("Submitted");
-        navigation.navigate("user");
+        // setSuccess("Submitted");
+        setCloseModal(true);
       }
     } catch (error) {
       setError(error.message);
@@ -133,182 +139,226 @@ const DonateMeal = () => {
       setLoading(false);
     }
   };
+  const onClose = () => {
+    setCloseModal(false);
+    navigation.navigate("user");
+  };
 
   return (
-    <Container>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <Header>{restData?.role === "donor" ? "Donate" : "Help"}</Header>
-
-        <View>
-          {listItems.map((item, index) => (
-            <View
-              key={index}
-              style={{
-                alignItems: "center",
-                marginBottom: 5,
-                borderColor: "#B4AAF2",
-                borderWidth: 2,
-                borderRadius: 8,
-              }}
-            >
-              <View style={{ alignSelf: "flex-start" }}>
-                <Text
-                  style={{
-                    fontFamily: "SemiBold",
-                    fontSize: 16,
-                    marginLeft: 10,
-                  }}
-                >
-                  Item {item.id}
-                </Text>
-              </View>
-
-              <View style={{ flexDirection: "row" }}>
-                <View style={{ width: "48%" }}>
-                  {/* <Text style={styles.label}>Item {item.id}</Text> */}
-                  <CustomInput
-                    placeholder={"Item Name"}
-                    // placeholder={`Item ${item.id}`}
-                    value={item.value}
-                    setValue={(text) => handleValueChange(text, index, "value")}
-                  />
+    <>
+      <Container>
+        <ConfettiCannon
+          count={200}
+          explosionSpeed={100}
+          autoStart={closeModal}
+          origin={{ x: -10, y: 0 }}
+          fadeOut={true}
+        />
+        <ConfettiModal visible={closeModal} onClose={onClose}>
+          <Text
+            style={{
+              fontSize: 30,
+              marginBottom: 30,
+              fontWeight: 600,
+              color: "#B4AAF2",
+            }}
+          >
+            🎉Congratulations!🎉
+          </Text>
+          <Text
+            style={{
+              fontSize: 20,
+              marginBottom: 30,
+              textAlign: "center",
+              fontWeight: 500,
+              color: "#B4AAF2",
+            }}
+          >
+            Thanks for the Donation
+          </Text>
+          {/* <Button title="Close Modal" onPress={onClose} />
+           */}
+          <CustomButton text="OKAY" onPress={onClose} type="primary" />
+        </ConfettiModal>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <Header>{restData?.role === "donor" ? "Donate" : "Help"}</Header>
+          <View style={{ marginBottom: 20 }}>
+            {listItems.map((item, index) => (
+              <View
+                key={index}
+                style={{
+                  alignItems: "center",
+                  marginBottom: 5,
+                  borderColor: "#B4AAF2",
+                  borderWidth: 2,
+                  borderRadius: 8,
+                }}
+              >
+                <View style={{ alignSelf: "flex-start" }}>
+                  <Text
+                    style={{
+                      fontFamily: "SemiBold",
+                      fontSize: 16,
+                      marginLeft: 10,
+                    }}
+                  >
+                    Item {item.id}
+                  </Text>
                 </View>
-                <View style={{ width: "48%" }}>
-                  {/* <Text style={styles.label}>Meal Type</Text> */}
 
-                  <View style={styles.inputText}>
-                    <Picker
-                      selectedValue={item.qType}
-                      onValueChange={(text) =>
-                        handleValueChange(text, index, "qType")
+                <View style={{ flexDirection: "row" }}>
+                  <View style={{ width: "48%" }}>
+                    {/* <Text style={styles.label}>Item {item.id}</Text> */}
+                    <CustomInput
+                      placeholder={"Item Name"}
+                      // placeholder={`Item ${item.id}`}
+                      value={item.value}
+                      setValue={(text) =>
+                        handleValueChange(text, index, "value")
                       }
-                      mode="dropdown"
-                      multiple={true}
-                    >
-                      {mealOptions.map((option) => (
-                        <Picker.Item
-                          key={option.id}
-                          label={option.label}
-                          value={option.label}
-                        />
-                      ))}
-                    </Picker>
-                  </View>
-                </View>
-              </View>
-              <View style={{ flexDirection: "row", gap: 20 }}>
-                <View style={{ width: 150 }}></View>
-              </View>
-              <View style={{ flexDirection: "row" }}>
-                <View style={{ width: "48%" }}>
-                  {/* <Text style={styles.label}>Item Quantity</Text> */}
-                  <CustomInput
-                    placeholder="Quantity"
-                    value={item.quantity}
-                    setValue={(text) =>
-                      handleValueChange(text, index, "quantity")
-                    }
-                    keyboardType="numeric"
-                  />
-                </View>
-
-                <View style={{ width: "48%" }}>
-                  {/* <Text style={styles.label}>Quantity Type</Text> */}
-                  <View style={styles.inputText}>
-                    <Picker
-                      selectedValue={item.quantityType}
-                      onValueChange={(text) =>
-                        handleValueChange(text, index, "quantityType")
-                      }
-                      mode="dropdown"
-                    >
-                      {quantityTypes.map((option) => (
-                        <Picker.Item
-                          key={option.quantityId}
-                          label={option.label}
-                          value={option.label}
-                        />
-                      ))}
-                    </Picker>
-                  </View>
-                </View>
-              </View>
-            </View>
-          ))}
-        </View>
-
-        <View
-          style={{
-            alignSelf: "center",
-            width: "96%",
-            bottom: 15,
-          }}
-        >
-          {/* expired */}
-          {restData?.role === "donor" && (
-            // {1 && (
-            <>
-              <View style={{ flexDirection: "row", marginTop: 10 }}>
-                <View style={{ width: "50%" }}>
-                  <Text style={styles.label}>Expired Time</Text>
-                  <CustomInput
-                    placeholder={expired.time || "0"}
-                    value={expired.time}
-                    setValue={(number) =>
-                      setExpired((prev) => ({ ...prev, time: number }))
-                    }
-                    keyboardType="numeric"
-                  />
-                </View>
-                <View style={{ width: "50%" }}>
-                  <Text style={styles.label}>Expired Type</Text>
-                  <View style={styles.inputText}>
-                    <Picker
-                      selectedValue={expired.type}
-                      onValueChange={(text) =>
-                        setExpired((prev) => ({ ...prev, type: text }))
-                      }
-                      mode="dropdown"
-                    >
-                      {expiredOptions.map((option) => (
-                        <Picker.Item
-                          key={option.id}
-                          label={option.label}
-                          value={option.label}
-                        />
-                      ))}
-                    </Picker>
-                  </View>
-                </View>
-              </View>
-              <Text style={styles.label}>Order</Text>
-              <View style={styles.inputText}>
-                <Picker
-                  selectedValue={orderType}
-                  onValueChange={(value) => setOrderType(value)}
-                  mode="dropdown"
-                >
-                  {orderOptions.map((option) => (
-                    <Picker.Item
-                      key={option.id}
-                      label={option.label}
-                      value={option.label}
                     />
-                  ))}
-                </Picker>
+                  </View>
+                  <View style={{ width: "48%" }}>
+                    {/* <Text style={styles.label}>Meal Type</Text> */}
+
+                    <View style={styles.inputText}>
+                      <Picker
+                        selectedValue={item.qType}
+                        onValueChange={(text) =>
+                          handleValueChange(text, index, "qType")
+                        }
+                        mode="dropdown"
+                        multiple={true}
+                      >
+                        {mealOptions.map((option) => (
+                          <Picker.Item
+                            key={option.id}
+                            label={option.label}
+                            value={option.label}
+                          />
+                        ))}
+                      </Picker>
+                    </View>
+                  </View>
+                </View>
+                <View style={{ flexDirection: "row", gap: 20 }}>
+                  <View style={{ width: 150 }}></View>
+                </View>
+                <View style={{ flexDirection: "row" }}>
+                  <View style={{ width: "48%" }}>
+                    {/* <Text style={styles.label}>Item Quantity</Text> */}
+                    <CustomInput
+                      placeholder="Quantity"
+                      value={item.quantity}
+                      setValue={(text) =>
+                        handleValueChange(text, index, "quantity")
+                      }
+                      keyboardType="numeric"
+                    />
+                  </View>
+
+                  <View style={{ width: "48%" }}>
+                    {/* <Text style={styles.label}>Quantity Type</Text> */}
+                    <View style={styles.inputText}>
+                      <Picker
+                        selectedValue={item.quantityType}
+                        onValueChange={(text) =>
+                          handleValueChange(text, index, "quantityType")
+                        }
+                        mode="dropdown"
+                      >
+                        {quantityTypes.map((option) => (
+                          <Picker.Item
+                            key={option.quantityId}
+                            label={option.label}
+                            value={option.label}
+                          />
+                        ))}
+                      </Picker>
+                    </View>
+                  </View>
+                </View>
               </View>
-            </>
-          )}
+            ))}
+          </View>
 
-          {error && <CustomAlert type="error" value={error} />}
-          {success && <CustomAlert type="success" value={success} />}
+          <View
+            style={{
+              alignSelf: "center",
+              width: "96%",
+              bottom: 15,
+            }}
+          >
+            {/* expired */}
+            {restData?.role === "donor" && (
+              // {1 && (
+              <>
+                <View style={{ flexDirection: "row", marginTop: 10 }}>
+                  <View style={{ width: "50%" }}>
+                    <Text style={styles.label}>Expired Time</Text>
+                    <CustomInput
+                      placeholder={expired.time || "0"}
+                      value={expired.time}
+                      setValue={(number) =>
+                        setExpired((prev) => ({ ...prev, time: number }))
+                      }
+                      keyboardType="numeric"
+                    />
+                  </View>
+                  <View style={{ width: "50%" }}>
+                    <Text style={styles.label}>Expired Type</Text>
+                    <View style={styles.inputText}>
+                      <Picker
+                        selectedValue={expired.type}
+                        onValueChange={(text) =>
+                          setExpired((prev) => ({ ...prev, type: text }))
+                        }
+                        mode="dropdown"
+                      >
+                        {expiredOptions.map((option) => (
+                          <Picker.Item
+                            key={option.id}
+                            label={option.label}
+                            value={option.label}
+                          />
+                        ))}
+                      </Picker>
+                    </View>
+                  </View>
+                </View>
+                <Text style={styles.label}>Order</Text>
+                <View style={styles.inputText}>
+                  <Picker
+                    selectedValue={orderType}
+                    onValueChange={(value) => setOrderType(value)}
+                    mode="dropdown"
+                  >
+                    {orderOptions.map((option) => (
+                      <Picker.Item
+                        key={option.id}
+                        label={option.label}
+                        value={option.label}
+                      />
+                    ))}
+                  </Picker>
+                </View>
+              </>
+            )}
 
-          {/* Order */}
+            {error && <CustomAlert type="error" value={error} />}
+            {/* {success && <CustomAlert type="success" value={success} />} */}
 
-          <CustomButton text="Continue" onPress={onDonateMeal} type="primary" />
-        </View>
-      </ScrollView>
-    </Container>
+            {/* Order */}
+
+            <CustomButton
+              text="Continue"
+              onPress={onDonateMeal}
+              type="primary"
+            />
+          </View>
+        </ScrollView>
+      </Container>
+    </>
   );
 };
 
@@ -320,7 +370,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 5,
     marginVertical: 5,
-    marginBottom: 20,
     justifyContent: "center",
     height: 38,
   },

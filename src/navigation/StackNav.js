@@ -36,7 +36,7 @@ const StackNav = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={"initial"}
+        initialRouteName={"community"}
         screenOptions={{ headerShown: false }}
       >
         {/* <Stack.Screen name="initial" component={Donate} /> */}

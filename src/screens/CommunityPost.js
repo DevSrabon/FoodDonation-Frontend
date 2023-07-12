@@ -2,14 +2,18 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import React, { useState } from "react";
+import ConfettiCannon from "react-native-confetti-cannon";
+
 import {
   Platform,
   Pressable,
   ScrollView,
   StyleSheet,
+  Text,
   View,
 } from "react-native";
 import AddImages from "../components/AddImages";
+import ConfettiModal from "../components/ConfettiModal";
 import CustomAlert from "../components/CustomAlert";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
@@ -22,6 +26,7 @@ import useImagePicker from "../hook/useImagePicker";
 
 const CommunityPost = () => {
   const { loading: imageLoading, imageUrls, takePhoto } = useImagePicker();
+  const [closeModal, setCloseModal] = useState(false);
 
   const { allData, setRefetch } = userContext();
   const { role, subRole, email, photo } = allData.userData;
@@ -84,6 +89,7 @@ const CommunityPost = () => {
       email,
       photo,
     };
+
     try {
       const res = await axios.post(
         `https://food-donation-backend.vercel.app/api/v1/community/create`,
@@ -91,19 +97,60 @@ const CommunityPost = () => {
       );
       if (res.data.status === "success") {
         setRefetch((prev) => !prev);
-        navigation.navigate("community");
+        setCloseModal(true);
       }
     } catch (error) {
+      console.log(error);
       setError(error.message);
       // alert(error.message);
+    } finally {
+      setLoading(false);
     }
   };
   if (imageLoading || loading) {
     return <Loading />;
   }
 
+  const onClose = () => {
+    setCloseModal(false);
+    navigation.navigate("community");
+  };
+
   return (
     <Container>
+      <ConfettiCannon
+        count={200}
+        explosionSpeed={100}
+        autoStart={closeModal}
+        origin={{ x: -10, y: 0 }}
+        fadeOut={true}
+      />
+      <ConfettiModal visible={closeModal} onClose={onClose}>
+        <Text
+          style={{
+            fontSize: 30,
+            marginBottom: 30,
+            fontWeight: 600,
+            color: "#B4AAF2",
+          }}
+        >
+          🎉Congratulations!🎉
+        </Text>
+        <Text
+          style={{
+            fontSize: 20,
+            marginBottom: 30,
+            textAlign: "center",
+            fontWeight: 500,
+            color: "#B4AAF2",
+          }}
+        >
+          Your Campaign has been successfully posted.
+        </Text>
+        {/* <Button title="Close Modal" onPress={onClose} />
+         */}
+        <CustomButton text="OKAY" onPress={onClose} type="primary" />
+      </ConfettiModal>
       <Header>Community Post</Header>
       <ScrollView style={{ flex: 1 }}>
         <View
