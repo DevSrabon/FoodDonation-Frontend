@@ -1,22 +1,20 @@
 import React from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
+import FadeView from "../components/fadeView";
 
 const CommunityItem = ({ item }) => {
   const date = new Date(item?.date);
   return (
-    <View style={styles.cardContainer}>
-      {/* <Pressable
-        onPress={() => navigation.navigate("donorPage", { user: item })}
-      > */}
-      <Image
-        source={{ uri: item?.imageUrls?.[0] } || icons.fixedHeight}
-        style={styles.cardImage}
-        resizeMode="cover"
-      />
-      {/* </Pressable> */}
-      <Text style={styles.cardDescription}>{item?.description}</Text>
-      {/* <Text style={styles.cardDescription}>{date.toDateString()}</Text> */}
-      <View style={styles.profileContainer}>
+    <FadeView>
+      <View style={styles.cardContainer}>
+        <Image
+          source={{ uri: item?.imageUrls?.[0] } || icons.fixedHeight}
+          style={styles.cardImage}
+          resizeMode="cover"
+        />
+
+        <Text style={styles.cardDescription}>{item?.description}</Text>
+
         <View style={styles.imageContainerProfile}>
           <Image
             source={{ uri: item?.photo } || icons.profile}
@@ -34,20 +32,59 @@ const CommunityItem = ({ item }) => {
             </Text>
           </View>
         </View>
-        <View>
-          <Text style={styles.date}>{date.toDateString()}</Text>
-          <Text style={styles.date}>{item?.location}</Text>
+        <View style={styles.dateContainer}>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Text style={styles.text}>Event Date:</Text>
+            <View style={styles.textPadding}>
+              <Text style={styles.textBox}>{date.toDateString()}</Text>
+            </View>
+          </View>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Text style={styles.text}>Event Location:</Text>
+            <View style={styles.textPadding}>
+              <Text style={styles.textBox}>{item?.location}</Text>
+            </View>
+          </View>
         </View>
-      </View>
 
-      {/* <Button title='share' onPress={()=>onShare(item)}/> */}
-    </View>
+        {/* <View style={styles.dateContainer}>
+          <Text style={styles.date}>Event Date: {date.toDateString()}</Text>
+          <Text style={styles.date}>Event Location: {item?.location}</Text>
+        </View> */}
+
+        {/* <Button title='share' onPress={()=>onShare(item)}/> */}
+      </View>
+    </FadeView>
   );
 };
 
 const styles = StyleSheet.create({
-  date: {
+  textBox: {
+    backgroundColor: "#fff2e6",
+    borderWidth: 1,
+    borderColor: "orange",
+    borderRadius: 4,
+    padding: 5,
+  },
+  text: {
+    fontFamily: "SemiBold",
+    fontSize: 16,
     color: "orange",
+  },
+  textPadding: {
+    color: "#fff",
+    // width: "50%",
+
+    paddingVertical: 2,
+    paddingHorizontal: 2,
+    textAlign: "center",
+  },
+  dateContainer: {
+    alignItems: "center",
+    marginTop: 5,
+  },
+  date: {
+    color: "green",
     fontFamily: "SemiBold",
     fontSize: 16,
   },
@@ -101,16 +138,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     marginRight: 16,
   },
-  // profile
-  profileContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginTop: 10,
-  },
   imageContainerProfile: {
     flexDirection: "row",
     alignItems: "center",
+    marginTop: 10,
   },
   profileImage: {
     width: 50,
