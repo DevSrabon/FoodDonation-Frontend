@@ -40,7 +40,7 @@ const StackNav = () => {
         screenOptions={{ headerShown: false }}
       >
         {/* <Stack.Screen name="initial" component={Donate} /> */}
-        <Stack.Screen name="initial" component={InitialPage} />
+        <Stack.Screen name="initial" component={AnimatedButton} />
 
         <Stack.Screen name="input" component={CustomField} />
         <Stack.Screen name="touch" component={CustomTouch} />
