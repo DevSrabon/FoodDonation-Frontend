@@ -28,10 +28,18 @@ const firebaseConfig = {
   measurementId: "G-1HY7TNGKRN",
 };
 
-// Initialize Firebase
-// const app = initializeApp(firebaseConfig);
-
-// export default app;
+// ------------production----------
+// const firebaseConfig = {
+//   apiKey: "AIzaSyAOgX0xAO7Gz8bdxnSYJwEiJ62owS6tuj8",
+//   authDomain: "food-donation-production.firebaseapp.com",
+//   databaseURL:
+//     "https://food-donation-production-default-rtdb.asia-southeast1.firebasedatabase.app",
+//   projectId: "food-donation-production",
+//   storageBucket: "food-donation-production.appspot.com",
+//   messagingSenderId: "931140566193",
+//   appId: "1:931140566193:web:84f5ebb357af719cc2f690",
+//   measurementId: "G-TBY7PQ73GT",
+// };
 
 if (getApps().length === 0) {
   initializeApp(firebaseConfig);
