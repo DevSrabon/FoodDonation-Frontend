@@ -54,7 +54,7 @@ const BottomNav = () => {
             tabBarIcon: ({ focused, color }) => (
               <Feather
                 name={"user"}
-                size={32}
+                size={24}
                 color={focused ? "#B4AAF2" : "gray"}
               />
             ),
@@ -69,7 +69,7 @@ const BottomNav = () => {
             tabBarIcon: ({ focused, color }) => (
               <Feather
                 name={"user"}
-                size={32}
+                size={24}
                 color={focused ? "#B4AAF2" : "gray"}
               />
             ),
@@ -84,7 +84,7 @@ const BottomNav = () => {
           tabBarIcon: ({ focused, color }) => (
             <Feather
               name="home"
-              size={32}
+              size={24}
               color={focused ? "#B4AAF2" : "gray"}
             />
           ),
@@ -99,7 +99,7 @@ const BottomNav = () => {
             tabBarIcon: ({ focused, color }) => (
               <Feather
                 name="user-plus"
-                size={32}
+                size={24}
                 color={focused ? "#B4AAF2" : "gray"}
               />
             ),
@@ -114,7 +114,7 @@ const BottomNav = () => {
             tabBarIcon: ({ focused, color }) => (
               <Feather
                 name="user-plus"
-                size={32}
+                size={24}
                 color={focused ? "#B4AAF2" : "gray"}
               />
             ),
@@ -128,20 +128,20 @@ const BottomNav = () => {
           tabBarIcon: ({ focused, color }) => (
             <Ionicons
               name="md-chatbox-ellipses-outline"
-              size={32}
+              size={24}
               color={focused ? "#B4AAF2" : "gray"}
             />
           ),
         }}
       />
       <Tab.Screen
-        name="community"
+        name="Community"
         component={Community}
         options={{
           tabBarIcon: ({ focused, color }) => (
             <Ionicons
               name="people-outline"
-              size={32}
+              size={24}
               color={focused ? "#B4AAF2" : "gray"}
             />
           ),

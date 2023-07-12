@@ -1,7 +1,7 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import React, { useState } from "react";
 
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ScrollView, StyleSheet, View, Text } from "react-native";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
@@ -85,7 +85,16 @@ const AddRestaurant = () => {
 
         {/* Location */}
         <View style={{ flex: 1, width: "90%", alignSelf: "center" }}>
-          <Label>Location</Label>
+          <Text
+            style={{
+              alignSelf: "flex-start",
+              fontFamily: "SemiBold",
+              fontSize: 14,
+            }}
+          >
+            Location
+          </Text>
+          {/* <Label></Label> */}
           <GooglePlacesAutocomplete
             fetchDetails={true}
             placeholder="Location"

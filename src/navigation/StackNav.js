@@ -30,6 +30,7 @@ import CommunityPost from "../screens/CommunityPost";
 import Settings from "../screens/Settings";
 import CustomField from "../components/CustomField";
 import AnimatedButton from "../components/AnimatedButton";
+import TermsAndConditions from "../screens/TermsAndConditions";
 
 const Stack = createNativeStackNavigator();
 
@@ -37,7 +38,7 @@ const StackNav = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={"community"}
+        initialRouteName={"initial"}
         screenOptions={{ headerShown: false }}
       >
         {/* <Stack.Screen name="initial" component={Donate} /> */}
@@ -60,6 +61,7 @@ const StackNav = () => {
         <Stack.Screen name="profile" component={Profile} />
         <Stack.Screen name="otp" component={Otp} />
         <Stack.Screen name="settings" component={Settings} />
+        <Stack.Screen name="terms" component={TermsAndConditions} />
 
         <Stack.Screen name="needy" component={FoodNeedier} />
         <Stack.Screen name="transporter" component={Transporter} />
