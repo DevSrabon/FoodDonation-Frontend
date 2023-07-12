@@ -26,11 +26,8 @@ import Transporter from "../screens/Transporter";
 import BottomNav from "./BottomNav";
 
 import CommunityPost from "../screens/CommunityPost";
-import LoginScreen from "../screens/LoginScreen";
-import SignUpScreen from "../screens/SignUpScreen";
-
-import AniInput from "../components/AniInput";
 import Settings from "../screens/Settings";
+import Onboarding from "../components/Carousel/Onboarding";
 
 const Stack = createNativeStackNavigator();
 
@@ -45,14 +42,11 @@ const StackNav = () => {
         <Stack.Screen name="initial" component={InitialPage} />
 
         <Stack.Screen name="touch" component={CustomTouch} />
-        <Stack.Screen name="myLogin" component={LoginScreen} />
-        <Stack.Screen name="mySignUp" component={SignUpScreen} />
         <Stack.Screen name="modal" component={CustomModal} />
         <Stack.Screen name="DropDown" component={DropDown} />
-        <Stack.Screen name="aniInput" component={AniInput} />
-
         {/* <Stack.Screen name="community" component={Community} /> */}
         <Stack.Screen name="communityPost" component={CommunityPost} />
+        <Stack.Screen name="onBoarding" component={Onboarding} />
         {/* <Stack.Screen name="communityItem" component={CommunityItem} /> */}
 
         <Stack.Screen name="intro" component={Intro} />

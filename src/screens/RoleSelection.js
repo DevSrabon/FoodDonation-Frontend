@@ -148,6 +148,7 @@ const RoleSelection = () => {
               toggle(1);
             }}
           >
+
             <Image style={{ width: 20, height: 20 }} source={icons.close} />
           </Pressable>
         </View>

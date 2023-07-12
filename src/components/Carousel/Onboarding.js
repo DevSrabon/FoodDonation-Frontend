@@ -4,7 +4,7 @@ import { Animated, FlatList, StyleSheet, View } from "react-native";
 import OnboardingItem from "./OnboardingItem";
 import Paginator from "./Paginator";
 import slides from "./slides";
-// import NextButton from './NextButton';
+// import NextButton from "./NextButton";
 
 const Onboarding = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -21,30 +21,29 @@ const Onboarding = () => {
 
   return (
     <View style={styles.container}>
-      <View style={{ flex: 3 }}>
-        <FlatList
-          data={slides}
-          renderItem={({ item }) => <OnboardingItem item={item} />}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          pagingEnabled
-          bounces={false}
-          keyExtractor={(item) => item.id}
-          onScroll={Animated.event(
-            [{ nativeEvent: { contentOffset: { x: scrollX } } }],
-            {
-              useNativeDriver: false,
-            }
-          )}
-          scrollEventThrottle={30}
-          onViewableItemsChanged={viewableItemsChanged}
-          viewabilityConfig={viewConfig}
-          ref={slidesRef}
-        />
-      </View>
+      <FlatList
+        data={slides}
+        renderItem={({ item }) => <OnboardingItem item={item} />}
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        pagingEnabled
+        bounces={false}
+        keyExtractor={(item) => item.id}
+        onScroll={Animated.event(
+          [{ nativeEvent: { contentOffset: { x: scrollX } } }],
+          {
+            useNativeDriver: false,
+          }
+        )}
+        scrollEventThrottle={30}
+        onViewableItemsChanged={viewableItemsChanged}
+        viewabilityConfig={viewConfig}
+        ref={slidesRef}
+      />
+
       <Paginator data={slides} scrollX={scrollX} />
 
-      {/* <NextButton percentage = {(currentIndex +1) * (100/slides.length)} /> */}
+      {/* <NextButton percentage={(currentIndex + 1) * (100 / slides.length)} /> */}
     </View>
   );
 };

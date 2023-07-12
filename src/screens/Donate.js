@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, ScrollView, View, Text } from "react-native";
 import AddImages from "../components/AddImages";
 import CustomAlert from "../components/CustomAlert";
 import CustomButton from "../components/CustomButton";
