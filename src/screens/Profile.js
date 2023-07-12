@@ -10,7 +10,9 @@ import {
 } from "react-native";
 
 import { useNavigation, useRoute } from "@react-navigation/native";
+import axios from "axios";
 import icons from "../../assets/icons";
+import CustomAlert from "../components/CustomAlert";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import Header from "../components/Header";
@@ -19,7 +21,6 @@ import Container from "../components/container";
 import Label from "../components/label";
 import { userContext } from "../context/Provider";
 import useImagePicker from "../hook/useImagePicker";
-import CustomAlert from "../components/CustomAlert";
 
 const Profile = () => {
   const route = useRoute();
@@ -34,12 +35,10 @@ const Profile = () => {
 
   const [error, setError] = useState("");
 
-
   const navigation = useNavigation();
   const { user, loading, setLoading } = userContext();
 
   const onBioSetup = async () => {
-
     let notifications = {};
 
     if (role === "needy") {
@@ -68,6 +67,7 @@ const Profile = () => {
       );
       if (result.data.status === "success") return navigation.navigate("user");
     } catch (error) {
+      console.log(error);
       if (error.code === "This-restaurant-already-in-use") {
         setError("The Restaurant is already in use");
       } else {
@@ -181,7 +181,7 @@ const Profile = () => {
               marginTop: 20,
             }}
           >
-                      {(error) && <CustomAlert type="error" value={error} />}
+            {error && <CustomAlert type="error" value={error} />}
 
             <CustomButton text="Done" onPress={onBioSetup} type="primary" />
           </View>

@@ -136,35 +136,45 @@ const DonateMeal = () => {
 
   return (
     <Container>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <Header>{restData?.role === "donate" ? "Donate" : "Help"}</Header>
 
-        <View
-          style={{
-            flex: 1,
-            alignItems: "center",
-          }}
-        >
+        <View>
           {listItems.map((item, index) => (
             <View
               key={index}
-              style={{ alignItems: "center", marginBottom: 10 }}
+              style={{
+                alignItems: "center",
+                marginBottom: 5,
+                borderColor: "#B4AAF2",
+                borderWidth: 2,
+                borderRadius: 8,
+              }}
             >
+              <View style={{ alignSelf: "flex-start" }}>
+                <Text
+                  style={{
+                    fontFamily: "SemiBold",
+                    fontSize: 16,
+                    marginLeft: 10,
+                  }}
+                >
+                  Item {item.id}
+                </Text>
+              </View>
+
               <View style={{ flexDirection: "row" }}>
                 <View style={{ width: "48%" }}>
-                  <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-                    Item {item.id}
-                  </Text>
+                  {/* <Text style={styles.label}>Item {item.id}</Text> */}
                   <CustomInput
-                    placeholder={`Item ${item.id}`}
+                    placeholder={"Item Name"}
+                    // placeholder={`Item ${item.id}`}
                     value={item.value}
                     setValue={(text) => handleValueChange(text, index, "value")}
                   />
                 </View>
                 <View style={{ width: "48%" }}>
-                  <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-                    Meal Type
-                  </Text>
+                  {/* <Text style={styles.label}>Meal Type</Text> */}
 
                   <View style={styles.inputText}>
                     <Picker
@@ -191,11 +201,9 @@ const DonateMeal = () => {
               </View>
               <View style={{ flexDirection: "row" }}>
                 <View style={{ width: "48%" }}>
-                  <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-                    Item Quantity
-                  </Text>
+                  {/* <Text style={styles.label}>Item Quantity</Text> */}
                   <CustomInput
-                    placeholder="0"
+                    placeholder="Quantity"
                     value={item.quantity}
                     setValue={(text) =>
                       handleValueChange(text, index, "quantity")
@@ -205,9 +213,7 @@ const DonateMeal = () => {
                 </View>
 
                 <View style={{ width: "48%" }}>
-                  <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-                    Quantity Type
-                  </Text>
+                  {/* <Text style={styles.label}>Quantity Type</Text> */}
                   <View style={styles.inputText}>
                     <Picker
                       selectedValue={item.quantityType}
@@ -244,9 +250,7 @@ const DonateMeal = () => {
             <>
               <View style={{ flexDirection: "row", marginTop: 10 }}>
                 <View style={{ width: "50%" }}>
-                  <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-                    Expired Time
-                  </Text>
+                  <Text style={styles.label}>Expired Time</Text>
                   <CustomInput
                     placeholder={expired.time || "0"}
                     value={expired.time}
@@ -257,9 +261,7 @@ const DonateMeal = () => {
                   />
                 </View>
                 <View style={{ width: "50%" }}>
-                  <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-                    Expired Type
-                  </Text>
+                  <Text style={styles.label}>Expired Type</Text>
                   <View style={styles.inputText}>
                     <Picker
                       selectedValue={expired.type}
@@ -279,9 +281,7 @@ const DonateMeal = () => {
                   </View>
                 </View>
               </View>
-              <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-                Order
-              </Text>
+              <Text style={styles.label}>Order</Text>
               <View style={styles.inputText}>
                 <Picker
                   selectedValue={orderType}
@@ -323,6 +323,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     justifyContent: "center",
     height: 38,
+  },
+  label: {
+    fontFamily: "SemiBold",
+    fontSize: 14,
   },
 });
 

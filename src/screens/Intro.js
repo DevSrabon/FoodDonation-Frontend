@@ -1,17 +1,19 @@
+import { useNavigation } from "@react-navigation/native";
+import LottieView from "lottie-react-native";
+import React from "react";
 import {
-  View,
-  Text,
-  Pressable,
-  StyleSheet,
   FlatList,
   Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
-import React from "react";
-import data from "../data/introData";
 import icons from "../../assets/icons";
-import { useNavigation } from "@react-navigation/native";
 import InitContainer from "../components/initContainer";
-import LottieView from "lottie-react-native";
+import data from "../data/introData";
+
+import Onboarding from "../components/Carousel/Onboarding";
 
 const Intro = () => {
   const navigation = useNavigation();
@@ -27,6 +29,7 @@ const Intro = () => {
       />
 
       <View style={styles.topContainer}></View>
+
       <View style={styles.subContainer}>
         <FlatList
           data={data}
@@ -58,6 +61,7 @@ const Intro = () => {
               >
                 {item.details}
               </Text>
+
               <Pressable onPress={() => navigation.navigate("login")}>
                 <Image source={icons.rightArrow} style={{ top: 30 }} />
               </Pressable>
@@ -68,6 +72,7 @@ const Intro = () => {
           pagingEnabled
         />
       </View>
+      <Onboarding />
     </InitContainer>
   );
 };
