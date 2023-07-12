@@ -19,7 +19,7 @@ const Donate = () => {
   const { loading, setLoading, allData } = useContext(AuthContext);
   const { name, role, subRole, email, location, categoryName, phone, photo } =
     allData.userData;
-  console.log("🚀 ~ file: Donate.js:27 ~ Donate ~ location:", location);
+
   const navigation = useNavigation();
   const [address, setAddress] = useState("");
   const [caption, setCaption] = useState("");

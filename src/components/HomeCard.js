@@ -6,7 +6,6 @@ import TimeLimitComponent from "../screens/TimeLimitComponent";
 import FadeView from "./fadeView";
 
 const HomeCard = ({ item }) => {
-  console.log("🚀 ~ file: HomeCard.js:8 ~ HomeCard ~ item:", item);
   const navigation = useNavigation();
   return (
     <FadeView>

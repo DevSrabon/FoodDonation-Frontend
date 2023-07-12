@@ -33,7 +33,7 @@ const ModalPopUp = ({ visible, children }) => {
         toValue: 0,
         duration: 300,
         useNativeDriver: true,
-      }).start();
+      }).reset();
     }
   };
 
@@ -84,7 +84,8 @@ const CustomAlert = ({ type, value }) => {
       <ModalPopUp visible={visible}>
         <View style={{ alignItems: "center" }}>
           <View style={styles.header}>
-            <TouchableOpacity  onPress={() => (setVisible(false), (value = null))}
+            <TouchableOpacity
+              onPress={() => (setVisible(false), (value = null))}
             >
               <Image source={icons.close} style={{ height: 30, width: 30 }} />
             </TouchableOpacity>
