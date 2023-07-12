@@ -25,9 +25,9 @@ import Signup from "../screens/Signup";
 import Transporter from "../screens/Transporter";
 import BottomNav from "./BottomNav";
 
+import Onboarding from "../components/Carousel/Onboarding";
 import CommunityPost from "../screens/CommunityPost";
 import Settings from "../screens/Settings";
-import Onboarding from "../components/Carousel/Onboarding";
 
 const Stack = createNativeStackNavigator();
 
