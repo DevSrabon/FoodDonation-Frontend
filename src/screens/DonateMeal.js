@@ -137,7 +137,7 @@ const DonateMeal = () => {
   return (
     <Container>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <Header>{restData?.role === "donate" ? "Donate" : "Help"}</Header>
+        <Header>{restData?.role === "donor" ? "Donate" : "Help"}</Header>
 
         <View>
           {listItems.map((item, index) => (
