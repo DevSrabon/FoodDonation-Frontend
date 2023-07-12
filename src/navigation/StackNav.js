@@ -28,6 +28,7 @@ import BottomNav from "./BottomNav";
 import CommunityPost from "../screens/CommunityPost";
 import Settings from "../screens/Settings";
 import Onboarding from "../components/Carousel/Onboarding";
+import AnimatedButton from "../components/AnimatedButton";
 
 const Stack = createNativeStackNavigator();
 
@@ -39,7 +40,7 @@ const StackNav = () => {
         screenOptions={{ headerShown: false }}
       >
         {/* <Stack.Screen name="initial" component={Donate} /> */}
-        <Stack.Screen name="initial" component={InitialPage} />
+        <Stack.Screen name="initial" component={AnimatedButton} />
 
         <Stack.Screen name="touch" component={CustomTouch} />
         <Stack.Screen name="modal" component={CustomModal} />
