@@ -1,7 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { ScrollView, View } from "react-native";
+import {
+  StyleSheet,
+  ScrollView,
+  View,
+  Text,
+  TouchableOpacity,
+} from "react-native";
 import AddImages from "../components/AddImages";
 import CustomAlert from "../components/CustomAlert";
 import CustomButton from "../components/CustomButton";
@@ -90,21 +96,26 @@ const Donate = () => {
     <Container>
       <Header>{role === "donate" ? "Donate" : "Help"}</Header>
       <ScrollView style={{ flex: 1 }}>
-        <View
-          style={{
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Label>Organization Name</Label>
-          <Label>{categoryName}</Label>
-          <Label>Location</Label>
-          <Label>
-            {address?.includes(",")
-              ? address?.substring(address?.indexOf(",") + 1).trim()
-              : address}
-          </Label>
+        <View style={styles.textContainer}>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Text style={styles.text}>Organization Name:</Text>
+            <View style={styles.textPadding}>
+              <Text style={styles.textBox}>{categoryName}</Text>
+            </View>
+          </View>
+
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Text style={styles.text}>Location:</Text>
+            <View style={styles.textPadding}>
+              <Text style={styles.textBox}>
+                {address?.includes(",")
+                  ? address?.substring(address?.indexOf(",") + 1).trim()
+                  : address}
+              </Text>
+            </View>
+          </View>
         </View>
+
         <View style={{ width: "100%", alignItems: "center", marginTop: 20 }}>
           <Label>Caption</Label>
           <CustomInput
@@ -124,13 +135,7 @@ const Donate = () => {
 
         <AddImages imageUrls={imageUrls} takePhoto={takePhoto} />
 
-        <View
-          style={{
-            flex: 1,
-            alignSelf: "center",
-            width: "90%",
-          }}
-        >
+        <View style={styles.btnContainer}>
           {error && <CustomAlert type="error" value={error} />}
           <CustomButton text="Continue" onPress={onDonate} type="primary" />
         </View>
@@ -138,5 +143,36 @@ const Donate = () => {
     </Container>
   );
 };
+
+const styles = StyleSheet.create({
+  textPadding: {
+    color: "#fff",
+    // width: "50%",
+
+    paddingVertical: 5,
+    paddingHorizontal: 5,
+    textAlign: "center",
+  },
+  textContainer: {
+    marginLeft: 15,
+    gap: 5,
+  },
+  text: {
+    fontFamily: "SemiBold",
+    fontSize: 16,
+  },
+  textBox: {
+    backgroundColor: "#efedf8",
+    borderWidth: 1,
+    borderColor: "#B4AAF2",
+    borderRadius: 4,
+    padding: 5,
+  },
+  btnContainer: {
+    flex: 1,
+    alignSelf: "center",
+    width: "90%",
+  },
+});
 
 export default Donate;

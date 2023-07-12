@@ -87,7 +87,7 @@ const Users = () => {
   const handleUserPress = (userchatId, user, emaill) => {
     navigation.navigate("SecuredChat", { userchatId, user, emaill });
   };
-
+//console.log(users)
   return (
     <View style={{ marginTop: 30, marginBottom: 50 }}>
       <ScrollView>
@@ -110,9 +110,17 @@ const Users = () => {
               }}
             >
               <Image
-                source={require("../../assets/icons/profile.png")}
-                style={{ width: 60, height: 60, borderRadius: 30 }}
-              />
+           source={
+            typeof user.profileImage === 'string'
+      ? { uri: user.profileImage }
+      : user.profileImage
+  
+  }
+  style={{ width: 60, height: 60, borderRadius: 30 }}
+/>
+
+
+
               <View>
                 <Text
                   style={{ fontSize: 17, fontWeight: "bold", paddingLeft: 20 }}
