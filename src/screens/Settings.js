@@ -7,6 +7,7 @@ import Header from "../components/Header";
 import Loading from "../components/Loading";
 import Container from "../components/container";
 import { userContext } from "../context/Provider";
+import { Feather } from "@expo/vector-icons";
 
 const Settings = () => {
   const { allData, user, loading, signOutUser } = userContext();
@@ -140,6 +141,20 @@ const Settings = () => {
         <TouchableOpacity style={styles.optionRow}>
           <Image source={icons.share} />
           <Text style={styles.optionText}>Share With Peers</Text>
+          <MaterialIcons
+            name="keyboard-arrow-right"
+            size={24}
+            color="gray"
+            style={{ marginLeft: "auto" }}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.optionRow}
+          onPress={() => navigation.navigate("terms")}
+        >
+          <Feather name="file-text" size={24} color="black" />
+          <Text style={styles.optionText}>Terms and Conditions</Text>
           <MaterialIcons
             name="keyboard-arrow-right"
             size={24}

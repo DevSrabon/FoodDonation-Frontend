@@ -109,6 +109,9 @@ const Profile = () => {
                           alignItems: "center",
                         }}
                       >
+                        <Text style={{ fontFamily: "SemiBold", fontSize: 16 }}>
+                          Profile Picture
+                        </Text>
                         <Text
                           style={{
                             fontFamily: "Bold",
@@ -119,7 +122,7 @@ const Profile = () => {
                         >
                           <Image source={icons.profile} />
                         </Text>
-                        <Text>Add Image</Text>
+                        <Text>Add Image+</Text>
                       </View>
                     )}
                   </TouchableOpacity>

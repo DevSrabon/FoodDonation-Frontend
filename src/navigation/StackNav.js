@@ -29,6 +29,8 @@ import Onboarding from "../components/Carousel/Onboarding";
 import CommunityPost from "../screens/CommunityPost";
 import Settings from "../screens/Settings";
 import CustomField from "../components/CustomField";
+import AnimatedButton from "../components/AnimatedButton";
+import TermsAndConditions from "../screens/TermsAndConditions";
 
 const Stack = createNativeStackNavigator();
 
@@ -36,11 +38,11 @@ const StackNav = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={"community"}
+        initialRouteName={"initial"}
         screenOptions={{ headerShown: false }}
       >
         {/* <Stack.Screen name="initial" component={Donate} /> */}
-        <Stack.Screen name="initial" component={AnimatedButton} />
+        <Stack.Screen name="initial" component={InitialPage} />
 
         <Stack.Screen name="input" component={CustomField} />
         <Stack.Screen name="touch" component={CustomTouch} />
@@ -49,6 +51,7 @@ const StackNav = () => {
         {/* <Stack.Screen name="community" component={Community} /> */}
         <Stack.Screen name="communityPost" component={CommunityPost} />
         <Stack.Screen name="onBoarding" component={Onboarding} />
+        <Stack.Screen name="aniBtn" component={AnimatedButton} />
         {/* <Stack.Screen name="communityItem" component={CommunityItem} /> */}
 
         <Stack.Screen name="intro" component={Intro} />
@@ -58,6 +61,7 @@ const StackNav = () => {
         <Stack.Screen name="profile" component={Profile} />
         <Stack.Screen name="otp" component={Otp} />
         <Stack.Screen name="settings" component={Settings} />
+        <Stack.Screen name="terms" component={TermsAndConditions} />
 
         <Stack.Screen name="needy" component={FoodNeedier} />
         <Stack.Screen name="transporter" component={Transporter} />

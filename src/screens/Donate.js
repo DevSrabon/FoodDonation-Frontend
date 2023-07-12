@@ -91,30 +91,24 @@ const Donate = () => {
     <Container>
       <Header>{role === "donor" ? "Donate" : "Help"}</Header>
       <ScrollView style={{ flex: 1 }}>
-        <View style={styles.textContainer}>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Text style={styles.text}>Organization Name:</Text>
-            <View style={styles.textPadding}>
-              <Text style={styles.textBox}>{categoryName}</Text>
-            </View>
-          </View>
+        <Label>Organization Name:</Label>
+        <View style={styles.textPadding}>
+          <Text style={styles.textBox}>{categoryName}</Text>
+        </View>
 
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Text style={styles.text}>Location:</Text>
-            <View style={styles.textPadding}>
-              <Text style={styles.textBox}>
-                {address?.includes(",")
-                  ? address?.substring(address?.indexOf(",") + 1).trim()
-                  : address}
-              </Text>
-            </View>
-          </View>
+        <Label>Location:</Label>
+        <View style={styles.textPadding}>
+          <Text style={styles.textBox}>
+            {address?.includes(",")
+              ? address?.substring(address?.indexOf(",") + 1).trim()
+              : address}
+          </Text>
         </View>
 
         <View style={{ width: "100%", alignItems: "center", marginTop: 20 }}>
-          <Label>Caption</Label>
+          <Label>Donation Description</Label>
           <CustomInput
-            placeholder="Caption"
+            placeholder="Donation Description"
             value={caption}
             setValue={setCaption}
           />
@@ -142,10 +136,8 @@ const Donate = () => {
 const styles = StyleSheet.create({
   textPadding: {
     color: "#fff",
-    // width: "50%",
 
     paddingVertical: 5,
-    paddingHorizontal: 5,
     textAlign: "center",
   },
   textContainer: {
@@ -157,11 +149,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   textBox: {
+    width: "90%",
+    alignSelf: "center",
+    justifyContent: "center",
     backgroundColor: "#efedf8",
     borderWidth: 1,
     borderColor: "#B4AAF2",
-    borderRadius: 4,
-    padding: 5,
+    borderRadius: 8,
+    padding: 10,
   },
   btnContainer: {
     flex: 1,

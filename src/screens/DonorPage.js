@@ -12,15 +12,15 @@ import { auth, userContext } from "../context/Provider";
 let i = 1;
 const DonorPage = () => {
   const route = useRoute();
-  const { user:paramUser } = route.params;
+  const { user: paramUser } = route.params;
 
-  const { allData,user } = userContext();
+  const { allData, user } = userContext();
   const navigation = useNavigation();
   const [address, setAddress] = useState();
   const latitude = paramUser.location.latitude;
   const longitude = paramUser.location.longitude;
-  
-const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const getAddressFromCoordinates = async () => {
     try {
@@ -58,7 +58,7 @@ const [isButtonDisabled, setIsButtonDisabled] = useState(false);
       chatid: createChatId(paramUser?.email, user?.email),
     };
     console.log(newMessage);
-    
+
     // Check if the email already exists in the database
     get(chatRef).then((snapshot) => {
       const emails = Object.values(snapshot.val() || {}).map(
@@ -70,10 +70,7 @@ const [isButtonDisabled, setIsButtonDisabled] = useState(false);
       }
     });
 
-    const chatRef1 = ref(
-      getDatabase(),
-      user?.email.replace(/[@.]/g, "")
-    );
+    const chatRef1 = ref(getDatabase(), user?.email.replace(/[@.]/g, ""));
     const newMessage1 = {
       mail: paramUser?.email,
       name: paramUser?.userName,
@@ -90,7 +87,7 @@ const [isButtonDisabled, setIsButtonDisabled] = useState(false);
         // Email doesn't exist, push the new message
         push(chatRef1, newMessage1);
       }
-    });/*
+    }); /*
     //here location is set
     set(ref(getDatabase(), "location/" + user?.email?.replace(/[@.]/g, "")), {
       lat: allData?.userData?.location?.latitude,
@@ -180,7 +177,14 @@ const [isButtonDisabled, setIsButtonDisabled] = useState(false);
             style={{ width: "100%", height: 180, resizeMode: "stretch" }}
           />
         </View>
-        <View style={{ flexDirection: "row", marginTop: 10, gap: 10 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-between",
+            marginTop: 10,
+            gap: 10,
+          }}
+        >
           <View
             style={{
               backgroundColor: "#F4A099",
@@ -193,7 +197,7 @@ const [isButtonDisabled, setIsButtonDisabled] = useState(false);
               {/* donar */}
             </Text>
           </View>
-          <View
+          {/* <View
             style={{
               backgroundColor: "#F5F6F7",
               padding: 10,
@@ -201,8 +205,8 @@ const [isButtonDisabled, setIsButtonDisabled] = useState(false);
             }}
           >
             <Text style={{ fontFamily: "Medium", fontSize: 10 }}>2.2kms</Text>
-          </View>
-          <View
+          </View> */}
+          {/* <View
             style={{
               backgroundColor: "#F5F6F7",
               padding: 10,
@@ -212,7 +216,7 @@ const [isButtonDisabled, setIsButtonDisabled] = useState(false);
             <Text style={{ fontFamily: "Medium", fontSize: 10 }}>
               5 Delivery
             </Text>
-          </View>
+          </View> */}
           <View
             style={{
               flex: 1,
@@ -253,7 +257,9 @@ const [isButtonDisabled, setIsButtonDisabled] = useState(false);
               }}
             >
               <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
-                {paramUser?.role === "needy" ? "Food Needed" : "Food Availability"}
+                {paramUser?.role === "needy"
+                  ? "Food Needed"
+                  : "Food Availability"}
               </Text>
               {paramUser?.listItems?.map((item) => (
                 <View
