@@ -3,57 +3,60 @@ import React from "react";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import icons from "../../assets/icons";
 import TimeLimitComponent from "../screens/TimeLimitComponent";
+import FadeView from "./fadeView";
 
 const HomeCard = ({ item }) => {
   console.log("🚀 ~ file: HomeCard.js:8 ~ HomeCard ~ item:", item);
   const navigation = useNavigation();
   return (
-    <View key={item._id} style={styles.cardContainer}>
-      <Pressable
-        onPress={() => navigation.navigate("donorPage", { user: item })}
-      >
-        <Image
-          source={{ uri: item?.imageUrls?.[0] } || icons.fixedHeight}
-          style={styles.cardImage}
-          resizeMode="cover"
-        />
-      </Pressable>
-      <Text style={styles.cardDescription}>{item?.caption}</Text>
-      <View style={styles.profileContainer}>
-        <View style={styles.imageContainerProfile}>
+    <FadeView>
+      <View key={item._id} style={styles.cardContainer}>
+        <Pressable
+          onPress={() => navigation.navigate("donorPage", { user: item })}
+        >
           <Image
-            source={{ uri: item?.photo } || icons.profile}
-            style={styles.profileImage}
+            source={{ uri: item?.imageUrls?.[0] } || icons.fixedHeight}
+            style={styles.cardImage}
             resizeMode="cover"
           />
-        </View>
-        <View style={styles.profileTextContainer}>
-          <Text style={{ fontFamily: "SemiBold", fontSize: 16 }}>
-            {item?.userName}
-          </Text>
-          <Text style={styles.profileText}>{item?.postCategoryName}</Text>
-          {/* <Text style={styles.roleText}>
+        </Pressable>
+        <Text style={styles.cardDescription}>{item?.caption}</Text>
+        <View style={styles.profileContainer}>
+          <View style={styles.imageContainerProfile}>
+            <Image
+              source={{ uri: item?.photo } || icons.profile}
+              style={styles.profileImage}
+              resizeMode="cover"
+            />
+          </View>
+          <View style={styles.profileTextContainer}>
+            <Text style={{ fontFamily: "SemiBold", fontSize: 16 }}>
+              {item?.userName}
+            </Text>
+            <Text style={styles.profileText}>{item?.postCategoryName}</Text>
+            {/* <Text style={styles.roleText}>
             {item?.role?.replace(/^./, item?.role[0].toUpperCase())}
           </Text> */}
-        </View>
-      </View>
-      {item?.role === "donor" && (
-        <View style={styles.contentCard}>
-          <View style={styles.cardItemsContainer}>
-            <View style={styles.textItem1}>
-              <Image source={icons.time} />
-              <Text>
-                <TimeLimitComponent
-                  key={item?._id}
-                  previousTime={item?.updatedAt}
-                  countTime={item?.expiredTime}
-                ></TimeLimitComponent>
-              </Text>
-            </View>
           </View>
         </View>
-      )}
-    </View>
+        {item?.role === "donor" && (
+          <View style={styles.contentCard}>
+            <View style={styles.cardItemsContainer}>
+              <View style={styles.textItem1}>
+                <Image source={icons.time} />
+                <Text>
+                  <TimeLimitComponent
+                    key={item?._id}
+                    previousTime={item?.updatedAt}
+                    countTime={item?.expiredTime}
+                  ></TimeLimitComponent>
+                </Text>
+              </View>
+            </View>
+          </View>
+        )}
+      </View>
+    </FadeView>
   );
 };
 
