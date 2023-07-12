@@ -19,6 +19,8 @@ const DonorPage = () => {
   const [address, setAddress] = useState();
   const latitude = paramUser.location.latitude;
   const longitude = paramUser.location.longitude;
+  
+const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const getAddressFromCoordinates = async () => {
     try {
@@ -43,6 +45,7 @@ const DonorPage = () => {
   }, [latitude, longitude]);
 
   const onAccept = () => {
+    setIsButtonDisabled(true);
     const createChatId = (email1, email2) => {
       return [email1, email2].sort().join();
     };
@@ -316,6 +319,7 @@ const DonorPage = () => {
                 }}
                 text="Accept"
                 type="primary"
+                disabled={isButtonDisabled}
               />
               <CustomButton onPress={onDecline} text="Decline" type="primary" />
             </>
