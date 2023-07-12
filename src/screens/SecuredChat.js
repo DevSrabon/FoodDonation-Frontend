@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet, Image, Alert } from 'react-native';
-import { getDatabase, ref, onValue, push, set } from 'firebase/database';
+import { getDatabase, ref, onValue, push, set, remove, get } from 'firebase/database';
 import { Marker, MapView } from 'react-native-maps';
 import * as Location from 'expo-location';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -45,8 +45,57 @@ const SecuredChat = () => {
   const route = useRoute();
   const { userchatId } = route.params;
   const {user:ouser} = route.params;
-  const {emaill} = route.params;
+  const {emaill} = route.params;//opponent user email
+  console.log(user.email)
+  const id = (email1, email2) => {
+    return [email1, email2].sort().join();
+  };
+  const chatId = id(user.email, emaill);
+  console.log(chatId)
 
+  function deleteChat() {
+    set(ref(db, `rooms/${userchatId}`), null)
+
+    const pushTokenRef = ref(db, `${user.email.replace(/[@.]/g, "")}`);
+    get(pushTokenRef).then((snapshot) => {
+      const data = snapshot.val();
+    const newData = {};
+     Object.keys(data).forEach((key) => {
+      if (data[key].chatid !== chatId) {
+        newData[key] = data[key];
+      }
+    });
+
+    set(pushTokenRef, newData)
+      }
+    );
+    
+    const pushTokenRef2 = ref(db, `${emaill.replace(/[@.]/g, "")}`);
+    get(pushTokenRef2).then((snapshot) => {
+      const data = snapshot.val();
+    const newData = {};
+     Object.keys(data).forEach((key) => {
+      if (data[key].chatid !== chatId) {
+        newData[key] = data[key];
+      }
+    });
+
+    set(pushTokenRef2, newData)
+      }
+    );
+
+
+    
+    /*pushTokenRef.orderByChild('chatid').equalTo(chatId).once('value', (snapshot) => {
+        snapshot.forEach((childSnapshot) => {
+            const pushToken = childSnapshot.val().pushToken;
+            console.log(pushToken); // Display the push token
+            // Or use it in your desired way
+        });
+    });*/
+    
+    navigation.goBack();
+  }
   useEffect(() => {
     onValue(ref(db, `rooms/${userchatId}/messages`), (snapshot) => {
       const data = snapshot.val();
@@ -62,7 +111,25 @@ const SecuredChat = () => {
       email: emailll,
       Delivered: "Yes",
     })
-    Alert.alert("Thank You \n ")
+    Alert.alert(
+      'Thank You',
+      "By clicking 'Yes,' you are confirming that you no longer need this chat and it will be deleted.",
+      [
+        {
+          text: 'Yes',
+          onPress: () => {
+            deleteChat();
+          },
+        },
+        {
+          text: 'No',
+          style: 'cancel',
+          onPress: () => {
+            Alert.alert("Food not yet Delivered");
+          },
+        },
+      ]
+    );
   }
   function handleNo() {
     push(ref(getDatabase(), 'FoodDelivery'), {
