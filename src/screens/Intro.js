@@ -1,17 +1,20 @@
+import { useNavigation } from "@react-navigation/native";
+import LottieView from "lottie-react-native";
+import React from "react";
 import {
-  View,
-  Text,
-  Pressable,
-  StyleSheet,
   FlatList,
   Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
-import React from "react";
-import data from "../data/introData";
 import icons from "../../assets/icons";
-import { useNavigation } from "@react-navigation/native";
 import InitContainer from "../components/initContainer";
-import LottieView from "lottie-react-native";
+import data from "../data/introData";
+
+import Onboarding from "../components/Carousel/Onboarding";
+import CustomButton from "../components/CustomButton";
 
 const Intro = () => {
   const navigation = useNavigation();
@@ -26,47 +29,27 @@ const Intro = () => {
         source={require("../../assets/girl.json")}
       />
 
-      <View style={styles.topContainer}></View>
+      <View style={styles.topContainer}>
+        <Pressable
+          onPress={() => navigation.navigate("login")}
+          style={{ top: 150, left: 150 }}
+        >
+          <Image source={icons.rightArrow} />
+          <Text
+            style={{
+              color: "white",
+              alignSelf: "center",
+              bottom: 23,
+              fontSize: 11,
+            }}
+          >
+            Login
+          </Text>
+        </Pressable>
+      </View>
+
       <View style={styles.subContainer}>
-        <FlatList
-          data={data}
-          renderItem={({ item }) => (
-            <View
-              style={{
-                // maxWidth: 350,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Text
-                style={{
-                  fontFamily: "Bold",
-                  fontSize: 24,
-                  textAlign: "center",
-                  // paddingVertical: 10,
-                  top: -20,
-                }}
-              >
-                {item.header}
-              </Text>
-              <Text
-                style={{
-                  fontFamily: "SemiBold",
-                  paddingHorizontal: 10,
-                  paddingVertical: 10,
-                }}
-              >
-                {item.details}
-              </Text>
-              <Pressable onPress={() => navigation.navigate("login")}>
-                <Image source={icons.rightArrow} style={{ top: 30 }} />
-              </Pressable>
-            </View>
-          )}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          pagingEnabled
-        />
+        <Onboarding />
       </View>
     </InitContainer>
   );
@@ -75,7 +58,6 @@ const Intro = () => {
 const styles = StyleSheet.create({
   topContainer: {
     flex: 1,
-    // backgroundColor: "#B4AAF2",
   },
   subContainer: {
     flex: 1,
@@ -83,8 +65,7 @@ const styles = StyleSheet.create({
     borderTopStartRadius: 17,
     borderTopEndRadius: 17,
     maxHeight: 300,
-    padding: 10,
-    justifyContent: "flex-start",
+    justifyContent: "center",
   },
 });
 

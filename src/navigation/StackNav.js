@@ -27,6 +27,7 @@ import BottomNav from "./BottomNav";
 
 import CommunityPost from "../screens/CommunityPost";
 import Settings from "../screens/Settings";
+import Onboarding from "../components/Carousel/Onboarding";
 
 const Stack = createNativeStackNavigator();
 
@@ -45,6 +46,7 @@ const StackNav = () => {
         <Stack.Screen name="DropDown" component={DropDown} />
         {/* <Stack.Screen name="community" component={Community} /> */}
         <Stack.Screen name="communityPost" component={CommunityPost} />
+        <Stack.Screen name="onBoarding" component={Onboarding} />
         {/* <Stack.Screen name="communityItem" component={CommunityItem} /> */}
 
         <Stack.Screen name="intro" component={Intro} />

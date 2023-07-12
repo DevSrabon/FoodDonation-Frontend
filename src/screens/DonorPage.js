@@ -51,15 +51,17 @@ const DonorPage = () => {
     const newMessage = {
       mail: user?.email,
       name: user?.displayName,
+      profileImage: allData?.userData?.photo || icons.user,
       chatid: createChatId(paramUser?.email, user?.email),
     };
-
+    console.log(newMessage);
+    
     // Check if the email already exists in the database
     get(chatRef).then((snapshot) => {
       const emails = Object.values(snapshot.val() || {}).map(
         (message) => message.mail
       );
-      if (!emails.includes(user?.email)) {
+      if (!emails.includes(paramUser?.email)) {
         // Email doesn't exist, push the new message
         push(chatRef, newMessage);
       }
@@ -72,9 +74,10 @@ const DonorPage = () => {
     const newMessage1 = {
       mail: paramUser?.email,
       name: paramUser?.userName,
+      profileImage: paramUser?.photo || icons.user,
       chatid: createChatId(paramUser?.email, user?.email),
     };
-
+    console.log(newMessage1);
     // Check if the email already exists in the database
     get(chatRef1).then((snapshot) => {
       const emails = Object.values(snapshot.val() || {}).map(

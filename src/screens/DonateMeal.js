@@ -10,7 +10,6 @@ import Header from "../components/Header";
 import Loading from "../components/Loading";
 import Container from "../components/container";
 import { AuthContext } from "../context/Provider";
-import Label from "../components/label";
 
 const DonateMeal = () => {
   const route = useRoute();

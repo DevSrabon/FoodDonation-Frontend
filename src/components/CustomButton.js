@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
   },
   text_tertiary: {
     color: "#B4AAF2",
+    // color: "white",
   },
 });
 

@@ -138,7 +138,7 @@ const RoleSelection = () => {
         }}
       >
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <Header style={{ color: "#B4AAF2" }}> Donar,</Header>
+          <Header style={{ color: "#B4AAF2" }}> Donor,</Header>
           <Pressable style={{ padding: 10 }} onPress={() => toggle()}>
             <Image style={{ width: 20, height: 20 }} source={icons.close} />
           </Pressable>
