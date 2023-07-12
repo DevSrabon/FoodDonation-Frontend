@@ -28,6 +28,7 @@ import BottomNav from "./BottomNav";
 import Onboarding from "../components/Carousel/Onboarding";
 import CommunityPost from "../screens/CommunityPost";
 import Settings from "../screens/Settings";
+import CustomField from "../components/CustomField";
 
 const Stack = createNativeStackNavigator();
 
@@ -35,12 +36,13 @@ const StackNav = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={"initial"}
+        initialRouteName={"community"}
         screenOptions={{ headerShown: false }}
       >
         {/* <Stack.Screen name="initial" component={Donate} /> */}
-        <Stack.Screen name="initial" component={InitialPage} />
+        <Stack.Screen name="initial" component={AnimatedButton} />
 
+        <Stack.Screen name="input" component={CustomField} />
         <Stack.Screen name="touch" component={CustomTouch} />
         <Stack.Screen name="modal" component={CustomModal} />
         <Stack.Screen name="DropDown" component={DropDown} />

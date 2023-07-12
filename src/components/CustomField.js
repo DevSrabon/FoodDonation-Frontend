@@ -1,5 +1,12 @@
 import React, { useRef, useState } from "react";
-import { Animated, Easing, StyleSheet, TextInput, View } from "react-native";
+import {
+  Animated,
+  Easing,
+  StyleSheet,
+  TextInput,
+  View,
+  Text,
+} from "react-native";
 
 const CustomField = ({ duration = 200 }) => {
   const [text, setText] = useState("");
@@ -45,19 +52,23 @@ const CustomField = ({ duration = 200 }) => {
     outputRange: ["grey", "black"],
     extrapolate: "clamp",
   });
+
   const labelColorAnimation = borderWidth.current.interpolate({
     inputRange: [0, 2],
     outputRange: ["grey", "black"],
     extrapolate: "clamp",
   });
+
   const fontSize = borderWidth.current.interpolate({
     inputRange: [0, 2],
     outputRange: [14, 12],
     extrapolate: "clamp",
   });
+
   const handleChangeText = (value) => {
     setText(value);
   };
+
   return (
     <View>
       <View
@@ -94,7 +105,6 @@ const CustomField = ({ duration = 200 }) => {
     </View>
   );
 };
-export default CustomField;
 
 const styles = StyleSheet.create({
   container: {
@@ -111,3 +121,5 @@ const styles = StyleSheet.create({
     padding: 20,
   },
 });
+
+export default CustomField;
