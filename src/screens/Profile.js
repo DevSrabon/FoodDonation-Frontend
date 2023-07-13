@@ -59,7 +59,7 @@ const Profile = () => {
       ...body,
       ...notifications,
     };
-
+    setLoading(true);
     try {
       const result = await axios.patch(
         `https://food-donation-backend.vercel.app/api/v1/users/update-role?email=${user?.email}`,
