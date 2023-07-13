@@ -29,9 +29,11 @@ import Onboarding from "../components/Carousel/Onboarding";
 import CommunityPost from "../screens/CommunityPost";
 import Settings from "../screens/Settings";
 import CustomField from "../components/CustomField";
+import TextField from "../components/TextField";
 import AnimatedButton from "../components/AnimatedButton";
 import TermsAndConditions from "../screens/TermsAndConditions";
 import BackgroundFetchScreen from "../screens/BackgroundFetchScreen";
+import CustomInput from "../components/CustomInput";
 
 const Stack = createNativeStackNavigator();
 
@@ -42,10 +44,10 @@ const StackNav = () => {
         initialRouteName={"initial"}
         screenOptions={{ headerShown: false }}
       >
-        {/* <Stack.Screen name="initial" component={Donate} /> */}
         <Stack.Screen name="initial" component={InitialPage} />
 
         <Stack.Screen name="input" component={CustomField} />
+        <Stack.Screen name="TextField" component={TextField} />
         <Stack.Screen name="touch" component={CustomTouch} />
         <Stack.Screen name="modal" component={CustomModal} />
         <Stack.Screen name="DropDown" component={DropDown} />
