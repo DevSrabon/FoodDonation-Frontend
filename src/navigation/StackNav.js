@@ -24,7 +24,6 @@ import DropDown from "../components/DropDown";
 import Signup from "../screens/Signup";
 import Transporter from "../screens/Transporter";
 import BottomNav from "./BottomNav";
-
 import Onboarding from "../components/Carousel/Onboarding";
 import CommunityPost from "../screens/CommunityPost";
 import Settings from "../screens/Settings";
@@ -40,7 +39,7 @@ const StackNav = () => {
         screenOptions={{ headerShown: false }}
       >
         {/* <Stack.Screen name="initial" component={Donate} /> */}
-        <Stack.Screen name="initial" component={AnimatedButton} />
+        <Stack.Screen name="initial" component={InitialPage} />
 
         <Stack.Screen name="input" component={CustomField} />
         <Stack.Screen name="touch" component={CustomTouch} />
