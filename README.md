@@ -26,7 +26,7 @@ Databases
 + After scanning the qr code from the expo go, the app will launch automatically using the expo go app. And, then you can check out the app
 
 ## Another way to launch the App by using Android Emulator
-+ After you run the command " npm run start " below the QR code you can see that, it will say press "<h4>a</h4>" for opening in Android.
++ After you run the command " npm run start " below the QR code you can see that, it will say press " a " for opening in Android.
 + You need to have an android emulator in your desktop pc/laptop
 + For that you will have to download the Android Studio
 + You can follow this guide of <a href="https://reactnative.dev/docs/environment-setup?guide=native"> React Native Documentation </a> for how to run an React Native/Expo App.
