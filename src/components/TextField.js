@@ -1,106 +1,146 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, TextInput, View, Text, Animated } from 'react-native';
+import React, { useEffect, useRef, useState } from "react";
+import { Animated, StyleSheet, Text, TextInput, View } from "react-native";
 
 const TextField = ({
-    value,
-    setValue,
-    placeholder,
-    placeHolderColor,
-    secureTextEntry,
-    multiline,
-    editable,
-    numberOfLines,
-    keyboardType,
-    style,
-    inputStyles,
-    ...restOfProps }) => {
-    // console.log("value==", value);
-    // console.log("setValue==", setValue);
-    // console.log("Placeholder==", placeholder);
+  value,
+  setValue,
+  placeholder,
+  placeHolderColor,
+  secureTextEntry,
+  multiline,
+  editable,
+  numberOfLines,
+  keyboardType,
+  style,
+  inputStyles,
+  error,
+  ...restOfProps
+}) => {
+  // console.log("value==", value);
+  // console.log("setValue==", setValue);
+  // console.log("Placeholder==", placeholder);
 
-    const inputref = useRef();
-    const [isFocused, setIsFocused] = useState(false);
-    const focusAnim = useRef(new Animated.Value(0)).current
+  const inputref = useRef();
+  const [isFocused, setIsFocused] = useState(false);
+  const focusAnim = useRef(new Animated.Value(0)).current;
 
-    useEffect(() => {
-        Animated.timing(focusAnim, {
-            toValue: isFocused ? 1 : 0,
-            duration: 150,
-            useNativeDriver: false,
-        }).start()
-    }, [focusAnim, isFocused])
+  useEffect(() => {
+    Animated.timing(focusAnim, {
+      toValue: isFocused ? 1 : 0,
+      duration: 150,
+      useNativeDriver: false,
+    }).start();
+  }, [focusAnim, isFocused]);
 
-    return (
-        <View style={[style, { marginVertical: 30, width: "90%" }]}>
-            <TextInput
-                // style={[styles.input, inputStyles]}
-                style={[styles.input, isFocused && styles.textInput]}
-                onChangeText={setValue}
-                secureTextEntry={secureTextEntry}
-                multiline={multiline}
-                editable={editable}
-                numberOfLines={numberOfLines}
-                keyboardType={keyboardType}
-                blurOnSubmit={true}
-                ref={inputref}
-                onBlur={() => { setIsFocused(false) }}
-                onFocus={() => { setIsFocused(true) }}
-                {...restOfProps} />
-            <Animated.View
-                style={[styles.labelContainer,(isFocused)?(styles.labelFocusContainer):(styles.labelContainer) ,
-                {
-                    top: value
-                        ? -9
-                        : focusAnim.interpolate({ inputRange: [0, 1], outputRange: [13, -9], }),
-                },]}>
-                <Animated.Text
-                    onPress={() => inputref.current.focus()}
-                    style={[styles.label,
-                    {
-                        fontSize: value ? -14 : focusAnim.interpolate({ inputRange: [0, 1], outputRange: [16, 14], }),
-                    },]}>
-                    {placeholder}
-                </Animated.Text>
-            </Animated.View>
-        </View>
-    )
-}
+  return (
+    <View style={[style, { marginVertical: 30, width: "90%" }]}>
+      <TextInput
+        // style={[styles.input, inputStyles]}
+        style={[
+          styles.input,
+          error ? styles.errorBorder : styles.successBorder,
+          (isFocused || value) && styles.textInput,
+        ]}
+        onChangeText={setValue}
+        secureTextEntry={secureTextEntry}
+        value={value}
+        multiline={multiline}
+        editable={editable}
+        numberOfLines={numberOfLines}
+        keyboardType={keyboardType}
+        blurOnSubmit={true}
+        ref={inputref}
+        onBlur={() => {
+          setIsFocused(false);
+        }}
+        onFocus={() => {
+          setIsFocused(true);
+        }}
+        {...restOfProps}
+      />
+      <Animated.View
+        style={[
+          styles.labelContainer,
+          error ? styles.errorBorder : styles.successBorder,
+          isFocused || value
+            ? styles.labelFocusContainer
+            : styles.labelContainer,
+          {
+            top: value
+              ? -9
+              : focusAnim.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [13, -9],
+                }),
+          },
+        ]}
+      >
+        <Animated.Text
+          onPress={() => inputref.current.focus()}
+          style={[
+            styles.label,
+            error ? styles.errorBorder : styles.successBorder,
+            {
+              fontSize: value
+                ? -14
+                : focusAnim.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [16, 14],
+                  }),
+            },
+          ]}
+        >
+          {placeholder}
+        </Animated.Text>
+      </Animated.View>
+      {error && <Text style={styles.error}>{error}</Text>}
+    </View>
+  );
+};
 
-export default TextField
+export default TextField;
 
 const styles = StyleSheet.create({
-    input: {
-        backgroundColor: 'white',
-        borderWidth: 1,
-        borderRadius: 4,
-        paddingHorizontal: 10,
-        fontFamily: "SemiBold",
-        // fontFamily: fonts.Medium,
-        fontSize: 19,
-        height: 50,
-    },
-    labelContainer: {
-        position: 'absolute',
-        left: 16,
-        paddingHorizontal: 5,
-    },
-    labelFocusContainer: {
-        position: 'absolute',
-        left: 16,
-        paddingHorizontal: 5,
-        backgroundColor: '#efedf8',
-        borderColor: "#B4AAF2",
-        borderWidth: 1,
-        borderRadius: 4,
-    },
-    label: {
-        fontFamily: "SemiBold",
-        fontSize: 12,
-    },
-    textInput: {
-        borderWidth: 1,
-        borderColor: "#B4AAF2",
-        color: "black",
-        backgroundColor: "#efedf8",
-    },
-})
+  error: { color: "red" },
+  input: {
+    backgroundColor: "white",
+    borderWidth: 1,
+    borderRadius: 4,
+    paddingHorizontal: 10,
+    fontFamily: "Medium",
+    // fontFamily: fonts.Medium,
+    fontSize: 14,
+    height: 50,
+  },
+  labelContainer: {
+    position: "absolute",
+    left: 16,
+    paddingHorizontal: 5,
+  },
+  errorBorder: {
+    borderColor: "orange",
+    color: "red",
+  },
+  successBorder: {
+    borderColor: "#B4AAF2",
+    color: "black",
+  },
+  labelFocusContainer: {
+    position: "absolute",
+    left: 16,
+    paddingHorizontal: 5,
+    backgroundColor: "#efedf8",
+    borderWidth: 1,
+    borderRadius: 4,
+  },
+  label: {
+    fontFamily: "SemiBold",
+    fontSize: 12,
+  },
+
+  textInput: {
+    borderWidth: 1,
+    color: "black",
+    backgroundColor: "#efedf8",
+  },
+});

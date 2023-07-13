@@ -2,15 +2,12 @@ import { useIsFocused, useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import Checkbox from "expo-checkbox";
 import React, { useEffect, useState } from "react";
-import { Animated, ScrollView, StyleSheet, Text, View } from "react-native";
-import CustomAlert from "../components/CustomAlert";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import CustomButton from "../components/CustomButton";
-import CustomInput from "../components/CustomInput";
 import Header from "../components/Header";
-import Container from "../components/container";
-import Label from "../components/label";
-import { userContext } from "../context/Provider";
 import TextField from "../components/TextField";
+import Container from "../components/container";
+import { userContext } from "../context/Provider";
 const Login = () => {
   const {
     signIn,
@@ -24,9 +21,8 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isChecked, setChecked] = useState(false);
-  const [error, setError] = useState("");
-
-  const [scaleValue] = useState(new Animated.Value(1));
+  const [error, setError] = useState({});
+  console.log("🚀 ~ file: Login.js:25 ~ Login ~ error:", error);
 
   const navigation = useNavigation();
   const isFocus = useIsFocused();
@@ -36,47 +32,57 @@ const Login = () => {
     }
   }, [user?.email, isFocus]);
   const onSignInPressed = async () => {
+    setError({});
     try {
       const res = await signIn(email, password);
     } catch (error) {
       let errorMessage = "An error occurred during sign-in.";
 
-      if (
-        error.code === "auth/user-not-found" ||
-        error.code === "auth/wrong-password"
-      ) {
-        errorMessage = "Invalid email or password. Please try again.";
+      if (error.code === "auth/user-not-found") {
+        errorMessage = "Invalid email . Please try again.";
+        setError((prev) => ({
+          ...prev,
+          email: errorMessage,
+          password: errorMessage,
+        }));
+      } else if (error.code === "auth/wrong-password") {
+        errorMessage = "Invalid password . Please try again.";
+        setError((prev) => ({
+          ...prev,
+          password: errorMessage,
+        }));
       } else if (error.code === "auth/invalid-email") {
         errorMessage =
           "Invalid email format. Please enter a valid email address.";
+        setError((prev) => ({
+          ...prev,
+          email: errorMessage,
+        }));
       } else if (error.code === "auth/too-many-requests") {
         errorMessage = "Too many sign-in attempts. Please try again later.";
+        setError((prev) => ({
+          ...prev,
+          email: errorMessage,
+          password: errorMessage,
+        }));
       } else if (error.code === "auth/network-request-failed") {
         errorMessage = "Network error. Please check your internet connection.";
+        setError((prev) => ({
+          ...prev,
+          email: errorMessage,
+          password: errorMessage,
+        }));
       } else {
         errorMessage = "An unknown error occurred. Please try again later.";
+        setError((prev) => ({
+          ...prev,
+          email: errorMessage,
+          password: errorMessage,
+        }));
       }
-
-      console.log(error);
-      setError(errorMessage);
-      console.log(error);
     } finally {
       setLoading(false);
     }
-  };
-
-  const animateButton = () => {
-    Animated.timing(scaleValue, {
-      toValue: 0.9,
-      duration: 200,
-      useNativeDriver: true,
-    }).start(() => {
-      Animated.timing(scaleValue, {
-        toValue: 1.1,
-        duration: 200,
-        useNativeDriver: true,
-      }).start();
-    });
   };
 
   const onForgotPasswordPressed = () => {
@@ -117,6 +123,7 @@ const Login = () => {
           value={email}
           setValue={setEmail}
           keyboardType="email-address"
+          error={error.email}
         />
 
         {/* <Label>Password</Label> */}
@@ -125,6 +132,7 @@ const Login = () => {
           value={password}
           setValue={setPassword}
           secureTextEntry={true}
+          error={error.password}
         />
 
         <View
@@ -155,7 +163,7 @@ const Login = () => {
             </Text>
           </View>
 
-          {error && <CustomAlert type="error" value={error} />}
+          {/* {error && <CustomAlert type="error" value={error} />} */}
 
           <CustomButton
             text="Forgot Password"

@@ -169,9 +169,9 @@ const RoleSelection = () => {
           <Pressable
             style={[
               styles.box,
-              updatecategory === "CateringService" && styles.selectedBox,
+              updatecategory === "Catering Service" && styles.selectedBox,
             ]}
-            onPress={() => setUpdatecategory("CateringService")}
+            onPress={() => setUpdatecategory("Catering Service")}
           >
             <Text style={styles.title}>Catering Service</Text>
             <Text style={styles.subTitle}>
@@ -182,9 +182,9 @@ const RoleSelection = () => {
           <Pressable
             style={[
               styles.box,
-              updatecategory === "GroceryStore" && styles.selectedBox,
+              updatecategory === "Grocery Store" && styles.selectedBox,
             ]}
-            onPress={() => setUpdatecategory("GroceryStore")}
+            onPress={() => setUpdatecategory("Grocery Store")}
           >
             <Text style={styles.title}>Grocery Store</Text>
             <Text style={styles.subTitle}>
@@ -195,10 +195,10 @@ const RoleSelection = () => {
           <Pressable
             style={[
               styles.box,
-              updatecategory === "Normalpeople" && styles.selectedBox,
+              updatecategory === "Normal People" && styles.selectedBox,
             ]}
             onPress={() => {
-              setUpdatecategory("Normalpeople");
+              setUpdatecategory("Normal People");
             }}
           >
             <Text style={styles.title}>Normal people</Text>
@@ -250,9 +250,9 @@ const RoleSelection = () => {
           <Pressable
             style={[
               styles.box,
-              updatecategory === "Nonprofit" && styles.selectedBox,
+              updatecategory === "Non Profit" && styles.selectedBox,
             ]}
-            onPress={() => setUpdatecategory("Nonprofit")}
+            onPress={() => setUpdatecategory("Non Profit")}
           >
             <Text style={styles.title}>Non profit Organization</Text>
             <Text style={styles.subTitle}>
@@ -263,9 +263,9 @@ const RoleSelection = () => {
           <Pressable
             style={[
               styles.box,
-              updatecategory === "Foodbanks" && styles.selectedBox,
+              updatecategory === "Food Banks" && styles.selectedBox,
             ]}
-            onPress={() => setUpdatecategory("Foodbanks")}
+            onPress={() => setUpdatecategory("Food Banks")}
           >
             <Text style={styles.title}>Food Bank</Text>
             <Text style={styles.subTitle}>
@@ -317,9 +317,9 @@ const RoleSelection = () => {
           <Pressable
             style={[
               styles.box,
-              updatecategory === "Nonprofit" && styles.selectedBox,
+              updatecategory === "Non Profit" && styles.selectedBox,
             ]}
-            onPress={() => setUpdatecategory("Nonprofit")}
+            onPress={() => setUpdatecategory("Non Profit")}
           >
             <Text style={styles.title}>Non profit Organization</Text>
             <Text style={styles.subTitle}>
@@ -343,9 +343,9 @@ const RoleSelection = () => {
           <Pressable
             style={[
               styles.box,
-              updatecategory === "foodbanks" && styles.selectedBox,
+              updatecategory === "Food Banks" && styles.selectedBox,
             ]}
-            onPress={() => setUpdatecategory("foodbanks")}
+            onPress={() => setUpdatecategory("Food Banks")}
           >
             <Text style={styles.title}>Food Bank</Text>
             <Text style={styles.subTitle}>
