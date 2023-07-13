@@ -26,7 +26,7 @@ const DonateMeal = () => {
   const [listItems, setListItems] = useState([]);
 
   const [closeModal, setCloseModal] = useState(false);
-console.log(restData)
+
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
@@ -95,14 +95,14 @@ console.log(restData)
   ];
   if (orderType === "Drop") {
     console.log("Drop");
-   set(ref(getDatabase(), `${restData.email.replace(/[@.]/g, "")}` ), {
+   set(ref(getDatabase(), `${restData.email.replace(/[@.]/g, "")}/pickup` ), {
     role: restData.role,
     pickup: 'Drop',
   });
 
   } else if (orderType === "Pickup") {
     console.log("Pickup");
-    set(ref(getDatabase(), `${restData.email.replace(/[@.]/g, "")}` ), {
+    set(ref(getDatabase(), `${restData.email.replace(/[@.]/g, "")}/pickup` ), {
       role: restData.role,
       pickup: 'Pickup',
     });

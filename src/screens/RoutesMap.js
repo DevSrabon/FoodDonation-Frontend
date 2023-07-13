@@ -27,6 +27,7 @@ const RoutesMap = () => {
   const route = useRoute();
   
 
+  const [otherUsers, setOtherUsers] = useState({});
   const { userchatId } = route.params;
   const { allData } = userContext();
   const { emaill } = route.params;
@@ -39,7 +40,7 @@ const RoutesMap = () => {
     latitudeDelta: 0.5,
     longitudeDelta: 0.5,
   };
-  useEffect(() => {
+ 
     const updateRealTime = async () => {
       const result = await askLocationPermission();
       if (result) {
@@ -48,8 +49,8 @@ const RoutesMap = () => {
         set(
           ref(
             getDatabase(),
-            `location/${userchatId}/` + allData.userData.email.replace(/[@.]/g, "")
-          ),
+            `location/${userchatId}/` )
+          ,
           {
             latitude: coords.latitude,
             longitude: coords.longitude,
@@ -60,8 +61,35 @@ const RoutesMap = () => {
 
     const interval = setInterval(updateRealTime, 5000); // Update location every 5 seconds
 
-    return () => clearInterval(interval); // Clean up the interval on component unmount
-  }, []);
+    const fetchOtherUsers = () => {
+      const dbRef = ref(getDatabase(), `location/${userchatId}`);
+      onValue(dbRef, (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+          setCurrentLocation(data);
+        }
+      });
+    };
+
+    const intervalId = setInterval(fetchOtherUsers, 5000);
+//IF doner drops ask for doner location 
+useEffect(() => {
+  onValue(ref(getDatabase(), `${allData.userData.email.replace(/[@.]/g, "")}}/pickup`), (snapshot) => {
+    const data = snapshot.val();
+    if (data) {
+     console.log(Object.values(data));
+      if (Object.values(data).pickup=='drop')
+      {
+        interval;
+      }
+      else{
+        intervalId;
+      }
+    }
+  });
+}, []);
+
+//if doner pickup ask for neeedy location
 
   useEffect(() => {
     if (allData.userData?.location && data?.location) {
@@ -114,7 +142,7 @@ const RoutesMap = () => {
             }}
             pinColor="green" // Set marker color to green
           />
-        )}
+        )} 
 
         {directions.map((direction, index) => (
           <MapViewDirections
