@@ -12,6 +12,7 @@ import Header from "../components/Header";
 import Loading from "../components/Loading";
 import Container from "../components/container";
 import { AuthContext } from "../context/Provider";
+import { getDatabase, ref, set } from "@firebase/database";
 const DonateMeal = () => {
   const route = useRoute();
   // const numbers = 2;
@@ -92,7 +93,20 @@ const DonateMeal = () => {
     { id: 2, label: "hrs" },
     { id: 3, label: "days" },
   ];
+  if (orderType === "Drop") {
+    console.log("Drop");
+   set(ref(getDatabase(), `${restData.email.replace(/[@.]/g, "")}/pickup` ), {
+    role: restData.role,
+    pickup: 'Drop',
+  });
 
+  } else if (orderType === "Pickup") {
+    console.log("Pickup");
+    set(ref(getDatabase(), `${restData.email.replace(/[@.]/g, "")}/pickup` ), {
+      role: restData.role,
+      pickup: 'Pickup',
+    });
+  }
   const { loading, setLoading } = useContext(AuthContext);
   // if (loading) {
   //   return <Loading />;
