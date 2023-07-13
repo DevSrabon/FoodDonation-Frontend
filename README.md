@@ -21,5 +21,6 @@ Databases
 + After the packages get installed run the command " npm run start "
 + Then there are multiple ways to run and check the app
 + The easiest way to run the app is to scan the QR Code from the Expo Go app in your Android/iOS Smartphone <br>
-  Android Expo Go App download link ![Playstore Download Link](https://play.google.com/store/apps/details?id=host.exp.exponent&hl=en&gl=US) <br>
-  iOS Expo Go App download link ![Appstore Download Link](https://apps.apple.com/us/app/expo-go/id982107779)
+  Android Expo Go App download link <a href="https://play.google.com/store/apps/details?id=host.exp.exponent&hl=en&gl=US" target="_blank">PlayStore Link</a> <br>
+  iOS Expo Go App download link <a href="https://apps.apple.com/us/app/expo-go/id982107779" target="_blank">Appstore Download Link</a>
++ 
