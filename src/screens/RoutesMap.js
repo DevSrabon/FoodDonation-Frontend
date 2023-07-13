@@ -78,7 +78,7 @@ useEffect(() => {
     const data = snapshot.val();
     if (data) {
      console.log(Object.values(data));
-      if (Object.values(data).pickup=='drop')
+      if (Object.values(data).pickup=='Drop' && Object.values(data).role=='Donor')
       {
         interval;
       }
