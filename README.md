@@ -17,4 +17,7 @@ Databases
 ## How to run the app
 + Go to the frontend directory named Bhojan-Mitra
 + Open the terminal
-+ Run the command
++ Run the command " npm install "
++ After the packages get installed run the command " npm run start "
++ Then there are multiple ways to run and check the app
++ 
