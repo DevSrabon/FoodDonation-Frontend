@@ -9,6 +9,7 @@ import Header from "../components/Header";
 import Container from "../components/container";
 import Label from "../components/label";
 import { userContext } from "../context/Provider";
+import TextField from "../components/TextField";
 const Signup = () => {
   const { createUser, updateUser, user, promptAsync, loading, setLoading } =
     userContext();
@@ -68,38 +69,73 @@ const Signup = () => {
       <Container style={{ alignItems: "center" }}>
         <Header>Signup</Header>
 
-        <Label>First Name</Label>
+        {/* <Label>First Name</Label>
         <CustomInput
+          placeholder="Your First Name"
+          value={firstName}
+          setValue={setFirstName}
+        /> */}
+        
+        <TextField
           placeholder="Your First Name"
           value={firstName}
           setValue={setFirstName}
         />
 
-        <Label>Last Name</Label>
+        {/* <Label>Last Name</Label>
         <CustomInput
+          placeholder="Your Last Name"
+          value={lastName}
+          setValue={setLastName}
+        /> */}
+      
+        <TextField
           placeholder="Your Last Name"
           value={lastName}
           setValue={setLastName}
         />
 
-        <Label>Phone Number</Label>
+        {/* <Label>Phone Number</Label>
         <CustomInput
+          placeholder="Your Phone Number"
+          value={phoneNumber}
+          setValue={setPhoneNumber}
+          keyboardType={"phone-pad"}
+        /> */}
+        
+       
+        <TextField
           placeholder="Your Phone Number"
           value={phoneNumber}
           setValue={setPhoneNumber}
           keyboardType={"phone-pad"}
         />
 
-        <Label>E-mail</Label>
+        {/* <Label>E-mail</Label>
         <CustomInput
+          placeholder="Your Email"
+          value={email}
+          setValue={setEmail}
+          keyboardType="email-address"
+        /> */}
+
+       
+        <TextField
           placeholder="Your Email"
           value={email}
           setValue={setEmail}
           keyboardType="email-address"
         />
 
-        <Label>Password</Label>
+        {/* <Label>Password</Label>
         <CustomInput
+          placeholder="Your Password"
+          value={password}
+          setValue={setPassword}
+          secureTextEntry={true}
+        /> */}
+        
+        <TextField
           placeholder="Your Password"
           value={password}
           setValue={setPassword}
