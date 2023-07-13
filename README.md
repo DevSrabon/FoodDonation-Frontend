@@ -11,5 +11,10 @@ Backend
 - <h5>Express.js - 4.18.2</h5>
 
 Databases
-- <h5>Firebase - </h5>
+- <h5>Firebase - 9.22.2</h5>
 - <h5>MongoDB - </h5>
+
+## How to run the app
++ Go to the frontend directory named Bhojan-Mitra
++ Open the terminal
++ Run the command
