@@ -46,10 +46,7 @@ const Users = () => {
         setUsers(uniqueUsers);
   
         // Store the chat data in AsyncStorage
-        AsyncStorage.setItem('chatData', JSON.stringify(uniqueUsers))
-          .catch(error => {
-            console.log('Error storing chat data:', error);
-          });
+     
       }
     };
   
@@ -61,25 +58,7 @@ const Users = () => {
   }, [user]);
   
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await AsyncStorage.getItem('chatData');
-        if (data) {
-          const parsedData = JSON.parse(data);
-          setUsers(parsedData);
-        }
-      } catch (error) {
-        console.log('Error retrieving chat data:', error);
-      }
-    };
-  
-    const intervalId = setInterval(fetchData, 5000);
-  
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, []);
+
   
 
   const navigation = useNavigation();
