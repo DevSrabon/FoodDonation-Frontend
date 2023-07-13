@@ -4,6 +4,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { userContext } from "../context/Provider";
 import Loading from "./Loading";
 import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 
 const SearchHeader = () => {
   const { allData, user, loading, signOutUser } = userContext();
@@ -30,9 +31,42 @@ const SearchHeader = () => {
             {allData?.userData?.name || "Guest"}
           </Text>
         </View>
+        {/* <View style={{ width: "50%" }}>
+          <CustomButton
+            text="Donate"
+            onPress={() => navigation.navigate("donate")}
+            type="primary"
+          />
+        </View> */}
+
+        <TouchableOpacity onPress={() => navigation.navigate("donate")}>
+          <View
+            style={{
+              flexDirection: "row",
+              backgroundColor: "#B4AAF2",
+
+              paddingHorizontal: 15,
+              paddingVertical: 8,
+              borderRadius: 8,
+              gap: 3,
+              alignItems: "center",
+            }}
+          >
+            <FontAwesome name="dollar" size={16} color="white" />
+            <Text
+              style={{
+                color: "white",
+                fontFamily: "Medium",
+                fontSize: 16,
+              }}
+            >
+              Donate
+            </Text>
+          </View>
+        </TouchableOpacity>
+
         <TouchableOpacity onPress={() => navigation.navigate("settings")}>
           <Ionicons name="ios-settings-outline" size={30} color="#B4AAF2" />
-          {/* <Ionicons name="settings" size={30} color="#B4AAF2" /> */}
         </TouchableOpacity>
       </View>
     </View>
@@ -48,7 +82,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-
     paddingHorizontal: 10,
   },
   searchView: {
