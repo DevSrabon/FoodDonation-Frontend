@@ -10,6 +10,7 @@ import Header from "../components/Header";
 import Container from "../components/container";
 import Label from "../components/label";
 import { userContext } from "../context/Provider";
+import TextField from "../components/TextField";
 const Login = () => {
   const {
     signIn,
@@ -103,16 +104,23 @@ const Login = () => {
       <Container style={{ alignItems: "center" }}>
         <Header>Login</Header>
 
-        <Label>E-mail</Label>
+        {/* <Label>E-mail</Label>
         <CustomInput
+          placeholder="Your Email"
+          value={email}
+          setValue={setEmail}
+          keyboardType="email-address"
+        /> */}
+
+        <TextField
           placeholder="Your Email"
           value={email}
           setValue={setEmail}
           keyboardType="email-address"
         />
 
-        <Label>Password</Label>
-        <CustomInput
+        {/* <Label>Password</Label> */}
+        <TextField
           placeholder="Your Password"
           value={password}
           setValue={setPassword}
