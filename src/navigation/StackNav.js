@@ -43,7 +43,6 @@ const StackNav = () => {
         initialRouteName={"initial"}
         screenOptions={{ headerShown: false }}
       >
-       
         <Stack.Screen name="initial" component={InitialPage} />
 
         <Stack.Screen name="input" component={CustomField} />
