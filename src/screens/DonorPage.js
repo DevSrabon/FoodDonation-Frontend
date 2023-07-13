@@ -56,6 +56,8 @@ const DonorPage = () => {
       console.log(response.data);
     } catch (error) {
       console.log("Error updating user:", error);
+    } finally {
+      setIsButtonDisabled(false);
     }
     const createChatId = (email1, email2) => {
       return [email1, email2].sort().join();
