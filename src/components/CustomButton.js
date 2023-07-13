@@ -1,22 +1,36 @@
-import { TouchableWithoutFeedback,TouchableOpacity,Animated, Text, StyleSheet, Pressable } from "react-native";
-import React,{useState} from "react";
+import React, { useState } from "react";
+import {
+  ActivityIndicator,
+  Animated,
+  StyleSheet,
+  Text,
+  TouchableWithoutFeedback,
+} from "react-native";
 
-const CustomButton = ({ onPress, text, type, bgColor, fgColor, disabled }) => {
+const CustomButton = ({
+  onPress,
+  text,
+  type,
+  bgColor,
+  fgColor,
+  disabled,
+  loading = false,
+}) => {
   const [scaleValue] = useState(new Animated.Value(1));
 
   const animateButton = () => {
     Animated.timing(scaleValue, {
-      toValue: 0.9,
+      toValue: 0.85,
       duration: 200,
-      useNativeDriver: true
+      useNativeDriver: true,
     }).start(() => {
       Animated.timing(scaleValue, {
-        toValue: 1.1,
+        toValue: 1,
         duration: 200,
-        useNativeDriver: true
+        useNativeDriver: true,
       }).start();
-    })
-  }
+    });
+  };
   const handlePress = () => {
     // Call both functions
     animateButton();
@@ -24,25 +38,30 @@ const CustomButton = ({ onPress, text, type, bgColor, fgColor, disabled }) => {
   };
 
   return (
-    <TouchableOpacity
-      onPress={handlePress}
-      disabled={disabled}
-      style={[
-        styles.container,
-        styles[`container_${type}`],
-        bgColor ? { backgroundColor: bgColor } : {},
-      ]}
-    >
-      <Text
+    <TouchableWithoutFeedback onPress={handlePress} disabled={disabled}>
+      <Animated.View
         style={[
-          styles.text,
-          styles[`text_${type}`],
-          fgColor ? { color: fgColor } : {},
+          styles.container,
+          styles[`container_${type}`],
+          bgColor ? { backgroundColor: bgColor } : {},
+          { transform: [{ scale: scaleValue }] },
         ]}
       >
-        {text}
-      </Text>
-    </TouchableOpacity>
+        {!loading ? (
+          <Text
+            style={[
+              styles.text,
+              styles[`text_${type}`],
+              fgColor ? { color: fgColor } : {},
+            ]}
+          >
+            {text}
+          </Text>
+        ) : (
+          <ActivityIndicator color={"#ffff"} size={40} />
+        )}
+      </Animated.View>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -54,6 +73,7 @@ const styles = StyleSheet.create({
     padding: 15,
     marginVertical: 5,
     alignItems: "center",
+    justifyContent: "center",
     borderRadius: 5,
   },
   container_primary: {

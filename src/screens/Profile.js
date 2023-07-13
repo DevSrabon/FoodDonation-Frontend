@@ -78,7 +78,7 @@ const Profile = () => {
     }
   };
 
-  if (loading || imageLoading) return <Loading />;
+  if (imageLoading) return <Loading />;
 
   return (
     <Container>
@@ -186,7 +186,13 @@ const Profile = () => {
           >
             {error && <CustomAlert type="error" value={error} />}
 
-            <CustomButton text="Done" onPress={onBioSetup} type="primary" />
+            <CustomButton
+              text="Done"
+              onPress={onBioSetup}
+              loading={loading}
+              disabled={loading}
+              type="primary"
+            />
           </View>
         </View>
       </ScrollView>

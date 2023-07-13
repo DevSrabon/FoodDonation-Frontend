@@ -108,9 +108,9 @@ const DonateMeal = () => {
     });
   }
   const { loading, setLoading } = useContext(AuthContext);
-  if (loading) {
-    return <Loading />;
-  }
+  // if (loading) {
+  //   return <Loading />;
+  // }
   // setTimeout(() => {
   //   setCloseModal(true);
   // }, 5000);
@@ -368,6 +368,8 @@ const DonateMeal = () => {
               text="Continue"
               onPress={onDonateMeal}
               type="primary"
+              disabled={loading}
+              loading={loading}
             />
           </View>
         </ScrollView>

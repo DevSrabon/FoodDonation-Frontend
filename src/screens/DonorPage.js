@@ -1,13 +1,13 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
-import { get, getDatabase, push, ref, set } from "firebase/database";
+import { get, getDatabase, push, ref } from "firebase/database";
 import React, { useEffect, useState } from "react";
 import { Image, StyleSheet, Text, View } from "react-native";
 import icons from "../../assets/icons";
 import CustomButton from "../components/CustomButton";
 import Container from "../components/container";
 import Measure from "../components/measure";
-import { auth, userContext } from "../context/Provider";
+import { userContext } from "../context/Provider";
 
 let i = 1;
 const DonorPage = () => {
@@ -44,9 +44,19 @@ const DonorPage = () => {
     getAddressFromCoordinates();
   }, [latitude, longitude]);
 
-  const onAccept = () => {
-    
+  const onAccept = async () => {
     setIsButtonDisabled(true);
+    const email = user?.email;
+    const body = { donorNotification: true };
+    try {
+      const response = await axios.patch(
+        `https://food-donation-backend.vercel.app/api/v1/users/update-role?email=${email}`,
+        body
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.log("Error updating user:", error);
+    }
     const createChatId = (email1, email2) => {
       return [email1, email2].sort().join();
     };
@@ -327,6 +337,7 @@ const DonorPage = () => {
                 text="Accept"
                 type="primary"
                 disabled={isButtonDisabled}
+                loading={isButtonDisabled}
               />
               <CustomButton onPress={onDecline} text="Decline" type="primary" />
             </>

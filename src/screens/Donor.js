@@ -21,7 +21,7 @@ const Donor = () => {
 
   if (error) return setError(error);
 
-  if (loading) return <Loading />;
+  // if (loading) return <Loading />;
   return (
     <Container>
       <View
@@ -150,7 +150,10 @@ const Donor = () => {
         }}
       >
         {errorMessage && <CustomAlert type="error" value={errorMessage} />}
-        <CustomButton text="Continue" onPress={onRoleSelect} type="primary" />
+        <CustomButton text="Continue" onPress={onRoleSelect} 
+        loading={loading}
+        disabled={loading}
+        type="primary" />
       </View>
     </Container>
   );

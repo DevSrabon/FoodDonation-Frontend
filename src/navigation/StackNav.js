@@ -31,6 +31,7 @@ import CustomField from "../components/CustomField";
 import TextField from "../components/TextField";
 import AnimatedButton from "../components/AnimatedButton";
 import TermsAndConditions from "../screens/TermsAndConditions";
+import BackgroundFetchScreen from "../screens/BackgroundFetchScreen";
 import CustomInput from "../components/CustomInput";
 
 const Stack = createNativeStackNavigator();
@@ -63,6 +64,7 @@ const StackNav = () => {
         <Stack.Screen name="otp" component={Otp} />
         <Stack.Screen name="settings" component={Settings} />
         <Stack.Screen name="terms" component={TermsAndConditions} />
+        <Stack.Screen name="background" component={BackgroundFetchScreen} />
 
         <Stack.Screen name="needy" component={FoodNeedier} />
         <Stack.Screen name="transporter" component={Transporter} />

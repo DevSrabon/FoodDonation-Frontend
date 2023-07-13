@@ -2,19 +2,11 @@ import { useIsFocused, useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import Checkbox from "expo-checkbox";
 import React, { useEffect, useState } from "react";
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-  Animated,
-  TouchableWithoutFeedback,
-} from "react-native";
+import { Animated, ScrollView, StyleSheet, Text, View } from "react-native";
 import CustomAlert from "../components/CustomAlert";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import Header from "../components/Header";
-import Loading from "../components/Loading";
 import Container from "../components/container";
 import Label from "../components/label";
 import { userContext } from "../context/Provider";
@@ -39,7 +31,7 @@ const Login = () => {
   const isFocus = useIsFocused();
   useEffect(() => {
     if (user?.email && isFocus) {
-      navigation.navigate("user");
+      navigation.navigate("background");
     }
   }, [user?.email, isFocus]);
   const onSignInPressed = async () => {
@@ -74,7 +66,7 @@ const Login = () => {
 
   const animateButton = () => {
     Animated.timing(scaleValue, {
-      toValue: 0.99,
+      toValue: 0.9,
       duration: 200,
       useNativeDriver: true,
     }).start(() => {
@@ -165,7 +157,13 @@ const Login = () => {
         </View>
 
         <View style={{ flex: 1, width: "90%", bottom: 20 }}>
-          <CustomButton text="Login" onPress={onSignInPressed} type="primary" />
+          <CustomButton
+            text="Login"
+            onPress={onSignInPressed}
+            type="primary"
+            loading={loading}
+            disabled={loading}
+          />
         </View>
 
         {/* <View style={styles.subContainer}>
@@ -181,14 +179,14 @@ const Login = () => {
           </Pressable>
         </View> */}
 
-        {/* <View style={{ flex: 1, width: "90%", bottom: 60 }}>
+        <View style={{ flex: 1, width: "90%", bottom: 60 }}>
           <CustomButton
             text="Signin as a Guest"
             onPress={onGuestPressed}
             type="primary"
           />
-        </View> */}
-        <View style={{ alignItems: "center", width: "90%" }}>
+        </View>
+        {/* <View style={{ alignItems: "center", width: "90%" }}>
           <TouchableWithoutFeedback
             onPress={() => {
               animateButton(), onSignInPressed();
@@ -200,7 +198,7 @@ const Login = () => {
               <Text style={styles.buttonText}>Login</Text>
             </Animated.View>
           </TouchableWithoutFeedback>
-        </View>
+        </View> */}
 
         <View
           style={{
