@@ -33,17 +33,13 @@ const CommunityItem = ({ item }) => {
           </View>
         </View>
         <View style={styles.dateContainer}>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Text style={styles.text}>Event Date:</Text>
-            <View style={styles.textPadding}>
-              <Text style={styles.textBox}>{date.toDateString()}</Text>
-            </View>
+          <Text style={styles.text}>Event Date:</Text>
+          <View style={styles.textPadding}>
+            <Text style={styles.textBox}>{date.toDateString()}</Text>
           </View>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Text style={styles.text}>Event Location:</Text>
-            <View style={styles.textPadding}>
-              <Text style={styles.textBox}>{item?.location}</Text>
-            </View>
+          <Text style={styles.text}>Event Location:</Text>
+          <View style={styles.textPadding}>
+            <Text style={styles.textBox}>{item?.location}</Text>
           </View>
         </View>
 
@@ -80,7 +76,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   dateContainer: {
-    alignItems: "center",
+    alignItems: "flex-start",
     marginTop: 5,
   },
   date: {
