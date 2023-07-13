@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
   },
   errorBorder: {
     borderColor: "orange",
-    color: "orange",
+    color: "red",
   },
   successBorder: {
     borderColor: "#B4AAF2",
