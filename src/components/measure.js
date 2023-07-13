@@ -19,7 +19,7 @@ const Measure = ({ email }) => {
   );
 
   if (loading) return <Loading />;
-  if (!data?.listItems?.length) return alert("No Post Found");
+  // if (!data?.listItems?.length) return alert("No Post Found");
   return (
     <View
       style={{
@@ -34,6 +34,7 @@ const Measure = ({ email }) => {
       <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
         {data?.role === "needy" ? "Food Needed" : "Food Availability"}
       </Text>
+      {!data?.listItems?.length && <Text>No Post Found</Text>}
       {data?.listItems?.map((item) => (
         <View
           key={item.id}

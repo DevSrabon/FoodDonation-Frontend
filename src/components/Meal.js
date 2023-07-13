@@ -12,7 +12,7 @@ const Meal = ({ routeName }) => {
   const route = useRoute();
   const numbers = route.params.number;
   const resData = route.params.resData;
-
+  const [loading, setLoading] = useState(false);
   const [listItems, setListItems] = useState([]);
 
   const mealOptions = [
@@ -65,6 +65,7 @@ const Meal = ({ routeName }) => {
 
   const onDonateMeal = async () => {
     const body = { listItems, orderType, ...resData };
+    setLoading(true);
     try {
       const res = await axios.post(
         `https://food-donation-backend.vercel.app/api/v1/posts/createPost`,
@@ -77,6 +78,8 @@ const Meal = ({ routeName }) => {
     } catch (error) {
       setError(error.message);
       // alert(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -238,7 +241,13 @@ const Meal = ({ routeName }) => {
         {error && <CustomAlert type="error" value={error} />}
         {success && <CustomAlert type="success" value={success} />}
 
-        <CustomButton text="Continue" onPress={onDonateMeal} type="primary" />
+        <CustomButton
+          text="Continue"
+          onPress={onDonateMeal}
+          type="primary"
+          loading={loading}
+          disabled={loading}
+        />
       </View>
     </View>
   );

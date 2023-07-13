@@ -107,7 +107,7 @@ const CommunityPost = () => {
       setLoading(false);
     }
   };
-  if (imageLoading || loading) {
+  if (imageLoading) {
     return <Loading />;
   }
 
@@ -230,7 +230,13 @@ const CommunityPost = () => {
           {error && <CustomAlert type="error" value={error} />}
           {success && <CustomAlert type="success" value={success} />}
 
-          <CustomButton text="Continue" onPress={onClicked} type="primary" />
+          <CustomButton
+            text="Continue"
+            loading={loading}
+            disabled={loading}
+            onPress={onClicked}
+            type="primary"
+          />
         </View>
       </ScrollView>
     </Container>
