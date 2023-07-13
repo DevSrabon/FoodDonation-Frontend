@@ -6,7 +6,6 @@ import CustomAlert from "../components/CustomAlert";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import Header from "../components/Header";
-import Loading from "../components/Loading";
 import Container from "../components/container";
 import Label from "../components/label";
 import { userContext } from "../context/Provider";
@@ -24,6 +23,7 @@ const Signup = () => {
 
   const onSignup = async () => {
     const userName = { displayName: firstName + " " + lastName };
+    setLoading(true);
     try {
       await createUser(email, password);
       await updateUser(userName);
@@ -60,9 +60,9 @@ const Signup = () => {
   const onLogin = () => {
     navigation.navigate("login");
   };
-  if (loading) {
-    return <Loading />;
-  }
+  // if (loading) {
+  //   return <Loading />;
+  // }
   return (
     <ScrollView style={{ flex: 1 }}>
       <Container style={{ alignItems: "center" }}>
@@ -122,7 +122,13 @@ const Signup = () => {
         </View>
 
         <View style={{ flex: 1, width: "90%" }}>
-          <CustomButton text="Continue" onPress={onSignup} type="primary" />
+          <CustomButton
+            text="Continue"
+            loading={loading}
+            disabled={loading}
+            onPress={onSignup}
+            type="primary"
+          />
         </View>
         <View
           style={{ flex: 1, alignSelf: "center", justifyContent: "center" }}

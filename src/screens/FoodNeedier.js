@@ -14,14 +14,13 @@ const FoodNeedier = () => {
 
   const [errorMessage, setError] = useState("");
 
-
   const onRoleSelect = async () => {
     updateUserRole(update, user?.email, "addRestaurant");
   };
 
   if (error) return setError(error);
 
-  if (loading) return <Loading />;
+  // if (loading) return <Loading />;
 
   return (
     <Container>
@@ -148,9 +147,15 @@ const FoodNeedier = () => {
           bottom: 80,
         }}
       >
-        {(errorMessage) && <CustomAlert type="error" value={errorMessage} />}
+        {errorMessage && <CustomAlert type="error" value={errorMessage} />}
 
-        <CustomButton text="Continue" onPress={onRoleSelect} type="primary" />
+        <CustomButton
+          text="Continue"
+          onPress={onRoleSelect}
+          type="primary"
+          loading={loading}
+          disabled={loading}
+        />
       </View>
     </Container>
   );

@@ -337,6 +337,7 @@ const DonorPage = () => {
                 text="Accept"
                 type="primary"
                 disabled={isButtonDisabled}
+                loading={isButtonDisabled}
               />
               <CustomButton onPress={onDecline} text="Decline" type="primary" />
             </>
