@@ -1,10 +1,31 @@
-import { Text, StyleSheet, Pressable } from "react-native";
-import React from "react";
+import { TouchableWithoutFeedback,TouchableOpacity,Animated, Text, StyleSheet, Pressable } from "react-native";
+import React,{useState} from "react";
 
-const CustomButton = ({ onPress, text, type, bgColor, fgColor,disabled }) => {
+const CustomButton = ({ onPress, text, type, bgColor, fgColor, disabled }) => {
+  const [scaleValue] = useState(new Animated.Value(1));
+
+  const animateButton = () => {
+    Animated.timing(scaleValue, {
+      toValue: 0.9,
+      duration: 200,
+      useNativeDriver: true
+    }).start(() => {
+      Animated.timing(scaleValue, {
+        toValue: 1.1,
+        duration: 200,
+        useNativeDriver: true
+      }).start();
+    })
+  }
+  const handlePress = () => {
+    // Call both functions
+    animateButton();
+    onPress();
+  };
+
   return (
-    <Pressable
-      onPress={onPress}
+    <TouchableOpacity
+      onPress={handlePress}
       disabled={disabled}
       style={[
         styles.container,
@@ -21,7 +42,7 @@ const CustomButton = ({ onPress, text, type, bgColor, fgColor,disabled }) => {
       >
         {text}
       </Text>
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 
