@@ -2,7 +2,14 @@ import { useIsFocused, useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import Checkbox from "expo-checkbox";
 import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  Animated,
+  TouchableWithoutFeedback,
+} from "react-native";
 import CustomAlert from "../components/CustomAlert";
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
@@ -24,8 +31,9 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isChecked, setChecked] = useState(false);
-
   const [error, setError] = useState("");
+
+  const [scaleValue] = useState(new Animated.Value(1));
 
   const navigation = useNavigation();
   const isFocus = useIsFocused();
@@ -64,6 +72,20 @@ const Login = () => {
     }
   };
 
+  const animateButton = () => {
+    Animated.timing(scaleValue, {
+      toValue: 0.99,
+      duration: 200,
+      useNativeDriver: true,
+    }).start(() => {
+      Animated.timing(scaleValue, {
+        toValue: 1.1,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+    });
+  };
+
   const onForgotPasswordPressed = () => {
     console.warn("Forgot Password");
   };
@@ -81,9 +103,9 @@ const Login = () => {
   const onSignup = () => {
     navigation.navigate("signup");
   };
-  if (loading) {
-    return <Loading />;
-  }
+  // if (loading) {
+  //   return <Loading />;
+  // }
   return (
     <ScrollView style={{ flex: 1 }}>
       <Container style={{ alignItems: "center" }}>
@@ -159,12 +181,25 @@ const Login = () => {
           </Pressable>
         </View> */}
 
-        <View style={{ flex: 1, width: "90%", bottom: 60 }}>
+        {/* <View style={{ flex: 1, width: "90%", bottom: 60 }}>
           <CustomButton
             text="Signin as a Guest"
             onPress={onGuestPressed}
             type="primary"
           />
+        </View> */}
+        <View style={{ alignItems: "center", width: "90%" }}>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              animateButton(), onSignInPressed();
+            }}
+          >
+            <Animated.View
+              style={[styles.button, { transform: [{ scale: scaleValue }] }]}
+            >
+              <Text style={styles.buttonText}>Login</Text>
+            </Animated.View>
+          </TouchableWithoutFeedback>
         </View>
 
         <View
@@ -199,5 +234,22 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   checkbox: { marginRight: 3 },
+
+  button: {
+    backgroundColor: "#B4AAF2",
+    elevation: 1,
+
+    width: "90%",
+    maxHeight: 50,
+    padding: 15,
+    marginVertical: 5,
+    alignItems: "center",
+    borderRadius: 5,
+  },
+  buttonText: {
+    fontFamily: "SemiBold",
+    fontSize: 14,
+    color: "white",
+  },
 });
 export default Login;
