@@ -2,7 +2,13 @@ import { useIsFocused, useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import Checkbox from "expo-checkbox";
 import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+} from "react-native";
 import CustomButton from "../components/CustomButton";
 import Header from "../components/Header";
 import TextField from "../components/TextField";
@@ -102,31 +108,19 @@ const Login = () => {
   const onSignup = () => {
     navigation.navigate("signup");
   };
-  // if (loading) {
-  //   return <Loading />;
-  // }
   return (
     <ScrollView style={{ flex: 1 }}>
       <Container style={{ alignItems: "center" }}>
-        <Header>Login</Header>
-
-        {/* <Label>E-mail</Label>
-        <CustomInput
-          placeholder="Your Email"
-          value={email}
-          setValue={setEmail}
-          keyboardType="email-address"
-        /> */}
+        <Header style={{ marginTop: 50 }}>Login</Header>
 
         <TextField
+          style={{ marginTop: 50 }}
           placeholder="Your Email"
           value={email}
           setValue={setEmail}
           keyboardType="email-address"
           error={error.email}
         />
-
-        {/* <Label>Password</Label> */}
         <TextField
           placeholder="Your Password"
           value={password}
@@ -137,16 +131,14 @@ const Login = () => {
 
         <View
           style={{
-            flex: 1,
             flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "flex-start",
-            marginLeft: 18,
+            gap: 160,
+            alignSelf: "flex-start",
+            marginHorizontal: 20,
           }}
         >
           <View
             style={{
-              flex: 1,
               flexDirection: "row",
             }}
           >
@@ -162,17 +154,18 @@ const Login = () => {
               Remember me
             </Text>
           </View>
-
-          {/* {error && <CustomAlert type="error" value={error} />} */}
-
-          <CustomButton
-            text="Forgot Password"
-            onPress={onForgotPasswordPressed}
-            type="tertiary"
-          />
+          <View>
+            <TouchableOpacity onPress={onForgotPasswordPressed}>
+              <Text
+                style={{ fontFamily: "Medium", fontSize: 12, color: "#B4AAF2" }}
+              >
+                Forgot Password
+              </Text>
+            </TouchableOpacity>
+          </View>
         </View>
 
-        <View style={{ flex: 1, width: "90%", bottom: 20 }}>
+        <View style={{ flex: 1, width: "90%", gap: 10, marginTop: 20 }}>
           <CustomButton
             text="Login"
             onPress={onSignInPressed}
@@ -180,52 +173,39 @@ const Login = () => {
             loading={loading}
             disabled={loading}
           />
-        </View>
-
-        {/* <View style={styles.subContainer}>
-
-          <Pressable
-            style={styles.box}
-            disabled={!request}
-            onPress={() =>
-              promptAsync({ useProxy: false, showInRecents: true })
-            }
-          >
-            <Image source={icons.google} />
-          </Pressable>
-        </View> */}
-
-        <View style={{ flex: 1, width: "90%", bottom: 60 }}>
           <CustomButton
             text="Signin as a Guest"
             onPress={onGuestPressed}
             type="primary"
           />
         </View>
-        {/* <View style={{ alignItems: "center", width: "90%" }}>
-          <TouchableWithoutFeedback
-            onPress={() => {
-              animateButton(), onSignInPressed();
-            }}
-          >
-            <Animated.View
-              style={[styles.button, { transform: [{ scale: scaleValue }] }]}
-            >
-              <Text style={styles.buttonText}>Login</Text>
-            </Animated.View>
-          </TouchableWithoutFeedback>
-        </View> */}
 
         <View
           style={{
             flex: 1,
             flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 3,
           }}
         >
-          <Text style={{ fontFamily: "SemiBold", fontSize: 12 }}>
+          <Text
+            style={{
+              fontFamily: "SemiBold",
+            }}
+          >
             Don't have an account?
-            <CustomButton text="Signup" onPress={onSignup} type="tertiary" />
           </Text>
+          <TouchableOpacity onPress={() => navigation.navigate("signup")}>
+            <Text
+              style={{
+                fontFamily: "SemiBold",
+                color: "#B4AAF2",
+              }}
+            >
+              Signup
+            </Text>
+          </TouchableOpacity>
         </View>
       </Container>
     </ScrollView>

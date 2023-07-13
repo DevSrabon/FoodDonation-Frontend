@@ -16,10 +16,6 @@ const TextField = ({
   error,
   ...restOfProps
 }) => {
-  // console.log("value==", value);
-  // console.log("setValue==", setValue);
-  // console.log("Placeholder==", placeholder);
-
   const inputref = useRef();
   const [isFocused, setIsFocused] = useState(false);
   const focusAnim = useRef(new Animated.Value(0)).current;
@@ -33,7 +29,7 @@ const TextField = ({
   }, [focusAnim, isFocused]);
 
   return (
-    <View style={[style, { marginVertical: 30, width: "90%" }]}>
+    <View style={[style, { marginVertical: 15, width: "90%" }]}>
       <TextInput
         // style={[styles.input, inputStyles]}
         style={[
@@ -105,11 +101,9 @@ const styles = StyleSheet.create({
   input: {
     backgroundColor: "white",
     borderWidth: 1,
-    borderRadius: 4,
+    borderRadius: 5,
     paddingHorizontal: 10,
     fontFamily: "Medium",
-    // fontFamily: fonts.Medium,
-    fontSize: 14,
     height: 50,
   },
   labelContainer: {
@@ -118,7 +112,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
   },
   errorBorder: {
-    borderColor: "orange",
+    borderColor: "red",
     color: "red",
   },
   successBorder: {
@@ -131,16 +125,17 @@ const styles = StyleSheet.create({
     paddingHorizontal: 5,
     backgroundColor: "#efedf8",
     borderWidth: 1,
-    borderRadius: 4,
+    borderRadius: 5,
   },
   label: {
-    fontFamily: "SemiBold",
-    fontSize: 12,
+    // fontFamily: "Medium",
+    // fontSize: 10,
+    // color: "#747980",
   },
 
   textInput: {
     borderWidth: 1,
-    color: "black",
+    color: "#747980",
     backgroundColor: "#efedf8",
   },
 });
