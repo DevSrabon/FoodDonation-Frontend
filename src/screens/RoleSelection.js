@@ -112,7 +112,7 @@ const RoleSelection = () => {
             setUpdate("needy"), toggle(3);
           }}
         >
-          <Text style={styles.title}>Food Needier</Text>
+          <Text style={styles.title}>Food Needy</Text>
           <Text style={styles.subTitle}>
             Person or an Organization who needs the food
           </Text>
@@ -141,14 +141,13 @@ const RoleSelection = () => {
         }}
       >
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <Header style={{ color: "#B4AAF2" }}> Donar,</Header>
+          <Header style={{ color: "#B4AAF2" }}> Donor,</Header>
           <Pressable
             style={{ padding: 10 }}
             onPress={() => {
               toggle(1);
             }}
           >
-
             <Image style={{ width: 20, height: 20 }} source={icons.close} />
           </Pressable>
         </View>
@@ -176,7 +175,7 @@ const RoleSelection = () => {
           >
             <Text style={styles.title}>Catering Service</Text>
             <Text style={styles.subTitle}>
-              Person or an Organization who helps Transporting the food
+              Person or an Organization who donates the food
             </Text>
           </Pressable>
 
@@ -189,7 +188,7 @@ const RoleSelection = () => {
           >
             <Text style={styles.title}>Grocery Store</Text>
             <Text style={styles.subTitle}>
-              Person or an Organization who needs the food
+              Person or an Organization who donates the food
             </Text>
           </Pressable>
 
@@ -204,7 +203,7 @@ const RoleSelection = () => {
           >
             <Text style={styles.title}>Normal people</Text>
             <Text style={styles.subTitle}>
-              Person or an Organization who needs the food
+              Person or an Organization who donates the food
             </Text>
           </Pressable>
         </View>
@@ -268,9 +267,9 @@ const RoleSelection = () => {
             ]}
             onPress={() => setUpdatecategory("Foodbanks")}
           >
-            <Text style={styles.title}>Food banks</Text>
+            <Text style={styles.title}>Food Bank</Text>
             <Text style={styles.subTitle}>
-              Person or an Organization who needs the food
+              Food Bank here helps in transporting the food
             </Text>
           </Pressable>
         </View>
@@ -302,7 +301,7 @@ const RoleSelection = () => {
         }}
       >
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <Header style={{ color: "#B4AAF2" }}>Food Needier,</Header>
+          <Header style={{ color: "#B4AAF2" }}>Food Needy,</Header>
 
           <Pressable
             style={{ padding: 10 }}
@@ -324,7 +323,7 @@ const RoleSelection = () => {
           >
             <Text style={styles.title}>Non profit Organization</Text>
             <Text style={styles.subTitle}>
-              Person or an Organization who donates the food
+              Person or an Organization who needs the food
             </Text>
           </Pressable>
 
@@ -337,7 +336,7 @@ const RoleSelection = () => {
           >
             <Text style={styles.title}>Orphanage</Text>
             <Text style={styles.subTitle}>
-              Person or an Organization who helps Transporting the food
+              Person or an Organization who needs the food
             </Text>
           </Pressable>
 
@@ -348,7 +347,7 @@ const RoleSelection = () => {
             ]}
             onPress={() => setUpdatecategory("foodbanks")}
           >
-            <Text style={styles.title}>Food banks</Text>
+            <Text style={styles.title}>Food Bank</Text>
             <Text style={styles.subTitle}>
               Person or an Organization who needs the food
             </Text>

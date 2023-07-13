@@ -126,7 +126,7 @@ const Donor = () => {
           <Text
             style={{ fontFamily: "SemiBold", fontSize: 14, color: "#252525" }}
           >
-            Normal People
+            Volunteer
           </Text>
           <Text
             style={{
@@ -149,7 +149,7 @@ const Donor = () => {
           bottom: 80,
         }}
       >
-        {(errorMessage) && <CustomAlert type="error" value={errorMessage} />}
+        {errorMessage && <CustomAlert type="error" value={errorMessage} />}
         <CustomButton text="Continue" onPress={onRoleSelect} type="primary" />
       </View>
     </Container>
