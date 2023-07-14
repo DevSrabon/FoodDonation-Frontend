@@ -139,18 +139,18 @@ const SecuredChat = () => {
     Alert.alert("Food Not delivered ? \n  We will look into this matter")
   }
   function sendMessage() {
-    if (message.trim()) {
+   
       const encryptedMessage = encryptMessage(message.trim());
       const newMessage = {
         id: Date.now().toString(),
         text: encryptedMessage,
-        user: user.displayName,
+        user: user?.displayName || "No name",
         createdAt: new Date().toISOString(),
       };
 
       push(ref(db, `rooms/${userchatId}/messages`), newMessage);
-      setMessage('');
-    }
+      
+    
   }
 
   function renderItem({ item }) {
