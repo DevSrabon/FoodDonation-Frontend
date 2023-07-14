@@ -1,7 +1,14 @@
 import { useNavigation } from "@react-navigation/native";
 import axios from "axios";
 import React, { useState } from "react";
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  Pressable,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import CustomButton from "../components/CustomButton";
 import Header from "../components/Header";
 import TextField from "../components/TextField";
@@ -98,28 +105,15 @@ const Signup = () => {
   return (
     <ScrollView style={{ flex: 1 }}>
       <Container style={{ alignItems: "center" }}>
-        <Header>Signup</Header>
-
-        {/* <Label>First Name</Label>
-        <CustomInput
-          placeholder="Your First Name"
-          value={firstName}
-          setValue={setFirstName}
-        /> */}
+        <Header style={{ marginTop: 50 }}>Signup</Header>
 
         <TextField
+          style={{ marginTop: 50 }}
           placeholder="Your First Name"
           value={firstName}
           setValue={setFirstName}
           error={error.firstName}
         />
-
-        {/* <Label>Last Name</Label>
-        <CustomInput
-          placeholder="Your Last Name"
-          value={lastName}
-          setValue={setLastName}
-        /> */}
 
         <TextField
           placeholder="Your Last Name"
@@ -127,14 +121,6 @@ const Signup = () => {
           setValue={setLastName}
           error={error.lastName}
         />
-
-        {/* <Label>Phone Number</Label>
-        <CustomInput
-          placeholder="Your Phone Number"
-          value={phoneNumber}
-          setValue={setPhoneNumber}
-          keyboardType={"phone-pad"}
-        /> */}
 
         <TextField
           placeholder="Your Phone Number"
@@ -144,14 +130,6 @@ const Signup = () => {
           error={error.phoneNumber}
         />
 
-        {/* <Label>E-mail</Label>
-        <CustomInput
-          placeholder="Your Email"
-          value={email}
-          setValue={setEmail}
-          keyboardType="email-address"
-        /> */}
-
         <TextField
           placeholder="Your Email"
           value={email}
@@ -159,14 +137,6 @@ const Signup = () => {
           keyboardType="email-address"
           error={error.email}
         />
-
-        {/* <Label>Password</Label>
-        <CustomInput
-          placeholder="Your Password"
-          value={password}
-          setValue={setPassword}
-          secureTextEntry={true}
-        /> */}
 
         <TextField
           placeholder="Your Password"
@@ -213,19 +183,31 @@ const Signup = () => {
           />
         </View>
         <View
-          style={{ flex: 1, alignSelf: "center", justifyContent: "center" }}
+          style={{
+            flex: 1,
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 3,
+          }}
         >
           <Text
             style={{
               fontFamily: "SemiBold",
-              fontSize: 12,
-              textAlign: "center",
-              bottom: 20,
             }}
           >
             Already signed up ?
-            <CustomButton text="Login" onPress={onLogin} type="tertiary" />
           </Text>
+          <TouchableOpacity onPress={() => navigation.navigate("login")}>
+            <Text
+              style={{
+                fontFamily: "SemiBold",
+                color: "#B4AAF2",
+              }}
+            >
+              Login
+            </Text>
+          </TouchableOpacity>
         </View>
       </Container>
     </ScrollView>

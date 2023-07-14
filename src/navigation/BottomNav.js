@@ -10,6 +10,7 @@ import Chat from "../screens/Chat";
 import Community from "../screens/Community";
 import Donate from "../screens/Donate";
 import User from "../screens/User";
+
 const Tab = createBottomTabNavigator();
 const BottomNav = () => {
   const { allData, loading } = userContext();
@@ -34,13 +35,17 @@ const BottomNav = () => {
         tabBarActiveTintColor: "#B4AAF2",
         tabBarStyle: {
           position: "absolute",
-          borderRadius: 20,
+          borderRadius: 15,
           bottom: 10,
           left: 20,
           right: 20,
           elevation: 1,
           backgroundColor: "white",
-          height: 70,
+          height: 60,
+        },
+        tabBarLabelStyle: {
+          bottom: 10,
+          fontFamily: "SemiBold",
         },
         headerShown: false,
       }}
@@ -81,6 +86,7 @@ const BottomNav = () => {
         name="home"
         component={Home}
         options={{
+          title: "Home",
           tabBarIcon: ({ focused, color }) => (
             <Feather
               name="home"
@@ -125,6 +131,7 @@ const BottomNav = () => {
         name="Chat"
         component={Chat}
         options={{
+          title: "Chat",
           tabBarIcon: ({ focused, color }) => (
             <Ionicons
               name="md-chatbox-ellipses-outline"
@@ -138,6 +145,7 @@ const BottomNav = () => {
         name="Community"
         component={Community}
         options={{
+          title: "Community",
           tabBarIcon: ({ focused, color }) => (
             <Ionicons
               name="people-outline"
