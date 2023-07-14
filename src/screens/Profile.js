@@ -12,16 +12,14 @@ import {
 import { useNavigation, useRoute } from "@react-navigation/native";
 import axios from "axios";
 import icons from "../../assets/icons";
-import CustomAlert from "../components/CustomAlert";
 import CustomButton from "../components/CustomButton";
 // import CustomInput from "../components/CustomInput";
 import Header from "../components/Header";
 import Loading from "../components/Loading";
+import TextField from "../components/TextField";
 import Container from "../components/container";
-import Label from "../components/label";
 import { userContext } from "../context/Provider";
 import useImagePicker from "../hook/useImagePicker";
-import TextField from "../components/TextField";
 
 const Profile = () => {
   const route = useRoute();
@@ -41,6 +39,7 @@ const Profile = () => {
 
   const onBioSetup = async () => {
     let notifications = {};
+    setError("");
 
     if (role === "needy") {
       notifications.needyNotification = false;
@@ -49,7 +48,8 @@ const Profile = () => {
     } else if (role === "transporter") {
       notifications.transporterNotification = false;
     }
-    if (!imageUrls.length || !bio) return setError("Please fill up your bio");
+    if (!imageUrls.length || !bio || !designation) return setError("Required");
+
     const bodyData = {
       bio,
       photo: imageUrls[0],
@@ -66,9 +66,11 @@ const Profile = () => {
         `https://food-donation-backend.vercel.app/api/v1/users/update-role?email=${user?.email}`,
         bodyData
       );
-      if (result.data.status === "success") return navigation.navigate("user");
+      if (result.data.status === "success") {
+        setError("");
+        navigation.navigate("user");
+      }
     } catch (error) {
-      console.log(error);
       if (error.code === "This-restaurant-already-in-use") {
         setError("The Restaurant is already in use");
       } else {
@@ -124,6 +126,7 @@ const Profile = () => {
                           <Image source={icons.profile} />
                         </Text>
                         <Text>Add Image+</Text>
+                        {error && <Text style={{ color: "red" }}>{error}</Text>}
                       </View>
                     )}
                   </TouchableOpacity>
@@ -157,13 +160,14 @@ const Profile = () => {
               multiline={true}
               numberOfLines={10}
             /> */}
-          
+
             <TextField
               placeholder="About Yourself"
               value={bio}
               setValue={setBio}
               multiline={true}
               numberOfLines={10}
+              error={error}
             />
           </View>
           <View
@@ -184,13 +188,14 @@ const Profile = () => {
               multiline={true}
               numberOfLines={10}
             /> */}
-            
+
             <TextField
               placeholder="Your Designation"
               value={designation}
               setValue={setDesignation}
               multiline={true}
               numberOfLines={10}
+              error={error}
             />
           </View>
           <View
@@ -201,8 +206,6 @@ const Profile = () => {
               marginTop: 20,
             }}
           >
-            {error && <CustomAlert type="error" value={error} />}
-
             <CustomButton
               text="Done"
               onPress={onBioSetup}
@@ -219,51 +222,3 @@ const Profile = () => {
 
 const styles = StyleSheet.create({});
 export default Profile;
-
-// const SERVER_URL = "http://localhost:3000";
-
-// const [photo, setPhoto] = useState(null);
-
-// const createFormData = (photo, body = {}) => {
-//   const data = new FormData();
-
-//   data.append("photo", {
-//     name: photo.fileName,
-//     type: photo.type,
-//     uri: Platform.OS === "ios" ? photo.uri.replace("file://", "") : photo.uri,
-//     uri: Platform.OS === "ios" ? photo.uri.replace("file://", "") : photo.uri,
-//   });
-
-//   Object.keys(body).forEach((key) => {
-//     data.append(key, body[key]);
-//   });
-
-//   return data;
-// };
-
-// const handleChoosePhoto = () => {
-//   launchImageLibrary({ noData: true }, (response) => {
-//     // console.log(response);
-//     if (response) {
-//       setPhoto(response);
-//     }
-//   });
-// };
-
-// const handleUploadPhoto = () => {
-//   fetch(`${SERVER_URL}/api/upload`, {
-//     method: "POST",
-//     body: createFormData(photo, { userId: "123" }),
-//     method: "POST",
-//     body: createFormData(photo, { userId: "123" }),
-//   })
-//     .then((response) => response.json())
-//     .then((response) => {
-//       console.log("response", response);
-//       console.log("response", response);
-//     })
-//     .catch((error) => {
-//       console.log("error", error);
-//       console.log("error", error);
-//     });
-// };

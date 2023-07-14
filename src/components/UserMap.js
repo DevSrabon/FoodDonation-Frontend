@@ -21,15 +21,13 @@ const UserMap = () => {
   const [errorMessage, setError] = useState("");
 
   const { user, setAllData } = userContext();
-  // const { loading, error, data } = useFetchData(`users?email=srabon3@gmail.com`);
+
   const { loading, error, data } = useFetchData(`users?email=${user?.email}`);
-  //const { data: data2, loading: isLoading } = useFetchData(
-  //`users/map?latitude=${data?.location?.latitude}&longitude=${data?.location?.longitude}&role=${data?.role}`
-  //);
+
   const [data2, setData] = useState(null);
   const [loading2, setLoading] = useState(true);
   const [error2, setError2] = useState(null);
-  // const url = `users/map?latitude=${data?.location?.latitude}&longitude=${data?.location?.longitude}&role=${data?.role}`;
+
   useEffect(() => {
     const fetchData = async () => {
       try {

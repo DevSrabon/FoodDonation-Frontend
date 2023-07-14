@@ -14,16 +14,14 @@ import {
 } from "react-native";
 import AddImages from "../components/AddImages";
 import ConfettiModal from "../components/ConfettiModal";
-import CustomAlert from "../components/CustomAlert";
 import CustomButton from "../components/CustomButton";
-import CustomInput from "../components/CustomInput";
 import Header from "../components/Header";
 import Loading from "../components/Loading";
+import TextField from "../components/TextField";
 import Container from "../components/container";
 import Label from "../components/label";
 import { userContext } from "../context/Provider";
 import useImagePicker from "../hook/useImagePicker";
-import TextField from "../components/TextField";
 
 const CommunityPost = () => {
   const { loading: imageLoading, imageUrls, takePhoto } = useImagePicker();
@@ -61,7 +59,11 @@ const CommunityPost = () => {
       toggleDatePicker();
     }
   };
-
+  const handleNumberChange = (value) => {
+    // Remove non-numeric characters
+    const formattedValue = value.replace(/[^0-9]/g, "");
+    setNoOfItem(formattedValue);
+  };
   const onClicked = async () => {
     if (
       imageUrls.length === 0 ||
@@ -70,11 +72,10 @@ const CommunityPost = () => {
       !address ||
       !description ||
       !noOfItem ||
+      isNaN(noOfItem) ||
       !date
     ) {
-      return setError(
-        "Please fill in all the fields and select at least 1 image."
-      );
+      return setError("Required");
     }
     setLoading(true);
     const body = {
@@ -114,18 +115,19 @@ const CommunityPost = () => {
 
   const onClose = () => {
     setCloseModal(false);
-    navigation.navigate("community");
+    navigation.navigate("Community");
   };
 
   return (
     <Container>
-      <ConfettiCannon
-        count={200}
-        explosionSpeed={100}
-        autoStart={closeModal}
-        origin={{ x: -10, y: 0 }}
-        fadeOut={true}
-      />
+      {closeModal && (
+        <ConfettiCannon
+          count={200}
+          autoStart={true}
+          origin={{ x: -10, y: 0 }}
+          fadeOut={true}
+        />
+      )}
       <ConfettiModal visible={closeModal} onClose={onClose}>
         <Text
           style={{
@@ -171,6 +173,7 @@ const CommunityPost = () => {
             placeholder="Your Name"
             value={yourName}
             setValue={setYourName}
+            error={error}
           />
 
           {/* <Label>Organization</Label>
@@ -184,6 +187,7 @@ const CommunityPost = () => {
             placeholder="Organization"
             value={organization}
             setValue={setOrganization}
+            error={error}
           />
 
           {/* <Label>Location</Label>
@@ -197,6 +201,7 @@ const CommunityPost = () => {
             placeholder="Event Location"
             value={address}
             setValue={setAddress}
+            error={error}
           />
 
           {/* <Label>Description</Label>
@@ -212,6 +217,7 @@ const CommunityPost = () => {
             value={description}
             setValue={setDescription}
             numberOfLines={10}
+            error={error}
           />
 
           {/* <Label>No of Items</Label>
@@ -226,7 +232,8 @@ const CommunityPost = () => {
             placeholder="No of Items"
             keyboardType="numeric"
             value={noOfItem}
-            setValue={setNoOfItem}
+            setValue={handleNumberChange}
+            error={error}
           />
 
           <Label>Date of Donation</Label>
@@ -255,7 +262,11 @@ const CommunityPost = () => {
               />
             </Pressable>
           )}
-          <AddImages imageUrls={imageUrls} takePhoto={takePhoto} />
+          <AddImages
+            imageUrls={imageUrls}
+            takePhoto={takePhoto}
+            error={error}
+          />
         </View>
 
         <View
@@ -265,9 +276,6 @@ const CommunityPost = () => {
             width: "90%",
           }}
         >
-          {error && <CustomAlert type="error" value={error} />}
-          {success && <CustomAlert type="success" value={success} />}
-
           <CustomButton
             text="Continue"
             loading={loading}

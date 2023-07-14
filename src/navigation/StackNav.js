@@ -18,21 +18,20 @@ import DonateMeal from "../screens/DonateMeal";
 import DonorPage from "../screens/DonorPage";
 import Profile from "../screens/Profile";
 
+import AnimatedButton from "../components/AnimatedButton";
+import Onboarding from "../components/Carousel/Onboarding";
+import CustomField from "../components/CustomField";
 import CustomModal from "../components/CustomModal";
 import CustomTouch from "../components/CustomTouch";
 import DropDown from "../components/DropDown";
-import Signup from "../screens/Signup";
-import Transporter from "../screens/Transporter";
-import BottomNav from "./BottomNav";
-import Onboarding from "../components/Carousel/Onboarding";
+import TextField from "../components/TextField";
+import BackgroundFetchScreen from "../screens/BackgroundFetchScreen";
 import CommunityPost from "../screens/CommunityPost";
 import Settings from "../screens/Settings";
-import CustomField from "../components/CustomField";
-import TextField from "../components/TextField";
-import AnimatedButton from "../components/AnimatedButton";
+import Signup from "../screens/Signup";
 import TermsAndConditions from "../screens/TermsAndConditions";
-import BackgroundFetchScreen from "../screens/BackgroundFetchScreen";
-import CustomInput from "../components/CustomInput";
+import Transporter from "../screens/Transporter";
+import BottomNav from "./BottomNav";
 
 const Stack = createNativeStackNavigator();
 

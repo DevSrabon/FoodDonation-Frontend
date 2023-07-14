@@ -1,11 +1,14 @@
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-const AddImages = ({ imageUrls, takePhoto }) => {
+const AddImages = ({ imageUrls, takePhoto, error = false }) => {
   return (
     <View style={{ height: 120, width: "100%" }}>
       <View style={styles.imageHeader}>
-        <Text style={styles.imageHeaderText}>Image</Text>
+        <View>
+          <Text style={styles.imageHeaderText}>Image</Text>
+          {error && <Text style={{ color: "red" }}>{error}</Text>}
+        </View>
         <TouchableOpacity onPress={takePhoto} style={styles.addButton}>
           <Text style={styles.addButtonLabel}>Add+</Text>
         </TouchableOpacity>
