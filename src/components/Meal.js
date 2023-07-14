@@ -6,7 +6,8 @@ import { StyleSheet, Text, View } from "react-native";
 import CustomButton from "../components/CustomButton";
 // import Loading from "../components/Loading";
 // import { AuthContext } from "../context/Provider";
-import CustomInput from "../components/CustomInput";
+// import CustomInput from "../components/CustomInput";
+import TextField from "./TextField";
 // import Meal from "../components/Meal";
 const Meal = ({ routeName }) => {
   const route = useRoute();
@@ -99,15 +100,23 @@ const Meal = ({ routeName }) => {
               <View key={index}>
                 <View style={{ flexDirection: "row", gap: 5 }}>
                   <View style={{ width: 150 }}>
-                    <Text
+                    {/* <Text
                       style={{
                         fontFamily: "SemiBold",
                         fontSize: 14,
                       }}
                     >
                       Item {item.id}
-                    </Text>
-                    <CustomInput
+                    </Text> */}
+                    {/* <CustomInput
+                      style={styles.inputText}
+                      value={item.value}
+                      onChangeText={(text) =>
+                        handleValueChange(text, index, "value")
+                      }
+                      placeholder={`Item ${item.id}`}
+                    /> */}
+                    <TextField
                       style={styles.inputText}
                       value={item.value}
                       onChangeText={(text) =>
@@ -143,7 +152,7 @@ const Meal = ({ routeName }) => {
                 </View>
                 <View style={{ flexDirection: "row", gap: 5, marginTop: 5 }}>
                   <View style={{ width: 150 }}>
-                    <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
+                    {/* <Text style={{ fontFamily: "SemiBold", fontSize: 14 }}>
                       Item Quantity
                     </Text>
                     <View style={{ width: 160 }}>
@@ -151,6 +160,17 @@ const Meal = ({ routeName }) => {
                         style={styles.inputText}
                         keyboardType="numeric"
                         placeholder="0"
+                        value={item.quantity}
+                        onChangeText={(text) =>
+                          handleValueChange(text, index, "quantity")
+                        }
+                      />
+                    </View> */}
+                    <View style={{ width: 160 }}>
+                      <TextField
+                        style={styles.inputText}
+                        keyboardType="numeric"
+                        placeholder="Item Quantity"
                         value={item.quantity}
                         onChangeText={(text) =>
                           handleValueChange(text, index, "quantity")
