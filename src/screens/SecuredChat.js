@@ -11,6 +11,8 @@ import {auth, userContext} from '../context/Provider';
 import leftArrow from '../../assets/icons/backbutton.png';
 import useFetchData from '../hook/useFetchData';
 import send from '../../assets/icons/send.png';
+import TextField from '../components/TextField';
+import CustomButton from '../components/CustomButton';
 const db = getDatabase();
 
 
@@ -139,18 +141,18 @@ const SecuredChat = () => {
     Alert.alert("Food Not delivered ? \n  We will look into this matter")
   }
   function sendMessage() {
-    if (message.trim()) {
+   
       const encryptedMessage = encryptMessage(message.trim());
       const newMessage = {
         id: Date.now().toString(),
         text: encryptedMessage,
-        user: user.displayName,
+        user: user?.displayName || "No name",
         createdAt: new Date().toISOString(),
       };
 
       push(ref(db, `rooms/${userchatId}/messages`), newMessage);
-      setMessage('');
-    }
+      
+    
   }
 
   function renderItem({ item }) {
@@ -164,9 +166,13 @@ const SecuredChat = () => {
       <TouchableOpacity >
         <Text style={{ position: 'absolute',padding:10, top: 10, left: 100, zIndex: 1,fontSize:25 }}>{ouser}</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Routes', { userchatId,emaill })} >
-        <Text style={{ position: 'absolute',color:"white",padding:10, top: 20, right: 10, zIndex: 1, borderRadius: 100,  backgroundColor: '#B4AAF2', }}>Map</Text>
-      </TouchableOpacity>
+    
+      <View style={{ position: 'absolute', top: 60, right: 10,   }}>
+      <CustomButton text="Map" 
+            type="primary" 
+            onPress={() => navigation.navigate('Routes', { userchatId,emaill })}
+            ></CustomButton>
+            </View>
       </View>
       <View style={{paddingTop:20,paddingLeft:10}} >
       <TouchableOpacity>
