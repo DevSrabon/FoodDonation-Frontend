@@ -14,13 +14,14 @@ import axios from "axios";
 import icons from "../../assets/icons";
 import CustomAlert from "../components/CustomAlert";
 import CustomButton from "../components/CustomButton";
-import CustomInput from "../components/CustomInput";
+// import CustomInput from "../components/CustomInput";
 import Header from "../components/Header";
 import Loading from "../components/Loading";
 import Container from "../components/container";
 import Label from "../components/label";
 import { userContext } from "../context/Provider";
 import useImagePicker from "../hook/useImagePicker";
+import TextField from "../components/TextField";
 
 const Profile = () => {
   const route = useRoute();
@@ -148,8 +149,16 @@ const Profile = () => {
               height: 150,
             }}
           >
-            <Label>Description</Label>
+            {/* <Label>Description</Label>
             <CustomInput
+              placeholder="About Yourself"
+              value={bio}
+              setValue={setBio}
+              multiline={true}
+              numberOfLines={10}
+            /> */}
+          
+            <TextField
               placeholder="About Yourself"
               value={bio}
               setValue={setBio}
@@ -167,8 +176,16 @@ const Profile = () => {
               marginTop: 10,
             }}
           >
-            <Label>Designation</Label>
+            {/* <Label>Designation</Label>
             <CustomInput
+              placeholder="Your Designation"
+              value={designation}
+              setValue={setDesignation}
+              multiline={true}
+              numberOfLines={10}
+            /> */}
+            
+            <TextField
               placeholder="Your Designation"
               value={designation}
               setValue={setDesignation}

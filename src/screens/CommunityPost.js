@@ -23,6 +23,7 @@ import Container from "../components/container";
 import Label from "../components/label";
 import { userContext } from "../context/Provider";
 import useImagePicker from "../hook/useImagePicker";
+import TextField from "../components/TextField";
 
 const CommunityPost = () => {
   const { loading: imageLoading, imageUrls, takePhoto } = useImagePicker();
@@ -159,37 +160,69 @@ const CommunityPost = () => {
             justifyContent: "center",
           }}
         >
-          <Label>Your Name</Label>
+          {/* <Label>Your Name</Label>
           <CustomInput
+            placeholder="Your Name"
+            value={yourName}
+            setValue={setYourName}
+          /> */}
+
+          <TextField
             placeholder="Your Name"
             value={yourName}
             setValue={setYourName}
           />
 
-          <Label>Organization</Label>
+          {/* <Label>Organization</Label>
           <CustomInput
+            placeholder="Organization"
+            value={organization}
+            setValue={setOrganization}
+          /> */}
+
+          <TextField
             placeholder="Organization"
             value={organization}
             setValue={setOrganization}
           />
 
-          <Label>Location</Label>
+          {/* <Label>Location</Label>
           <CustomInput
+            placeholder="Event Location"
+            value={address}
+            setValue={setAddress}
+          /> */}
+
+          <TextField
             placeholder="Event Location"
             value={address}
             setValue={setAddress}
           />
 
-          <Label>Description</Label>
+          {/* <Label>Description</Label>
           <CustomInput
+            placeholder="Description of event"
+            value={description}
+            setValue={setDescription}
+            numberOfLines={10}
+          /> */}
+
+          <TextField
             placeholder="Description of event"
             value={description}
             setValue={setDescription}
             numberOfLines={10}
           />
 
-          <Label>No of Items</Label>
+          {/* <Label>No of Items</Label>
           <CustomInput
+            placeholder="No of Items"
+            keyboardType="numeric"
+            value={noOfItem}
+            setValue={setNoOfItem}
+          /> */}
+
+          <TextField
             placeholder="No of Items"
             keyboardType="numeric"
             value={noOfItem}
@@ -210,7 +243,12 @@ const CommunityPost = () => {
               style={{ width: "100%", marginLeft: 35 }}
               onPress={toggleDatePicker}
             >
-              <CustomInput
+              {/* <CustomInput
+                placeholder={date.toDateString()}
+                value={selectedDate}
+                editable={false}
+              /> */}
+              <TextField
                 placeholder={date.toDateString()}
                 value={selectedDate}
                 editable={false}

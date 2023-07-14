@@ -12,6 +12,7 @@ import Container from "../components/container";
 import Label from "../components/label";
 import { AuthContext } from "../context/Provider";
 import useImagePicker from "../hook/useImagePicker";
+import TextField from "../components/TextField";
 
 const Donate = () => {
   const { loading: imageLoading, imageUrls, takePhoto } = useImagePicker();
@@ -106,15 +107,28 @@ const Donate = () => {
         </View>
 
         <View style={{ width: "100%", alignItems: "center", marginTop: 20 }}>
-          <Label>Donation Description</Label>
+          {/* <Label>Donation Description</Label>
           <CustomInput
+            placeholder="Donation Description"
+            value={caption}
+            setValue={setCaption}
+          /> */}
+
+          <TextField
             placeholder="Donation Description"
             value={caption}
             setValue={setCaption}
           />
 
-          <Label>No of Items</Label>
+          {/* <Label>No of Items</Label>
           <CustomInput
+            placeholder="No of Items"
+            keyboardType="numeric"
+            value={noOfItem}
+            setValue={handleNumberChange}
+          /> */}
+
+          <TextField
             placeholder="No of Items"
             keyboardType="numeric"
             value={noOfItem}

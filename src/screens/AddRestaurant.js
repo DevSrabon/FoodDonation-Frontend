@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { ScrollView, StyleSheet, View, Text } from "react-native";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import CustomButton from "../components/CustomButton";
-import CustomInput from "../components/CustomInput";
+// import CustomInput from "../components/CustomInput";
 import Loading from "../components/Loading";
 import { userContext } from "../context/Provider";
 
@@ -14,6 +14,7 @@ import AddImages from "../components/AddImages";
 import Header from "../components/Header";
 import Label from "../components/label";
 import useImagePicker from "../hook/useImagePicker";
+import TextField from "../components/TextField";
 
 const AddRestaurant = () => {
   const route = useRoute();
@@ -71,8 +72,14 @@ const AddRestaurant = () => {
         <Header>Add {subRole}</Header>
 
         <View style={{ width: "100%", alignItems: "center" }}>
-          <Label>{subRole} Name</Label>
+          {/* <Label>{subRole} Name</Label>
           <CustomInput
+            placeholder={`${subRole} Name`}
+            value={categoryName}
+            setValue={setCategoryName}
+          /> */}
+
+          <TextField
             placeholder={`${subRole} Name`}
             value={categoryName}
             setValue={setCategoryName}
@@ -111,15 +118,28 @@ const AddRestaurant = () => {
         </View>
 
         <View style={{ width: "100%", alignItems: "center" }}>
-          <Label>FSSAI License / Other License</Label>
+          {/* <Label>FSSAI License / Other License</Label>
           <CustomInput
+            placeholder="FSSAI License"
+            value={fssaiLicense}
+            setValue={setFSSAILicense}
+          /> */}
+
+          <TextField
             placeholder="FSSAI License"
             value={fssaiLicense}
             setValue={setFSSAILicense}
           />
 
-          <Label>PAN number</Label>
+          {/* <Label>PAN number</Label>
           <CustomInput
+            placeholder="PAN Number"
+            value={panNumber}
+            setValue={setPanNumber}
+            secureTextEntry={true}
+          /> */}
+
+          <TextField
             placeholder="PAN Number"
             value={panNumber}
             setValue={setPanNumber}

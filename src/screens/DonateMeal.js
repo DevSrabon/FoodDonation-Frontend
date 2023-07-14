@@ -7,12 +7,13 @@ import ConfettiCannon from "react-native-confetti-cannon";
 import ConfettiModal from "../components/ConfettiModal";
 import CustomAlert from "../components/CustomAlert";
 import CustomButton from "../components/CustomButton";
-import CustomInput from "../components/CustomInput";
+// import CustomInput from "../components/CustomInput";
 import Header from "../components/Header";
 import Loading from "../components/Loading";
 import Container from "../components/container";
 import { AuthContext } from "../context/Provider";
 import { getDatabase, ref, set } from "@firebase/database";
+import TextField from "../components/TextField";
 const DonateMeal = () => {
   const route = useRoute();
   // const numbers = 2;
@@ -95,14 +96,14 @@ const DonateMeal = () => {
   ];
   if (orderType === "Drop") {
     console.log("Drop");
-   set(ref(getDatabase(), `${restData.email.replace(/[@.]/g, "")}/pickup` ), {
-    role: restData.role,
-    pickup: 'Drop',
-  });
+    set(ref(getDatabase(), `${restData.email.replace(/[@.]/g, "")}/pickup`), {
+      role: restData.role,
+      pickup: 'Drop',
+    });
 
   } else if (orderType === "Pickup") {
     console.log("Pickup");
-    set(ref(getDatabase(), `${restData.email.replace(/[@.]/g, "")}/pickup` ), {
+    set(ref(getDatabase(), `${restData.email.replace(/[@.]/g, "")}/pickup`), {
       role: restData.role,
       pickup: 'Pickup',
     });
@@ -223,7 +224,15 @@ const DonateMeal = () => {
                 <View style={{ flexDirection: "row" }}>
                   <View style={{ width: "48%" }}>
                     {/* <Text style={styles.label}>Item {item.id}</Text> */}
-                    <CustomInput
+                    {/* <CustomInput
+                      placeholder={"Item Name"}
+                      // placeholder={`Item ${item.id}`}
+                      value={item.value}
+                      setValue={(text) =>
+                        handleValueChange(text, index, "value")
+                      }
+                    /> */}
+                    <TextField
                       placeholder={"Item Name"}
                       // placeholder={`Item ${item.id}`}
                       value={item.value}
@@ -261,7 +270,15 @@ const DonateMeal = () => {
                 <View style={{ flexDirection: "row" }}>
                   <View style={{ width: "48%" }}>
                     {/* <Text style={styles.label}>Item Quantity</Text> */}
-                    <CustomInput
+                    {/* <CustomInput
+                      placeholder="Quantity"
+                      value={item.quantity}
+                      setValue={(text) =>
+                        handleValueChange(text, index, "quantity")
+                      }
+                      keyboardType="numeric"
+                    /> */}
+                    <TextField
                       placeholder="Quantity"
                       value={item.quantity}
                       setValue={(text) =>
@@ -309,8 +326,17 @@ const DonateMeal = () => {
               <>
                 <View style={{ flexDirection: "row", marginTop: 10 }}>
                   <View style={{ width: "50%" }}>
-                    <Text style={styles.label}>Expired Time</Text>
+                    {/* <Text style={styles.label}>Expired Time</Text>
                     <CustomInput
+                      placeholder={expired.time || "0"}
+                      value={expired.time}
+                      setValue={(number) =>
+                        setExpired((prev) => ({ ...prev, time: number }))
+                      }
+                      keyboardType="numeric"
+                    /> */}
+                    <Text style={styles.label}>Expired Time</Text>
+                    <TextField
                       placeholder={expired.time || "0"}
                       value={expired.time}
                       setValue={(number) =>
