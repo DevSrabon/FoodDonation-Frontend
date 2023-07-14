@@ -81,7 +81,7 @@ const TextField = ({
                 ? -14
                 : focusAnim.interpolate({
                     inputRange: [0, 1],
-                    outputRange: [16, 14],
+                    outputRange: [15, 14],
                   }),
             },
           ]}
@@ -122,7 +122,8 @@ const styles = StyleSheet.create({
   labelFocusContainer: {
     position: "absolute",
     left: 16,
-    paddingHorizontal: 5,
+    paddingHorizontal: 7,
+    paddingVertical:1,
     backgroundColor: "#efedf8",
     borderWidth: 1,
     borderRadius: 5,
