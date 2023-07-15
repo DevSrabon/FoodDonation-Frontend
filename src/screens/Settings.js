@@ -8,6 +8,7 @@ import Loading from "../components/Loading";
 import Container from "../components/container";
 import { userContext } from "../context/Provider";
 import { Feather } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
 
 const Settings = () => {
   const { allData, user, loading, signOutUser } = userContext();
@@ -155,6 +156,20 @@ const Settings = () => {
         >
           <Feather name="file-text" size={24} color="black" />
           <Text style={styles.optionText}>Terms and Conditions</Text>
+          <MaterialIcons
+            name="keyboard-arrow-right"
+            size={24}
+            color="gray"
+            style={{ marginLeft: "auto" }}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.optionRow}
+          onPress={() => navigation.navigate("dashboard")}
+        >
+          <FontAwesome name="dashboard" size={24} color="black" />
+          <Text style={styles.optionText}>Dashboard</Text>
           <MaterialIcons
             name="keyboard-arrow-right"
             size={24}
