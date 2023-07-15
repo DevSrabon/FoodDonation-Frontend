@@ -31,8 +31,9 @@ const AuthProvider = ({ children }) => {
   const [request, response, promptAsync] = Google.useAuthRequest({
     androidClientId:
       "23464134108-uqr508fog7oijqeih54tetr14iv81b3u.apps.googleusercontent.com",
+    expoClientId: "",
   });
-  console.log("🚀 ~ file: Provider.js:32 ~ AuthProvider ~ response:", response);
+
   useEffect(() => {
     if (response && response.type === "success") {
       const { id_token } = response.params;

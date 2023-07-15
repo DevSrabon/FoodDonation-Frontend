@@ -1,10 +1,20 @@
-import { View, Text, StyleSheet } from "react-native";
+import axios from "axios";
 import React from "react";
-import Header from "../components/Header";
+import { StyleSheet, Text, View } from "react-native";
 import InitContainer from "../components/initContainer";
-import Onboarding from "../components/Carousel/Onboarding";
 
 const DashBoard = () => {
+  const [count, setCount] = React.useState({});
+
+  const fetchData = async () => {
+    const res = await axios.get(
+      "https://food-donation-backend.vercel.app/api/v1/dashboard/getCount?"
+    );
+    if (res.data) setCount(res.data);
+  };
+  React.useEffect(() => {
+    fetchData();
+  }, []);
   return (
     <InitContainer>
       <Text
@@ -22,34 +32,48 @@ const DashBoard = () => {
       <View style={styles.subContainer}>
         <View style={styles.cardContainer}>
           <View style={[styles.card, styles.shadow]}>
-            <Text>Total Donor</Text>
+            <Text style={{ fontSize: 18, fontWeight: "500" }}>Total Users</Text>
+            <Text style={{ fontSize: 18, fontWeight: "500" }}>
+              {count?.users}
+            </Text>
           </View>
           <View style={[styles.card, styles.shadow]}>
-            <Text>Total Needy</Text>
-          </View>
-        </View>
-        <View style={styles.cardContainer}>
-          <View style={[styles.card, styles.shadow]}>
-            <Text>Total Donor</Text>
-          </View>
-          <View style={[styles.card, styles.shadow]}>
-            <Text>Total Donor</Text>
+            <Text style={{ fontSize: 18, fontWeight: "500" }}>Total Donor</Text>
+            <Text style={{ fontSize: 18, fontWeight: "500" }}>
+              {count?.donor}
+            </Text>
           </View>
         </View>
         <View style={styles.cardContainer}>
           <View style={[styles.card, styles.shadow]}>
-            <Text>Total Donor</Text>
+            <Text style={{ fontSize: 18, fontWeight: "500" }}>Total Needy</Text>
+            <Text style={{ fontSize: 18, fontWeight: "500" }}>
+              {count?.needy}
+            </Text>
           </View>
           <View style={[styles.card, styles.shadow]}>
-            <Text>Total Donor</Text>
+            <Text style={{ fontSize: 18, fontWeight: "500" }}>
+              Total Transporter
+            </Text>
+            <Text style={{ fontSize: 18, fontWeight: "500" }}>
+              {count?.transporter}
+            </Text>
           </View>
         </View>
         <View style={styles.cardContainer}>
           <View style={[styles.card, styles.shadow]}>
-            <Text>Total Donor</Text>
+            <Text style={{ fontSize: 18, fontWeight: "500" }}>Total Posts</Text>
+            <Text style={{ fontSize: 18, fontWeight: "500" }}>
+              {count?.posts}
+            </Text>
           </View>
           <View style={[styles.card, styles.shadow]}>
-            <Text>Total Donor</Text>
+            <Text style={{ fontSize: 18, fontWeight: "500" }}>
+              Community Posts
+            </Text>
+            <Text style={{ fontSize: 18, fontWeight: "500" }}>
+              {count?.community}
+            </Text>
           </View>
         </View>
       </View>
@@ -73,11 +97,12 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: "white",
     borderRadius: 8,
-    paddingVertical: 45,
-    paddingHorizontal: 25,
     width: "45%",
     height: 150,
     marginVertical: 10,
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
   },
   shadow: {
     elevation: 20,
