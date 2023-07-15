@@ -1,20 +1,30 @@
 import axios from "axios";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import Loading from "../components/Loading";
 import InitContainer from "../components/initContainer";
 
 const DashBoard = () => {
   const [count, setCount] = React.useState({});
+  const [loading, setLoading] = React.useState(false);
 
   const fetchData = async () => {
-    const res = await axios.get(
-      "https://food-donation-backend.vercel.app/api/v1/dashboard/getCount?"
-    );
-    if (res.data) setCount(res.data);
+    try {
+      setLoading(true);
+      const res = await axios.get(
+        "https://food-donation-backend.vercel.app/api/v1/dashboard/getCount"
+      );
+      if (res.data) setCount(res.data);
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
   React.useEffect(() => {
     fetchData();
   }, []);
+  if (loading) return <Loading />;
   return (
     <InitContainer>
       <Text
