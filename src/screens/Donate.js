@@ -88,42 +88,32 @@ const Donate = () => {
     <Container>
       <Header>{role === "donor" ? "Donate" : "Help"}</Header>
       <ScrollView style={{ flex: 1 }}>
-        <Label>Organization Name:</Label>
-        <View style={styles.textPadding}>
-          <Text style={styles.textBox}>{categoryName}</Text>
-        </View>
+        <View style={{ width: "100%", alignItems: "center", marginTop: 20 }}>
+          <TextField
+            placeholder="Organization Name"
+            value={categoryName}
+            editable={false}
+          />
 
-        <Label>Location:</Label>
-        <View style={styles.textPadding}>
-          <Text style={styles.textBox}>
-            {address?.includes(",")
+        </View>
+        <View style={{ width: "100%", alignItems: "center", marginTop: 10 }}>
+          <TextField
+            placeholder="Location"
+            value={address?.includes(",")
               ? address?.substring(address?.indexOf(",") + 1).trim()
               : address}
-          </Text>
+            editable={false}
+          />
+
         </View>
 
         <View style={{ width: "100%", alignItems: "center", marginTop: 20 }}>
-          {/* <Label>Donation Description</Label>
-          <CustomInput
-            placeholder="Donation Description"
-            value={caption}
-            setValue={setCaption}
-          /> */}
-
           <TextField
             placeholder="Donation Description"
             value={caption}
             setValue={setCaption}
             error={error}
           />
-
-          {/* <Label>No of Items</Label>
-          <CustomInput
-            placeholder="No of Items"
-            keyboardType="numeric"
-            value={noOfItem}
-            setValue={handleNumberChange}
-          /> */}
 
           <TextField
             placeholder="No of Items"
@@ -147,7 +137,6 @@ const Donate = () => {
 const styles = StyleSheet.create({
   textPadding: {
     color: "#fff",
-
     paddingVertical: 5,
     textAlign: "center",
   },

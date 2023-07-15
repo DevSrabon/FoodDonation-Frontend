@@ -58,7 +58,7 @@ const RoutesMap = () => {
         );
       }
     };
-
+    console.log(allData.userData.role)
     const interval = setInterval(updateRealTime, 5000); // Update location every 5 seconds
 
     const fetchOtherUsers = () => {
@@ -82,13 +82,15 @@ useEffect(() => {
       { console.log("Donor drop")
         interval;
       }
-      else{
-        console.log("Donor pickup")
-        intervalId;
-      }
+      
     }
   });
 }, []);
+
+if(allData.userData.role=='needy'){
+  console.log("needy")
+  intervalId;
+}
 
 //if doner pickup ask for neeedy location
 
