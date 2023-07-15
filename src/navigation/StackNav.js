@@ -32,6 +32,7 @@ import Signup from "../screens/Signup";
 import TermsAndConditions from "../screens/TermsAndConditions";
 import Transporter from "../screens/Transporter";
 import BottomNav from "./BottomNav";
+import DashBoard from "../screens/DashBoard";
 
 const Stack = createNativeStackNavigator();
 
@@ -39,7 +40,7 @@ const StackNav = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={"initial"}
+        initialRouteName={"dashboard"}
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="initial" component={InitialPage} />
@@ -72,6 +73,7 @@ const StackNav = () => {
         <Stack.Screen name="addRestaurant" component={AddRestaurant} />
         <Stack.Screen name="DonateMeal" component={DonateMeal} />
         <Stack.Screen name="donate" component={Donate} />
+        <Stack.Screen name="dashboard" component={DashBoard} />
 
         {/* <Stack.Screen name="profile" component={Profile} /> */}
         <Stack.Screen name="Chat" component={Chat} />
