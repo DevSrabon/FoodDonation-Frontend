@@ -40,50 +40,36 @@ const DashBoard = () => {
 
       <View style={styles.topContainer}></View>
       <View style={styles.subContainer}>
-        <View style={styles.cardContainer}>
-          <View style={[styles.card, styles.shadow]}>
-            <Text style={{ fontSize: 18, fontWeight: "500" }}>Total Users</Text>
-            <Text style={{ fontSize: 18, fontWeight: "500" }}>
-              {count?.users}
-            </Text>
+        <View style={{ marginTop: 30 }}>
+          <View style={styles.cardContainer}>
+            <View style={[styles.card, styles.shadow]}>
+              <Text style={styles.text}>Total Users</Text>
+              <Text style={styles.textCount}>{count?.users}</Text>
+            </View>
+            <View style={[styles.card, styles.shadow]}>
+              <Text style={styles.text}>Total Donor</Text>
+              <Text style={styles.textCount}>{count?.donor}</Text>
+            </View>
           </View>
-          <View style={[styles.card, styles.shadow]}>
-            <Text style={{ fontSize: 18, fontWeight: "500" }}>Total Donor</Text>
-            <Text style={{ fontSize: 18, fontWeight: "500" }}>
-              {count?.donor}
-            </Text>
+          <View style={styles.cardContainer}>
+            <View style={[styles.card, styles.shadow]}>
+              <Text style={styles.text}>Total Needy</Text>
+              <Text style={styles.textCount}>{count?.needy}</Text>
+            </View>
+            <View style={[styles.card, styles.shadow]}>
+              <Text style={styles.text}>Total Transporter</Text>
+              <Text style={styles.textCount}>{count?.transporter}</Text>
+            </View>
           </View>
-        </View>
-        <View style={styles.cardContainer}>
-          <View style={[styles.card, styles.shadow]}>
-            <Text style={{ fontSize: 18, fontWeight: "500" }}>Total Needy</Text>
-            <Text style={{ fontSize: 18, fontWeight: "500" }}>
-              {count?.needy}
-            </Text>
-          </View>
-          <View style={[styles.card, styles.shadow]}>
-            <Text style={{ fontSize: 18, fontWeight: "500" }}>
-              Total Transporter
-            </Text>
-            <Text style={{ fontSize: 18, fontWeight: "500" }}>
-              {count?.transporter}
-            </Text>
-          </View>
-        </View>
-        <View style={styles.cardContainer}>
-          <View style={[styles.card, styles.shadow]}>
-            <Text style={{ fontSize: 18, fontWeight: "500" }}>Total Posts</Text>
-            <Text style={{ fontSize: 18, fontWeight: "500" }}>
-              {count?.posts}
-            </Text>
-          </View>
-          <View style={[styles.card, styles.shadow]}>
-            <Text style={{ fontSize: 18, fontWeight: "500" }}>
-              Community Posts
-            </Text>
-            <Text style={{ fontSize: 18, fontWeight: "500" }}>
-              {count?.community}
-            </Text>
+          <View style={styles.cardContainer}>
+            <View style={[styles.card, styles.shadow]}>
+              <Text style={styles.text}>Total Posts</Text>
+              <Text style={styles.textCount}>{count?.posts}</Text>
+            </View>
+            <View style={[styles.card, styles.shadow]}>
+              <Text style={styles.text}>Community Posts</Text>
+              <Text style={styles.textCount}>{count?.community}</Text>
+            </View>
           </View>
         </View>
       </View>
@@ -92,8 +78,17 @@ const DashBoard = () => {
 };
 
 const styles = StyleSheet.create({
+  text: {
+    fontSize: 18,
+    fontFamily: "SemiBold",
+  },
+  textCount: {
+    fontFamily: "Bold",
+    fontSize: 24,
+    color: "red",
+  },
   topContainer: {
-    flex: 0.1,
+    flex: 0.4,
   },
   subContainer: {
     flex: 1,
@@ -101,6 +96,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderTopStartRadius: 17,
     borderTopEndRadius: 17,
+
     // maxHeight: 00,
     // justifyContent: "center",
   },
