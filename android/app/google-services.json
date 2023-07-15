@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "23464134108",
+    "firebase_url": "https://food-donation-new-9fa4a-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "food-donation-new-9fa4a",
+    "storage_bucket": "food-donation-new-9fa4a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:23464134108:android:ca301590b9d4c69c333b19",
+        "android_client_info": {
+          "package_name": "com.mahbubmorshed.FoodDonation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "23464134108-2sp8jpgrfgff89rrhtpnks5h4ppe6j1s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mahbubmorshed.FoodDonation",
+            "certificate_hash": "dbfb2808a604d4c023874fc61ba62c881c747260"
+          }
+        },
+        {
+          "client_id": "23464134108-er1v3k4ih8le9d4grdfp4fjr1p3ttupo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mahbubmorshed.FoodDonation",
+            "certificate_hash": "5684da11988c2ee057b78a5fd64bc30bbea28252"
+          }
+        },
+        {
+          "client_id": "23464134108-h4p94ggmlps0ig6i4h0v1sciqndcljrs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCm-ZDsz7tOJMrngXYrNTEC19bOMoBEUoM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "23464134108-bv4hblk8iftesdgh0qf485i4var9l6hj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

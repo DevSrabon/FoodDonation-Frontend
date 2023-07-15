@@ -14,6 +14,7 @@ const TextField = ({
   style,
   inputStyles,
   error,
+  width = "90%",
   ...restOfProps
 }) => {
   const inputref = useRef();
@@ -29,7 +30,7 @@ const TextField = ({
   }, [focusAnim, isFocused]);
 
   return (
-    <View style={[style, { marginVertical: 15, width: "90%" }]}>
+    <View style={[style, { marginVertical: 15, width }]}>
       <TextInput
         // style={[styles.input, inputStyles]}
         style={[
@@ -99,6 +100,7 @@ export default TextField;
 const styles = StyleSheet.create({
   error: { color: "red" },
   input: {
+    width: "100%",
     backgroundColor: "white",
     borderWidth: 1,
     borderRadius: 5,
