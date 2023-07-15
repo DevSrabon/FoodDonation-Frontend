@@ -5,15 +5,13 @@ import React, { useContext, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import ConfettiCannon from "react-native-confetti-cannon";
 import ConfettiModal from "../components/ConfettiModal";
-import CustomAlert from "../components/CustomAlert";
 import CustomButton from "../components/CustomButton";
 // import CustomInput from "../components/CustomInput";
+import { getDatabase, ref, set } from "@firebase/database";
 import Header from "../components/Header";
-import Loading from "../components/Loading";
+import TextField from "../components/TextField";
 import Container from "../components/container";
 import { AuthContext } from "../context/Provider";
-import { getDatabase, ref, set } from "@firebase/database";
-import TextField from "../components/TextField";
 const DonateMeal = () => {
   const route = useRoute();
   // const numbers = 2;
@@ -45,7 +43,7 @@ const DonateMeal = () => {
         value: "",
         qType: mealOptions[0].label,
         quantityType: quantityTypes[0].label,
-        quantity: "",
+        quantity: null,
       });
     }
     setListItems(items);
@@ -98,14 +96,13 @@ const DonateMeal = () => {
     console.log("Drop");
     set(ref(getDatabase(), `${restData.email.replace(/[@.]/g, "")}/pickup`), {
       role: restData.role,
-      pickup: 'Drop',
+      pickup: "Drop",
     });
-
   } else if (orderType === "Pickup") {
     console.log("Pickup");
     set(ref(getDatabase(), `${restData.email.replace(/[@.]/g, "")}/pickup`), {
       role: restData.role,
-      pickup: 'Pickup',
+      pickup: "Pickup",
     });
   }
   const { loading, setLoading } = useContext(AuthContext);
@@ -119,9 +116,7 @@ const DonateMeal = () => {
   const onDonateMeal = async () => {
     if (restData?.role === "donor") {
       if (expiredTime <= 0 || isNaN(expiredTime)) {
-        return setError(
-          "Expired Time should be more than 0 minutes and must be in Number"
-        );
+        return setError("Required");
       }
     }
     for (const item of listItems) {
@@ -132,9 +127,7 @@ const DonateMeal = () => {
         !item.quantityType ||
         isNaN(item.quantity)
       ) {
-        return setError(
-          "Please fill in all the item details and Item Quantity must be in Number"
-        );
+        return setError("Required");
       }
     }
     setLoading(true);
@@ -149,6 +142,10 @@ const DonateMeal = () => {
         setCloseModal(true);
       }
     } catch (error) {
+      console.log(
+        "🚀 ~ file: DonateMeal.js:145 ~ onDonateMeal ~ error:",
+        error
+      );
       setError(error.message);
     } finally {
       setLoading(false);
@@ -162,14 +159,15 @@ const DonateMeal = () => {
   return (
     <>
       <Container>
-        <ConfettiCannon
-          count={200}
-          explosionSpeed={100}
-          autoStart={closeModal}
-          origin={{ x: -10, y: 0 }}
-          fadeOut={true}
-        />
-        <ConfettiModal visible={closeModal} onClose={onClose}>
+        {closeModal && (
+          <ConfettiCannon
+            count={200}
+            origin={{ x: -10, y: 50 }}
+            autoStart={closeModal}
+            fadeOut={true}
+          />
+        )}
+        <ConfettiModal visible={closeModal}>
           <Text
             style={{
               fontSize: 30,
@@ -236,6 +234,7 @@ const DonateMeal = () => {
                       placeholder={"Item Name"}
                       // placeholder={`Item ${item.id}`}
                       value={item.value}
+                      error={error}
                       setValue={(text) =>
                         handleValueChange(text, index, "value")
                       }
@@ -281,6 +280,7 @@ const DonateMeal = () => {
                     <TextField
                       placeholder="Quantity"
                       value={item.quantity}
+                      error={error}
                       setValue={(text) =>
                         handleValueChange(text, index, "quantity")
                       }
@@ -339,6 +339,7 @@ const DonateMeal = () => {
                     <TextField
                       placeholder={expired.time || "0"}
                       value={expired.time}
+                      error={error}
                       setValue={(number) =>
                         setExpired((prev) => ({ ...prev, time: number }))
                       }
@@ -385,7 +386,7 @@ const DonateMeal = () => {
               </>
             )}
 
-            {error && <CustomAlert type="error" value={error} />}
+            {/* {error && <CustomAlert type="error" value={error} />} */}
             {/* {success && <CustomAlert type="success" value={success} />} */}
 
             {/* Order */}
@@ -413,7 +414,8 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     marginVertical: 5,
     justifyContent: "center",
-    height: 38,
+    height: 50,
+    marginTop: 15,
   },
   label: {
     fontFamily: "SemiBold",

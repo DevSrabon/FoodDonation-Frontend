@@ -3,16 +3,14 @@ import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import AddImages from "../components/AddImages";
-import CustomAlert from "../components/CustomAlert";
 import CustomButton from "../components/CustomButton";
-import CustomInput from "../components/CustomInput";
 import Header from "../components/Header";
 import Loading from "../components/Loading";
+import TextField from "../components/TextField";
 import Container from "../components/container";
 import Label from "../components/label";
 import { AuthContext } from "../context/Provider";
 import useImagePicker from "../hook/useImagePicker";
-import TextField from "../components/TextField";
 
 const Donate = () => {
   const { loading: imageLoading, imageUrls, takePhoto } = useImagePicker();
@@ -38,10 +36,8 @@ const Donate = () => {
   };
 
   const onDonate = () => {
-    if (!imageUrls.length || !caption || !noOfItem)
-      return setError(
-        "Please Select at Least 1 image and fill up all input field"
-      );
+    if (!imageUrls.length || !caption || !noOfItem || isNaN(noOfItem))
+      return setError("Required");
 
     const body = {
       userName: name,
@@ -116,6 +112,7 @@ const Donate = () => {
             placeholder="Donation Description"
             value={caption}
             setValue={setCaption}
+            error={error}
           />
 
           <TextField
@@ -123,13 +120,13 @@ const Donate = () => {
             keyboardType="numeric"
             value={noOfItem}
             setValue={handleNumberChange}
+            error={error}
           />
         </View>
 
-        <AddImages imageUrls={imageUrls} takePhoto={takePhoto} />
+        <AddImages imageUrls={imageUrls} takePhoto={takePhoto} error={error} />
 
         <View style={styles.btnContainer}>
-          {error && <CustomAlert type="error" value={error} />}
           <CustomButton text="Continue" onPress={onDonate} type="primary" />
         </View>
       </ScrollView>

@@ -1,20 +1,18 @@
 import { useNavigation, useRoute } from "@react-navigation/native";
 import React, { useState } from "react";
 
-import { ScrollView, StyleSheet, View, Text } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import CustomButton from "../components/CustomButton";
 // import CustomInput from "../components/CustomInput";
 import Loading from "../components/Loading";
-import { userContext } from "../context/Provider";
 
 import Container from "../components/container";
 
 import AddImages from "../components/AddImages";
 import Header from "../components/Header";
-import Label from "../components/label";
-import useImagePicker from "../hook/useImagePicker";
 import TextField from "../components/TextField";
+import useImagePicker from "../hook/useImagePicker";
 
 const AddRestaurant = () => {
   const route = useRoute();
@@ -28,18 +26,21 @@ const AddRestaurant = () => {
 
   const [fssaiLicense, setFSSAILicense] = useState("");
   const [panNumber, setPanNumber] = useState("");
-  const { user, loading, setLoading } = userContext();
+  const [error, setError] = useState({});
+
   const onAddRestaurant = () => {
-    if (
-      !imageUrls?.length ||
-      !categoryName ||
-      !location?.latitude ||
-      !location?.longitude ||
-      !fssaiLicense ||
-      !panNumber
-    ) {
-      return alert("Please fill-up all the information");
-    } else {
+    setError({});
+    if (!imageUrls.length)
+      return setError((prev) => ({ ...prev, errorImg: "Required" }));
+    else if (!categoryName)
+      return setError((prev) => ({ ...prev, errorName: "Required" }));
+    else if (!location?.latitude || !location?.longitude)
+      return setError((prev) => ({ ...prev, errorLocation: "Required" }));
+    else if (!fssaiLicense)
+      return setError((prev) => ({ ...prev, errorLicense: "Required" }));
+    else if (!panNumber)
+      return setError((prev) => ({ ...prev, errorPan: "Required" }));
+    else {
       const body = {
         categoryName,
         location: location,
@@ -51,7 +52,7 @@ const AddRestaurant = () => {
     }
   };
 
-  if (loading || imageLoading) {
+  if (imageLoading) {
     return <Loading />;
   }
 
@@ -72,23 +73,21 @@ const AddRestaurant = () => {
         <Header>Add {subRole}</Header>
 
         <View style={{ width: "100%", alignItems: "center" }}>
-          {/* <Label>{subRole} Name</Label>
-          <CustomInput
-            placeholder={`${subRole} Name`}
-            value={categoryName}
-            setValue={setCategoryName}
-          /> */}
-
           <TextField
             placeholder={`${subRole} Name`}
             value={categoryName}
             setValue={setCategoryName}
+            error={error.errorName}
           />
         </View>
 
         {/* Image add part */}
 
-        <AddImages imageUrls={imageUrls} takePhoto={takePhoto} />
+        <AddImages
+          imageUrls={imageUrls}
+          takePhoto={takePhoto}
+          error={error.errorImg}
+        />
 
         {/* Location */}
         <View style={{ flex: 1, width: "90%", alignSelf: "center" }}>
@@ -101,6 +100,9 @@ const AddRestaurant = () => {
           >
             Location
           </Text>
+          {error?.errorLocation && (
+            <Text style={{ color: "red" }}>{error.errorLocation}</Text>
+          )}
           {/* <Label></Label> */}
           <GooglePlacesAutocomplete
             fetchDetails={true}
@@ -116,34 +118,20 @@ const AddRestaurant = () => {
             }}
           />
         </View>
-
         <View style={{ width: "100%", alignItems: "center" }}>
-          {/* <Label>FSSAI License / Other License</Label>
-          <CustomInput
-            placeholder="FSSAI License"
-            value={fssaiLicense}
-            setValue={setFSSAILicense}
-          /> */}
-
           <TextField
             placeholder="FSSAI License"
             value={fssaiLicense}
             setValue={setFSSAILicense}
+            error={error.errorLicense}
           />
 
-          {/* <Label>PAN number</Label>
-          <CustomInput
-            placeholder="PAN Number"
-            value={panNumber}
-            setValue={setPanNumber}
-            secureTextEntry={true}
-          /> */}
-
           <TextField
             placeholder="PAN Number"
             value={panNumber}
             setValue={setPanNumber}
             secureTextEntry={true}
+            error={error.errorPan}
           />
         </View>
 

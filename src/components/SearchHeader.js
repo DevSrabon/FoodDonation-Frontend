@@ -1,27 +1,92 @@
+import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import RazorpayCheckout from "react-native-razorpay";
 import { userContext } from "../context/Provider";
+import ConfettiModal from "./ConfettiModal";
+import CustomButton from "./CustomButton";
 import Loading from "./Loading";
-import { Ionicons } from "@expo/vector-icons";
-import { FontAwesome } from "@expo/vector-icons";
-
+import TextField from "./TextField";
 const SearchHeader = () => {
   const { allData, user, loading, signOutUser } = userContext();
   const navigation = useNavigation();
 
-  const handleSignOut = async () => {
-    if (user?.email) {
-      await signOutUser();
-      navigation.navigate("initial");
-    } else {
-      navigation.navigate("login");
-    }
+  const [closeModal, setCloseModal] = useState(false);
+  const [value, setValue] = useState(null);
+  const handleValue = (value) => {
+    const filterNumber = value.replace(/[^0-9]/g, "");
+    setValue(filterNumber);
+  };
+  const onClose = () => {
+    setCloseModal(false);
   };
 
+  const payNow = () => {
+    const email = user?.email;
+    const name = user?.displayName;
+    const mobile = allData?.userData?.phone;
+    const userId = allData?.userData?._id;
+    var options = {
+      description: "Credits towards consultation",
+      image: "../../assets/favicon.png",
+      currency: "INR",
+      key: "rzp_test_P8O8kQ18tBojQq",
+      amount: value * 100,
+      name: "Bhojan Mittra",
+      order_id: "", //Replace this with an order_id created using Orders API.
+      prefill: {
+        email,
+        contact: mobile,
+        name,
+      },
+      theme: { color: "#53a20e" },
+    };
+    RazorpayCheckout.open(options)
+      .then((data) => {
+        // handle success
+        alert(`Success: ${data.razorpay_payment_id}`);
+      })
+      .catch((error) => {
+        console.log(error);
+        // handle failure
+        // alert(`Error: ${error.code} | ${error.description}`);
+      });
+  };
   if (loading) return <Loading />;
   return (
     <View style={styles.container}>
+      <ConfettiModal visible={closeModal}>
+        <Text
+          style={{ textAlign: "right", fontSize: 16, fontWeight: "bold" }}
+          onPress={() => setCloseModal(false)}
+        >
+          X
+        </Text>
+        <Text
+          style={{
+            fontSize: 30,
+            marginBottom: 30,
+            fontWeight: 600,
+            color: "#B4AAF2",
+          }}
+        >
+          Donate Now!!
+        </Text>
+
+        <TextField
+          placeholder={"Enter Your Amount"}
+          value={value}
+          setValue={handleValue}
+          width="100%"
+        />
+
+        <CustomButton
+          text="Pay Now"
+          onPress={() => (setCloseModal(false), payNow())}
+          type="primary"
+        />
+      </ConfettiModal>
       <View style={styles.headerView}>
         <View style={{ marginTop: 5 }}>
           <Text style={styles.typography}>
@@ -31,15 +96,7 @@ const SearchHeader = () => {
             {allData?.userData?.name || "Guest"}
           </Text>
         </View>
-        {/* <View style={{ width: "50%" }}>
-          <CustomButton
-            text="Donate"
-            onPress={() => navigation.navigate("donate")}
-            type="primary"
-          />
-        </View> */}
-
-        <TouchableOpacity onPress={() => navigation.navigate("donate")}>
+        <TouchableOpacity onPress={() => setCloseModal(true)}>
           <View
             style={{
               flexDirection: "row",
