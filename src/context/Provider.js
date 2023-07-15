@@ -1,8 +1,12 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as Google from "expo-auth-session/providers/google";
+import * as WebBrowser from "expo-web-browser";
 import {
+  GoogleAuthProvider,
   createUserWithEmailAndPassword,
   getAuth,
   onAuthStateChanged,
+  signInWithCredential,
   signInWithEmailAndPassword,
   signOut,
   updateProfile,
@@ -11,7 +15,7 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { app } from "../firebase/firebase.config";
 
 export const AuthContext = createContext(null);
-
+WebBrowser.maybeCompleteAuthSession();
 const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
@@ -23,6 +27,20 @@ const AuthProvider = ({ children }) => {
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+
+  const [request, response, promptAsync] = Google.useAuthRequest({
+    androidClientId:
+      "23464134108-uqr508fog7oijqeih54tetr14iv81b3u.apps.googleusercontent.com",
+    expoClientId: "",
+  });
+
+  useEffect(() => {
+    if (response && response.type === "success") {
+      const { id_token } = response.params;
+      const credential = GoogleAuthProvider.credential(id_token);
+      signInWithCredential(auth, credential);
+    }
+  }, [response]);
 
   const createUser = (email, password) => {
     setLoading(true);
@@ -97,6 +115,7 @@ const AuthProvider = ({ children }) => {
     updateUser,
     allData,
     setAllData,
+    promptAsync,
     error,
     setError,
     refetch,

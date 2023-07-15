@@ -29,7 +29,8 @@ const SearchHeader = () => {
     const userId = allData?.userData?._id;
     var options = {
       description: "Credits towards consultation",
-      image: "../../assets/favicon.png",
+      image:
+        "https://imgv3.fotor.com/images/cover-photo-image/a-beautiful-girl-with-gray-hair-and-lucxy-neckless-generated-by-Fotor-AI.jpg",
       currency: "INR",
       key: "rzp_test_P8O8kQ18tBojQq",
       amount: value * 100,
@@ -48,7 +49,7 @@ const SearchHeader = () => {
         alert(`Success: ${data.razorpay_payment_id}`);
       })
       .catch((error) => {
-        console.log(error);
+        alert(error.error.description);
         // handle failure
         // alert(`Error: ${error.code} | ${error.description}`);
       });
