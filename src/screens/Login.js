@@ -6,8 +6,8 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  View,
   TouchableOpacity,
+  View,
 } from "react-native";
 import CustomButton from "../components/CustomButton";
 import Header from "../components/Header";
@@ -42,6 +42,7 @@ const Login = () => {
     try {
       const res = await signIn(email, password);
     } catch (error) {
+      console.log(error);
       let errorMessage = "An error occurred during sign-in.";
 
       if (error.code === "auth/user-not-found") {
