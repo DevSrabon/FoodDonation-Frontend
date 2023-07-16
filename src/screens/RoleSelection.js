@@ -26,7 +26,7 @@ const RoleSelection = () => {
   const [donaropen, setDonaropen] = useState(false);
   const [transporteropen, setTransporteropen] = useState(false);
   const [foodneederopen, setFoodneederopen] = useState(false);
-  console.log("=========", donaropen, transporteropen, foodneederopen);
+
   const AniDonar = useRef(new Animated.Value(1500)).current;
   const Anitransporter = useRef(new Animated.Value(1500)).current;
   const Anifoodneeder = useRef(new Animated.Value(1500)).current;

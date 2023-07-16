@@ -93,13 +93,11 @@ const DonateMeal = () => {
     { id: 3, label: "days" },
   ];
   if (orderType === "Drop") {
-    console.log("Drop");
     set(ref(getDatabase(), `${restData.email.replace(/[@.]/g, "")}/pickup`), {
       role: restData.role,
       pickup: "Drop",
     });
   } else if (orderType === "Pickup") {
-    console.log("Pickup");
     set(ref(getDatabase(), `${restData.email.replace(/[@.]/g, "")}/pickup`), {
       role: restData.role,
       pickup: "Pickup",

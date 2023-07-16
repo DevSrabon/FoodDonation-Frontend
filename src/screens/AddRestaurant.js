@@ -10,6 +10,7 @@ import Loading from "../components/Loading";
 import Container from "../components/container";
 
 import AddImages from "../components/AddImages";
+import Header from "../components/Header";
 import TextField from "../components/TextField";
 import useImagePicker from "../hook/useImagePicker";
 
@@ -69,7 +70,7 @@ const AddRestaurant = () => {
       keyboardShouldPersistTaps="handled"
     >
       <Container style={{ justifyContent: "center" }}>
-        {/* <Header>Add {subRole}</Header> */}
+        <Header>{`Add ${subRole}`.toString()}</Header>
         <Text
           style={{ fontFamily: "SemiBold", fontSize: 24, color: "#312E49" }}
         >

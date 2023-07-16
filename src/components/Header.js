@@ -2,7 +2,6 @@ import { View, StyleSheet, Animated, Text } from "react-native";
 import React, { useEffect, useRef } from "react";
 
 const Header = (props) => {
-
   const springValues = useRef([]);
 
   const text = props.children;
@@ -20,7 +19,7 @@ const Header = (props) => {
   }, []);
 
   const renderAnimatedText = () => {
-    return text.split('').map((char, index) => {
+    return text.split("").map((char, index) => {
       const springValue = useRef(new Animated.Value(100)).current;
       springValues.current[index] = springValue;
 
@@ -33,7 +32,7 @@ const Header = (props) => {
               fontFamily: "SemiBold",
               fontSize: 24,
               color: "#312E49",
-            }
+            },
           ]}
         >
           {char}
@@ -61,14 +60,13 @@ const Header = (props) => {
 };
 
 const styles = StyleSheet.create({
-
   typography: {
     fontFamily: "SemiBold",
     fontSize: 24,
     color: "#312E49",
   },
   textContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
   },
 });
 

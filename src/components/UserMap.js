@@ -67,7 +67,6 @@ const UserMap = () => {
     return <Loading />;
   }
   setLoadingState(0);
-  console.log(data2);
   if (error) return setError(error.message);
   return (
     <View style={styles.mapContainer}>

@@ -58,7 +58,6 @@ export default function BackgroundFetchScreen() {
     };
   }, []);
   const checkForOrderStatus = async () => {
-    console.log("email" + user?.email);
     if (user?.email != null) {
       try {
         const response = await axios.get(
@@ -87,8 +86,6 @@ export default function BackgroundFetchScreen() {
   React.useEffect(() => {
     const interval = setInterval(() => {
       checkForOrderStatus();
-
-      console.log("Logs every minute");
     }, 10000);
 
     return () => clearInterval(interval);
@@ -99,7 +96,6 @@ export default function BackgroundFetchScreen() {
   };
 
   React.useEffect(() => {
-    console.log("Background screen running");
     setTimeout(goToForegroundScreen, 500);
   }, []);
   return null;

@@ -27,12 +27,12 @@ import DropDown from "../components/DropDown";
 import TextField from "../components/TextField";
 import BackgroundFetchScreen from "../screens/BackgroundFetchScreen";
 import CommunityPost from "../screens/CommunityPost";
+import DashBoard from "../screens/DashBoard";
 import Settings from "../screens/Settings";
 import Signup from "../screens/Signup";
 import TermsAndConditions from "../screens/TermsAndConditions";
 import Transporter from "../screens/Transporter";
 import BottomNav from "./BottomNav";
-import DashBoard from "../screens/DashBoard";
 
 const Stack = createNativeStackNavigator();
 
@@ -40,7 +40,7 @@ const StackNav = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={"initial"}
+        initialRouteName={"roleSelection"}
         screenOptions={{ headerShown: false }}
       >
         <Stack.Screen name="initial" component={InitialPage} />
