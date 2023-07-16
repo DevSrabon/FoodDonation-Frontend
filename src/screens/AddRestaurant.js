@@ -71,12 +71,6 @@ const AddRestaurant = () => {
     >
       <Container style={{ justifyContent: "center" }}>
         <Header>{`Add ${subRole}`.toString()}</Header>
-        <Text
-          style={{ fontFamily: "SemiBold", fontSize: 24, color: "#312E49" }}
-        >
-          Add {subRole}
-        </Text>
-
         <View style={{ width: "100%", alignItems: "center" }}>
           <TextField
             placeholder={`${subRole} Name`}

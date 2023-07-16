@@ -107,6 +107,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     fontFamily: "Medium",
     height: 50,
+    fontSize: 17,
   },
   labelContainer: {
     position: "absolute",
@@ -124,8 +125,8 @@ const styles = StyleSheet.create({
   labelFocusContainer: {
     position: "absolute",
     left: 16,
-    paddingHorizontal: 7,
-    paddingVertical:1,
+    // paddingHorizontal: 7,
+    paddingVertical: 1,
     backgroundColor: "#efedf8",
     borderWidth: 1,
     borderRadius: 5,

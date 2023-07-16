@@ -29,12 +29,11 @@ const SearchHeader = () => {
     const userId = allData?.userData?._id;
     var options = {
       description: "Credits towards consultation",
-      image:
-        "https://imgv3.fotor.com/images/cover-photo-image/a-beautiful-girl-with-gray-hair-and-lucxy-neckless-generated-by-Fotor-AI.jpg",
+      image: "https://i.ibb.co/89GD3cS/adaptive-icon.png",
       currency: "INR",
       key: "rzp_test_P8O8kQ18tBojQq",
       amount: value * 100,
-      name: "Bhojan Mittra",
+      name: "Bhojan Mitra",
       order_id: "", //Replace this with an order_id created using Orders API.
       prefill: {
         email,
